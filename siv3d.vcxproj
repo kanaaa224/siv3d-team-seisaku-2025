@@ -116,10 +116,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\CharacterBase.cpp" />
+    <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\GameUI.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
     <ClCompile Include="source\Player.cpp" />
+    <ClCompile Include="source\Ranking.cpp" />
+    <ClCompile Include="source\Title.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -330,9 +333,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CharacterBase.hpp" />
+    <ClInclude Include="source\Common.hpp" />
+    <ClInclude Include="source\Game.hpp" />
     <ClInclude Include="source\GameUI.hpp" />
     <ClInclude Include="source\ObjectBase.hpp" />
     <ClInclude Include="source\Player.hpp" />
+    <ClInclude Include="source\Ranking.hpp" />
+    <ClInclude Include="source\Title.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
