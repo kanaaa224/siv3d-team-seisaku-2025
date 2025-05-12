@@ -1,5 +1,7 @@
 ﻿# include <Siv3D.hpp> // Siv3D v0.6.16
 
+#include "GameUI.h"
+
 void Main()
 {
 	// 背景の色を設定する | Set the background color
