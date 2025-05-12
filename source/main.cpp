@@ -1,6 +1,7 @@
 ﻿# include <Siv3D.hpp> // Siv3D v0.6.16
 
-#include "GameUI.h"
+# include "GameUI.hpp"
+# include "Player.hpp"
 
 void Main()
 {
