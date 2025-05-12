@@ -115,8 +115,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\CharacterBase.cpp" />
     <ClCompile Include="source\GameUI.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\ObjectBase.cpp" />
+    <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -326,7 +329,10 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\GameUI.h" />
+    <ClInclude Include="source\CharacterBase.hpp" />
+    <ClInclude Include="source\GameUI.hpp" />
+    <ClInclude Include="source\ObjectBase.hpp" />
+    <ClInclude Include="source\Player.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
