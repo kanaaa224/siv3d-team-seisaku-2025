@@ -115,6 +115,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Enemy\EnemyBase.cpp" />
     <ClCompile Include="source\CharacterBase.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\GameUI.cpp" />
@@ -332,6 +333,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Enemy\EnemyBase.hpp" />
     <ClInclude Include="source\CharacterBase.hpp" />
     <ClInclude Include="source\Common.hpp" />
     <ClInclude Include="source\Game.hpp" />
