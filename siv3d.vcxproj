@@ -115,15 +115,15 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Enemy\EnemyBase.cpp" />
-    <ClCompile Include="source\CharacterBase.cpp" />
-    <ClCompile Include="source\Game.cpp" />
-    <ClCompile Include="source\GameUI.cpp" />
     <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\ObjectBase.cpp" />
-    <ClCompile Include="source\Player.cpp" />
-    <ClCompile Include="source\Ranking.cpp" />
-    <ClCompile Include="source\Title.cpp" />
+    <ClCompile Include="source\Objects\CharacterBase.cpp" />
+    <ClCompile Include="source\Objects\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="source\Objects\ObjectBase.cpp" />
+    <ClCompile Include="source\Objects\Player.cpp" />
+    <ClCompile Include="source\Scene\Game.cpp" />
+    <ClCompile Include="source\Scene\GameUI.cpp" />
+    <ClCompile Include="source\Scene\Ranking.cpp" />
+    <ClCompile Include="source\Scene\Title.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -333,15 +333,15 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Enemy\EnemyBase.hpp" />
-    <ClInclude Include="source\CharacterBase.hpp" />
     <ClInclude Include="source\Common.hpp" />
-    <ClInclude Include="source\Game.hpp" />
-    <ClInclude Include="source\GameUI.hpp" />
-    <ClInclude Include="source\ObjectBase.hpp" />
-    <ClInclude Include="source\Player.hpp" />
-    <ClInclude Include="source\Ranking.hpp" />
-    <ClInclude Include="source\Title.hpp" />
+    <ClInclude Include="source\Objects\CharacterBase.hpp" />
+    <ClInclude Include="source\Objects\Enemy\EnemyBase.hpp" />
+    <ClInclude Include="source\Objects\ObjectBase.hpp" />
+    <ClInclude Include="source\Objects\Player.hpp" />
+    <ClInclude Include="source\Scene\Game.hpp" />
+    <ClInclude Include="source\Scene\GameUI.hpp" />
+    <ClInclude Include="source\Scene\Ranking.hpp" />
+    <ClInclude Include="source\Scene\Title.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
