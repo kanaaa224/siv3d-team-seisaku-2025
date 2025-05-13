@@ -1,7 +1,7 @@
-﻿# include "Game.hpp"
+# include "Game.hpp"
 
 # include "GameUI.hpp"
-# include "Player.hpp"
+# include "../Objects/Player.hpp"
 
 Game::Game(const InitData& init)
 	: IScene{ init }

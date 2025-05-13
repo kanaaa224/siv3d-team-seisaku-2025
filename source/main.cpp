@@ -1,7 +1,7 @@
-﻿# include "Common.hpp"
-# include "Title.hpp"
-# include "Game.hpp"
-# include "Ranking.hpp"
+# include "Common.hpp"
+# include "Scene/Title.hpp"
+# include "Scene/Game.hpp"
+# include "Scene/Ranking.hpp"
 
 void Main()
 {
