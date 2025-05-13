@@ -1,5 +1,5 @@
-﻿# pragma once
-# include "Common.hpp"
+# pragma once
+# include "../Common.hpp"
 
 // ゲームシーン
 class Game : public App::Scene

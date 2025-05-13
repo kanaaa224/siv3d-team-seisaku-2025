@@ -1,5 +1,5 @@
-﻿# pragma once
-# include "Common.hpp"
+# pragma once
+# include "../Common.hpp"
 
 // ランキングシーン
 class Ranking : public App::Scene
