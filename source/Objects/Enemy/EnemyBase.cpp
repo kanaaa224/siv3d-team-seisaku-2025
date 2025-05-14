@@ -57,7 +57,7 @@ void EnemyBase::movement(float distance)
 	if (spawnPosition.x <= position.x) {
 		velocity.x = -MOVE_SPEED;
 		//ここに画像反転などのFlgなど
-		texture.mirrored();//画像反転？(仮)
+		//texture.mirrored();//画像反転？(仮)
 	}
 	if (spawnPosition.x - distance >= position.x) {
 		velocity.x = MOVE_SPEED;

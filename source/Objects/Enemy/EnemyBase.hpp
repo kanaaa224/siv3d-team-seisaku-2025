@@ -84,7 +84,7 @@ protected:
 	/// <summary>
 	/// ダメージを受けた時の移動
 	/// </summary>
-	virtual void getDamageMovement();
+	virtual void getDamageMovement() {};
 
 	/// <summary>
 	/// デバッグ用のHP表示
