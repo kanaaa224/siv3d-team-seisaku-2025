@@ -1,5 +1,6 @@
 ﻿# pragma once
 # include "../Common.hpp"
+#include "../Objects/Player.hpp"
 
 // ゲームシーン
 class Game : public App::Scene
@@ -11,4 +12,6 @@ public:
 	void draw() const override;
 
 private:
+
+	Player* player;
 };
