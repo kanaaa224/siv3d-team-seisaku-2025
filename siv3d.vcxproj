@@ -115,6 +115,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Objects\Enemy\Scarerun\Scarerun.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Objects\CharacterBase.cpp" />
     <ClCompile Include="source\Objects\Enemy\EnemyBase.cpp" />
@@ -333,6 +334,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Objects\Enemy\Scarerun\Scarerun.hpp" />
     <ClInclude Include="source\Common.hpp" />
     <ClInclude Include="source\Objects\CharacterBase.hpp" />
     <ClInclude Include="source\Objects\Enemy\EnemyBase.hpp" />

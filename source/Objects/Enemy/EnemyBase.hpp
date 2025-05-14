@@ -38,7 +38,7 @@ private:
 	std::vector<Texture> attack_img;        //攻撃の画像
 	std::vector<Texture> getAttack_img;     //攻撃を受ける画像
 	std::vector<Texture> die_img;           //死亡の画像
-	int nowImageNum;                      //画像配列の現在の要素数を格納する用
+	int nowImageNum;                        //画像配列の現在の要素数を格納する用
 
 	Vec2 spawnPosition;                 //スポーン位置を格納
 
@@ -48,10 +48,54 @@ private:
 	bool damageStopFlg;                 //ダメージを受けるのを止めるか止めないか
 
 public:
-	EnemyBase(const Vec2& start_position) : CharacterBase(start_position) {};
+	EnemyBase(const Vec2& start_position);
 	~EnemyBase();
 
 	virtual void update() override;
 	virtual void draw() const override;
+
+protected:
+	/// <summary>
+	/// ステートに合わせて画像を切り替える
+	/// </summary>
+	/// <param name="delta_second">1フレーム何秒経過したか</param>
+	virtual void animation(float delta_second);
+	/// <summary>
+	/// 敵のステートをセット
+	/// </summary>
+	/// <param name="setState"></param>
+	virtual void setEnemyState(eEnemyState setState) {
+		oldState = nowState;
+		nowState = setState;
+	};
+	/// <summary>
+	/// 基本的な左右移動
+	/// ※飛行する敵などは書き換える
+	/// スポーン位置を始点に引数に入れたdistance分移動したら、
+	/// 始点に方向転換して移動する
+	/// </summary>
+	/// <param name="distance"></param>
+	virtual void movement(float distance);
+	/// <summary>
+	/// Update内で１回のみ初期化したい変数を関数内に入れる
+	/// </summary>
+	virtual void initUpdate();
+
+	/// <summary>
+	/// ダメージを受けた時の移動
+	/// </summary>
+	virtual void getDamageMovement();
+
+	/// <summary>
+	/// デバッグ用のHP表示
+	/// </summary>
+	void drawHP() const;
+
+	/// <summary>
+	/// ダメージを受けた時にダメージ数を入れる関数
+	/// ダメージストップも担う
+	/// </summary>
+	/// <param name="damage">ダメージ数</param>
+	void getDamage(float damage);
 };
 
