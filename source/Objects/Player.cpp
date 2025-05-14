@@ -24,6 +24,7 @@ void Player::initialize()
 	playerState = ePlayerState::null;	//待機状態に設定
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
+	velocity = Vec2(0.0, 0.0);	//移動量初期化
 }
 
 void Player::update()

@@ -6,6 +6,7 @@
 void AssetsRegistration()
 {
 	// アセットの登録
+	TextureAsset::Register(U"Player_idle", U"assets/images/stage/stage1/forest.png");
 }
 
 void Initialize()
