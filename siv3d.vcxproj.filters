@@ -141,13 +141,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Objects\Enemy\Scarerun\Scarerun.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="source\Objects\Enemy\EnemyBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Objects\CharacterBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Objects\ObjectBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Objects\Player.cpp">
@@ -166,9 +163,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Objects\Enemy\Scarerun\Scarerun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -836,6 +830,9 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Objects\Enemy\Scarerun\Scarerun.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="source\Objects\Enemy\EnemyBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -861,9 +858,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Common.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Objects\Enemy\Scarerun\Scarerun.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
