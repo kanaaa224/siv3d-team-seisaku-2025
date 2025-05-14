@@ -119,6 +119,7 @@
     <ClCompile Include="source\Objects\Enemy\EnemyBase.cpp" />
     <ClCompile Include="source\Objects\Enemy\Scarerun\Scarerun.cpp" />
     <ClCompile Include="source\Objects\Player.cpp" />
+    <ClCompile Include="source\Objects\Stage.cpp" />
     <ClCompile Include="source\Scene\Game.cpp" />
     <ClCompile Include="source\Scene\GameUI.cpp" />
     <ClCompile Include="source\Scene\Ranking.cpp" />
@@ -338,6 +339,7 @@
     <ClInclude Include="source\Objects\Enemy\Scarerun\Scarerun.hpp" />
     <ClInclude Include="source\Objects\ObjectBase.hpp" />
     <ClInclude Include="source\Objects\Player.hpp" />
+    <ClInclude Include="source\Objects\Stage.hpp" />
     <ClInclude Include="source\Scene\Game.hpp" />
     <ClInclude Include="source\Scene\GameUI.hpp" />
     <ClInclude Include="source\Scene\Ranking.hpp" />

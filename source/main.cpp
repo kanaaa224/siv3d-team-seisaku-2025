@@ -6,7 +6,7 @@
 void AssetsRegistration()
 {
 	// アセットの登録
-	TextureAsset::Register({ U"Player_idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
+	//TextureAsset::Register({ U"Player_idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
 }
 
 void Initialize()
