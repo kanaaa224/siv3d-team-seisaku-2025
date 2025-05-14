@@ -18,9 +18,8 @@ Player::~Player()
 
 void Player::initialize()
 {
-	size = Vec2(100.0, 100.0);	//サイズ設定
+	size = Vec2(200.0, 200.0);	//サイズ設定
 	is_on_ground = true;		//地面についているか？
-	position = Vec2(30, 670);	//初期座標
 	playerState = ePlayerState::null;	//待機状態に設定
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
@@ -102,7 +101,7 @@ void Player::update()
 
 void Player::draw() const
 {
-	TextureAsset(U"Player_idle").draw(position);
+	TextureAsset(U"Player_idle").resized(size).draw(position);
 	Print << TextureAsset::IsReady(U"Player_idle");
 }
 
