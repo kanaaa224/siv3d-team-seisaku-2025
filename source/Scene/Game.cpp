@@ -7,7 +7,7 @@ Game::Game(const InitData& init)
 	: IScene{ init }
 {
 	// Playerの初期位置設定
-	player = new Player(Vec2(100.0, 100.0));
+	player = new Player(Vec2(50, 640.0));
 	player->initialize();
 }
 

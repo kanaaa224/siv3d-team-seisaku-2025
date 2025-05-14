@@ -1,7 +1,7 @@
-﻿#include <Siv3D.hpp>
+﻿//#include <Siv3D.hpp>
 #include "Player.hpp"
 
-#define VELOCITY 4.0
+#define VELOCITY 400.0
 
 Player::Player(const Vec2& start_position) : CharacterBase(start_position)
 {
@@ -9,21 +9,32 @@ Player::Player(const Vec2& start_position) : CharacterBase(start_position)
 	playerState = ePlayerState::null;
 	playerIndex = NULL;
 	enableDeadZone = false;
+	flip_flg = false;
+	animation_number = 0;
 }
 
 Player::~Player()
 {
-
+	idle_animation.clear();
 }
 
 void Player::initialize()
 {
-	size = Vec2(200.0, 200.0);	//サイズ設定
+	size = Vec2(288.0 * 2, 45.0 * 2);	//サイズ設定
 	is_on_ground = true;		//地面についているか？
 	playerState = ePlayerState::null;	//待機状態に設定
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
 	velocity = Vec2(0.0, 0.0);	//移動量初期化
+	flip_flg = false;
+	hp = 100;
+
+	// アセットの登録
+	TextureAsset::Register({ U"Player_idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
+
+	// 分割画像の登録
+	idle_animation = LoadDivGraph(U"../assets/images/player/idle/03_idle.png", Size(288, 45));
+	image = idle_animation[0];
 }
 
 void Player::update()
@@ -51,6 +62,8 @@ void Player::update()
 
 		//移動量なし
 		velocity.x = 0.0;
+
+		animation(idle_animation, 0.1);
 
 		if (
 			controller.buttonLeft.pressed() == true ||
@@ -96,13 +109,19 @@ void Player::update()
 	}
 
 	// 移動量計算
-	position += velocity;
+	position += velocity * Scene::DeltaTime();
 }
 
 void Player::draw() const
 {
-	TextureAsset(U"Player_idle").resized(size).draw(position);
-	Print << TextureAsset::IsReady(U"Player_idle");
+	//.drawAtを使って中心座標を元に描画
+	//TextureAsset(U"Player_idle").mirrored(flip_flg).resized(size).drawAt(position);
+	image.mirrored(flip_flg).resized(size).drawAt(position);
+
+	Print << U"Player 画像登録 : " << TextureAsset::IsReady(U"Player_idle");
+	Print << U"Player 座標 : " << position;
+	Print << U"Player 移動量 : " << velocity;
+	Print << U"DeltaTime : " << Scene::DeltaTime();
 }
 
 void Player::finalize()
@@ -114,9 +133,21 @@ ePlayerState Player::getplayerstate() const
 	return playerState;
 }
 
-void Player::animation()
+void Player::animation(Array<TextureRegion> image_container, double frame)
 {
+	animation_time += Scene::DeltaTime();
 
+	if (animation_time >= frame)
+	{
+		animation_time = 0.0;
+		animation_number++;
+		if (animation_number >= image_container.size())
+		{
+			animation_number = 0;
+		}
+
+		image = image_container[animation_number];
+	}
 }
 
 void Player::movement(s3d::detail::XInput_impl controller)
@@ -130,7 +161,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	{
 		velocity.x = -VELOCITY;
 
-		// flip_flg = true;
+		flip_flg = true;
 
 		//移動状態のときボタンを押されたら
 
@@ -139,7 +170,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	{
 		velocity.x = VELOCITY;
 
-		// flip_flg = false;
+		flip_flg = false;
 
 		//移動状態のときボタンを押されたら
 	}
