@@ -9,8 +9,6 @@ protected:
 
 	SizeF size; // 大きさ
 
-	Texture texture; // テクスチャ
-
 public:
 	ObjectBase(const Vec2& start_position) : position(start_position) {}
 	virtual ~ObjectBase() = default;
@@ -23,5 +21,4 @@ public:
 	Vec2 getVelocity() const { return velocity; }
 	bool addVelocity(const Vec2& v) { velocity += v; return true; }
 	SizeF getSize() const { return size; }
-	bool drawTexture() const { texture.resized(size).drawAt(position); return true; }
 };
