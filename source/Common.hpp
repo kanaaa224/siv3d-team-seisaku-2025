@@ -2,21 +2,17 @@
 # include <Siv3D.hpp> // Siv3D v0.6.16
 
 // シーンのステート
-enum class State
+enum class SceneState
 {
 	Title,
 	Game,
-	Ranking,
+	Ranking
 };
 
 // 共有するデータ
-struct GameData
+struct SceneData
 {
-	// 直前のゲームのスコア
-	int32 lastScore = 0;
 
-	// ハイスコア
-	Array<int32> highScores = { 10, 8, 6, 4, 2 };
 };
 
-using App = SceneManager<State, GameData>;
+using App = SceneManager<SceneState, SceneData>;

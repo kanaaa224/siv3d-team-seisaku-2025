@@ -1,19 +1,31 @@
-# include "Common.hpp"
+﻿# include "Common.hpp"
 # include "Scene/Title.hpp"
 # include "Scene/Game.hpp"
 # include "Scene/Ranking.hpp"
 
+void AssetsRegistration()
+{
+	// アセットの登録
+}
+
+void Initialize()
+{
+	Window::Resize(1280, 720);
+
+	Window::SetTitle(U"My Game");
+}
+
 void Main()
 {
-	FontAsset::Register(U"TitleFont", FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf");
-	FontAsset(U"TitleFont").setBufferThickness(4);
+	AssetsRegistration();
 
-	FontAsset::Register(U"Bold", FontMethod::MSDF, 48, Typeface::Bold);
+	Initialize();
 
 	App manager;
-	manager.add<Title>(State::Title);
-	manager.add<Game>(State::Game);
-	manager.add<Ranking>(State::Ranking);
+
+	manager.add<Title>(SceneState::Title);
+	manager.add<Game>(SceneState::Game);
+	manager.add<Ranking>(SceneState::Ranking);
 
 	while (System::Update())
 	{
