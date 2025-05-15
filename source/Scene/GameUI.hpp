@@ -1,11 +1,24 @@
 ﻿# pragma once
 
+#include <Siv3D.hpp>
+
 class GameUI
 {
-public:
-	GameUI() {};
-	~GameUI() {};
+private:
 
-	bool update();
-	bool draw();
+	Vec2 position;
+
+	static GameUI* instance;
+	GameUI* gameui;
+
+public:
+	GameUI();
+	~GameUI();
+
+	void initialize();
+	void update();
+	void draw()const;
+	void finalize();
+
+	static GameUI* GetInstance();
 };
