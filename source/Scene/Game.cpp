@@ -20,6 +20,7 @@ void Game::update()
 
 void Game::draw() const
 {
+	//ClearDrawScreenと一緒
 	ClearPrint();
 	player->draw();
 }
