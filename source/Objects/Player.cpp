@@ -2,6 +2,8 @@
 #include "Player.hpp"
 
 #define VELOCITY 400.0
+#define D_GRAVITY (9.807f) //重力
+#define ADDJUMP (10) //
 
 Player::Player(const Vec2& start_position) : CharacterBase(start_position)
 {
@@ -28,6 +30,7 @@ void Player::initialize()
 	velocity = Vec2(0.0, 0.0);	//移動量初期化
 	flip_flg = false;
 	hp = 100;
+	ground_y = 640.0f;  //地面のlocation
 
 	// アセットの登録
 	TextureAsset::Register({ U"Player_idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
@@ -35,12 +38,23 @@ void Player::initialize()
 	// 分割画像の登録
 	idle_animation = LoadDivGraph(U"../assets/images/player/idle/03_idle.png", Size(288, 45));
 	image = idle_animation[0];
+
+	player_s = 0;
 }
 
 void Player::update()
 {
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
+
+	velocity.y += D_GRAVITY * Scene::DeltaTime() * ADDJUMP;  //重力速度計算
+
+
+	if (position.y > 640) //地面落ちないようにする
+	{
+		position.y = 640;
+		velocity.y = 0.5;
+	}
 
 	switch (playerState)
 	{
@@ -60,12 +74,15 @@ void Player::update()
 
 	case idle: //待機処理
 
+		player_s = 0;
+
 		//移動量なし
 		velocity.x = 0.0;
 
 		animation(idle_animation, 0.1);
 
-		if (
+		//idle状態からボタンを押したごとの処理
+		if (//move
 			controller.buttonLeft.pressed() == true ||
 			controller.buttonRight.pressed() == true ||
 			KeyA.pressed() == true ||
@@ -75,15 +92,54 @@ void Player::update()
 			)
 		{
 			playerState = ePlayerState::move;
-		}
+		}//jump
+		else if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
+		{
+			playerState = ePlayerState::jump;
+		}//attack
+		else if (controller.buttonX.pressed() == true || KeyE.pressed() == true)
+		{
+			playerState = ePlayerState::attack;
+		}//avoidance
+		else if (controller.buttonB.pressed() == true || KeyQ.pressed() == true)
+		{
+			playerState = ePlayerState::avoidance;
+		}///////////////キーを押したらダメージを減らす
+		else if (KeyS.pressed() == true)
+		{
+			playerState = ePlayerState::damage;
+		}///////////////
+
 
 		break;
 	case move: //移動処理
 
+		player_s = 0;
 		movement(controller);
+
+		if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
+		{
+			playerState = ePlayerState::jump;
+		}
+
 
 		break;
 	case jump: //ジャンプ処理
+		player_s = 1;
+		jumpmovement(controller);
+
+		//地面についた時の処理
+		if (position.y + velocity.y * Scene::DeltaTime() > ground_y) {
+
+			position.y = ground_y;
+
+			velocity.y = 0.0f;
+
+			is_on_ground = true;
+			//jump_attack_flg = false;
+
+			playerState = ePlayerState::idle;
+		}
 
 		break;
 	case avoidance: //回避処理
@@ -122,6 +178,7 @@ void Player::draw() const
 	Print << U"Player 座標 : " << position;
 	Print << U"Player 移動量 : " << velocity;
 	Print << U"DeltaTime : " << Scene::DeltaTime();
+	Print << U"PlayerState : " << player_s;
 }
 
 void Player::finalize()
@@ -182,6 +239,12 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 }
 
-//void Player::jumpmovement(s3d::detail::XInput_impl controller)
-//{
-//}
+void Player::jumpmovement(s3d::detail::XInput_impl controller)
+{
+	//ジャンプ処理
+	if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
+	{
+		velocity.y = -170.0f;
+		is_on_ground = false;
+	}
+}
