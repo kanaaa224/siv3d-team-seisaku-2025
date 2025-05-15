@@ -10,6 +10,7 @@ enum ePlayerState
 	avoidance,	//回避
 	attack,		//攻撃
 	jump_attack,//ジャンプ攻撃
+	damage,     //ダメージ
 	die,		//死亡
 	null,		//何もなし(初期化用)
 };
@@ -24,7 +25,8 @@ private:
 	size_t playerIndex;			//プレイヤー数
 	bool enableDeadZone;		//デッドゾーンを有効にするか？
 
-	bool flip_flg;				//画像反転？
+	bool flip_flg;				//画像反転フラグ
+	bool jump_attack_flg;
 
 	TextureRegion image;		//画像描画用
 
@@ -32,7 +34,13 @@ private:
 
 	int8 animation_number;		//画像切り替え用
 
-	double animation_time;
+	double animation_time;      //アニメーション時間
+
+	float ground_y;
+
+	//プレイヤーの状態
+	int player_s;
+	//
 
 public:
 
@@ -52,5 +60,5 @@ public:
 private:
 	void animation(Array<TextureRegion> image_container, double frame);	//アニメーション
 	void movement(s3d::detail::XInput_impl controller);	//左右移動
-	//void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理
+	void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理
 };
