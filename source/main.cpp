@@ -7,6 +7,10 @@ void AssetsRegistration()
 {
 	// アセットの登録
 	//TextureAsset::Register({ U"Player_idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
+
+	// アセットの登録
+	TextureAsset::Register({ U"Character_frame", { U"UI" } }, U"../assets/images/ui/character_frame.png");
+	TextureAsset::Register({ U"Character_icon", { U"UI" } }, U"../assets/images/ui/character_icon.png");
 }
 
 void Initialize()
