@@ -1,7 +1,7 @@
 ﻿# include "Game.hpp"
 
 # include "GameUI.hpp"
-# include "../Objects/Player.hpp"
+
 
 Game::Game(const InitData& init)
 	: IScene{ init }
@@ -14,6 +14,15 @@ Game::Game(const InitData& init)
 	GameUI* gameui = GameUI::GetInstance();
 	//イニシャライズ呼び出し
 	gameui->initialize();
+
+	stage = new Stage(Vec2(1280.0, 720.0));
+	stage->initialize();
+}
+
+Game::~Game()
+{
+	delete player;
+	delete stage;
 }
 
 void Game::update()
@@ -32,6 +41,8 @@ void Game::update()
 
 void Game::draw() const
 {
+	stage->draw();
+
 	//ClearDrawScreenと一緒
 	ClearPrint();
 	player->draw();
