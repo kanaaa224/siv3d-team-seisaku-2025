@@ -15,10 +15,6 @@ GameUI::~GameUI()
 
 void GameUI::initialize()
 {
-	// アセットの登録
-	TextureAsset::Register({ U"Character_frame", { U"UI" } }, U"../assets/images/ui/character_frame.png");
-	TextureAsset::Register({ U"Character_icon", { U"UI" } }, U"../assets/images/ui/character_icon.png");
-
 	position = { 300.0, 300.0 };
 }
 
