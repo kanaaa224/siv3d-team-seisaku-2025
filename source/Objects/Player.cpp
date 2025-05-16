@@ -13,10 +13,14 @@ Player::Player(const Vec2& start_position) : CharacterBase(start_position)
 	enableDeadZone = false;
 	flip_flg = false;
 	animation_number = 0;
+
+	this->initialize();
 }
 
 Player::~Player()
 {
+	this->finalize();
+
 	idle_animation.clear();
 }
 
@@ -183,6 +187,7 @@ void Player::draw() const
 
 void Player::finalize()
 {
+
 }
 
 ePlayerState Player::getplayerstate() const

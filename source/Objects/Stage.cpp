@@ -1,32 +1,61 @@
-﻿#include "Stage.hpp"
+﻿# include "Stage.hpp"
 
-Stage::Stage(const Vec2& start_position): ObjectBase(start_position)
+# include "GameUI.hpp"
+# include "Player.hpp"
+# include "StageBackground.hpp"
+
+Stage* Stage::instance = nullptr;
+
+Stage::Stage()
 {
-
+	this->initialize();
 }
 
 Stage::~Stage()
 {
-
+	this->finalize();
 }
 
 void Stage::initialize()
 {
-	// アセットの登録
-	TextureAsset::Register({ U"Stage1_background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
+	objects << new StageBackground(Vec2());
+	objects << new Player(Vec2(50, 640));
 }
 
 void Stage::update()
 {
+	for (const auto& object : objects)
+	{
+		object->update();
+	}
 
+	GameUI* gameUI = GameUI::GetInstance();
+
+	gameUI->update();
 }
 
 void Stage::draw() const
 {
-	TextureAsset(U"Stage1_background").resized(1280, 720).draw(0,0);
+	ClearPrint(); // 過去のPrint出力を消す
+
+	for (const auto& object : objects)
+	{
+		object->draw();
+	}
+
+	GameUI* gameUI = GameUI::GetInstance();
+
+	gameUI->draw();
 }
 
 void Stage::finalize()
 {
 
+}
+
+Stage* Stage::GetInstance()
+{
+	if (instance == nullptr) instance = new Stage();
+
+	return instance;
 }

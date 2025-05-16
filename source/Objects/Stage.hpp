@@ -1,19 +1,23 @@
-﻿#pragma once
+﻿# pragma once
 
-#include "../Objects/ObjectBase.hpp"
+# include "ObjectBase.hpp"
 
-class Stage : public ObjectBase
+class Stage
 {
-private:
-
-
 public:
-	Stage(const Vec2& start_position);
+	Stage();
 	~Stage();
 
-	void initialize();
-	void update() override;
-	void draw() const override;
-	void finalize();
+	void update();
+	void draw() const;
 
+	static Stage* GetInstance();
+
+private:
+	static Stage* instance;
+
+	Array<ObjectBase*> objects;
+
+	void initialize();
+	void finalize();
 };
