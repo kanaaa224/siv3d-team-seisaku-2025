@@ -31,6 +31,7 @@ private:
 	TextureRegion image;		//画像描画用
 
 	Array <TextureRegion> idle_animation;	//待機状態アニメーション
+	Array <TextureRegion> run_animation;    //移動状態アニメーション
 	Array <TextureRegion> attack_animation;    //攻撃状態アニメーション
 	Array <TextureRegion> roll_animation;    //回避状態アニメーション
 
