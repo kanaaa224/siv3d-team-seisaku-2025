@@ -24,12 +24,14 @@ void GameUI::update()
 
 void GameUI::draw() const
 {
-	Vec2 position{ 0, 0 };
+	Vec2 position{ 40, 40 };
+
+	Vec2 size{ 80, 80 };
 
 	// resizedで画像の描画サイズ(拡大率？) drawAtで中心座標を元に描画位置を設定(描画したい座標を設定)
 	// 変数を使ってるのはframeの中にiconを入れたいため
-	TextureAsset(U"Character Frame").resized(26 * 2, 24 * 2).draw(position);
-	TextureAsset(U"Character Icon").fitted(26 * 2, 24 * 2).draw(position);
+	TextureAsset(U"Character Frame").resized(size).drawAt(position);
+	TextureAsset(U"Character Icon").resized(size.x - 10, size.y - 10).drawAt(position);
 }
 
 void GameUI::finalize()
