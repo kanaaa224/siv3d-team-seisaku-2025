@@ -2,11 +2,11 @@
 
 # include "ObjectBase.hpp"
 
-class StageBackground : public ObjectBase
+class Camera : public ObjectBase
 {
 public:
-	StageBackground(const Vec2& start_position);
-	~StageBackground();
+	Camera(const Vec2& start_position);
+	~Camera();
 
 	void update() override;
 	void draw() const override;
