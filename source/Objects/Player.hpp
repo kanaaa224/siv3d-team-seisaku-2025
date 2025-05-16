@@ -31,6 +31,8 @@ private:
 	TextureRegion image;		//画像描画用
 
 	Array <TextureRegion> idle_animation;	//待機状態アニメーション
+	Array <TextureRegion> attack_animation;    //攻撃状態アニメーション
+	Array <TextureRegion> roll_animation;    //回避状態アニメーション
 
 	int8 animation_number;		//画像切り替え用
 
@@ -58,7 +60,7 @@ public:
 
 
 private:
-	void animation(Array<TextureRegion> image_container, double frame);	//アニメーション
+	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
 	void movement(s3d::detail::XInput_impl controller);	//左右移動
 	void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理
 };
