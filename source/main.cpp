@@ -12,6 +12,9 @@ void AssetsRegistration()
 	FontAsset(U"TitleFont").setBufferThickness(4);
 
 	TextureAsset::Register({ U"Player Idle", { U"Player" } }, U"../assets/images/player/idle/03_idle.png");
+	TextureAsset::Register({ U"Player Run",  { U"Player" } }, U"../assets/images/player/run/run_288_45_8.png");
+	TextureAsset::Register({ U"Player Attack", { U"Player" } }, U"../assets/images/player/attack1/atk_288_45.png");
+	TextureAsset::Register({ U"Player Roll", { U"Player" } }, U"../assets/images/player/roll/roll_288_45_7.png");
 	TextureAsset::Register({ U"Character Frame", { U"UI" } }, U"../assets/images/ui/character_frame.png");
 	TextureAsset::Register({ U"Character Icon",  { U"UI" } }, U"../assets/images/ui/character_icon.png");
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
