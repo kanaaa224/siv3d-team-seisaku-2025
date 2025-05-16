@@ -3,6 +3,7 @@
 # include "../Objects/GameUI.hpp"
 # include "../Objects/Player.hpp"
 # include "../Objects/StageBackground.hpp"
+#include  "../Objects/Enemy/Scarerun/Scarerun.hpp"
 
 Stage1* Stage1::instance = nullptr;
 
@@ -20,6 +21,7 @@ void Stage1::initialize()
 {
 	objects << new StageBackground(Vec2());
 	objects << new Player(Vec2(50, 640));
+	objects << new Scarerun(Vec2(300, 640));
 }
 
 void Stage1::update()

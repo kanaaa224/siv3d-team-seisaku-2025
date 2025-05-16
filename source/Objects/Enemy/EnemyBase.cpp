@@ -3,6 +3,8 @@
 EnemyBase::EnemyBase(const Vec2& start_position) :
 	CharacterBase(start_position)//初期位置
 {
+	hp = 100.0f;
+	setEnemyState(IDLE);
 }
 
 EnemyBase::~EnemyBase()
@@ -25,8 +27,9 @@ void EnemyBase::update()
 		}
 	}
 
+	animation(Scene::DeltaTime());
 	//座標の更新
-	position += velocity;
+	position += velocity * Scene::DeltaTime();
 
 #ifdef DEBUG
 	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
@@ -50,25 +53,144 @@ void EnemyBase::draw() const
 
 void EnemyBase::animation(float delta_second)
 {
+	switch (nowState)
+	{
+	case IDLE:
+		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
+		if (nowState != oldState) {
+			nowStateTime = 0;
+			nowImageNum = 0;
+		}
+		//現在のステートになって何秒経過しているか加算
+		nowStateTime += delta_second;
+		//現在のステートを更新
+		setEnemyState(IDLE);
+
+		//コンテナの最後の要素数になったら最初の画像の要素数にする
+		if (nowImageNum >= idle_img.size()) {
+			nowImageNum = 0;
+		}
+
+		//画像切り替え
+		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= idle_img.size()) {
+			now_texture = idle_img[nowImageNum];//画像を更新
+			nowStateTime = 0;
+			nowImageNum++;
+		}
+		break;
+	case ATTACK_POSITION:
+		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
+		if (nowState != oldState) {
+			nowStateTime = 0;
+			nowImageNum = 0;
+		}
+		//現在のステートになって何秒経過しているか加算
+		nowStateTime += delta_second;
+		//現在のステートを更新
+		setEnemyState(ATTACK_POSITION);
+
+		//コンテナの最後の要素数になったら最初の画像の要素数にする
+		if (nowImageNum >= attackPosition_img.size()) {
+			nowImageNum = 0;
+		}
+
+		//画像切り替え
+		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= attackPosition_img.size()) {
+			now_texture = attackPosition_img[nowImageNum];
+			nowStateTime = 0;
+			nowImageNum++;
+		}
+		break;
+	case ATTACK:
+		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
+		if (nowState != oldState) {
+			nowStateTime = 0;
+			nowImageNum = 0;
+		}
+		//現在のステートになって何秒経過しているか加算
+		nowStateTime += delta_second;
+		//現在のステートを更新
+		setEnemyState(ATTACK);
+
+		//コンテナの最後の要素数になったら最初の画像の要素数にする
+		if (nowImageNum >= attack_img.size()) {
+			nowImageNum = 0;
+		}
+
+		//画像切り替え
+		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= attack_img.size()) {
+			now_texture = attack_img[nowImageNum];
+			nowStateTime = 0;
+			nowImageNum++;
+		}
+		break;
+	case GET_ATTACK:
+		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
+		if (nowState != oldState) {
+			nowStateTime = 0;
+			nowImageNum = 0;
+		}
+		//現在のステートになって何秒経過しているか加算
+		nowStateTime += delta_second;
+		//現在のステートを更新
+		setEnemyState(GET_ATTACK);
+
+		//コンテナの最後の要素数になったら最初の画像の要素数にする
+		if (nowImageNum >= getAttack_img.size()) {
+			nowImageNum = 0;
+		}
+
+		//画像切り替え
+		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= getAttack_img.size()) {
+			now_texture = getAttack_img[nowImageNum];
+			nowStateTime = 0;
+			nowImageNum++;
+		}
+		break;
+	case DIE:
+		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
+		if (nowState != oldState) {
+			nowStateTime = 0;
+			nowImageNum = 0;
+		}
+		//現在のステートになって何秒経過しているか加算
+		nowStateTime += delta_second;
+		//現在のステートを更新
+		setEnemyState(DIE);
+
+		//コンテナの最後の要素数になったら最初の画像の要素数にする
+		if (nowImageNum >= die_img.size()) {
+			nowImageNum = 0;
+		}
+
+		//画像切り替え
+		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= die_img.size()) {
+			now_texture = die_img[nowImageNum];
+			nowStateTime = 0;
+			nowImageNum++;
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyBase::movement(float distance)
 {
 	if (spawnPosition.x <= position.x) {
 		velocity.x = -MOVE_SPEED;
-		//ここに画像反転などのFlgなど
-		//texture.mirrored();//画像反転？(仮)
+		img_flipFlg = true;
 	}
 	if (spawnPosition.x - distance >= position.x) {
 		velocity.x = MOVE_SPEED;
-		//ここに画像反転などのFlgなど
+		img_flipFlg = false;
 	}
 }
 
 void EnemyBase::initUpdate()
 {
 	if (initUpdateFlg == false) {
-		position = spawnPosition;//スポーンした場所
+		spawnPosition = position;//スポーンした場所
 		initUpdateFlg = true;
 	}
 }
