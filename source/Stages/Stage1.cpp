@@ -1,28 +1,28 @@
-﻿# include "Stage.hpp"
+﻿# include "Stage1.hpp"
 
-# include "GameUI.hpp"
-# include "Player.hpp"
-# include "StageBackground.hpp"
+# include "../Objects/GameUI.hpp"
+# include "../Objects/Player.hpp"
+# include "../Objects/StageBackground.hpp"
 
-Stage* Stage::instance = nullptr;
+Stage1* Stage1::instance = nullptr;
 
-Stage::Stage()
+Stage1::Stage1()
 {
 	this->initialize();
 }
 
-Stage::~Stage()
+Stage1::~Stage1()
 {
 	this->finalize();
 }
 
-void Stage::initialize()
+void Stage1::initialize()
 {
 	objects << new StageBackground(Vec2());
 	objects << new Player(Vec2(50, 640));
 }
 
-void Stage::update()
+void Stage1::update()
 {
 	for (const auto& object : objects)
 	{
@@ -34,7 +34,7 @@ void Stage::update()
 	gameUI->update();
 }
 
-void Stage::draw() const
+void Stage1::draw() const
 {
 	ClearPrint(); // 過去のPrint出力を消す
 
@@ -48,14 +48,14 @@ void Stage::draw() const
 	gameUI->draw();
 }
 
-void Stage::finalize()
+void Stage1::finalize()
 {
 
 }
 
-Stage* Stage::GetInstance()
+Stage1* Stage1::GetInstance()
 {
-	if (instance == nullptr) instance = new Stage();
+	if (instance == nullptr) instance = new Stage1();
 
 	return instance;
 }

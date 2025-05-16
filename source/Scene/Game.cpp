@@ -1,5 +1,6 @@
 ﻿# include "Game.hpp"
-# include "../Objects/Stage.hpp"
+# include "../Stages/Stage.hpp"
+# include "../Stages/Stage1.hpp"
 
 Game::Game(const InitData& init)
 	: IScene{ init }
@@ -9,7 +10,7 @@ Game::Game(const InitData& init)
 
 void Game::update()
 {
-	Stage* stage = Stage::GetInstance();
+	Stage* stage = Stage1::GetInstance();
 
 	stage->update();
 
@@ -18,7 +19,7 @@ void Game::update()
 
 void Game::draw() const
 {
-	Stage* stage = Stage::GetInstance();
+	Stage* stage = Stage1::GetInstance();
 
 	stage->draw();
 }
