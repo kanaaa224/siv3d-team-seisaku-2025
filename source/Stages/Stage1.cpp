@@ -20,8 +20,8 @@ Stage1::~Stage1()
 void Stage1::initialize()
 {
 	objects << new StageBackground(Vec2());
-	objects << new Player(Vec2(50, 640));
 	objects << new Scarerun(Vec2(300, 640));
+	objects << new Player(Vec2(50, 640));
 }
 
 void Stage1::update()
