@@ -38,6 +38,10 @@ void Player::initialize()
 
 	// 分割画像の登録
 	idle_animation = LoadDivGraph(U"Player Idle", Size(288, 45));
+	run_animation = LoadDivGraph(U"Player Run", Size(288, 45));
+	attack_animation = LoadDivGraph(U"Player Attack", Size(288, 45));
+	roll_animation = LoadDivGraph(U"Player Roll", Size(288, 45));
+
 	image = idle_animation[0];
 
 	player_s = 0;
@@ -80,7 +84,7 @@ void Player::update()
 		//移動量なし
 		velocity.x = 0.0;
 
-		animation(idle_animation, 0.1);
+		animation(idle_animation, 0.1,8,idle);
 
 		//idle状態からボタンを押したごとの処理
 		if (//move
@@ -117,6 +121,7 @@ void Player::update()
 
 		player_s = 0;
 		movement(controller);
+		animation(run_animation, 0.1,8,idle);
 
 		if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
 		{
@@ -144,9 +149,15 @@ void Player::update()
 
 		break;
 	case avoidance: //回避処理
-
+		player_s = 2;
+		animation(roll_animation, 0.1,7,idle);
+		
 		break;
 	case attack: //攻撃処理
+		player_s = 3;
+		animation(attack_animation, 0.1,6,idle);
+
+		//playerState = ePlayerState::idle;
 
 		break;
 	case jump_attack: //ジャンプ攻撃処理
@@ -192,7 +203,7 @@ ePlayerState Player::getplayerstate() const
 	return playerState;
 }
 
-void Player::animation(Array<TextureRegion> image_container, double frame)
+void Player::animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state)
 {
 	animation_time += Scene::DeltaTime();
 
@@ -203,6 +214,11 @@ void Player::animation(Array<TextureRegion> image_container, double frame)
 		if (animation_number >= image_container.size())
 		{
 			animation_number = 0;
+			if (state == jump && jump_attack_flg == false)
+			{
+				jump_attack_flg = true;
+			}
+			playerState = state;
 		}
 
 		image = image_container[animation_number];
