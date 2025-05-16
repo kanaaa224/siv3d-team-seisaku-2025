@@ -5,6 +5,8 @@
 #define D_GRAVITY (9.807f) //重力
 #define ADDJUMP (10) //
 
+//#define DEBUG
+
 Player::Player(const Vec2& start_position) : CharacterBase(start_position)
 {
 	is_on_ground = false;
@@ -186,11 +188,13 @@ void Player::draw() const
 	//TextureAsset(U"Player_idle").mirrored(flip_flg).resized(size).drawAt(position);
 	image.mirrored(flip_flg).resized(size).drawAt(position);
 
-	Print << U"Player 画像登録 : " << TextureAsset::IsReady(U"Player_idle");
+#ifdef DEBUG
+	Print << U"Player 画像登録 : " << TextureAsset::IsReady(U"Player Idle");
 	Print << U"Player 座標 : " << position;
 	Print << U"Player 移動量 : " << velocity;
 	Print << U"DeltaTime : " << Scene::DeltaTime();
 	Print << U"PlayerState : " << player_s;
+#endif // DEBUG
 }
 
 void Player::finalize()
