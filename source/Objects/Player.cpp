@@ -36,11 +36,8 @@ void Player::initialize()
 	hp = 100;
 	ground_y = 640.0f;  //地面のlocation
 
-	// アセットの登録
-	TextureAsset::Register({ U"Player_idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
-
 	// 分割画像の登録
-	idle_animation = LoadDivGraph(U"../assets/images/player/idle/03_idle.png", Size(288, 45));
+	idle_animation = LoadDivGraph(U"Player Idle", Size(288, 45));
 	image = idle_animation[0];
 
 	player_s = 0;
