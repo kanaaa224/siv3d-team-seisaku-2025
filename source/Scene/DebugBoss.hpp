@@ -3,10 +3,10 @@
 # include "../Common.hpp"
 
 // ランキングシーン
-class Ranking : public App::Scene
+class DebugBoss : public App::Scene
 {
 public:
-	Ranking(const InitData& init);
+	DebugBoss(const InitData& init);
 
 	void update() override;
 	void draw() const override;
