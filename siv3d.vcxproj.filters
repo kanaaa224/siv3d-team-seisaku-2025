@@ -156,9 +156,6 @@
     <ClCompile Include="source\Scene\GameUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scene\Ranking.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Scene\Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -166,6 +163,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Objects\Stage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene\Debug\DebugBoss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -854,9 +854,6 @@
     <ClInclude Include="source\Scene\GameUI.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scene\Ranking.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Scene\Title.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -867,6 +864,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Utils\CustomImageLoader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene\Debug\DebugBoss.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
