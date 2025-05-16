@@ -203,7 +203,6 @@ ePlayerState Player::getplayerstate() const
 	return playerState;
 }
 
-void Player::animation(Array<TextureRegion> image_container, double frame)
 void Player::animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state)
 {
 	animation_time += Scene::DeltaTime();
