@@ -1,5 +1,5 @@
-﻿//#include <Siv3D.hpp>
-#include "Player.hpp"
+﻿# include "Player.hpp"
+# include "../Utils/CustomImageLoader.hpp"
 
 #define VELOCITY 400.0
 #define D_GRAVITY (9.807f) //重力

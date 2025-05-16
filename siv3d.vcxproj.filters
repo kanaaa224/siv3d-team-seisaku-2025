@@ -866,5 +866,8 @@
     <ClInclude Include="source\Objects\Stage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Utils\CustomImageLoader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
