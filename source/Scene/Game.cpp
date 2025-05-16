@@ -1,7 +1,5 @@
 ﻿# include "Game.hpp"
-
 # include "GameUI.hpp"
-
 
 Game::Game(const InitData& init)
 	: IScene{ init }
@@ -30,7 +28,7 @@ void Game::update()
 	//UIのインスタンスを取得
 	GameUI* gameui = GameUI::GetInstance();
 
-	if (MouseL.down()) changeScene(SceneState::Ranking);
+	if (MouseL.down()) changeScene(SceneState::Title, 0.5s);
 
 	player->update();
 
