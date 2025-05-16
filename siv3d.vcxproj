@@ -344,6 +344,7 @@
     <ClInclude Include="source\Scene\GameUI.hpp" />
     <ClInclude Include="source\Scene\Ranking.hpp" />
     <ClInclude Include="source\Scene\Title.hpp" />
+    <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
