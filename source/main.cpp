@@ -6,18 +6,21 @@
 void AssetsRegistration()
 {
 	// アセットの登録
-	//TextureAsset::Register({ U"Player_idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
+	FontAsset::Register(U"TitleFont", FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf");
+	FontAsset::Register(U"Bold", FontMethod::MSDF, 48, Typeface::Bold);
 
-	// アセットの登録
-	TextureAsset::Register({ U"Character_frame", { U"UI" } }, U"../assets/images/ui/character_frame.png");
-	TextureAsset::Register({ U"Character_icon", { U"UI" } }, U"../assets/images/ui/character_icon.png");
+	FontAsset(U"TitleFont").setBufferThickness(4);
+
+	TextureAsset::Register({ U"Player Idle", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
+	TextureAsset::Register({ U"Character Frame", { U"UI" } }, U"../assets/images/ui/character_frame.png");
+	TextureAsset::Register({ U"Character Icon",  { U"UI" } }, U"../assets/images/ui/character_icon.png");
 }
 
 void Initialize()
 {
 	Window::Resize(1280, 720);
 
-	Window::SetTitle(U"My Game");
+	Window::SetTitle(U""); // TODO
 }
 
 void Main()
@@ -31,6 +34,8 @@ void Main()
 	manager.add<Title>(SceneState::Title);
 	manager.add<Game>(SceneState::Game);
 	manager.add<Ranking>(SceneState::Ranking);
+
+	manager.init(SceneState::Title, 0.5s);
 
 	while (System::Update())
 	{
