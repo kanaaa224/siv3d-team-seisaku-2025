@@ -115,6 +115,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Objects\Buff\Attack\AttackBuff.cpp" />
     <ClCompile Include="source\Objects\Buff\BuffBase.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Objects\Camera.cpp" />
@@ -338,6 +339,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Objects\Buff\Attack\AttackBuff.h" />
     <ClInclude Include="source\Objects\Buff\BuffBase.hpp" />
     <ClInclude Include="source\Common.hpp" />
     <ClInclude Include="source\Objects\Camera.hpp" />
