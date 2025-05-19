@@ -1,7 +1,11 @@
 ﻿# pragma once
+# include <Siv3D.hpp>
 
 class GameUI
 {
+private:
+	Vec2 flame_location;
+
 public:
 	GameUI();
 	~GameUI();
