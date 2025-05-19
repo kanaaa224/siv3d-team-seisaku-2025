@@ -218,3 +218,8 @@ void EnemyBase::getDamage(float damage)
 		hp = 0;
 	}
 }
+
+void EnemyBase::spawnBuff(BuffBase* pBuff)
+{
+	
+}

@@ -183,6 +183,9 @@
     <ClCompile Include="source\Objects\Buff\BuffBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Objects\Buff\Attack\AttackBuff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -894,6 +897,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Buff\BuffBase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Objects\Buff\Attack\AttackBuff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

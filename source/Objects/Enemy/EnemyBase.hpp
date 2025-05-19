@@ -1,6 +1,8 @@
 ﻿#pragma once
 //親クラス
 #include "../CharacterBase.hpp"
+//Buffの親クラス
+#include "../Buff/BuffBase.hpp"
 
 #define DEBUG                  //デバック表示
 #define IMG_CHANGE_TIME 0.1f  //画像の切り替え速度
@@ -101,5 +103,8 @@ protected:
 	/// </summary>
 	/// <param name="damage">ダメージ数</param>
 	void getDamage(float damage);
+
+	//バフをスポーンさせる
+	void spawnBuff(class BuffBase* pBuff);
 };
 
