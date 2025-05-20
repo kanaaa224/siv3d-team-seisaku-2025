@@ -1,15 +1,15 @@
 ﻿# include "Player.hpp"
 # include "../Utils/CustomImageLoader.hpp"
 
-#define VELOCITY 400.0
+#define VELOCITY 150.0	   //移動速度
 #define D_GRAVITY (9.807f) //重力
-#define ADDJUMP (10) //
+#define ADDJUMP (10)	   //
 
 #define DEBUG
 
-Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
+Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position), M_world(world)
 {
-	body = world.createRect(P2Dynamic, position, SizeF{ 100, 100 }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
+	body = world.createRect(P2Dynamic, position, SizeF{ 100, 100 - 10 }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
 
 	is_on_ground = false;
 	playerState = ePlayerState::null;
@@ -49,21 +49,14 @@ void Player::initialize()
 	image = idle_animation[0];
 
 	player_s = 0;
+
+	body.setVelocity(Vec2(0.0, 0.0));
 }
 
 void Player::update()
 {
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
-
-	//velocity.y += D_GRAVITY * Scene::DeltaTime() * ADDJUMP;  //重力速度計算
-
-
-	//if (position.y > 640) //地面落ちないようにする
-	//{
-	//	position.y = 640;
-	//	velocity.y = 0.5;
-	//}
 
 	switch (playerState)
 	{
@@ -86,7 +79,7 @@ void Player::update()
 		player_s = 0;
 
 		//移動量なし
-		//velocity.x = 0.0;
+		body.setVelocity(Vec2(body.getVelocity()));
 
 		animation(idle_animation, 0.1,8,idle);
 
@@ -102,19 +95,19 @@ void Player::update()
 		{
 			playerState = ePlayerState::move;
 		}//jump
-		else if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
+		else if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
 		{
 			playerState = ePlayerState::jump;
 		}//attack
-		else if (controller.buttonX.pressed() == true || KeyE.pressed() == true)
+		else if (controller.buttonX.down() == true || KeyE.down() == true)
 		{
 			playerState = ePlayerState::attack;
 		}//avoidance
-		else if (controller.buttonB.pressed() == true || KeyQ.pressed() == true)
+		else if (controller.buttonB.down() == true || KeyQ.down() == true)
 		{
 			playerState = ePlayerState::avoidance;
 		}///////////////キーを押したらダメージを減らす
-		else if (KeyS.pressed() == true)
+		else if (KeyS.down() == true)
 		{
 			playerState = ePlayerState::damage;
 		}///////////////
@@ -139,17 +132,13 @@ void Player::update()
 		jumpmovement(controller);
 
 		//地面についた時の処理
-		//if (position.y + velocity.y * Scene::DeltaTime() > ground_y) {
+		if (body.getVelocity().y <= 0.0 && is_on_ground == false) {
 
-		//	position.y = ground_y;
+			is_on_ground = true;
+			//jump_attack_flg = false;
 
-		//	velocity.y = 0.0f;
-
-		//	is_on_ground = true;
-		//	//jump_attack_flg = false;
-
-		//	playerState = ePlayerState::idle;
-		//}
+			playerState = ePlayerState::idle;
+		}
 
 		break;
 	case avoidance: //回避処理
@@ -175,20 +164,13 @@ void Player::update()
 	}
 
 	// 画面左側を超えないようにする
-	/*if (position.x < 16.0f)
+	if (body.getPos().x < 55.0)
 	{
-		position.x = 16.0f;
-	}*/
+		body.setPos(55.0, body.getPos().y);
+	}
 
 	// 移動量計算
-	//position += velocity * Scene::DeltaTime();
-
-
-	{ // 島袋が追記: このメソッドでオブジェクトに力を加えられます
-		if (KeyA.pressed())  body.applyLinearImpulse(Vec2{ -10,    0 });
-		if (KeyD.pressed())  body.applyLinearImpulse(Vec2{  10,    0 });
-		if (KeySpace.down()) body.applyLinearImpulse(Vec2{   0, -500 });
-	}
+	body.setPos(body.getPos() + body.getVelocity() *  Scene::DeltaTime());
 }
 
 void Player::draw() const
@@ -198,6 +180,7 @@ void Player::draw() const
 
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
 
+	body.drawFrame(1.0, ColorF(Palette::Blue));
 	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
 #ifdef DEBUG
@@ -206,6 +189,20 @@ void Player::draw() const
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"DeltaTime : " << Scene::DeltaTime();
 	Print << U"PlayerState : " << player_s;
+
+	for (auto&& [pair, collision] : M_world.getCollisions())
+	{
+		// body.id は Playerのこと
+		if (pair.a == body.id())
+		{
+			Print << U"PlayerHit : " << pair.a;
+		}
+		else if(pair.b == body.id())
+		{
+			Print << U"PlayerHit : " << pair.b;
+		}
+		
+	}
 #endif // DEBUG
 }
 
@@ -250,7 +247,8 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		KeyLeft.pressed() == true
 		)
 	{
-		//velocity.x = -VELOCITY;
+
+		body.setVelocity(Vec2(-VELOCITY, 0.0));
 
 		flip_flg = true;
 
@@ -259,7 +257,8 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else if(controller.buttonRight.pressed() == true || KeyD.pressed() == true || KeyRight.pressed() == true)
 	{
-		//velocity.x = VELOCITY;
+
+		body.setVelocity(Vec2(VELOCITY, 0.0));
 
 		flip_flg = false;
 
@@ -267,7 +266,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else
 	{
-		//velocity.x = 0.0;
+		body.setVelocity(Vec2(0.0, 0.0));
 
 		playerState = ePlayerState::idle;
 	}
@@ -278,7 +277,8 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 	//ジャンプ処理
 	if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
 	{
-		//velocity.y = -170.0f;
+		body.setVelocity(Vec2(0.0, -550.0));
+
 		is_on_ground = false;
 	}
 }
