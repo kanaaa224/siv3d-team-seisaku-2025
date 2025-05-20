@@ -120,7 +120,7 @@ void Player::update()
 		movement(controller);
 		animation(run_animation, 0.1,8,idle);
 
-		if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
+		if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
 		{
 			playerState = ePlayerState::jump;
 		}
