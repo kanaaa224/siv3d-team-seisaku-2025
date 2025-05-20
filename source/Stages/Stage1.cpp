@@ -31,6 +31,37 @@ void Stage1::update()
 	for (accumulatedTime += Scene::DeltaTime(); stepTime <= accumulatedTime; accumulatedTime -= stepTime)
 	{
 		world.update(stepTime);
+
+		for (const auto& object : objects)
+		{
+			for (auto&& [pair, collision] : world.getCollisions())
+			{
+				if (pair.a == object->getBody().id())
+				{
+					for (const auto& objectA : objects)
+					{
+						if (object->getBody().id() == objectA->getBody().id()) continue;
+						if(pair.a != objectA->getBody().id()) continue;
+
+						object->onHit(*objectA);
+
+						break;
+					}
+				}
+				else if (pair.b == object->getBody().id())
+				{
+					for (const auto& objectB : objects)
+					{
+						if (object->getBody().id() == objectB->getBody().id()) continue;
+						if (pair.a != objectB->getBody().id()) continue;
+
+						object->onHit(*objectB);
+
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	for (const auto& object : objects)

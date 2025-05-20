@@ -45,6 +45,8 @@ private:
 	int player_s;
 	//
 
+	P2World& M_world;
+
 public:
 
 	Player(P2World& world, const Vec2& position);
@@ -58,7 +60,7 @@ public:
 	ePlayerState getplayerstate() const;
 	//ePlayerState setplayerstate(int state);	//デバッグの時に使うかも
 
-
+	void onHit(ObjectBase& object) override;
 
 private:
 	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
