@@ -132,7 +132,7 @@ void Player::update()
 		jumpmovement(controller);
 
 		//地面についた時の処理
-		if (body.getVelocity().y <= 0.0 && is_on_ground == false) {
+		if (body.getVelocity().y == 0.0) {
 
 			is_on_ground = true;
 			//jump_attack_flg = false;
