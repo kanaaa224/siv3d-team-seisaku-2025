@@ -5,6 +5,13 @@ class GameUI
 {
 private:
 	Vec2 flame_location;
+	Vec2 hp_location;
+
+	Array<String> frameNames = {};
+
+	Array<String> iconNames = {
+		
+	};
 
 public:
 	GameUI();
