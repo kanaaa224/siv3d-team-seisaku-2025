@@ -2,15 +2,15 @@
 //画像の分割読み込み
 #include "../../../Utils/CustomImageLoader.hpp"
 
-Scarerun::Scarerun(const Vec2& start_position):
-	EnemyBase(start_position)//初期位置
+Scarerun::Scarerun(P2World& world, const Vec2& position):
+	EnemyBase(world, position)//初期位置
 {
 	//画像を分割読み込み
 	idle_img = LoadDivGraph(U"Scarerun Idle", Size(46, 40));//idle画像
 	now_texture = idle_img[0];//初期化用の画像
 
 
-	size = Vec2(100, 100);
+	//size = Vec2(100, 100);
 }
 
 Scarerun::~Scarerun()
@@ -31,5 +31,7 @@ void Scarerun::update()
 
 void Scarerun::draw() const
 {
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(position);
+	Vec2 size = Vec2(100, 100);
+
+	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
 }

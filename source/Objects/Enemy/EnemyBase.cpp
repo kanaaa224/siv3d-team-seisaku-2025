@@ -1,7 +1,7 @@
 ﻿#include "EnemyBase.hpp"
 
-EnemyBase::EnemyBase(const Vec2& start_position) :
-	CharacterBase(start_position)//初期位置
+EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
+	CharacterBase(world, position)//初期位置
 {
 	hp = 100.0f;
 	setEnemyState(IDLE);
@@ -29,7 +29,7 @@ void EnemyBase::update()
 
 	animation(Scene::DeltaTime());
 	//座標の更新
-	position += velocity * Scene::DeltaTime();
+	//position += velocity * Scene::DeltaTime();
 
 #ifdef DEBUG
 	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
@@ -47,7 +47,7 @@ void EnemyBase::draw() const
 
 #ifdef DEBUG
 	//画像ができるまでの仮表示
-	Rect(position.x, position.y, size.x, size.y).draw(Palette::Red);
+	//Rect(position.x, position.y, size.x, size.y).draw(Palette::Red);
 #endif // DEBUG
 }
 
@@ -177,22 +177,22 @@ void EnemyBase::animation(float delta_second)
 
 void EnemyBase::movement(float distance)
 {
-	if (spawnPosition.x <= position.x) {
+	/*if (spawnPosition.x <= position.x) {
 		velocity.x = -MOVE_SPEED;
 		img_flipFlg = true;
 	}
 	if (spawnPosition.x - distance >= position.x) {
 		velocity.x = MOVE_SPEED;
 		img_flipFlg = false;
-	}
+	}*/
 }
 
 void EnemyBase::initUpdate()
 {
-	if (initUpdateFlg == false) {
-		spawnPosition = position;//スポーンした場所
-		initUpdateFlg = true;
-	}
+	//if (initUpdateFlg == false) {
+	//	spawnPosition = position;//スポーンした場所
+	//	initUpdateFlg = true;
+	//}
 }
 
 void EnemyBase::drawHP() const

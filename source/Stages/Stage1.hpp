@@ -16,6 +16,8 @@ public:
 private:
 	static Stage1* instance;
 
+	P2Body floor;
+
 	void initialize();
 	void finalize();
 };

@@ -7,7 +7,7 @@
 class BuffBase : public ObjectBase
 {
 public:
-	BuffBase(const Vec2& start_position);
+	BuffBase(P2World& world, const Vec2& position);
 	virtual ~BuffBase();
 
 	virtual void update() override;
