@@ -51,7 +51,7 @@ void Initialize()
 {
 	Window::Resize(1280, 720);
 
-	Window::SetTitle(U""); // TODO
+	Window::SetTitle(U"Temple（仮）"); // TODO
 }
 
 void Main()
