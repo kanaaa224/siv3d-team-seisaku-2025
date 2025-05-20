@@ -271,7 +271,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else
 	{
-		body.setVelocity(Vec2(0.0, 0.0));
+		body.setVelocity(Vec2(0.0,body.getVelocity().y));
 
 		playerState = ePlayerState::idle;
 	}
@@ -282,8 +282,7 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 	//ジャンプ処理
 	if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
 	{
-		body.setVelocity(Vec2(0.0, -550.0));
-
 		is_on_ground = false;
+		body.setVelocity(Vec2(body.getVelocity().x, -550.0));
 	}
 }
