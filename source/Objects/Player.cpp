@@ -206,6 +206,11 @@ void Player::draw() const
 #endif // DEBUG
 }
 
+void Player::onHit(ObjectBase& object)
+{
+	object.getBody().applyLinearImpulse(Vec2{ 0, -10 });
+}
+
 void Player::finalize()
 {
 
