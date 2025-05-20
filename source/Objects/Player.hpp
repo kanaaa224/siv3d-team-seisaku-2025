@@ -60,7 +60,7 @@ public:
 	ePlayerState getplayerstate() const;
 	//ePlayerState setplayerstate(int state);	//デバッグの時に使うかも
 
-	void onHit(ObjectBase& object) override;
+	void onHit(CharacterBase& object) override;
 
 private:
 	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション

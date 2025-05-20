@@ -32,33 +32,35 @@ void Stage1::update()
 	{
 		world.update(stepTime);
 
-		for (const auto& object : objects)
+		for (const auto& [pair, collision] : world.getCollisions())
 		{
-			for (auto&& [pair, collision] : world.getCollisions())
+			ObjectBase* objectA = nullptr;
+			ObjectBase* objectB = nullptr;
+
+			for (const auto& object : objects)
 			{
-				if (pair.a == object->getBody().id())
+				     if (object->getBody().id() == pair.a) objectA = object;
+				else if (object->getBody().id() == pair.b) objectB = object;
+
+				if (objectA && objectB) break;
+			}
+
+			// 両方見つかったら処理
+			if (objectA && objectB)
+			{
+				// CharacterBase へ変換
+				auto* characterA = dynamic_cast<CharacterBase*>(objectA);
+				auto* characterB = dynamic_cast<CharacterBase*>(objectB);
+
+				if (characterA && characterB)
 				{
-					for (const auto& objectA : objects)
-					{
-						if (object->getBody().id() == objectA->getBody().id()) continue;
-						if(pair.a != objectA->getBody().id()) continue;
-
-						object->onHit(*objectA);
-
-						break;
-					}
+					characterA->onHit(*characterB);
+					characterB->onHit(*characterA);
 				}
-				else if (pair.b == object->getBody().id())
+				else
 				{
-					for (const auto& objectB : objects)
-					{
-						if (object->getBody().id() == objectB->getBody().id()) continue;
-						if (pair.a != objectB->getBody().id()) continue;
-
-						object->onHit(*objectB);
-
-						break;
-					}
+					objectA->onHit(*objectB);
+					objectB->onHit(*objectA);
 				}
 			}
 		}
