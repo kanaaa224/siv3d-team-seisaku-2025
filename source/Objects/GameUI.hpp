@@ -9,9 +9,9 @@ private:
 
 	Array<String> frameNames = {};
 
-	Array<String> iconNames = {
-		
-	};
+	Array<String> iconNames = {};
+
+	const Font fontBitmap;
 
 public:
 	GameUI();
