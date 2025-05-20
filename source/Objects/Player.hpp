@@ -45,6 +45,8 @@ private:
 	int player_s;
 	//
 
+	P2World& M_world;
+
 public:
 
 	Player(P2World& world, const Vec2& position);
