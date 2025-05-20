@@ -5,7 +5,7 @@
 class StageBackground : public ObjectBase
 {
 public:
-	StageBackground(const Vec2& start_position);
+	StageBackground(P2World& world, const Vec2& position);
 	~StageBackground();
 
 	void update() override;

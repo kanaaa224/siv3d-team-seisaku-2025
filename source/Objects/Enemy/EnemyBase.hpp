@@ -54,7 +54,7 @@ protected:
 	bool damageStopFlg;                 //ダメージを受けるのを止めるか止めないか
 
 public:
-	EnemyBase(const Vec2& start_position);
+	EnemyBase(P2World& world, const Vec2& position);
 	~EnemyBase();
 
 	virtual void update() override;

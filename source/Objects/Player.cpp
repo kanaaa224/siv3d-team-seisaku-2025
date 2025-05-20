@@ -5,10 +5,12 @@
 #define D_GRAVITY (9.807f) //重力
 #define ADDJUMP (10) //
 
-//#define DEBUG
+#define DEBUG
 
-Player::Player(const Vec2& start_position) : CharacterBase(start_position)
+Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
 {
+	body = world.createRect(P2Dynamic, position, SizeF{ 100, 100 }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
+
 	is_on_ground = false;
 	playerState = ePlayerState::null;
 	playerIndex = NULL;
@@ -28,12 +30,12 @@ Player::~Player()
 
 void Player::initialize()
 {
-	size = Vec2(288.0 * 2, 45.0 * 2);	//サイズ設定
+	//size = Vec2(288.0 * 2, 45.0 * 2);	//サイズ設定
 	is_on_ground = true;		//地面についているか？
 	playerState = ePlayerState::null;	//待機状態に設定
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
-	velocity = Vec2(0.0, 0.0);	//移動量初期化
+	//velocity = Vec2(0.0, 0.0);	//移動量初期化
 	flip_flg = false;
 	hp = 100;
 	ground_y = 640.0f;  //地面のlocation
@@ -54,14 +56,14 @@ void Player::update()
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
-	velocity.y += D_GRAVITY * Scene::DeltaTime() * ADDJUMP;  //重力速度計算
+	//velocity.y += D_GRAVITY * Scene::DeltaTime() * ADDJUMP;  //重力速度計算
 
 
-	if (position.y > 640) //地面落ちないようにする
-	{
-		position.y = 640;
-		velocity.y = 0.5;
-	}
+	//if (position.y > 640) //地面落ちないようにする
+	//{
+	//	position.y = 640;
+	//	velocity.y = 0.5;
+	//}
 
 	switch (playerState)
 	{
@@ -84,7 +86,7 @@ void Player::update()
 		player_s = 0;
 
 		//移動量なし
-		velocity.x = 0.0;
+		//velocity.x = 0.0;
 
 		animation(idle_animation, 0.1,8,idle);
 
@@ -137,23 +139,23 @@ void Player::update()
 		jumpmovement(controller);
 
 		//地面についた時の処理
-		if (position.y + velocity.y * Scene::DeltaTime() > ground_y) {
+		//if (position.y + velocity.y * Scene::DeltaTime() > ground_y) {
 
-			position.y = ground_y;
+		//	position.y = ground_y;
 
-			velocity.y = 0.0f;
+		//	velocity.y = 0.0f;
 
-			is_on_ground = true;
-			//jump_attack_flg = false;
+		//	is_on_ground = true;
+		//	//jump_attack_flg = false;
 
-			playerState = ePlayerState::idle;
-		}
+		//	playerState = ePlayerState::idle;
+		//}
 
 		break;
 	case avoidance: //回避処理
 		player_s = 2;
 		animation(roll_animation, 0.1,7,idle);
-		
+
 		break;
 	case attack: //攻撃処理
 		player_s = 3;
@@ -173,25 +175,35 @@ void Player::update()
 	}
 
 	// 画面左側を超えないようにする
-	if (position.x < 16.0f)
+	/*if (position.x < 16.0f)
 	{
 		position.x = 16.0f;
-	}
+	}*/
 
 	// 移動量計算
-	position += velocity * Scene::DeltaTime();
+	//position += velocity * Scene::DeltaTime();
+
+
+	{ // 島袋が追記: このメソッドでオブジェクトに力を加えられます
+		if (KeyA.pressed())  body.applyLinearImpulse(Vec2{ -10,    0 });
+		if (KeyD.pressed())  body.applyLinearImpulse(Vec2{  10,    0 });
+		if (KeySpace.down()) body.applyLinearImpulse(Vec2{   0, -500 });
+	}
 }
 
 void Player::draw() const
 {
 	//.drawAtを使って中心座標を元に描画
 	//TextureAsset(U"Player_idle").mirrored(flip_flg).resized(size).drawAt(position);
-	image.mirrored(flip_flg).resized(size).drawAt(position);
+
+	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
+
+	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
 #ifdef DEBUG
 	Print << U"Player 画像登録 : " << TextureAsset::IsReady(U"Player Idle");
-	Print << U"Player 座標 : " << position;
-	Print << U"Player 移動量 : " << velocity;
+	Print << U"Player 座標 : " << body.getPos();
+	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"DeltaTime : " << Scene::DeltaTime();
 	Print << U"PlayerState : " << player_s;
 #endif // DEBUG
@@ -238,7 +250,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		KeyLeft.pressed() == true
 		)
 	{
-		velocity.x = -VELOCITY;
+		//velocity.x = -VELOCITY;
 
 		flip_flg = true;
 
@@ -247,7 +259,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else if(controller.buttonRight.pressed() == true || KeyD.pressed() == true || KeyRight.pressed() == true)
 	{
-		velocity.x = VELOCITY;
+		//velocity.x = VELOCITY;
 
 		flip_flg = false;
 
@@ -255,7 +267,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else
 	{
-		velocity.x = 0.0;
+		//velocity.x = 0.0;
 
 		playerState = ePlayerState::idle;
 	}
@@ -266,7 +278,7 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 	//ジャンプ処理
 	if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
 	{
-		velocity.y = -170.0f;
+		//velocity.y = -170.0f;
 		is_on_ground = false;
 	}
 }

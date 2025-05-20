@@ -5,7 +5,7 @@
 class Scarerun : public EnemyBase
 {
 public:
-	Scarerun(const Vec2& start_position);
+	Scarerun(P2World& world, const Vec2& position);
 	~Scarerun();
 
 	void update() override;

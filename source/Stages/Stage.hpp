@@ -16,6 +16,8 @@ public:
 protected:
 	Array<ObjectBase*> objects;
 
+	P2World world;
+
 private:
 	static Stage* instance;
 };

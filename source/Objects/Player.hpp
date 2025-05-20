@@ -47,7 +47,7 @@ private:
 
 public:
 
-	Player(const Vec2& start_position);
+	Player(P2World& world, const Vec2& position);
 	~Player();
 
 	void initialize();

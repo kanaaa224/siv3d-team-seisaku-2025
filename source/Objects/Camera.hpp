@@ -5,7 +5,7 @@
 class Camera : public ObjectBase
 {
 public:
-	Camera(const Vec2& start_position);
+	Camera(P2World& world, const Vec2& position);
 	~Camera();
 
 	void update() override;
