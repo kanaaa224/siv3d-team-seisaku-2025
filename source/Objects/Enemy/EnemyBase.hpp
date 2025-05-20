@@ -8,6 +8,7 @@
 #define IMG_CHANGE_TIME 0.1f  //画像の切り替え速度
 #define MOVE_SPEED      20.0f   //移動速度
 #define FALLING_SPEED   4.0f   //落下速度
+#define GRAVITY 9.807f //重力
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
@@ -48,8 +49,6 @@ protected:
 
 	Vec2 spawnPosition;                 //スポーン位置を格納
 
-	bool initUpdateFlg;                 //Update内で初期化したか
-
 	float damageStop_ct;                //ダメージを受けてから何秒経過しているか
 	bool damageStopFlg;                 //ダメージを受けるのを止めるか止めないか
 
@@ -82,10 +81,6 @@ protected:
 	/// </summary>
 	/// <param name="distance"></param>
 	virtual void movement(float distance);
-	/// <summary>
-	/// Update内で１回のみ初期化したい変数を関数内に入れる
-	/// </summary>
-	virtual void initUpdate();
 
 	/// <summary>
 	/// ダメージを受けた時の移動
