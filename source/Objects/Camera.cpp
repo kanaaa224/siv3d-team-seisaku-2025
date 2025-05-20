@@ -25,6 +25,11 @@ void Camera::draw() const
 
 }
 
+void Camera::SetCameraPosX(Vec2 pos)
+{
+	cameraPosX = pos.x;
+}
+
 void Camera::finalize()
 {
 
