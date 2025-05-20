@@ -2,7 +2,7 @@
 
 GameUI* GameUI::instance = nullptr;
 
-GameUI::GameUI():flame_location(0.0, 0.0) , hp_location(0.0, 0.0)
+GameUI::GameUI():flame_location(0.0, 0.0) , hp_location(0.0, 0.0), fontBitmap{ 48 }
 {
 	this->initialize();
 }
@@ -76,8 +76,7 @@ void GameUI::draw() const
 		TextureAsset(iconNames[i]).resized(50, 50).drawAt(pos);
 	}
 
-	//Font font(30);
-	//font(U"×00").draw(560, 35);
+	fontBitmap(U"×00").draw(35, Vec2{ 560, 30 });
 }
 
 void GameUI::finalize()
