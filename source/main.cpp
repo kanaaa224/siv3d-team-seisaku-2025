@@ -22,7 +22,29 @@ void AssetsRegistration()
 	//GameUI
 	TextureAsset::Register({ U"Character Frame", { U"UI" } }, U"../assets/images/ui/character_frame.png");
 	TextureAsset::Register({ U"Character Icon",  { U"UI" } }, U"../assets/images/ui/character_icon.png");
-	TextureAsset::Register({ U"Attack Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_attack_power.png");
+
+	TextureAsset::Register({ U"HP_frame",  { U"UI" } }, U"../assets/images/ui/hp_frame.png");
+	TextureAsset::Register({ U"HP_bar",  { U"UI" } }, U"../assets/images/ui/hp_bar_back.png");
+
+	TextureAsset::Register({ U"time_frame",  { U"UI" } }, U"../assets/images/ui/timer_frame.png");
+
+
+	TextureAsset::Register({ U"Buf_Attack",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_attack_power_up.png");
+	TextureAsset::Register({ U"Attack_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_attack_power.png");
+	
+	TextureAsset::Register({ U"Buf_defense",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_Defense_power_up.png");
+	TextureAsset::Register({ U"Defense_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_Defense_power.png");
+
+	TextureAsset::Register({ U"Buf_Hpup",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_hp_upper_limit_up.png");
+	TextureAsset::Register({ U"Hpup_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_hp_upper_limit.png");
+
+	TextureAsset::Register({ U"Buf_recovery",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_hp_recovery.png");
+	TextureAsset::Register({ U"Recovery_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_hp_recovery.png");
+
+	TextureAsset::Register({ U"Buf_Movement",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_movement_speed_up.png");
+	TextureAsset::Register({ U"Movement_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_movement_speed.png");
+
+	TextureAsset::Register({ U"avoidance_button",  { U"UI" } }, U"../assets/images/ui/button/short_button_animation1.png");
 }
 
 void Initialize()
