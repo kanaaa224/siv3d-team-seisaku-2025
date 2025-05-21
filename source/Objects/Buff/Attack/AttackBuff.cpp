@@ -14,5 +14,5 @@ void AttackBuff::update()
 
 void AttackBuff::draw() const
 {
-	__super::draw();
+	BuffBase::draw();
 }
