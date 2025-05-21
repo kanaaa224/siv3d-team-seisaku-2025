@@ -238,7 +238,7 @@ void EnemyBase::getDamage(float damage)
 
 void EnemyBase::spawnBuff()
 {
-	Stage* stage = Stage1::GetInstance();
+	Stage* stage = Stage::GetInstance();
 
 	stage->createObject<AttackBuff>(body.getPos());
 }

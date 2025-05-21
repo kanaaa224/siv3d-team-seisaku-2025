@@ -5,16 +5,9 @@
 # include "../Objects/StageBackground.hpp"
 # include  "../Objects/Enemy/Scarerun/Scarerun.hpp"
 
-Stage1* Stage1::instance = nullptr;
-
 Stage1::Stage1()
 {
 	this->initialize();
-}
-
-Stage1::~Stage1()
-{
-	this->finalize();
 }
 
 void Stage1::initialize()
@@ -28,37 +21,7 @@ void Stage1::initialize()
 
 void Stage1::update()
 {
-	for (accumulatedTime += Scene::DeltaTime(); stepTime <= accumulatedTime; accumulatedTime -= stepTime)
-	{
-		world.update(stepTime);
-
-		for (const auto& [pair, collision] : world.getCollisions())
-		{
-			ObjectBase* objectA = nullptr;
-			ObjectBase* objectB = nullptr;
-
-			for (const auto& object : objects)
-			{
-				     if (object->getBody().id() == pair.a) objectA = object;
-				else if (object->getBody().id() == pair.b) objectB = object;
-
-				if (objectA && objectB) break;
-			}
-
-			if (objectA && objectB)
-			{
-				objectA->onHit(*objectB);
-				objectB->onHit(*objectA);
-			}
-		}
-	}
-
-	auto _objects_ = objects;
-
-	for (const auto& object : _objects_)
-	{
-		object->update();
-	}
+	__super::update();
 
 	GameUI* gameUI = GameUI::GetInstance();
 
@@ -69,10 +32,7 @@ void Stage1::draw() const
 {
 	ClearPrint(); // 過去のPrint出力を消す
 
-	for (const auto& object : objects)
-	{
-		object->draw();
-	}
+	__super::draw();
 
 	floor.draw();
 
@@ -81,17 +41,9 @@ void Stage1::draw() const
 	gameUI->draw();
 }
 
-void Stage1::finalize()
+void Stage1::NewInstance()
 {
-	for (const auto& object : objects)
-	{
-		delete object;
-	}
-}
+	if (instance != nullptr) delete instance;
 
-Stage1* Stage1::GetInstance()
-{
-	if (instance == nullptr) instance = new Stage1();
-
-	return instance;
+	instance = new Stage1();
 }
