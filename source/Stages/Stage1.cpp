@@ -19,9 +19,9 @@ Stage1::~Stage1()
 
 void Stage1::initialize()
 {
-	objects << new StageBackground(world, Vec2{ 0, 0 });
-	objects << new Scarerun(world, Vec2{ 350, 500 });
-	objects << new Player(world, Vec2{ 320, 500 });
+	addObject(new StageBackground(world, Vec2{ 0, 0 }));
+	addObject(new Scarerun(world, Vec2{ 350, 500 }));
+	addObject(new Player(world, Vec2{ 320, 500 }));
 
 	floor = world.createRect(P2Static, Vec2{ 640, 600 }, SizeF{ 1000, 10 });
 }

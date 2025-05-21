@@ -13,6 +13,8 @@ public:
 
 	static Stage* GetInstance();
 
+	bool addObject(ObjectBase* object) { objects << object; return true; }
+
 protected:
 	Array<ObjectBase*> objects;
 

@@ -13,5 +13,5 @@ public:
 	float getHP()    const { return hp; }
 	float getMaxHP() const { return max_hp; }
 
-	virtual void onHit(CharacterBase& object) {}
+	virtual void onHit(CharacterBase& object) { (void)object; }
 };
