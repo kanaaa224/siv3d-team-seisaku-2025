@@ -9,7 +9,7 @@
 
 Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position), M_world(world)
 {
-	body = world.createRect(P2Dynamic, position, SizeF{ 100, 100 - 10 }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
+	body = world.createRect(P2Dynamic, position, SizeF{ 100, 90 }, P2Material{ .restitution = 0.0, }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
 
 	is_on_ground = false;
 	playerState = ePlayerState::null;
@@ -30,15 +30,13 @@ Player::~Player()
 
 void Player::initialize()
 {
-	//size = Vec2(288.0 * 2, 45.0 * 2);	//サイズ設定
 	is_on_ground = true;		//地面についているか？
 	playerState = ePlayerState::null;	//待機状態に設定
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
-	//velocity = Vec2(0.0, 0.0);	//移動量初期化
 	flip_flg = false;
 	hp = 100;
-	ground_y = 640.0f;  //地面のlocation
+	//ground_y = 640.0f;  //地面のlocation
 
 	// 分割画像の登録
 	idle_animation = LoadDivGraph(U"Player Idle", Size(288, 45));
@@ -50,7 +48,7 @@ void Player::initialize()
 
 	player_s = 0;
 
-	body.setVelocity(Vec2(0.0, 0.0));
+	body.setVelocity(Vec2(0.0, 0.0)); //移動量設定
 }
 
 void Player::update()
@@ -134,6 +132,7 @@ void Player::update()
 		//地面についた時の処理
 		if (body.getVelocity().y == 0.0) {
 
+			body.setVelocity(Vec2(body.getVelocity().x, 0.0));
 			is_on_ground = true;
 			//jump_attack_flg = false;
 
