@@ -240,5 +240,5 @@ void EnemyBase::spawnBuff()
 {
 	Stage* stage = Stage1::GetInstance();
 
-	stage->addObject<AttackBuff>(body.getPos());
+	stage->createObject<AttackBuff>(body.getPos());
 }

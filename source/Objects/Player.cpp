@@ -205,7 +205,7 @@ void Player::draw() const
 #endif // DEBUG
 }
 
-void Player::onHit(CharacterBase& object)
+void Player::onHit(ObjectBase& object)
 {
 	object.getBody().applyLinearImpulse(Vec2{ 0, -10 });
 }
