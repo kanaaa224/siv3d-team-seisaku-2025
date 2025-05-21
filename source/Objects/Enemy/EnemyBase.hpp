@@ -44,6 +44,7 @@ protected:
 	Array<TextureRegion> getAttack_img;     //攻撃を受ける画像
 	Array<TextureRegion> die_img;           //死亡の画像
 	int nowImageNum;                        //画像配列の現在の要素数を格納する用
+	float imageChangeTime;                  //画像切替用変数
 
 	bool img_flipFlg;
 
@@ -51,6 +52,10 @@ protected:
 
 	float damageStop_ct;                //ダメージを受けてから何秒経過しているか
 	bool damageStopFlg;                 //ダメージを受けるのを止めるか止めないか
+
+	P2World* nowWorld;                   //現在の物理シュミレーション
+
+	bool spawnBuffFlg;
 
 public:
 	EnemyBase(P2World& world, const Vec2& position);
@@ -100,6 +105,6 @@ protected:
 	void getDamage(float damage);
 
 	//バフをスポーンさせる
-	void spawnBuff(class BuffBase* pBuff);
+	void spawnBuff();
 };
 

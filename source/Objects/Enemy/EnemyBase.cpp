@@ -1,12 +1,18 @@
 ﻿#include "EnemyBase.hpp"
+#include "../../Stages/Stage1.hpp"
+#include "../Buff/Attack/AttackBuff.h"
+#include "../Enemy/Scarerun/Scarerun.hpp"
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
 {
-	hp = 100.0f;
-	setEnemyState(IDLE);
-	body.setGravityScale(GRAVITY);
-	spawnPosition = position;
+	hp = 100.0f;//体力
+	setEnemyState(IDLE);//ステータス
+	body.setGravityScale(GRAVITY);//重力
+	spawnPosition = position;//スポーン位置
+	nowWorld = &world;//現在の物理シュミレーション
+
+	spawnBuffFlg = false;
 }
 
 EnemyBase::~EnemyBase()
@@ -27,6 +33,11 @@ void EnemyBase::update()
 	}
 
 	animation(Scene::DeltaTime());
+
+	if (nowState == DIE && nowStateTime >= 3.0f && spawnBuffFlg == false) {
+		spawnBuff();
+		spawnBuffFlg = true;
+	}
 
 #ifdef DEBUG
 	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
@@ -59,11 +70,14 @@ void EnemyBase::animation(float delta_second)
 		if (nowState != oldState) {
 			nowStateTime = 0;
 			nowImageNum = 0;
+			imageChangeTime = 0;
 		}
 		//現在のステートになって何秒経過しているか加算
 		nowStateTime += delta_second;
 		//現在のステートを更新
 		setEnemyState(IDLE);
+		//現在の画像が何秒経過したか
+		imageChangeTime += delta_second;
 
 		//コンテナの最後の要素数になったら最初の画像の要素数にする
 		if (nowImageNum >= idle_img.size()) {
@@ -71,9 +85,9 @@ void EnemyBase::animation(float delta_second)
 		}
 
 		//画像切り替え
-		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= idle_img.size()) {
+		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= idle_img.size()) {
 			now_texture = idle_img[nowImageNum];//画像を更新
-			nowStateTime = 0;
+			imageChangeTime = 0;
 			nowImageNum++;
 		}
 		break;
@@ -82,11 +96,14 @@ void EnemyBase::animation(float delta_second)
 		if (nowState != oldState) {
 			nowStateTime = 0;
 			nowImageNum = 0;
+			imageChangeTime = 0;
 		}
 		//現在のステートになって何秒経過しているか加算
 		nowStateTime += delta_second;
 		//現在のステートを更新
 		setEnemyState(ATTACK_POSITION);
+		//現在の画像が何秒経過したか
+		imageChangeTime += delta_second;
 
 		//コンテナの最後の要素数になったら最初の画像の要素数にする
 		if (nowImageNum >= attackPosition_img.size()) {
@@ -94,9 +111,9 @@ void EnemyBase::animation(float delta_second)
 		}
 
 		//画像切り替え
-		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= attackPosition_img.size()) {
+		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= attackPosition_img.size()) {
 			now_texture = attackPosition_img[nowImageNum];
-			nowStateTime = 0;
+			imageChangeTime = 0;
 			nowImageNum++;
 		}
 		break;
@@ -105,11 +122,14 @@ void EnemyBase::animation(float delta_second)
 		if (nowState != oldState) {
 			nowStateTime = 0;
 			nowImageNum = 0;
+			imageChangeTime = 0;
 		}
 		//現在のステートになって何秒経過しているか加算
 		nowStateTime += delta_second;
 		//現在のステートを更新
 		setEnemyState(ATTACK);
+		//現在の画像が何秒経過したか
+		imageChangeTime += delta_second;
 
 		//コンテナの最後の要素数になったら最初の画像の要素数にする
 		if (nowImageNum >= attack_img.size()) {
@@ -117,9 +137,9 @@ void EnemyBase::animation(float delta_second)
 		}
 
 		//画像切り替え
-		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= attack_img.size()) {
+		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= attack_img.size()) {
 			now_texture = attack_img[nowImageNum];
-			nowStateTime = 0;
+			imageChangeTime = 0;
 			nowImageNum++;
 		}
 		break;
@@ -128,11 +148,14 @@ void EnemyBase::animation(float delta_second)
 		if (nowState != oldState) {
 			nowStateTime = 0;
 			nowImageNum = 0;
+			imageChangeTime = 0;
 		}
 		//現在のステートになって何秒経過しているか加算
 		nowStateTime += delta_second;
 		//現在のステートを更新
 		setEnemyState(GET_ATTACK);
+		//現在の画像が何秒経過したか
+		imageChangeTime += delta_second;
 
 		//コンテナの最後の要素数になったら最初の画像の要素数にする
 		if (nowImageNum >= getAttack_img.size()) {
@@ -140,9 +163,9 @@ void EnemyBase::animation(float delta_second)
 		}
 
 		//画像切り替え
-		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= getAttack_img.size()) {
+		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= getAttack_img.size()) {
 			now_texture = getAttack_img[nowImageNum];
-			nowStateTime = 0;
+			imageChangeTime = 0;
 			nowImageNum++;
 		}
 		break;
@@ -151,11 +174,14 @@ void EnemyBase::animation(float delta_second)
 		if (nowState != oldState) {
 			nowStateTime = 0;
 			nowImageNum = 0;
+			imageChangeTime = 0;
 		}
 		//現在のステートになって何秒経過しているか加算
 		nowStateTime += delta_second;
 		//現在のステートを更新
 		setEnemyState(DIE);
+		//現在の画像が何秒経過したか
+		imageChangeTime += delta_second;
 
 		//コンテナの最後の要素数になったら最初の画像の要素数にする
 		if (nowImageNum >= die_img.size()) {
@@ -163,9 +189,9 @@ void EnemyBase::animation(float delta_second)
 		}
 
 		//画像切り替え
-		if (nowStateTime >= IMG_CHANGE_TIME && nowImageNum <= die_img.size()) {
+		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= die_img.size()) {
 			now_texture = die_img[nowImageNum];
-			nowStateTime = 0;
+			imageChangeTime = 0;
 			nowImageNum++;
 		}
 		break;
@@ -210,7 +236,9 @@ void EnemyBase::getDamage(float damage)
 	}
 }
 
-void EnemyBase::spawnBuff(BuffBase* pBuff)
+void EnemyBase::spawnBuff()
 {
-	
+	Stage* stage = Stage1::GetInstance();
+
+	stage->addObject<AttackBuff>(body.getPos());
 }
