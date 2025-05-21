@@ -31,6 +31,7 @@ void Scarerun::update()
 	}
 	if (hp <= 0) {
 		setEnemyState(DIE);
+		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
 	}
 }
 
