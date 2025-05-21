@@ -66,7 +66,9 @@ void Stage1::update()
 		}
 	}
 
-	for (const auto& object : objects)
+	auto _objects_ = objects;
+
+	for (const auto& object : _objects_)
 	{
 		object->update();
 	}
