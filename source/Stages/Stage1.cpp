@@ -19,9 +19,9 @@ Stage1::~Stage1()
 
 void Stage1::initialize()
 {
-	addObject<StageBackground>(Vec2{ 0, 0 });
-	addObject<Scarerun>(Vec2{ 350, 500 });
-	addObject<Player>(Vec2{ 320, 500 });
+	createObject<StageBackground>(Vec2{ 0, 0 });
+	createObject<Scarerun>(Vec2{ 350, 500 });
+	createObject<Player>(Vec2{ 320, 500 });
 
 	floor = world.createRect(P2Static, Vec2{ 640, 600 }, SizeF{ 1000, 10 });
 }
@@ -45,23 +45,10 @@ void Stage1::update()
 				if (objectA && objectB) break;
 			}
 
-			// 両方見つかったら処理
 			if (objectA && objectB)
 			{
-				// CharacterBase へ変換
-				auto* characterA = dynamic_cast<CharacterBase*>(objectA);
-				auto* characterB = dynamic_cast<CharacterBase*>(objectB);
-
-				if (characterA && characterB)
-				{
-					characterA->onHit(*characterB);
-					characterB->onHit(*characterA);
-				}
-				else
-				{
-					objectA->onHit(*objectB);
-					objectB->onHit(*objectA);
-				}
+				objectA->onHit(*objectB);
+				objectB->onHit(*objectA);
 			}
 		}
 	}
