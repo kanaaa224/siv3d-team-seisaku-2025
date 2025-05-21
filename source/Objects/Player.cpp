@@ -168,6 +168,12 @@ void Player::update()
 	{
 		body.setPos(55.0, body.getPos().y);
 	}
+	
+	// （仮） 落ちたら戻ってくる
+	if (body.getPos().y >= 1000) {
+		body.setPos(Vec2{ 320, 500 });
+		body.setVelocity(Vec2{});
+	}
 
 	// 移動量計算
 	body.setPos(body.getPos() + body.getVelocity() *  Scene::DeltaTime());

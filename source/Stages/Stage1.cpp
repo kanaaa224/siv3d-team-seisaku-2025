@@ -13,7 +13,7 @@ Stage1::Stage1()
 void Stage1::initialize()
 {
 	createObject<StageBackground>(Vec2{ 0, 0 });
-	createObject<Scarerun>(Vec2{ 350, 500 });
+	createObject<Scarerun>(Vec2{ 450, 500 });
 	createObject<Player>(Vec2{ 320, 500 });
 
 	floor = world.createRect(P2Static, Vec2{ 640, 600 }, SizeF{ 1000, 10 });
