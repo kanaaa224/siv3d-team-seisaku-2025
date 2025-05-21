@@ -10,6 +10,7 @@
 Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position), M_world(world)
 {
 	body = world.createRect(P2Dynamic, position, SizeF{ 100, 90 }, P2Material{ .restitution = 0.0, }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
+	body.setFixedRotation(true);
 
 	is_on_ground = false;
 	playerState = ePlayerState::null;

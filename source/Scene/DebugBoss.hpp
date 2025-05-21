@@ -2,7 +2,7 @@
 
 # include "../Common.hpp"
 
-// ランキングシーン
+// デバッグボスシーン
 class DebugBoss : public App::Scene
 {
 public:
@@ -10,6 +10,4 @@ public:
 
 	void update() override;
 	void draw() const override;
-
-private:
 };
