@@ -24,7 +24,7 @@ Scarerun::~Scarerun()
 
 void Scarerun::update()
 {
-	__super::update();
+	EnemyBase::update();
 
 	if (nowState == IDLE) {
 		movement(70.0f);//左右移動（数値は移動する距離）

@@ -21,7 +21,7 @@ void Stage1::initialize()
 
 void Stage1::update()
 {
-	__super::update();
+	Stage::update();
 
 	GameUI* gameUI = GameUI::GetInstance();
 
@@ -32,7 +32,7 @@ void Stage1::draw() const
 {
 	ClearPrint(); // 過去のPrint出力を消す
 
-	__super::draw();
+	Stage::draw();
 
 	floor.draw();
 
