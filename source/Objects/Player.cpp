@@ -144,6 +144,14 @@ void Player::update()
 	case avoidance: //回避処理
 		player_s = 2;
 		animation(roll_animation, 0.1,7,idle);
+		if (flip_flg == true)
+		{
+			body.setVelocity(Vec2(-VELOCITY, 0.0));
+		}
+		else
+		{
+			body.setVelocity(Vec2(VELOCITY, 0.0));
+		}
 
 		break;
 	case attack: //攻撃処理
