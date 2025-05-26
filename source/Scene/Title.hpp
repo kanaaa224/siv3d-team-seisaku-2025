@@ -17,4 +17,9 @@ private:
 
 	Transition m_startTransition{ 0.2s, 0.2s };
 	Transition m_exitTransition{ 0.2s, 0.2s };
+
+	// 選択されているボタンのインデックス
+	// 0: PLAY (スタート), 1: EXIT (終了)
+	int m_selectedButtonIndex = 0;
+
 };
