@@ -15,7 +15,7 @@
 
 #define DAMAGE_STOP_TIME 0.1f //ダメージストップ時間
 
-#define SPAWN_BUFF_TIME 3.0f  //ステータスがDIEになってから何秒でBuffを生成するか
+#define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
 enum eEnemyState
 {
@@ -58,6 +58,8 @@ protected:
 	P2World* nowWorld;                  //現在の物理シュミレーション
 
 	bool spawnBuffFlg;
+
+	Vec2 playerPos;
 
 public:
 	EnemyBase(P2World& world, const Vec2& position);
@@ -108,5 +110,7 @@ protected:
 
 	//バフをスポーンさせる
 	void spawnBuff();
+
+	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 };
 
