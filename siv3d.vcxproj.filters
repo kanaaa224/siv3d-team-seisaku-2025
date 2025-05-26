@@ -165,6 +165,9 @@
     <ClCompile Include="source\Objects\StageBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Objects\Wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="source\Scene\DebugBoss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -879,6 +882,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\StageBackground.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Objects\Wall.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene\DebugBoss.hpp">

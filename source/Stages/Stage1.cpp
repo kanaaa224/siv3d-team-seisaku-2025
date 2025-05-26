@@ -1,6 +1,7 @@
 ﻿# include "Stage1.hpp"
 
 # include "../Objects/Ground.hpp"
+# include "../Objects/Wall.hpp"
 # include "../Objects/GameUI.hpp"
 # include "../Objects/Player.hpp"
 # include "../Objects/StageBackground.hpp"
@@ -17,6 +18,7 @@ void Stage1::initialize()
 {
 	createObject<StageBackground>(Vec2{ 0, 0 });
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
+	createObject<Wall>(Vec2{ -5, 500 });
 	createObject<Scarerun>(Vec2{ 450, 500 });
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 500 });
 

@@ -124,6 +124,7 @@
     <ClCompile Include="source\Objects\Ground.cpp" />
     <ClCompile Include="source\Objects\Player.cpp" />
     <ClCompile Include="source\Objects\StageBackground.cpp" />
+    <ClCompile Include="source\Objects\Wall.cpp" />
     <ClCompile Include="source\Scene\DebugBoss.cpp" />
     <ClCompile Include="source\Scene\Game.cpp" />
     <ClCompile Include="source\Scene\Title.cpp" />
@@ -350,6 +351,7 @@
     <ClInclude Include="source\Objects\ObjectBase.hpp" />
     <ClInclude Include="source\Objects\Player.hpp" />
     <ClInclude Include="source\Objects\StageBackground.hpp" />
+    <ClInclude Include="source\Objects\Wall.hpp" />
     <ClInclude Include="source\Scene\DebugBoss.hpp" />
     <ClInclude Include="source\Scene\Game.hpp" />
     <ClInclude Include="source\Scene\Title.hpp" />

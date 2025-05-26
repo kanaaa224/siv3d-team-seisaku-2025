@@ -204,10 +204,10 @@ void Player::update()
 	}
 
 	// 画面左側を超えないようにする
-	if (body.getPos().x < 55.0)
+	/*if (body.getPos().x < 55.0)
 	{
 		body.setPos(55.0, body.getPos().y);
-	}
+	}*/
 	
 	// （仮） 落ちたら戻ってくる
 	if (body.getPos().y >= 1000) {
