@@ -153,9 +153,6 @@
     <ClCompile Include="source\Objects\Enemy\EnemyBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Objects\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Objects\GameUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -861,9 +858,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Enemy\EnemyBase.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Objects\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\CharacterBase.hpp">

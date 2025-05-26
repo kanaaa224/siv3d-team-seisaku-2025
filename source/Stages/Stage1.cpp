@@ -17,6 +17,8 @@ void Stage1::initialize()
 	createObject<Player>(Vec2{ 320, 500 });
 
 	floor = world.createRect(P2Static, Vec2{ 640, 600 }, SizeF{ 1000, 10 });
+
+	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 }
 
 void Stage1::update()
@@ -32,6 +34,14 @@ void Stage1::update()
 
 	if (player)
 	{
+		double y = player->getBody().getPos().y;
+
+		int centerHeight = (Scene::Height() / 2);
+
+		if (centerHeight < y) y = centerHeight;
+
+		camera.setTargetCenter(Vec2{ player->getBody().getPos().x, y });
+
 		for (const auto& object : objects)
 		{
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
@@ -41,6 +51,8 @@ void Stage1::update()
 		}
 	}
 
+	camera.update();
+
 	GameUI* gameUI = GameUI::GetInstance();
 
 	gameUI->update();
@@ -49,6 +61,8 @@ void Stage1::update()
 void Stage1::draw() const
 {
 	ClearPrint(); // 過去のPrint出力を消す
+
+	const auto t = camera.createTransformer();
 
 	Stage::draw();
 
