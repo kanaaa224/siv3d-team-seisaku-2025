@@ -270,13 +270,13 @@ bool EnemyBase::IsPlayerInSight()
 	//左を向いていてプレイヤーが左にいる場合
 	if (eLookDirection::LEFT == nowLookDirection() && 0 > calcPlayerDist().x) {
 		//指定した距離内にいる場合
-		if (-SIGHT > calcPlayerDist().x && (playerPos.y < 550 && playerPos.y > 400)) {
+		if (-SIGHT < calcPlayerDist().x /*&& (playerPos.y < 550 && playerPos.y > 400)*/) {
 			return true;
 		}
 	}//右を向いていてプレイヤーが右にいる場合
 	else if (eLookDirection::RIGTH == nowLookDirection() && 0 < calcPlayerDist().x) {
 		//指定した距離内にいる場合
-		if (SIGHT < calcPlayerDist().x && (playerPos.y < 550 && playerPos.y > 400)) {
+		if (SIGHT > calcPlayerDist().x /*&& (playerPos.y < 550 && playerPos.y > 400)*/) {
 			return true;
 		}
 	}

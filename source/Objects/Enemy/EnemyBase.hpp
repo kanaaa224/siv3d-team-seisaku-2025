@@ -17,7 +17,7 @@
 
 #define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
-#define SIGHT 50              //視力
+#define SIGHT 200             //視力
 
 enum eEnemyState
 {
