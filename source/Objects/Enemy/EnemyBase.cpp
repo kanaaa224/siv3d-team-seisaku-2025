@@ -244,7 +244,9 @@ void EnemyBase::getDamage(float damage)
 
 void EnemyBase::spawnBuff()
 {
+	//ステージのインスタンスを取得
 	Stage* stage = Stage::GetInstance();
 
+	//Buffを生成
 	stage->createObject<AttackBuff>(body.getPos());
 }
