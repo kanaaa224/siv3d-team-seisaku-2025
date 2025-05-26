@@ -156,10 +156,16 @@
     <ClCompile Include="source\Objects\GameUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Objects\Ground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="source\Objects\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Objects\StageBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Objects\Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene\DebugBoss.cpp">
@@ -866,6 +872,9 @@
     <ClInclude Include="source\Objects\GameUI.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Objects\Ground.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="source\Objects\ObjectBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -873,6 +882,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\StageBackground.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Objects\Wall.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene\DebugBoss.hpp">
