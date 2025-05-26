@@ -34,9 +34,15 @@ void EnemyBase::update()
 
 	animation(Scene::DeltaTime());
 
-	if (nowState == DIE && nowStateTime >= 3.0f && spawnBuffFlg == false) {
+	//Buffの生成
+	if (nowState == DIE && nowStateTime >= SPAWN_BUFF_TIME && spawnBuffFlg == false) {
 		spawnBuff();
 		spawnBuffFlg = true;
+	}
+
+	//Buff生成時に自分自身の削除
+	if (spawnBuffFlg == true) {
+		Stage::GetInstance()->deleteObject(this);
 	}
 
 #ifdef DEBUG

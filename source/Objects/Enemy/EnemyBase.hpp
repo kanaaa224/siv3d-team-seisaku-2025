@@ -5,8 +5,8 @@
 #include "../Buff/BuffBase.hpp"
 
 #define DEBUG                  //デバック表示
-#define IMG_CHANGE_TIME 0.1f  //画像の切り替え速度
-#define MOVE_SPEED      20.0f   //移動速度
+#define IMG_CHANGE_TIME 0.1f   //画像の切り替え速度
+#define MOVE_SPEED      20.0f  //移動速度
 #define FALLING_SPEED   4.0f   //落下速度
 #define GRAVITY 9.807f //重力
 
@@ -14,6 +14,8 @@
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
 
 #define DAMAGE_STOP_TIME 0.1f //ダメージストップ時間
+
+#define SPAWN_BUFF_TIME 3.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
 enum eEnemyState
 {
@@ -53,7 +55,7 @@ protected:
 	float damageStop_ct;                //ダメージを受けてから何秒経過しているか
 	bool damageStopFlg;                 //ダメージを受けるのを止めるか止めないか
 
-	P2World* nowWorld;                   //現在の物理シュミレーション
+	P2World* nowWorld;                  //現在の物理シュミレーション
 
 	bool spawnBuffFlg;
 
