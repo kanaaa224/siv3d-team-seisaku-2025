@@ -40,13 +40,16 @@ void Stage1::update()
 	{
 		respawnTimer.reset();
 
+		double x = player->getBody().getPos().x;
 		double y = player->getBody().getPos().y;
 
+		int centerWidth  = (Scene::Width()  / 2);
 		int centerHeight = (Scene::Height() / 2);
 
+		if (centerWidth  > x) x = centerWidth;
 		if (centerHeight < y) y = centerHeight;
 
-		camera.setTargetCenter(Vec2{ player->getBody().getPos().x, y });
+		camera.setTargetCenter(Vec2{ x, y });
 
 		for (const auto& object : objects)
 		{
