@@ -23,6 +23,24 @@ void Stage1::update()
 {
 	Stage::update();
 
+	Player* player = nullptr;
+
+	for (const auto& object : objects)
+	{
+		if ((player = dynamic_cast<Player*>(object))) break;
+	}
+
+	if (player)
+	{
+		for (const auto& object : objects)
+		{
+			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
+			{
+				enemy->setPlayerPos(player->getBody().getPos());
+			}
+		}
+	}
+
 	GameUI* gameUI = GameUI::GetInstance();
 
 	gameUI->update();
@@ -36,9 +54,7 @@ void Stage1::draw() const
 
 	floor.draw();
 
-	GameUI* gameUI = GameUI::GetInstance();
-
-	gameUI->draw();
+	GameUI::GetInstance()->draw();
 }
 
 void Stage1::NewInstance()

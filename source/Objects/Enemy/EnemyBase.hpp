@@ -111,6 +111,7 @@ protected:
 	//バフをスポーンさせる
 	void spawnBuff();
 
+public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 };
 
