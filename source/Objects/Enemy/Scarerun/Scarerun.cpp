@@ -41,7 +41,7 @@ void Scarerun::draw() const
 
 	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
 	body.drawFrame();
-
+	
 	Print << U"Enemy_Velocity : " << body.getVelocity();
 	Print << U"Enemy_SpawnPos : " << spawnPosition;
 	Print << U"Enemy_Pos : " << body.getPos();
@@ -49,4 +49,5 @@ void Scarerun::draw() const
 	Print << U"OldState : " << oldState;
 	Print << U"StateNum : " << nowStateTime;
 	Print << U"HP : " << hp;
+	Print << U"FlipFlg : " << img_flipFlg;
 }

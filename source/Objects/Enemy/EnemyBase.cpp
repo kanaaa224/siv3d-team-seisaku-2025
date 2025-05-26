@@ -34,6 +34,8 @@ void EnemyBase::update()
 
 	animation(Scene::DeltaTime());
 
+	IsPlayerInSight();
+
 	//Buffの生成
 	if (nowState == DIE && nowStateTime >= SPAWN_BUFF_TIME && spawnBuffFlg == false) {
 		spawnBuff();
@@ -249,4 +251,35 @@ void EnemyBase::spawnBuff()
 
 	//Buffを生成
 	stage->createObject<AttackBuff>(body.getPos());
+}
+
+eLookDirection EnemyBase::nowLookDirection()
+{
+	if (img_flipFlg == true) {
+		return eLookDirection::LEFT;
+	}
+	else if (img_flipFlg == false) {
+		return eLookDirection::RIGTH;
+	}
+
+	return eLookDirection::LEFT;
+}
+
+bool EnemyBase::IsPlayerInSight()
+{
+	//左を向いていてプレイヤーが左にいる場合
+	if (eLookDirection::LEFT == nowLookDirection() && 0 > calcPlayerDist().x) {
+		//指定した距離内にいる場合
+		if (-SIGHT > calcPlayerDist().x && (playerPos.y < 550 && playerPos.y > 400)) {
+			return true;
+		}
+	}//右を向いていてプレイヤーが右にいる場合
+	else if (eLookDirection::RIGTH == nowLookDirection() && 0 < calcPlayerDist().x) {
+		//指定した距離内にいる場合
+		if (SIGHT < calcPlayerDist().x && (playerPos.y < 550 && playerPos.y > 400)) {
+			return true;
+		}
+	}
+
+	return false;
 }

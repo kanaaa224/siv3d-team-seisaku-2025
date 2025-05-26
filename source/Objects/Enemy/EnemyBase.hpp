@@ -17,6 +17,8 @@
 
 #define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
+#define SIGHT 50              //視力
+
 enum eEnemyState
 {
 	NONE,           //何もなし
@@ -25,6 +27,12 @@ enum eEnemyState
 	ATTACK,         //攻撃状態
 	GET_ATTACK,     //攻撃を受ける状態
 	DIE             //死亡状態
+};
+
+enum eLookDirection
+{
+	RIGTH,
+	LEFT
 };
 
 class EnemyBase : public CharacterBase
@@ -48,7 +56,7 @@ protected:
 	int nowImageNum;                        //画像配列の現在の要素数を格納する用
 	float imageChangeTime;                  //画像切替用変数
 
-	bool img_flipFlg;
+	bool img_flipFlg;                       //画像を左右反転
 
 	Vec2 spawnPosition;                 //スポーン位置を格納
 
@@ -57,9 +65,9 @@ protected:
 
 	P2World* nowWorld;                  //現在の物理シュミレーション
 
-	bool spawnBuffFlg;
+	bool spawnBuffFlg;                  //buffが生成されたか
 
-	Vec2 playerPos;
+	Vec2 playerPos;                     //プレイヤーの現在地
 
 public:
 	EnemyBase(P2World& world, const Vec2& position);
@@ -110,6 +118,15 @@ protected:
 
 	//バフをスポーンさせる
 	void spawnBuff();
+
+	//プレイヤーまでの距離
+	Vec2 calcPlayerDist() { return playerPos - body.getPos(); };
+
+	//敵が左右どちらを向いているか
+	eLookDirection nowLookDirection();
+
+	//プレイヤーを視野内に捕らえているか
+	bool IsPlayerInSight();
 
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
