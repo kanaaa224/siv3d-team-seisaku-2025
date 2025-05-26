@@ -1,9 +1,9 @@
 ﻿# include "Player.hpp"
 # include "../Utils/CustomImageLoader.hpp"
+# include "../Stages/Stage.hpp"
 
 #define VELOCITY 150.0	   //移動速度
 #define D_GRAVITY (9.807f) //重力
-#define ADDJUMP (10)	   //
 
 #define DEBUG
 
@@ -79,6 +79,7 @@ void Player::update()
 
 		//移動量なし
 		body.setVelocity(Vec2(body.getVelocity()));
+		jump_attack_flg = false;
 
 		animation(idle_animation, 0.1,8,idle);
 
@@ -96,14 +97,17 @@ void Player::update()
 		}//jump
 		else if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
 		{
+			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}//attack
-		else if (controller.buttonX.down() == true || KeyE.down() == true)
+		else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
+			animation_number = 0;
 			playerState = ePlayerState::attack;
 		}//avoidance
 		else if (controller.buttonB.down() == true || KeyQ.down() == true)
 		{
+			animation_number = 0;
 			playerState = ePlayerState::avoidance;
 		}///////////////キーを押したらダメージを減らす
 		else if (KeyS.down() == true)
@@ -121,6 +125,7 @@ void Player::update()
 
 		if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
 		{
+			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}
 
@@ -130,9 +135,10 @@ void Player::update()
 		player_s = 1;
 		jumpmovement(controller);
 
-		/*ジャンプ中に2回攻撃させないため*/
+		//ジャンプ攻撃
 		if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
+			animation_number = 0;
 			playerState = ePlayerState::jump_attack;
 		}
 
@@ -142,34 +148,52 @@ void Player::update()
 			body.setVelocity(Vec2(body.getVelocity().x, 0.0));
 			is_on_ground = true;
 			jump_attack_flg = false;
-
+			animation_number = 0;
 			playerState = ePlayerState::idle;
 		}
 
 		break;
 	case avoidance: //回避処理
 		player_s = 2;
-		animation(roll_animation, 0.1,7,idle);
+
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-VELOCITY, 0.0));
+			if (animation(roll_animation, 0.1) == true)
+			{
+				playerState = ePlayerState::idle;
+			}
 		}
 		else
 		{
 			body.setVelocity(Vec2(VELOCITY, 0.0));
+			if (animation(roll_animation, 0.1) == true)
+			{
+				playerState = ePlayerState::idle;
+			}
 		}
 
 		break;
 	case attack: //攻撃処理
 		player_s = 3;
-		animation(attack_animation, 0.1,6,idle);
 
-		//playerState = ePlayerState::idle;
+		if (animation(attack_animation, 0.1) == true)
+		{
+			playerState = ePlayerState::idle;
+		}
+		
 
 		break;
 	case jump_attack: //ジャンプ攻撃処理
 		player_s = 4;
-		animation(attack_animation,0.1,6,jump);
+		//animation(attack_animation,0.1,6,jump);
+
+		jump_attack_flg = true;
+
+		if (animation(attack_animation, 0.1) == true)
+		{
+			playerState = ePlayerState::jump;
+		}
 
 		break;
 	case die: //死亡処理
@@ -187,8 +211,7 @@ void Player::update()
 	
 	// （仮） 落ちたら戻ってくる
 	if (body.getPos().y >= 1000) {
-		body.setPos(Vec2{ 320, 500 });
-		body.setVelocity(Vec2{});
+		Stage::GetInstance()->deleteObject(this);
 	}
 
 	// 移動量計算
@@ -211,6 +234,7 @@ void Player::draw() const
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"DeltaTime : " << Scene::DeltaTime();
 	Print << U"PlayerState : " << player_s;
+	Print << U"PlayerAnimation : " << animation_number;
 
 	for (auto&& [pair, collision] : M_world.getCollisions())
 	{
@@ -262,6 +286,27 @@ void Player::animation(Array<TextureRegion> image_container, double frame,int im
 		}
 
 		image = image_container[animation_number];
+	}
+}
+
+bool Player::animation(Array<TextureRegion> image_container, double frame)
+{
+	animation_time += Scene::DeltaTime();
+
+	if (animation_time >= frame)
+	{
+		animation_time = 0.0;
+		animation_number++;
+		if (animation_number >= image_container.size())
+		{
+			animation_number = 0;
+			return true;
+		}
+		else
+		{
+			image = image_container[animation_number];
+			return false;
+		}
 	}
 }
 

@@ -43,7 +43,6 @@ private:
 
 	//プレイヤーの状態
 	int player_s;
-	//
 
 	P2World& M_world;
 
@@ -64,6 +63,7 @@ public:
 
 private:
 	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
+	bool animation(Array<TextureRegion> image_container, double frame);
 	void movement(s3d::detail::XInput_impl controller);	//左右移動
 	void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理
 };
