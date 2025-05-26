@@ -130,12 +130,18 @@ void Player::update()
 		player_s = 1;
 		jumpmovement(controller);
 
+		/*ジャンプ中に2回攻撃させないため*/
+		if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
+		{
+			playerState = ePlayerState::jump_attack;
+		}
+
 		//地面についた時の処理
 		if (body.getVelocity().y == 0.0) {
 
 			body.setVelocity(Vec2(body.getVelocity().x, 0.0));
 			is_on_ground = true;
-			//jump_attack_flg = false;
+			jump_attack_flg = false;
 
 			playerState = ePlayerState::idle;
 		}
@@ -162,6 +168,8 @@ void Player::update()
 
 		break;
 	case jump_attack: //ジャンプ攻撃処理
+		player_s = 4;
+		animation(attack_animation,0.1,6,jump);
 
 		break;
 	case die: //死亡処理
