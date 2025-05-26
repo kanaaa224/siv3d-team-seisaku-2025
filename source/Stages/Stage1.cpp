@@ -1,5 +1,6 @@
 ﻿# include "Stage1.hpp"
 
+# include "../Objects/Ground.hpp"
 # include "../Objects/GameUI.hpp"
 # include "../Objects/Player.hpp"
 # include "../Objects/StageBackground.hpp"
@@ -15,10 +16,9 @@ Stage1::Stage1()
 void Stage1::initialize()
 {
 	createObject<StageBackground>(Vec2{ 0, 0 });
+	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Scarerun>(Vec2{ 450, 500 });
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 500 });
-
-	floor = world.createRect(P2Static, Vec2{ 640, 600 }, SizeF{ 1000, 10 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 }
@@ -89,8 +89,6 @@ void Stage1::draw() const
 #endif
 
 	Stage::draw();
-
-	floor.draw();
 
 	GameUI::GetInstance()->draw();
 }
