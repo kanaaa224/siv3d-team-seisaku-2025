@@ -34,8 +34,6 @@ void EnemyBase::update()
 
 	animation(Scene::DeltaTime());
 
-	IsPlayerInSight();
-
 	//Buffの生成
 	if (nowState == DIE && nowStateTime >= SPAWN_BUFF_TIME && spawnBuffFlg == false) {
 		spawnBuff();
@@ -265,7 +263,7 @@ eLookDirection EnemyBase::nowLookDirection()
 	return eLookDirection::LEFT;
 }
 
-bool EnemyBase::IsPlayerInSight()
+bool EnemyBase::isPlayerInSight()
 {
 	//左を向いていてプレイヤーが左にいる場合
 	if (eLookDirection::LEFT == nowLookDirection() && 0 > calcPlayerDist().x) {
@@ -281,5 +279,10 @@ bool EnemyBase::IsPlayerInSight()
 		}
 	}
 
+	return false;
+}
+
+bool EnemyBase::isEndAttackPostion()
+{
 	return false;
 }

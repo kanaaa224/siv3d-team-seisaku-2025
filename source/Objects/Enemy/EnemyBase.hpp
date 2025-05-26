@@ -126,8 +126,10 @@ protected:
 	eLookDirection nowLookDirection();
 
 	//プレイヤーを視野内に捕らえているか
-	bool IsPlayerInSight();
+	bool isPlayerInSight();
 
+	//
+	bool isEndAttackPostion();
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 };

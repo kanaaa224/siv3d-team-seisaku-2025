@@ -36,7 +36,7 @@ void Scarerun::update()
 	}
 
 	//視界内にプレイヤーがいる場合
-	if (IsPlayerInSight() == true) {
+	if (isPlayerInSight() == true && nowState != DIE) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
 	}
 
