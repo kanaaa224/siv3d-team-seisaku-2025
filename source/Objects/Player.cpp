@@ -4,7 +4,6 @@
 
 #define VELOCITY 150.0	   //移動速度
 #define D_GRAVITY (9.807f) //重力
-#define ADDJUMP (10)	   //
 
 #define DEBUG
 
@@ -80,6 +79,7 @@ void Player::update()
 
 		//移動量なし
 		body.setVelocity(Vec2(body.getVelocity()));
+		jump_attack_flg = false;
 
 		animation(idle_animation, 0.1,8,idle);
 
@@ -135,7 +135,8 @@ void Player::update()
 		player_s = 1;
 		jumpmovement(controller);
 
-		if (controller.buttonX.down() == true || KeyE.down() == true)
+		//ジャンプ攻撃
+		if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
 			animation_number = 0;
 			playerState = ePlayerState::jump_attack;
@@ -175,7 +176,6 @@ void Player::update()
 		break;
 	case attack: //攻撃処理
 		player_s = 3;
-		//animation(attack_animation, 0.1,6,idle);
 
 		if (animation(attack_animation, 0.1) == true)
 		{
@@ -186,7 +186,14 @@ void Player::update()
 		break;
 	case jump_attack: //ジャンプ攻撃処理
 		player_s = 4;
-		animation(attack_animation,0.1,6,jump);
+		//animation(attack_animation,0.1,6,jump);
+
+		jump_attack_flg = true;
+
+		if (animation(attack_animation, 0.1) == true)
+		{
+			playerState = ePlayerState::jump;
+		}
 
 		break;
 	case die: //死亡処理
