@@ -5,6 +5,8 @@
 # include "../Objects/StageBackground.hpp"
 # include  "../Objects/Enemy/Scarerun/Scarerun.hpp"
 
+# define DEBUG
+
 Stage1::Stage1()
 {
 	this->initialize();
@@ -63,6 +65,10 @@ void Stage1::draw() const
 	ClearPrint(); // 過去のPrint出力を消す
 
 	const auto t = camera.createTransformer();
+
+#ifdef DEBUG
+	Print << U"オブジェクト数: " << objects.size();
+#endif
 
 	Stage::draw();
 
