@@ -1,4 +1,4 @@
-﻿# pragma once
+# pragma once
 
 # include <Siv3D.hpp>
 
@@ -8,7 +8,7 @@ protected:
 	P2Body body;
 
 public:
-	ObjectBase(P2World& world, const Vec2& position) { (void)world; (void)position;  }
+	ObjectBase(P2World& world, const Vec2& position) { (void)world; (void)position; }
 	virtual ~ObjectBase() = default;
 
 	virtual void update() {}
