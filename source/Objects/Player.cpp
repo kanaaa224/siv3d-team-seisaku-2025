@@ -39,7 +39,8 @@ void Player::initialize()
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
 	flip_flg = false;
-	//hp = 100;
+	hp = 100;
+	max_hp = 100;
 	//ground_y = 640.0f;  //地面のlocation
 
 	// 分割画像の登録
