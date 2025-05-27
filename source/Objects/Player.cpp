@@ -3,14 +3,19 @@
 # include "../Stages/Stage.hpp"
 
 #define VELOCITY 150.0	   //移動速度
-#define D_GRAVITY (9.807f) //重力
+#define JUMPSPEED 550.0	   //ジャンプ速度
+#define DISTANCE 150.0	   //回避距離
 
 #define DEBUG
 
-Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position), M_world(world)
+Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
 {
-	body = world.createRect(P2Dynamic, position, SizeF{ 100, 90 }, P2Material{ .restitution = 0.0, }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
+	// プレイヤーの当たり判定
+	body = world.createRect(P2Dynamic, position, SizeF{ 55, 90 }, P2Material{ .restitution = 0.0, }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
 	body.setFixedRotation(true);
+
+	// 攻撃の当たり判定
+	attackhitbox = world.createRectSensor(P2Kinematic, Vec2(-100, -100), RectF{ 100, 90 });
 
 	is_on_ground = false;
 	playerState = ePlayerState::null;
@@ -50,6 +55,7 @@ void Player::initialize()
 	player_s = 0;
 
 	body.setVelocity(Vec2(0.0, 0.0)); //移動量設定
+	attackhitbox.setVelocity(body.getVelocity());
 }
 
 void Player::update()
@@ -78,7 +84,8 @@ void Player::update()
 		player_s = 0;
 
 		//移動量なし
-		body.setVelocity(Vec2(body.getVelocity()));
+		body.setVelocity(Vec2(0.0, body.getVelocity().y));
+		//body.setVelocity(Vec2(0.0, 0.0));
 		jump_attack_flg = false;
 
 		animation(idle_animation, 0.1,8,idle);
@@ -162,7 +169,7 @@ void Player::update()
 
 		if (flip_flg == true)
 		{
-			body.setVelocity(Vec2(-VELOCITY, 0.0));
+			body.setVelocity(Vec2(-DISTANCE, 0.0));
 			if (animation(roll_animation, 0.1) == true)
 			{
 				playerState = ePlayerState::idle;
@@ -170,7 +177,7 @@ void Player::update()
 		}
 		else
 		{
-			body.setVelocity(Vec2(VELOCITY, 0.0));
+			body.setVelocity(Vec2(DISTANCE, 0.0));
 			if (animation(roll_animation, 0.1) == true)
 			{
 				playerState = ePlayerState::idle;
@@ -181,6 +188,16 @@ void Player::update()
 	case attack: //攻撃処理
 		player_s = 3;
 
+		if (flip_flg == false)
+		{
+			attackhitbox.setPos(Vec2(body.getPos().x + 30, body.getPos().y ));
+		}
+		/*else
+		{
+			attackhitbox.setPos(Vec2(body.getPos().x * -1, body.getPos().y));
+		}*/
+		
+		
 		if (animation(attack_animation, 0.1) == true)
 		{
 			playerState = ePlayerState::idle;
@@ -202,17 +219,24 @@ void Player::update()
 		break;
 	case die: //死亡処理
 
+		Stage::GetInstance()->deleteObject(this);
+
+		break;
+	case damage:
+
+		hp -= 50;
+		playerState = ePlayerState::idle;
+
 		break;
 	default: //例外
 		break;
 	}
 
-	// 画面左側を超えないようにする
-	/*if (body.getPos().x < 55.0)
+	if (hp <= 0)
 	{
-		body.setPos(55.0, body.getPos().y);
-	}*/
-	
+		playerState = ePlayerState::die;
+	}
+
 	// （仮） 落ちたら戻ってくる
 	if (body.getPos().y >= 1000) {
 		Stage::GetInstance()->deleteObject(this);
@@ -230,29 +254,18 @@ void Player::draw() const
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
 
 	body.drawFrame(1.0, ColorF(Palette::Blue));
-	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
+	attackhitbox.drawFrame(1.0, ColorF(Palette::Red));
+	image.mirrored(flip_flg).resized(size).drawAt(body.getPos(), ColorF(Palette::Red));
 
 #ifdef DEBUG
-	Print << U"Player 画像登録 : " << TextureAsset::IsReady(U"Player Idle");
+
+	Print << U"Player HP : " << hp;
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"DeltaTime : " << Scene::DeltaTime();
 	Print << U"PlayerState : " << player_s;
 	Print << U"PlayerAnimation : " << animation_number;
 
-	for (auto&& [pair, collision] : M_world.getCollisions())
-	{
-		// body.id は Playerのこと
-		if (pair.a == body.id())
-		{
-			Print << U"PlayerHit : " << pair.a;
-		}
-		else if(pair.b == body.id())
-		{
-			Print << U"PlayerHit : " << pair.b;
-		}
-		
-	}
 #endif // DEBUG
 }
 
@@ -354,6 +367,6 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 	if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
 	{
 		is_on_ground = false;
-		body.setVelocity(Vec2(body.getVelocity().x, -550.0));
+		body.setVelocity(Vec2(body.getVelocity().x, -JUMPSPEED));
 	}
 }

@@ -20,7 +20,7 @@ void Stage1::initialize()
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>(Vec2{ -5, 500 });
 	createObject<Scarerun>(Vec2{ 450, 500 });
-	createObject<Player>(Vec2{ (Scene::Width() / 2), 500 });
+	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 }
