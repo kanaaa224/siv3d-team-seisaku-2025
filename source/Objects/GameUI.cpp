@@ -33,11 +33,22 @@ void GameUI::initialize()
 		U"Buf_recovery",
 		U"Buf_Movement"
 	};
+
+	// 追加: buff_amountを0で初期化したら
+	buff_amount = 0;
+
 }
 
 void GameUI::update()
 {
-
+	// ここにキー入力の処理を追加します。
+	// 例えば、スペースキーが押されたらbuff_amountを1増やします。
+	if (KeyP.down()) // ここを好きなキーに変更できます (例: KeyA, KeyEnterなど)
+	{
+		buff_amount++;
+		// デバッグ用に現在の値をコンソールに出力することもできます
+		// Print << U"Buff amount: " << buff_amount;
+	}
 }
 
 void GameUI::draw() const
@@ -76,7 +87,9 @@ void GameUI::draw() const
 		TextureAsset(iconNames[i]).resized(50, 50).drawAt(pos);
 	}
 
-	fontBitmap(U"×00").draw(35, Vec2{ 560, 30 });
+	//buff_amountの値を文字列に変換して表示させら
+	//int値をStringに変換したら、U"×"と結合しますした。
+	fontBitmap(U"×" + Format(buff_amount)).draw(35, Vec2{ 560, 30 });
 }
 
 void GameUI::finalize()
