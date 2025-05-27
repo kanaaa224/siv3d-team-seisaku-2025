@@ -44,8 +44,6 @@ private:
 	//プレイヤーの状態
 	int player_s;
 
-	P2Body attackhitbox;
-
 public:
 
 	Player(P2World& world, const Vec2& position);
@@ -60,6 +58,7 @@ public:
 	//ePlayerState setplayerstate(int state);	//デバッグの時に使うかも
 
 	void onHit(ObjectBase& object) override;
+	bool getFlip()    const { return flip_flg; }
 
 private:
 	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション

@@ -15,10 +15,6 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	body = world.createRect(P2Dynamic, position, SizeF{ 55, 90 }, P2Material{ .restitution = 0.0, }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
 	body.setFixedRotation(true);
 
-	// 攻撃の当たり判定
-	attackhitbox = world.createRectSensor(P2Kinematic, Vec2(-100, -100), RectF{ 70, 90 });
-
-
 	is_on_ground = false;
 	playerState = ePlayerState::null;
 	playerIndex = NULL;
@@ -57,7 +53,6 @@ void Player::initialize()
 	player_s = 0;
 
 	body.setVelocity(Vec2(0.0, 0.0)); //移動量設定
-	attackhitbox.setVelocity(body.getVelocity());
 }
 
 void Player::update()
@@ -84,9 +79,6 @@ void Player::update()
 	case idle: //待機処理
 
 		player_s = 0;
-
-		//攻撃判定なし
-		attackhitbox.setPos(Vec2(-100.0, -100.0));
 
 		//移動量なし
 		body.setVelocity(Vec2(0.0, body.getVelocity().y));
@@ -151,9 +143,6 @@ void Player::update()
 	case jump: //ジャンプ処理
 		player_s = 1;
 
-		//攻撃判定
-		attackhitbox.setPos(Vec2(-100.0, -100.0));
-
 		jumpmovement(controller);
 
 		//ジャンプ攻撃
@@ -201,13 +190,10 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 98, body.getPos().y - 45));
-
-			//attackhitbox.setPos(Vec2(body.getPos().x - 98, body.getPos().y - 45));
 		}
 		else
 		{
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 28, body.getPos().y - 45));
-			//attackhitbox.setPos(Vec2(body.getPos().x + 28, body.getPos().y - 45));
 		}
 		
 		
@@ -224,11 +210,11 @@ void Player::update()
 
 		if (flip_flg == true)
 		{
-			attackhitbox.setPos(Vec2(body.getPos().x - 98, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 98, body.getPos().y - 45));
 		}
 		else
 		{
-			attackhitbox.setPos(Vec2(body.getPos().x + 28, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 28, body.getPos().y - 45));
 		}
 
 		if (animation(attack_animation, 0.1) == true)
@@ -274,7 +260,6 @@ void Player::draw() const
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
 
 	body.drawFrame(1.0, ColorF(Palette::Blue));
-	//attackhitbox.drawFrame(1.0, ColorF(Palette::Red));
 	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
 #ifdef DEBUG
@@ -282,9 +267,7 @@ void Player::draw() const
 	Print << U"Player HP : " << hp;
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
-	Print << U"DeltaTime : " << Scene::DeltaTime();
-	Print << U"PlayerState : " << player_s;
-	Print << U"PlayerHit : " << attackhitbox.id();
+	Print << U"Player State : " << playerState;
 
 #endif // DEBUG
 }

@@ -65,6 +65,7 @@ void Stage1::update()
 			{
 				hitbox->setPlayerPos(player->getBody().getPos());
 				hitbox->setPlayerState(player->getplayerstate());
+				hitbox->setPlayerflip(player->getFlip());
 			}
 		}
 	}
