@@ -54,7 +54,7 @@ void Scarerun::update()
 void Scarerun::draw() const
 {
 	Vec2 size = Vec2(100, 100);
-
+	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
 	body.drawFrame();
 
 #ifdef DEBUG
