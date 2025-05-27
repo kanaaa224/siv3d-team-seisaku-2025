@@ -15,4 +15,7 @@ public:
 	float getMaxHP() const { return max_hp; }
 
 	void addHP(float amount) { hp += amount; }
+
+	virtual void onDamaged(float amount) { hp -= amount; }
+	virtual void onHealed (float amount) { hp += amount; }
 };
