@@ -36,7 +36,7 @@ void Scarerun::update()
 		}
 	}
 
-	if (getDamageFlg == true) {
+	if (getDamageFlg == true && hp > 0) {
 		setEnemyState(GET_ATTACK);
 	}
 
@@ -87,6 +87,7 @@ void Scarerun::stateControl()
 		//ここにノックバック処理
 		//ここにダメージを受けた時のエフェクト
 
+		//アニメーションが終わったら次の状態へ遷移
 		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
 			int tmp = getAttack_img.size();
 			getDamageFlg = false;
