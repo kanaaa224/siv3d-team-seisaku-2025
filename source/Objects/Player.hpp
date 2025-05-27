@@ -44,7 +44,7 @@ private:
 	//プレイヤーの状態
 	int player_s;
 
-	P2World& M_world;
+	P2Body attackhitbox;
 
 public:
 
