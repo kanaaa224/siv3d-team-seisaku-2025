@@ -300,7 +300,7 @@ void EnemyBase::attackMove()
 	double length = playerDist.length();
 
 	if (length > 0) {
-		body.setVelocity(Vec2{ (playerDist.x / length * MOVE_SPEED),body.getVelocity().y });
+		body.setVelocity(Vec2{ (playerDist.x / length * (MOVE_SPEED * 10)),body.getVelocity().y });
 
 		if (body.getVelocity().x < 0) {
 			img_flipFlg = true;
