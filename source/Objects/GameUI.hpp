@@ -13,9 +13,13 @@ private:
 
 	const Font fontBitmap;
 
-public:
+	int buff_amount;
+
 	GameUI();
 	~GameUI();
+
+public:
+	
 
 	void update();
 	void draw()const;
