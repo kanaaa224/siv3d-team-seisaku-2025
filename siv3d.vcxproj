@@ -126,11 +126,11 @@
     <ClCompile Include="source\Objects\StageBackground.cpp" />
     <ClCompile Include="source\Objects\Vaillant.cpp" />
     <ClCompile Include="source\Objects\Wall.cpp" />
-    <ClCompile Include="source\Scene\DebugBoss.cpp" />
     <ClCompile Include="source\Scene\Game.cpp" />
     <ClCompile Include="source\Scene\Title.cpp" />
     <ClCompile Include="source\Stages\Stage.cpp" />
     <ClCompile Include="source\Stages\Stage1.cpp" />
+    <ClCompile Include="source\Stages\StageDebugBoss.cpp" />
     <ClCompile Include="source\Utils\CustomImageLoader.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -354,11 +354,11 @@
     <ClInclude Include="source\Objects\StageBackground.hpp" />
     <ClInclude Include="source\Objects\Vaillant.hpp" />
     <ClInclude Include="source\Objects\Wall.hpp" />
-    <ClInclude Include="source\Scene\DebugBoss.hpp" />
     <ClInclude Include="source\Scene\Game.hpp" />
     <ClInclude Include="source\Scene\Title.hpp" />
     <ClInclude Include="source\Stages\Stage.hpp" />
     <ClInclude Include="source\Stages\Stage1.hpp" />
+    <ClInclude Include="source\Stages\StageDebugBoss.hpp" />
     <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

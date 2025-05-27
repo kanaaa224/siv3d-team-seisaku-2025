@@ -2,8 +2,7 @@
 
 # include "Title.hpp"
 
-Title::Title(const InitData& init)
-	: IScene{ init }
+Title::Title(const InitData& init) : IScene{ init }
 {
 
 }
@@ -46,9 +45,6 @@ void Title::update()
 	{
 		System::Exit();
 	}
-
-	// デバッグキー
-	if (Key1.down()) changeScene(SceneState::DebugBoss, 0.5s);
 }
 
 void Title::draw() const

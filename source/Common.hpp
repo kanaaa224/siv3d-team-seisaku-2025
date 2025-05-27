@@ -6,9 +6,7 @@
 enum class SceneState
 {
 	Title,
-	Game,
-
-	DebugBoss
+	Game
 };
 
 // 共有するデータ
