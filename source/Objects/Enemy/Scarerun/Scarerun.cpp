@@ -1,6 +1,8 @@
 ﻿#include "Scarerun.hpp"
 //画像の分割読み込み
 #include "../../../Utils/CustomImageLoader.hpp"
+//Player
+#include "../../Player.hpp"
 
 Scarerun::Scarerun(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
@@ -29,9 +31,9 @@ void Scarerun::update()
 	EnemyBase::update();
 
 	//視界内にプレイヤーがいる場合
-	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK) || nowState == ATTACK_POSITION) {
+	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && getDamageFlg == false) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
-		if (nowStateTime >= attackPosition_img.size() * IMG_CHANGE_TIME) {//２秒経ったら攻撃へ
+		if (nowStateTime >= attackPosition_img.size() * IMG_CHANGE_TIME) {//アニメーションを終えたら攻撃へ
 			setEnemyState(ATTACK);
 		}
 	}
@@ -53,7 +55,6 @@ void Scarerun::draw() const
 {
 	Vec2 size = Vec2(100, 100);
 
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
 	body.drawFrame();
 
 #ifdef DEBUG
@@ -66,6 +67,24 @@ void Scarerun::draw() const
 	Print << U"Enemy_Scarerun_HP : " << hp;
 	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;
 #endif // DEBUG
+}
+
+void Scarerun::onHit(ObjectBase& object)
+{
+	//プレイヤーに当たったら
+	if (Player* player = dynamic_cast<Player*>(&object)) {
+		//player->onDamaged(10);//プレイヤーへダメージ
+
+		//
+		if (object.getBody().getPos().x < body.getPos().x)
+		{
+			object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
+		}
+		else
+		{
+			object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
+		}
+	}
 }
 
 void Scarerun::stateControl()
@@ -87,7 +106,6 @@ void Scarerun::stateControl()
 		break;
 	case GET_ATTACK:
 		//ここにダメージを受けた時のエフェクト
-
 		//アニメーションが終わったら次の状態へ遷移
 		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
 			getDamageFlg = false;
