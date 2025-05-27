@@ -1,6 +1,7 @@
 ﻿# include "Player.hpp"
 # include "../Utils/CustomImageLoader.hpp"
 # include "../Stages/Stage.hpp"
+# include "../Objects/HitBox.hpp"
 
 #define VELOCITY 150.0	   //移動速度
 #define JUMPSPEED 550.0	   //ジャンプ速度
@@ -16,6 +17,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 
 	// 攻撃の当たり判定
 	attackhitbox = world.createRectSensor(P2Kinematic, Vec2(-100, -100), RectF{ 70, 90 });
+
 
 	is_on_ground = false;
 	playerState = ePlayerState::null;
@@ -83,12 +85,11 @@ void Player::update()
 
 		player_s = 0;
 
-		//攻撃判定
+		//攻撃判定なし
 		attackhitbox.setPos(Vec2(-100.0, -100.0));
 
 		//移動量なし
 		body.setVelocity(Vec2(0.0, body.getVelocity().y));
-		//body.setVelocity(Vec2(0.0, 0.0));
 
 		//ジャンプ攻撃有効化
 		jump_attack_flg = false;
@@ -149,6 +150,10 @@ void Player::update()
 		break;
 	case jump: //ジャンプ処理
 		player_s = 1;
+
+		//攻撃判定
+		attackhitbox.setPos(Vec2(-100.0, -100.0));
+
 		jumpmovement(controller);
 
 		//ジャンプ攻撃
@@ -195,11 +200,14 @@ void Player::update()
 
 		if (flip_flg == true)
 		{
-			attackhitbox.setPos(Vec2(body.getPos().x - 100, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 98, body.getPos().y - 45));
+
+			//attackhitbox.setPos(Vec2(body.getPos().x - 98, body.getPos().y - 45));
 		}
 		else
 		{
-			attackhitbox.setPos(Vec2(body.getPos().x + 30, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 28, body.getPos().y - 45));
+			//attackhitbox.setPos(Vec2(body.getPos().x + 28, body.getPos().y - 45));
 		}
 		
 		
@@ -207,14 +215,21 @@ void Player::update()
 		{
 			playerState = ePlayerState::idle;
 		}
-		
 
 		break;
 	case jump_attack: //ジャンプ攻撃処理
 		player_s = 4;
-		//animation(attack_animation,0.1,6,jump);
 
 		jump_attack_flg = true;
+
+		if (flip_flg == true)
+		{
+			attackhitbox.setPos(Vec2(body.getPos().x - 98, body.getPos().y - 45));
+		}
+		else
+		{
+			attackhitbox.setPos(Vec2(body.getPos().x + 28, body.getPos().y - 45));
+		}
 
 		if (animation(attack_animation, 0.1) == true)
 		{
@@ -259,8 +274,8 @@ void Player::draw() const
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
 
 	body.drawFrame(1.0, ColorF(Palette::Blue));
-	attackhitbox.drawFrame(1.0, ColorF(Palette::Red));
-	image.mirrored(flip_flg).resized(size).drawAt(body.getPos(), ColorF(Palette::Red));
+	//attackhitbox.drawFrame(1.0, ColorF(Palette::Red));
+	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
 #ifdef DEBUG
 
@@ -269,14 +284,14 @@ void Player::draw() const
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"DeltaTime : " << Scene::DeltaTime();
 	Print << U"PlayerState : " << player_s;
-	Print << U"PlayerAnimation : " << animation_number;
+	Print << U"PlayerHit : " << attackhitbox.id();
 
 #endif // DEBUG
 }
 
 void Player::onHit(ObjectBase& object)
 {
-
+	
 }
 
 void Player::finalize()

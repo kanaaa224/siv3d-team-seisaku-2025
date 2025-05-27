@@ -122,6 +122,7 @@
     <ClCompile Include="source\Objects\Enemy\Scarerun\Scarerun.cpp" />
     <ClCompile Include="source\Objects\GameUI.cpp" />
     <ClCompile Include="source\Objects\Ground.cpp" />
+    <ClCompile Include="source\Objects\HitBox.cpp" />
     <ClCompile Include="source\Objects\Player.cpp" />
     <ClCompile Include="source\Objects\StageBackground.cpp" />
     <ClCompile Include="source\Objects\Vaillant.cpp" />
@@ -349,6 +350,7 @@
     <ClInclude Include="source\Objects\Enemy\Scarerun\Scarerun.hpp" />
     <ClInclude Include="source\Objects\GameUI.hpp" />
     <ClInclude Include="source\Objects\Ground.hpp" />
+    <ClInclude Include="source\Objects\HitBox.hpp" />
     <ClInclude Include="source\Objects\ObjectBase.hpp" />
     <ClInclude Include="source\Objects\Player.hpp" />
     <ClInclude Include="source\Objects\StageBackground.hpp" />
