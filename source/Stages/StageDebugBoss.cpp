@@ -1,7 +1,9 @@
 ﻿# include "StageDebugBoss.hpp"
 
+# include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
+# include "../Objects/Vaillant.hpp"
 # include "../Objects/Player.hpp"
 # include "../Objects/Enemy/EnemyBase.hpp"
 # include "../Objects/GameUI.hpp"
@@ -15,8 +17,10 @@ StageDebugBoss::StageDebugBoss()
 
 void StageDebugBoss::initialize()
 {
+	createObject<StageBackground>(Vec2{ 0, 0 });
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>(Vec2{ -5, 500 });
+	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 200, 500 });
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 500 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
