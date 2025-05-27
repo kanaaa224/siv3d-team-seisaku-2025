@@ -134,11 +134,11 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}
-		/*else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
+		else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
 			animation_number = 0;
 			playerState = ePlayerState::attack;
-		}*/
+		}
 
 		break;
 	case jump: //ジャンプ処理
