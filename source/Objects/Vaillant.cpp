@@ -4,7 +4,7 @@
 
 Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position)
 {
-	body = world.createRect(P2Dynamic, position, SizeF{ 75, 100 });
+	body = world.createRect(P2Dynamic, position, SizeF{ 275, 300 });
 
 	body.setFixedRotation(true);
 
