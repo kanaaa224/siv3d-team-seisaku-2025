@@ -83,6 +83,8 @@ public:
 
 	virtual void onHit(ObjectBase& object) override;
 
+	virtual void onDamaged(float amount) override { getDamage(amount); };
+
 protected:
 	/// <summary>
 	/// ステートに合わせて画像を切り替える
