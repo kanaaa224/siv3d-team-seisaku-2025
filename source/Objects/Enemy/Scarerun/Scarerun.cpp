@@ -29,9 +29,9 @@ void Scarerun::update()
 	EnemyBase::update();
 
 	//視界内にプレイヤーがいる場合
-	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && nowState != GET_ATTACK)) {
+	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
-		if (nowStateTime >= 2.0) {//２秒経ったら攻撃へ
+		if (nowStateTime >= attackPosition_img.size() * IMG_CHANGE_TIME) {//２秒経ったら攻撃へ
 			setEnemyState(ATTACK);
 		}
 	}
@@ -86,6 +86,12 @@ void Scarerun::stateControl()
 	case GET_ATTACK:
 		//ここにノックバック処理
 		//ここにダメージを受けた時のエフェクト
+
+		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
+			int tmp = getAttack_img.size();
+			getDamageFlg = false;
+			setEnemyState(ATTACK_POSITION);
+		}
 		break;
 	case DIE:
 		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
