@@ -41,13 +41,9 @@ void GameUI::initialize()
 
 void GameUI::update()
 {
-	// ここにキー入力の処理を追加します。
-	// 例えば、スペースキーが押されたらbuff_amountを1増やします。
-	if (KeyP.down()) // ここを好きなキーに変更できます (例: KeyA, KeyEnterなど)
+	if (KeyP.down())
 	{
 		buff_amount++;
-		// デバッグ用に現在の値をコンソールに出力することもできます
-		// Print << U"Buff amount: " << buff_amount;
 	}
 }
 
