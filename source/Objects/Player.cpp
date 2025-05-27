@@ -15,7 +15,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	body.setFixedRotation(true);
 
 	// 攻撃の当たり判定
-	attackhitbox = world.createRectSensor(P2Kinematic, Vec2(-100, -100), RectF{ 100, 90 });
+	attackhitbox = world.createRectSensor(P2Kinematic, Vec2(-100, -100), RectF{ 70, 90 });
 
 	is_on_ground = false;
 	playerState = ePlayerState::null;
@@ -83,9 +83,14 @@ void Player::update()
 
 		player_s = 0;
 
+		//攻撃判定
+		attackhitbox.setPos(Vec2(-100.0, -100.0));
+
 		//移動量なし
 		body.setVelocity(Vec2(0.0, body.getVelocity().y));
 		//body.setVelocity(Vec2(0.0, 0.0));
+
+		//ジャンプ攻撃有効化
 		jump_attack_flg = false;
 
 		animation(idle_animation, 0.1,8,idle);
@@ -188,14 +193,14 @@ void Player::update()
 	case attack: //攻撃処理
 		player_s = 3;
 
-		if (flip_flg == false)
+		if (flip_flg == true)
 		{
-			attackhitbox.setPos(Vec2(body.getPos().x + 30, body.getPos().y ));
+			attackhitbox.setPos(Vec2(body.getPos().x - 100, body.getPos().y - 45));
 		}
-		/*else
+		else
 		{
-			attackhitbox.setPos(Vec2(body.getPos().x * -1, body.getPos().y));
-		}*/
+			attackhitbox.setPos(Vec2(body.getPos().x + 30, body.getPos().y - 45));
+		}
 		
 		
 		if (animation(attack_animation, 0.1) == true)
