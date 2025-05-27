@@ -80,7 +80,7 @@ void Scarerun::stateControl()
 		//ここに攻撃準備のSE
 		break;
 	case ATTACK:
-		body.setVelocity(Vec2{ -MOVE_SPEED,body.getVelocity().y });//ここに攻撃時の移動処理を書く
+		attackMove();
 		//ここに攻撃のSE
 		break;
 	case GET_ATTACK:

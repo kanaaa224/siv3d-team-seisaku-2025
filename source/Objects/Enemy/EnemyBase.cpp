@@ -297,7 +297,18 @@ void EnemyBase::attackMove()
 {
 	//プレイヤーまでの距離を取得する
 	Vec2 playerDist = calcPlayerDist();
-	
+	double length = playerDist.length();
+
+	if (length > 0) {
+		body.setVelocity(Vec2{ (playerDist.x / length * MOVE_SPEED),body.getVelocity().y });
+
+		if (body.getVelocity().x < 0) {
+			img_flipFlg = true;
+		}
+		else if (body.getVelocity().x > 0) {
+			img_flipFlg = false;
+		}
+	}
 }
 
 void EnemyBase::getDamageMove()
