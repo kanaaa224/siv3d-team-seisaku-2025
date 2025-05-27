@@ -134,6 +134,11 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}
+		else if (controller.buttonB.down() == true || KeyQ.down() == true)
+		{
+			animation_number = 0;
+			playerState = ePlayerState::avoidance;
+		}
 		else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
 			animation_number = 0;
