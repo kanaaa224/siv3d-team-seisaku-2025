@@ -6,6 +6,7 @@
 # include "../Objects/Player.hpp"
 # include "../Objects/Enemy/Scarerun/Scarerun.hpp"
 # include "../Objects/GameUI.hpp"
+# include "../Objects/Hitbox.hpp"
 
 # define DEBUG
 
@@ -58,6 +59,12 @@ void Stage1::update()
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
 			{
 				enemy->setPlayerPos(player->getBody().getPos());
+			}
+
+			if (HitBox* hitbox = dynamic_cast<HitBox*>(object))
+			{
+				hitbox->setPlayerPos(player->getBody().getPos());
+				hitbox->setPlayerState(player->getplayerstate());
 			}
 		}
 	}
