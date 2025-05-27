@@ -33,7 +33,7 @@ void HitBox::update()
 	{
 		body.setPos(Vec2(playerPos.x + 28, playerPos.y - 45));
 	}
-	else
+	else if(flip_flg == true)
 	{
 		body.setPos(Vec2(playerPos.x - 48, playerPos.y - 45));
 	}

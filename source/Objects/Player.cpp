@@ -340,7 +340,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		)
 	{
 
-		body.setVelocity(Vec2(-VELOCITY, 0.0));
+		body.setVelocity(Vec2(-VELOCITY, body.getVelocity().y));
 
 		flip_flg = true;
 
@@ -350,7 +350,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	else if(controller.buttonRight.pressed() == true || KeyD.pressed() == true || KeyRight.pressed() == true)
 	{
 
-		body.setVelocity(Vec2(VELOCITY, 0.0));
+		body.setVelocity(Vec2(VELOCITY, body.getVelocity().y));
 
 		flip_flg = false;
 
