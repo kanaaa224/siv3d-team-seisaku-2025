@@ -7,8 +7,7 @@
 #define DEBUG                  //デバック表示
 #define IMG_CHANGE_TIME 0.1f   //画像の切り替え速度
 #define MOVE_SPEED      20.0f  //移動速度
-#define FALLING_SPEED   4.0f   //落下速度
-#define GRAVITY 9.807f //重力
+#define GRAVITY 9.807f        //重力
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
@@ -18,6 +17,11 @@
 #define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
 #define SIGHT 200             //視力
+
+enum eEnemyType
+{
+	Scarerun
+};
 
 enum eEnemyState
 {
@@ -38,12 +42,13 @@ enum eLookDirection
 class EnemyBase : public CharacterBase
 {
 protected:
+	eEnemyType type;                    //敵のタイプ
+
 	eEnemyState nowState;               //現在の状態
 	eEnemyState oldState;               //1フレーム前の状態
 	float nowStateTime;                 //現在の状態へ遷移してからの経過時間
 
-	Vec2 playerLocation;                //プレイヤーの現在地
-	Vec2 playerVelocity;                //プレイヤーの現在の移動量
+	Vec2 playerPos;                     //プレイヤーの現在地
 	bool playerFoundFlg;                //プレイヤーを発見したか
 
 	TextureRegion now_texture;              //現在の画像
@@ -67,7 +72,7 @@ protected:
 
 	bool spawnBuffFlg;                  //buffが生成されたか
 
-	Vec2 playerPos;                     //プレイヤーの現在地
+	bool getDamageFlg;                  //ダメージを受けた時にTrue、ダメージを受けたアニメーションが終わったらFalse
 
 public:
 	EnemyBase(P2World& world, const Vec2& position);
@@ -87,8 +92,12 @@ protected:
 	/// </summary>
 	/// <param name="setState"></param>
 	virtual void setEnemyState(eEnemyState setState) {
-		oldState = nowState;
-		nowState = setState;
+		if (oldState != setState) {
+			oldState = nowState;
+			nowState = setState;
+
+			nowStateTime = 0.0f;
+		}
 	};
 	/// <summary>
 	/// 基本的な左右移動
@@ -116,6 +125,9 @@ protected:
 	/// <param name="damage">ダメージ数</param>
 	void getDamage(float damage);
 
+	//状態遷移
+	virtual void stateControl() {};
+
 	//バフをスポーンさせる
 	void spawnBuff();
 
@@ -128,8 +140,8 @@ protected:
 	//プレイヤーを視野内に捕らえているか
 	bool isPlayerInSight();
 
-	//
-	bool isEndAttackPostion();
+	//攻撃時の移動
+	void attackMove();
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 };

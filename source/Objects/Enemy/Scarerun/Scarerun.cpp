@@ -5,6 +5,8 @@
 Scarerun::Scarerun(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
 {
+	type = eEnemyType::Scarerun;
+
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
 	body = world.createRect(P2Dynamic, position, SizeF{ 50, 60 },P2Material{ .friction = 0.0 });
 	body.setFixedRotation(true);//当たり判定の回転を無くす
@@ -13,11 +15,9 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	idle_img           = LoadDivGraph(U"Scarerun Idle", Size(46, 40));//idle画像
 	attackPosition_img = LoadDivGraph(U"Scarerun Idle", Size(46, 40));//attackPosition画像(仮)
 	attack_img         = LoadDivGraph(U"Scarerun Idle", Size(46, 40));//attack画像(仮)
+	getAttack_img      = LoadDivGraph(U"Scarerun Idle", Size(46, 40));//getAttack画像(仮)
 	die_img            = LoadDivGraph(U"Scarerun Idle", Size(46, 40));//die画像(仮)
 	now_texture = idle_img[0];//初期化用の画像
-
-
-	//size = Vec2(100, 100);
 }
 
 Scarerun::~Scarerun()
@@ -28,23 +28,25 @@ void Scarerun::update()
 {
 	EnemyBase::update();
 
-	if (nowState == IDLE) {//アイドル時
-		movement(70.0f);//左右移動（数値は移動する距離）
-	}
-	else if (nowState == ATTACK_POSITION) {//攻撃姿勢時
-		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
+	//視界内にプレイヤーがいる場合
+	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && nowState != GET_ATTACK)) {
+		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
+		if (nowStateTime >= 2.0) {//２秒経ったら攻撃へ
+			setEnemyState(ATTACK);
+		}
 	}
 
-	//視界内にプレイヤーがいる場合
-	if (isPlayerInSight() == true && nowState != DIE) {
-		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
+	if (getDamageFlg == true) {
+		setEnemyState(GET_ATTACK);
 	}
 
 	//hpが０になったら死亡
 	if (hp <= 0) {
 		setEnemyState(DIE);
-		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
 	}
+
+	//状態遷移
+	stateControl();
 }
 
 void Scarerun::draw() const
@@ -62,4 +64,35 @@ void Scarerun::draw() const
 	Print << U"StateNum : " << nowStateTime;
 	Print << U"HP : " << hp;
 	Print << U"FlipFlg : " << img_flipFlg;
+}
+
+void Scarerun::stateControl()
+{
+	switch (nowState)
+	{
+	case NONE:
+		break;
+	case IDLE:
+		movement(70.0f);//左右移動（数値は移動する距離）
+		break;
+	case ATTACK_POSITION:
+		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
+		//ここに攻撃準備のSE
+		break;
+	case ATTACK:
+		body.setVelocity(Vec2{ -MOVE_SPEED,body.getVelocity().y });//ここに攻撃時の移動処理を書く
+		//ここに攻撃のSE
+		break;
+	case GET_ATTACK:
+		//ここにノックバック処理
+		//ここにダメージを受けた時のエフェクト
+		break;
+	case DIE:
+		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
+		//ここに死亡時のエフェクト
+		//ここに死亡時のSE
+		break;
+	default:
+		break;
+	}
 }

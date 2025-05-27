@@ -12,7 +12,8 @@ EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	spawnPosition = position;//スポーン位置
 	nowWorld = &world;//現在の物理シュミレーション
 
-	spawnBuffFlg = false;
+	spawnBuffFlg = false;//バフがスポーンしたか
+	playerFoundFlg = false;//プレイヤーを発見したか
 }
 
 EnemyBase::~EnemyBase()
@@ -74,7 +75,6 @@ void EnemyBase::animation(float delta_second)
 	case IDLE:
 		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
 		if (nowState != oldState) {
-			nowStateTime = 0;
 			nowImageNum = 0;
 			imageChangeTime = 0;
 		}
@@ -100,7 +100,6 @@ void EnemyBase::animation(float delta_second)
 	case ATTACK_POSITION:
 		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
 		if (nowState != oldState) {
-			nowStateTime = 0;
 			nowImageNum = 0;
 			imageChangeTime = 0;
 		}
@@ -126,7 +125,6 @@ void EnemyBase::animation(float delta_second)
 	case ATTACK:
 		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
 		if (nowState != oldState) {
-			nowStateTime = 0;
 			nowImageNum = 0;
 			imageChangeTime = 0;
 		}
@@ -152,7 +150,6 @@ void EnemyBase::animation(float delta_second)
 	case GET_ATTACK:
 		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
 		if (nowState != oldState) {
-			nowStateTime = 0;
 			nowImageNum = 0;
 			imageChangeTime = 0;
 		}
@@ -178,7 +175,6 @@ void EnemyBase::animation(float delta_second)
 	case DIE:
 		//現在のステートと前フレームのステートが違う場合nowStateTiemを０にする
 		if (nowState != oldState) {
-			nowStateTime = 0;
 			nowImageNum = 0;
 			imageChangeTime = 0;
 		}
@@ -233,6 +229,7 @@ void EnemyBase::getDamage(float damage)
 	//設定した時間経過後またダメージを受ける
 	if (damageStopFlg == false) {
 		hp -= damage;
+		getDamageFlg = true;
 		damageStopFlg = true;
 	}
 
@@ -247,8 +244,16 @@ void EnemyBase::spawnBuff()
 	//ステージのインスタンスを取得
 	Stage* stage = Stage::GetInstance();
 
-	//Buffを生成
-	stage->createObject<AttackBuff>(body.getPos());
+	//タイプによって違う種類のBuffを生成する
+	switch (type)
+	{
+	case Scarerun:
+		stage->createObject<AttackBuff>(body.getPos());
+		break;
+	default:
+		break;
+	}
+	
 }
 
 eLookDirection EnemyBase::nowLookDirection()
@@ -269,12 +274,14 @@ bool EnemyBase::isPlayerInSight()
 	if (eLookDirection::LEFT == nowLookDirection() && 0 > calcPlayerDist().x) {
 		//指定した距離内にいる場合
 		if (-SIGHT < calcPlayerDist().x /*&& (playerPos.y < 550 && playerPos.y > 400)*/) {
+			playerFoundFlg = true;
 			return true;
 		}
 	}//右を向いていてプレイヤーが右にいる場合
 	else if (eLookDirection::RIGTH == nowLookDirection() && 0 < calcPlayerDist().x) {
 		//指定した距離内にいる場合
 		if (SIGHT > calcPlayerDist().x /*&& (playerPos.y < 550 && playerPos.y > 400)*/) {
+			playerFoundFlg = true;
 			return true;
 		}
 	}
@@ -282,7 +289,9 @@ bool EnemyBase::isPlayerInSight()
 	return false;
 }
 
-bool EnemyBase::isEndAttackPostion()
+void EnemyBase::attackMove()
 {
-	return false;
+	//プレイヤーまでの距離を取得する
+	Vec2 playerDist = calcPlayerDist();
+	
 }
