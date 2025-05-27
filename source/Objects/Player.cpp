@@ -39,7 +39,7 @@ void Player::initialize()
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
 	flip_flg = false;
-	hp = 100;
+	//hp = 100;
 	//ground_y = 640.0f;  //地面のlocation
 
 	// 分割画像の登録
@@ -133,11 +133,11 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}
-		else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
+		/*else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
 			animation_number = 0;
 			playerState = ePlayerState::attack;
-		}
+		}*/
 
 		break;
 	case jump: //ジャンプ処理
@@ -166,6 +166,10 @@ void Player::update()
 	case avoidance: //回避処理
 		player_s = 2;
 
+		//すり抜け
+
+
+		//ダメージ受けたら死ぬ
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, 0.0));
@@ -340,7 +344,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		)
 	{
 
-		body.setVelocity(Vec2(-VELOCITY, 0.0));
+		body.setVelocity(Vec2(-VELOCITY, body.getVelocity().y));
 
 		flip_flg = true;
 
@@ -350,7 +354,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	else if(controller.buttonRight.pressed() == true || KeyD.pressed() == true || KeyRight.pressed() == true)
 	{
 
-		body.setVelocity(Vec2(VELOCITY, 0.0));
+		body.setVelocity(Vec2(VELOCITY, body.getVelocity().y));
 
 		flip_flg = false;
 
