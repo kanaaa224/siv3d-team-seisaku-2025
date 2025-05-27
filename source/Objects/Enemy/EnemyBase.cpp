@@ -68,6 +68,10 @@ void EnemyBase::draw() const
 #endif // DEBUG
 }
 
+void EnemyBase::onHit(ObjectBase& object)
+{
+}
+
 void EnemyBase::animation(float delta_second)
 {
 	switch (nowState)
@@ -294,4 +298,8 @@ void EnemyBase::attackMove()
 	//プレイヤーまでの距離を取得する
 	Vec2 playerDist = calcPlayerDist();
 	
+}
+
+void EnemyBase::getDamageMove()
+{
 }

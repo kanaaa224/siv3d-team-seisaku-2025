@@ -89,7 +89,6 @@ void Scarerun::stateControl()
 
 		//アニメーションが終わったら次の状態へ遷移
 		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
-			int tmp = getAttack_img.size();
 			getDamageFlg = false;
 			setEnemyState(ATTACK_POSITION);
 		}

@@ -81,6 +81,8 @@ public:
 	virtual void update() override;
 	virtual void draw() const override;
 
+	virtual void onHit(ObjectBase& object) override;
+
 protected:
 	/// <summary>
 	/// ステートに合わせて画像を切り替える
@@ -142,6 +144,9 @@ protected:
 
 	//攻撃時の移動
 	void attackMove();
+
+	//攻撃を受けた時の移動
+	void getDamageMove();
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 };
