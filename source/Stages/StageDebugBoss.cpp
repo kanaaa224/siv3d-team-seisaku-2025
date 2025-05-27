@@ -1,31 +1,28 @@
-﻿# include "Stage1.hpp"
+﻿# include "StageDebugBoss.hpp"
 
-# include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
 # include "../Objects/Player.hpp"
-# include "../Objects/Enemy/Scarerun/Scarerun.hpp"
+# include "../Objects/Enemy/EnemyBase.hpp"
 # include "../Objects/GameUI.hpp"
 
 # define DEBUG
 
-Stage1::Stage1()
+StageDebugBoss::StageDebugBoss()
 {
 	this->initialize();
 }
 
-void Stage1::initialize()
+void StageDebugBoss::initialize()
 {
-	createObject<StageBackground>(Vec2{ 0, 0 });
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>(Vec2{ -5, 500 });
-	createObject<Scarerun>(Vec2{ 450, 500 });
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 500 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 }
 
-void Stage1::update()
+void StageDebugBoss::update()
 {
 	Stage::update();
 
@@ -80,9 +77,9 @@ void Stage1::update()
 	gameUI->update();
 }
 
-void Stage1::draw() const
+void StageDebugBoss::draw() const
 {
-	ClearPrint(); // 過去のPrint出力を消す
+	ClearPrint();
 
 #ifdef DEBUG
 	Print << U"オブジェクト数: " << objects.size();
@@ -97,9 +94,9 @@ void Stage1::draw() const
 	GameUI::GetInstance()->draw();
 }
 
-void Stage1::NewInstance()
+void StageDebugBoss::NewInstance()
 {
 	if (instance != nullptr) delete instance;
 
-	instance = new Stage1();
+	instance = new StageDebugBoss();
 }

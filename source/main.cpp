@@ -1,7 +1,6 @@
 ﻿# include "Common.hpp"
 # include "Scene/Title.hpp"
 # include "Scene/Game.hpp"
-# include "Scene/DebugBoss.hpp"
 
 void AssetsRegistration()
 {
@@ -64,7 +63,6 @@ void Main()
 
 	manager.add<Title>(SceneState::Title);
 	manager.add<Game>(SceneState::Game);
-	manager.add<DebugBoss>(SceneState::DebugBoss);
 
 	manager.init(SceneState::Title, 0.5s);
 

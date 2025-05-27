@@ -171,9 +171,6 @@
     <ClCompile Include="source\Objects\Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scene\DebugBoss.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Scene\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -184,6 +181,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Stages\Stage1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Stages\StageDebugBoss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Utils\CustomImageLoader.cpp">
@@ -893,9 +893,6 @@
     <ClInclude Include="source\Objects\Wall.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scene\DebugBoss.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Scene\Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -906,6 +903,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Stages\Stage1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Stages\StageDebugBoss.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Utils\CustomImageLoader.hpp">

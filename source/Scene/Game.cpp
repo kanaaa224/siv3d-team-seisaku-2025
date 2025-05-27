@@ -1,8 +1,15 @@
-# include "Game.hpp"
+﻿# include "Game.hpp"
 # include "../Stages/Stage1.hpp"
+# include "../Stages/StageDebugBoss.hpp"
 
 Game::Game(const InitData& init) : IScene{ init }
 {
+	if (Key1.pressed())
+	{
+		StageDebugBoss::NewInstance();
+		return;
+	}
+
 	switch (getData().nowStage)
 	{
 	case 0:
