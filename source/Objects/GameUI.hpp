@@ -24,6 +24,8 @@ public:
 	void update();
 	void draw()const;
 
+	void setPlayerHP(float hp) { player_hp = hp; }
+
 	static GameUI* GetInstance();
 
 private:
@@ -31,4 +33,7 @@ private:
 
 	void initialize();
 	void finalize();
+
+	float player_hp;
+
 };

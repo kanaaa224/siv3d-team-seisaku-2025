@@ -32,6 +32,8 @@ void Stage1::update()
 
 	static Stopwatch respawnTimer{ StartImmediately::No };
 
+	float player_hp = 0;
+
 	Player* player = nullptr;
 
 	for (const auto& object : objects)
@@ -42,6 +44,8 @@ void Stage1::update()
 	if (player)
 	{
 		respawnTimer.reset();
+
+		player_hp = player->getHP();
 
 		double x = player->getBody().getPos().x;
 		double y = player->getBody().getPos().y;
@@ -85,6 +89,7 @@ void Stage1::update()
 
 	GameUI* gameUI = GameUI::GetInstance();
 
+	gameUI->setPlayerHP(player_hp);
 	gameUI->update();
 }
 

@@ -2,7 +2,7 @@
 
 GameUI* GameUI::instance = nullptr;
 
-GameUI::GameUI():flame_location(0.0, 0.0) , hp_location(0.0, 0.0), fontBitmap{ 48 }
+GameUI::GameUI():flame_location(0.0, 0.0) , hp_location(0.0, 0.0), fontBitmap{ 48 },player_hp(0)
 {
 	this->initialize();
 }
@@ -49,6 +49,9 @@ void GameUI::update()
 
 void GameUI::draw() const
 {
+
+	Print << U"Player HP: " << player_hp;
+
 	Vec2 position{ 40, 40 };
 
 	Vec2 size{ 110, 110 };
@@ -61,7 +64,7 @@ void GameUI::draw() const
 	TextureAsset(U"Character Icon").resized(size.x - 10, size.y - 10).drawAt(position);
 
 	TextureAsset(U"HP_frame").resized(HP_size).drawAt(hp_location);
-	TextureAsset(U"HP_bar").resized(HP_size.x -25,HP_size.y-25).drawAt(hp_location);
+	TextureAsset(U"HP_bar")(0,0,0,0).resized(HP_size.x - 25, HP_size.y - 25).drawAt(hp_location);
 
 	TextureAsset(U"time_frame").resized(200,50).drawAt(195,70);
 
