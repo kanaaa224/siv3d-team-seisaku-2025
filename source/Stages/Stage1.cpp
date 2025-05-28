@@ -54,7 +54,7 @@ void Stage1::update()
 		int centerHeight = (Scene::Height() / 2);
 
 		if (centerWidth  > x) x = centerWidth;
-		if (centerHeight < y) y = centerHeight;
+		/*if (centerHeight < y)*/ y = centerHeight;
 
 		camera.setTargetCenter(Vec2{ x, y });
 

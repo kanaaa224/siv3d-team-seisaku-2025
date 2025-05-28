@@ -34,7 +34,6 @@ void GameUI::initialize()
 		U"Buf_Movement"
 	};
 
-	// 追加: buff_amountを0で初期化したら
 	buff_amount = 0;
 
 }
