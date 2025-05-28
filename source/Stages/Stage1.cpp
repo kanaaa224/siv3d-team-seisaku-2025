@@ -1,5 +1,4 @@
 ﻿# include "Stage1.hpp"
-
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
@@ -12,7 +11,7 @@
 
 Stage1::Stage1()
 {
-	this->initialize();
+	initialize();
 }
 
 void Stage1::initialize()

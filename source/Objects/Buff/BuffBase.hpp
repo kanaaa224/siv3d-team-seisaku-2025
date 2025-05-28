@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../ObjectBase.hpp"//親クラス
+#include "../Base.hpp"//親クラス
 
 #define DEBUG
 #define GRAVITY 10.0

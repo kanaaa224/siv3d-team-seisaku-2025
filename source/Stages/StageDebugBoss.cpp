@@ -1,5 +1,4 @@
 ﻿# include "StageDebugBoss.hpp"
-
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
@@ -12,7 +11,7 @@
 
 StageDebugBoss::StageDebugBoss()
 {
-	this->initialize();
+	initialize();
 }
 
 void StageDebugBoss::initialize()

@@ -1,6 +1,6 @@
 ﻿# pragma once
 
-# include "ObjectBase.hpp"
+# include "Base.hpp"
 
 class HitBox : public ObjectBase
 {
@@ -15,19 +15,18 @@ private:
 
 public:
 	HitBox(P2World& world, const Vec2& position);
-	~HitBox();
+	~HitBox() = default;
 
 	void update() override;
 	void draw() const override;
+
+	void onHit(ObjectBase& object) override;
 
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 	void setPlayerState(int state) { playerState = state; };
 	void setPlayerVelocity(Vec2 velocity) { playerVelocity = velocity; };
 	void setPlayerflip(bool flg) { flip_flg = flg; };
 
-	void onHit(ObjectBase& object) override;
-
 private:
 	void initialize();
-	void finalize();
 };

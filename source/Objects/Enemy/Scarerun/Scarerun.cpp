@@ -75,7 +75,7 @@ void Scarerun::onHit(ObjectBase& object)
 	if (Player* player = dynamic_cast<Player*>(&object)) {
 		//プレイヤーが攻撃状態じゃないなら
 		if (player->getplayerstate() != ePlayerState::attack && (nowState != IDLE && nowState != DIE)) {
-			player->onDamaged(10);//プレイヤーへダメージ
+			player->applyDamage(10);//プレイヤーへダメージ
 
 			//プレイヤーのノックバック
 			if (object.getBody().getPos().x < body.getPos().x)

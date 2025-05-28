@@ -274,9 +274,9 @@ void Player::update()
 		}
 
 		break;
-	case die: //死亡処理
+	case ePlayerState::die: //死亡処理
 
-		Stage::GetInstance()->deleteObject(this);
+		die();
 
 		break;
 	case damage:
@@ -295,9 +295,7 @@ void Player::update()
 	}
 
 	// （仮） 落ちたら戻ってくる
-	if (body.getPos().y >= 1000) {
-		Stage::GetInstance()->deleteObject(this);
-	}
+	if (body.getPos().y >= 1000) die();
 
 	// 移動量計算
 	body.setPos(body.getPos() + body.getVelocity() *  Scene::DeltaTime());

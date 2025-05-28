@@ -43,7 +43,7 @@ void EnemyBase::update()
 
 	//Buff生成時に自分自身の削除
 	if (spawnBuffFlg == true) {
-		Stage::GetInstance()->deleteObject(this);
+		die();
 	}
 
 #ifdef DEBUG

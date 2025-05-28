@@ -1,5 +1,4 @@
 ﻿# include "Vaillant.hpp"
-# include "../Stages/Stage.hpp"
 # include "Player.hpp"
 
 Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position)
@@ -25,8 +24,6 @@ void Vaillant::update()
 		body.setPos(start_position);
 		body.setVelocity(Vec2{});
 	}
-
-	if (!hp) Stage::GetInstance()->deleteObject(this);
 }
 
 void Vaillant::draw() const
@@ -42,7 +39,7 @@ void Vaillant::onHit(ObjectBase& object)
 		{
 			object.getBody().applyLinearImpulse(Vec2{ 0, -300 });
 
-			onDamaged(10);
+			this->applyDamage(10);
 		}
 		else
 		{
@@ -55,17 +52,7 @@ void Vaillant::onHit(ObjectBase& object)
 				object.getBody().applyLinearImpulse(Vec2{ 100, -100 });
 			}
 
-			player->onDamaged(10);
+			player->applyDamage(10);
 		}
 	}
-}
-
-void Vaillant::onDamaged(float amount)
-{
-	CharacterBase::onDamaged(amount);
-}
-
-void Vaillant::onHealed(float amount)
-{
-	CharacterBase::onHealed(amount);
 }

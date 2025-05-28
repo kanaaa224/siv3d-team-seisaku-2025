@@ -4,12 +4,7 @@ GameUI* GameUI::instance = nullptr;
 
 GameUI::GameUI() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBitmap{ 48 }, player_hp(100)
 {
-	this->initialize();
-}
-
-GameUI::~GameUI()
-{
-	this->finalize();
+	initialize();
 }
 
 void GameUI::initialize()
@@ -116,11 +111,6 @@ void GameUI::draw() const
 	//buff_amountの値を文字列に変換して表示させら
 	//int値をStringに変換したら、U"×"と結合しますした。
 	fontBitmap(U"×" + Format(buff_amount)).draw(35, Vec2{ 560, 30 });
-}
-
-void GameUI::finalize()
-{
-
 }
 
 GameUI* GameUI::GetInstance()

@@ -195,6 +195,9 @@
     <ClCompile Include="source\Objects\HitBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Objects\Base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -872,16 +875,10 @@
     <ClInclude Include="source\Objects\Enemy\EnemyBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Objects\CharacterBase.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Objects\GameUI.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Ground.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Objects\ObjectBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Player.hpp">
@@ -918,6 +915,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\HitBox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Objects\Base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Objects\CharacterBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

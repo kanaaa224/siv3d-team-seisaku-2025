@@ -3,23 +3,9 @@
 
 class GameUI
 {
-private:
-	Vec2 flame_location;
-	Vec2 hp_location;
-
-	Array<String> frameNames = {};
-
-	Array<String> iconNames = {};
-
-	const Font fontBitmap;
-
-	int buff_amount;
-
-	GameUI();
-	~GameUI();
-
 public:
-	
+	GameUI();
+	~GameUI() = default;
 
 	void update();
 	void draw()const;
@@ -32,8 +18,17 @@ private:
 	static GameUI* instance;
 
 	void initialize();
-	void finalize();
+
+	Vec2 flame_location;
+	Vec2 hp_location;
+
+	Array<String> frameNames = {};
+
+	Array<String> iconNames = {};
+
+	const Font fontBitmap;
+
+	int buff_amount;
 
 	float player_hp;
-
 };
