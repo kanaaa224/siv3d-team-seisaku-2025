@@ -46,7 +46,7 @@ void Vaillant::onHit(ObjectBase& object)
 		{
 			object.getBody().applyLinearImpulse(Vec2{ 0, -300 });
 
-			addHP(-10);
+			onDamaged(10);
 		}
 		else
 		{
@@ -59,19 +59,19 @@ void Vaillant::onHit(ObjectBase& object)
 				object.getBody().applyLinearImpulse(Vec2{ 100, -100 });
 			}
 
-			player->addHP(-10);
+			player->onDamaged(10);
 		}
 	}
 }
 
 void Vaillant::onDamaged(float amount)
 {
-
+	CharacterBase::onDamaged(amount);
 }
 
 void Vaillant::onHealed(float amount)
 {
-
+	CharacterBase::onHealed(amount);
 }
 
 void Vaillant::finalize()
