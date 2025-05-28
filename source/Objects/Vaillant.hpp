@@ -13,6 +13,9 @@ public:
 
 	void onHit(ObjectBase& object) override;
 
+	void onDamaged(float amount) override;
+	void onHealed (float amount) override;
+
 private:
 	Vec2 start_position;
 

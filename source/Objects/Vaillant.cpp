@@ -10,6 +10,8 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, 
 
 	hp = 100;
 
+	max_hp = 100;
+
 	this->initialize();
 }
 
@@ -60,6 +62,16 @@ void Vaillant::onHit(ObjectBase& object)
 			player->addHP(-10);
 		}
 	}
+}
+
+void Vaillant::onDamaged(float amount)
+{
+
+}
+
+void Vaillant::onHealed(float amount)
+{
+
 }
 
 void Vaillant::finalize()
