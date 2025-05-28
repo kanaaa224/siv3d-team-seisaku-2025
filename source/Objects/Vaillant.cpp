@@ -1,6 +1,6 @@
 ﻿# include "Vaillant.hpp"
 # include "../Stages/Stage.hpp"
-# include "./Player.hpp"
+# include "Player.hpp"
 
 Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position)
 {
@@ -8,29 +8,25 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, 
 
 	body.setFixedRotation(true);
 
-	hp = 100;
-
-	max_hp = 100;
-
-	this->initialize();
-}
-
-Vaillant::~Vaillant()
-{
-	this->finalize();
+	initialize();
 }
 
 void Vaillant::initialize()
 {
+	max_hp = 100;
 
+	hp = max_hp;
 }
 
 void Vaillant::update()
 {
-	if (body.getPos().y >= 1000 || hp <= 0)
+	if (body.getPos().y >= 1000)
 	{
-		Stage::GetInstance()->deleteObject(this);
+		body.setPos(start_position);
+		body.setVelocity(Vec2{});
 	}
+
+	if (!hp) Stage::GetInstance()->deleteObject(this);
 }
 
 void Vaillant::draw() const
@@ -46,7 +42,7 @@ void Vaillant::onHit(ObjectBase& object)
 		{
 			object.getBody().applyLinearImpulse(Vec2{ 0, -300 });
 
-			addHP(-10);
+			onDamaged(10);
 		}
 		else
 		{
@@ -59,22 +55,17 @@ void Vaillant::onHit(ObjectBase& object)
 				object.getBody().applyLinearImpulse(Vec2{ 100, -100 });
 			}
 
-			player->addHP(-10);
+			player->onDamaged(10);
 		}
 	}
 }
 
 void Vaillant::onDamaged(float amount)
 {
-
+	CharacterBase::onDamaged(amount);
 }
 
 void Vaillant::onHealed(float amount)
 {
-
-}
-
-void Vaillant::finalize()
-{
-
+	CharacterBase::onHealed(amount);
 }
