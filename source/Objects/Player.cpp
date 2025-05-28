@@ -7,8 +7,6 @@
 #define JUMPSPEED 550.0	   //ジャンプ速度
 #define DISTANCE 150.0	   //回避距離
 
-#define DEBUG
-
 Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
 {
 	// プレイヤーの干渉フィルター
@@ -313,7 +311,7 @@ void Player::draw() const
 
 	auto type = body.getBodyType();
 
-#ifdef DEBUG
+#ifdef _DEBUG
 
 	Print << U"Player HP : " << hp;
 	Print << U"Player 座標 : " << body.getPos();

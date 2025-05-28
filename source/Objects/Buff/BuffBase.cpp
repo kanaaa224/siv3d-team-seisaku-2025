@@ -13,7 +13,7 @@ BuffBase::~BuffBase()
 void BuffBase::update()
 {
 
-#ifdef DEBUG
+#ifdef _DEBUG
 
 #endif // DEBUG
 
@@ -21,7 +21,7 @@ void BuffBase::update()
 
 void BuffBase::draw() const
 {
-#ifdef DEBUG
+#ifdef _DEBUG
 	//仮表示
 	RectF{ Arg::center(body.getPos().x,body.getPos().y),size.x,size.y}.draw();
 #endif // DEBUG

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "../Base.hpp"//親クラス
 
-#define DEBUG
 #define GRAVITY 10.0
 
 class BuffBase : public ObjectBase

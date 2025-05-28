@@ -46,7 +46,7 @@ void EnemyBase::update()
 		die();
 	}
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
 		hp = 0;
 	}
@@ -60,7 +60,7 @@ void EnemyBase::draw() const
 {
 
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	//画像ができるまでの仮表示
 	//Rect(position.x, position.y, size.x, size.y).draw(Palette::Red);
 

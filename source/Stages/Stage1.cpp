@@ -7,8 +7,6 @@
 # include "../Objects/GameUI.hpp"
 # include "../Objects/Hitbox.hpp"
 
-# define DEBUG
-
 Stage1::Stage1()
 {
 	initialize();
@@ -96,7 +94,7 @@ void Stage1::draw() const
 {
 	ClearPrint(); // 過去のPrint出力を消す
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	Print << U"オブジェクト数: " << objects.size();
 #endif
 

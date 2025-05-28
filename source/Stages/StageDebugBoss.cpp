@@ -7,8 +7,6 @@
 # include "../Objects/Enemy/EnemyBase.hpp"
 # include "../Objects/GameUI.hpp"
 
-# define DEBUG
-
 StageDebugBoss::StageDebugBoss()
 {
 	initialize();
@@ -84,7 +82,7 @@ void StageDebugBoss::draw() const
 {
 	ClearPrint();
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	Print << U"オブジェクト数: " << objects.size();
 #endif
 
