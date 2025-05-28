@@ -2,7 +2,7 @@
 
 GameUI* GameUI::instance = nullptr;
 
-GameUI::GameUI():flame_location(0.0, 0.0) , hp_location(0.0, 0.0), fontBitmap{ 48 },player_hp(0)
+GameUI::GameUI() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBitmap{ 48 }, player_hp(100)
 {
 	this->initialize();
 }
@@ -14,7 +14,7 @@ GameUI::~GameUI()
 
 void GameUI::initialize()
 {
-	flame_location = {350.0, 55.0 };
+	flame_location = { 350.0, 55.0 };
 
 	hp_location = { 195.0,22.0 };
 
@@ -57,15 +57,43 @@ void GameUI::draw() const
 
 	Vec2 HP_size{ 200,35 };
 
+	// HPバー関係の定義
+	const int max_hp = 100;
+	double hp_rate = Clamp(static_cast<double>(player_hp) / max_hp, 0.0, 1.0); // 0～1に制限
+
+	double full_width = HP_size.x - 25;
+	double hp_width = (HP_size.x - 25) * hp_rate;
+
 	// resizedで画像の描画サイズ(拡大率？) drawAtで中心座標を元に描画位置を設定(描画したい座標を設定)
 	// 変数を使ってるのはframeの中にiconを入れたいため
 	TextureAsset(U"Character Frame").resized(size).drawAt(position);
 	TextureAsset(U"Character Icon").resized(size.x - 10, size.y - 10).drawAt(position);
 
 	TextureAsset(U"HP_frame").resized(HP_size).drawAt(hp_location);
-	TextureAsset(U"HP_bar")(0,0,0,0).resized(HP_size.x - 25, HP_size.y - 25).drawAt(hp_location);
+	//TextureAsset(U"HP_bar")(0, 0, 0, 0).resized(HP_size.x - 25, HP_size.y - 25).drawAt(hp_location);
 
-	TextureAsset(U"time_frame").resized(200,50).drawAt(195,70);
+// バーの描画左上座標（左端を固定）したい
+	Vec2 bar_size{ full_width, HP_size.y - 25 };
+	Vec2 bar_top_left = hp_location - Vec2{ bar_size.x / 2.0, bar_size.y / 2.0 };
+
+	if (hp_rate >= 1.0)
+	{
+		// HP満タン → 画像そのまま描画させる
+		TextureAsset(U"HP_bar").resized(bar_size).draw(bar_top_left);
+	}
+	else if (hp_rate > 0.0)
+	{
+		int cut_width = static_cast<int>(hp_width);
+
+		// ひだりこてい
+		//TextureAsset(U"HP_bar")(0, 0, cut_width, static_cast<int>(bar_size.y)).resized(hp_width, bar_size.y).draw(bar_top_left);
+		TextureAsset(U"HP_bar").resized(100, bar_size.y).draw(bar_top_left);
+	}
+
+
+
+
+	TextureAsset(U"time_frame").resized(200, 50).drawAt(195, 70);
 
 
 	// 読み込みたい画像のパスをmain.cppに書きます。
@@ -73,7 +101,7 @@ void GameUI::draw() const
 	// これをTextureAsset(U"?? ??")の中に名前を入れないと呼び出しても描画されません。
 	// .resized()は 0 0 以外の値を入れてください ちなみに画像のサイズです。
 	// .drawAt()は描画したい画像の中心座標になります。
-	
+
 	Vec2 start = flame_location; //描画の開始位置　左側
 	int spacing = 180;            //横間隔
 
