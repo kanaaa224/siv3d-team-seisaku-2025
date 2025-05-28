@@ -314,3 +314,17 @@ void EnemyBase::attackMove()
 void EnemyBase::getDamageMove()
 {
 }
+
+void EnemyBase::doOncePosZero(Vec2 para)
+{
+	//今のフレームのステートと前のフレームのステートが違う時
+	//doOnceFlgを下げる
+	if (doOnceFlg == true && nowState != oldState) {
+		doOnceFlg = false;
+	}
+
+	if (doOnceFlg == false) {
+		this->getBody().setVelocity(para);
+		doOnceFlg = true;
+	}
+}

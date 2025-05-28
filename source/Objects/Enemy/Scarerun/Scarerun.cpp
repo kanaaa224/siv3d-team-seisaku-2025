@@ -73,16 +73,19 @@ void Scarerun::onHit(ObjectBase& object)
 {
 	//プレイヤーに当たったら
 	if (Player* player = dynamic_cast<Player*>(&object)) {
-		//player->onDamaged(10);//プレイヤーへダメージ
+		//プレイヤーが攻撃状態じゃないなら
+		if (player->getplayerstate() != ePlayerState::attack && (nowState != IDLE && nowState != DIE)) {
+			player->onDamaged(10);//プレイヤーへダメージ
 
-		//
-		if (object.getBody().getPos().x < body.getPos().x)
-		{
-			object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
-		}
-		else
-		{
-			object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
+			//プレイヤーのノックバック
+			if (object.getBody().getPos().x < body.getPos().x)
+			{
+				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
+			}
+			else
+			{
+				object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
+			}
 		}
 	}
 }
@@ -97,7 +100,8 @@ void Scarerun::stateControl()
 		movement(70.0f);//左右移動（数値は移動する距離）
 		break;
 	case ATTACK_POSITION:
-		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
+		//body.setVelocity(Vec2{ 0.0,body.getVelocity().y});
+		doOncePosZero(Vec2{ 0.0,body.getVelocity().y });
 		//ここに攻撃準備のSE
 		break;
 	case ATTACK:
@@ -113,7 +117,8 @@ void Scarerun::stateControl()
 		}
 		break;
 	case DIE:
-		body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
+		//body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
+		doOncePosZero(Vec2{ 0.0,body.getVelocity().y });
 		//ここに死亡時のエフェクト
 		//ここに死亡時のSE
 		break;

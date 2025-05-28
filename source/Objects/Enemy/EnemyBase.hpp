@@ -12,7 +12,7 @@
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
 
-#define DAMAGE_STOP_TIME 0.1f //ダメージストップ時間
+#define DAMAGE_STOP_TIME 1.0f //ダメージストップ時間
 
 #define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
@@ -73,6 +73,8 @@ protected:
 	bool spawnBuffFlg;                  //buffが生成されたか
 
 	bool getDamageFlg;                  //ダメージを受けた時にTrue、ダメージを受けたアニメーションが終わったらFalse
+
+	bool doOnceFlg;
 
 public:
 	EnemyBase(P2World& world, const Vec2& position);
@@ -149,6 +151,9 @@ protected:
 
 	//攻撃を受けた時の移動
 	void getDamageMove();
+
+	//１種類のステータスの処理内で１回のみ座標にゼロを入れる
+	void doOncePosZero(Vec2 para);
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 };
