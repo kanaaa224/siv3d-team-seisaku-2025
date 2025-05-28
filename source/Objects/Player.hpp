@@ -41,6 +41,8 @@ private:
 
 	float ground_y;
 
+	bool isTriggeredOnce;
+
 	//プレイヤーの状態
 	int player_s;
 

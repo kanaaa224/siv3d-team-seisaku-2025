@@ -21,6 +21,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	enableDeadZone = false;
 	flip_flg = false;
 	animation_number = 0;
+	isTriggeredOnce = true;
 
 	this->initialize();
 }
@@ -81,8 +82,13 @@ void Player::update()
 
 		player_s = 0;
 
-		//移動量なし
-		body.setVelocity(Vec2(0.0, body.getVelocity().y));
+		if (isTriggeredOnce == true)
+		{
+			//移動量なし
+			body.setVelocity(Vec2(0.0, body.getVelocity().y));
+			isTriggeredOnce = false;
+		}
+		
 
 		//ジャンプ攻撃有効化
 		jump_attack_flg = false;
@@ -124,7 +130,7 @@ void Player::update()
 
 		break;
 	case move: //移動処理
-
+		isTriggeredOnce = true;
 		player_s = 0;
 		movement(controller);
 		animation(run_animation, 0.1,8,idle);
@@ -147,6 +153,7 @@ void Player::update()
 
 		break;
 	case jump: //ジャンプ処理
+		isTriggeredOnce = true;
 		player_s = 1;
 
 		jumpmovement(controller);
@@ -161,7 +168,7 @@ void Player::update()
 		//地面についた時の処理
 		if (body.getVelocity().y == 0.0) {
 
-			body.setVelocity(Vec2(body.getVelocity().x, 0.0));
+			body.setVelocity(Vec2(body.getVelocity().x, body.getVelocity().y));
 			is_on_ground = true;
 			jump_attack_flg = false;
 			animation_number = 0;
@@ -170,31 +177,66 @@ void Player::update()
 
 		break;
 	case avoidance: //回避処理
+		isTriggeredOnce = true;
 		player_s = 2;
 
 		//すり抜け
-
+		if (body.getBodyType() == P2Dynamic)
+		{
+			body.setBodyType(P2Static);
+		}
 
 		//ダメージ受けたら死ぬ
 		if (flip_flg == true)
 		{
-			body.setVelocity(Vec2(-DISTANCE, 0.0));
+			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
 			if (animation(roll_animation, 0.1) == true)
 			{
-				playerState = ePlayerState::idle;
+				//idle状態からボタンを押したごとの処理
+				if (//move
+					controller.buttonLeft.pressed() == true ||
+					controller.buttonRight.pressed() == true ||
+					KeyA.pressed() == true ||
+					KeyD.pressed() == true ||
+					KeyLeft.pressed() == true ||
+					KeyRight.pressed() == true
+					)
+				{
+					playerState = ePlayerState::move;
+				}
+				else
+				{
+					playerState = ePlayerState::idle;
+				}
 			}
 		}
 		else
 		{
-			body.setVelocity(Vec2(DISTANCE, 0.0));
+			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
 			if (animation(roll_animation, 0.1) == true)
 			{
-				playerState = ePlayerState::idle;
+				//idle状態からボタンを押したごとの処理
+				if (//move
+					controller.buttonLeft.pressed() == true ||
+					controller.buttonRight.pressed() == true ||
+					KeyA.pressed() == true ||
+					KeyD.pressed() == true ||
+					KeyLeft.pressed() == true ||
+					KeyRight.pressed() == true
+					)
+				{
+					playerState = ePlayerState::move;
+				}
+				else
+				{
+					playerState = ePlayerState::idle;
+				}
 			}
 		}
 
 		break;
 	case attack: //攻撃処理
+		isTriggeredOnce = true;
 		player_s = 3;
 
 		if (flip_flg == true)
@@ -214,6 +256,7 @@ void Player::update()
 
 		break;
 	case jump_attack: //ジャンプ攻撃処理
+		isTriggeredOnce = true;
 		player_s = 4;
 
 		jump_attack_flg = true;
@@ -272,12 +315,15 @@ void Player::draw() const
 	body.drawFrame(1.0, ColorF(Palette::Blue));
 	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
+	auto type = body.getBodyType();
+
 #ifdef DEBUG
 
 	Print << U"Player HP : " << hp;
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
+	Print << U"Player ; " << body.getInertia();
 
 #endif // DEBUG
 }
