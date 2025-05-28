@@ -15,6 +15,14 @@ public:
 
 private:
 	Vec2 start_position;
+	
+	SizeF size;
+	
+	double animationTime;
+	
+	int state;
+	
+	bool mirrored;
 
 	void initialize();
 };
