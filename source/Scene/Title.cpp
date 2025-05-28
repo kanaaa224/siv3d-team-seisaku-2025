@@ -1,6 +1,4 @@
-﻿// Title.cpp (抜粋)
-
-# include "Title.hpp"
+﻿# include "Title.hpp"
 
 Title::Title(const InitData& init) : IScene{ init }
 {
@@ -23,7 +21,6 @@ void Title::update()
 		}
 	}
 
-	// 方向キーでのボタン選択切り替え
 	 // D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
 	if (controller.buttonDown.down() || KeyDown.down())
 	{
