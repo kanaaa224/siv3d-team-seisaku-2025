@@ -41,7 +41,9 @@ private:
 
 	float ground_y;
 
-	bool isTriggeredOnce;
+	bool isTriggeredOnce;		//一度だけの処理用フラグ
+
+	P2Filter filter;			//物理干渉のフィルター
 
 	//プレイヤーの状態
 	int player_s;

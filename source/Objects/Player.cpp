@@ -11,8 +11,12 @@
 
 Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
 {
+	// プレイヤーの干渉フィルター
+	filter.categoryBits = 0x0001;		// Playerのカテゴリ設定
+	filter.maskBits = 0x0001;			// 敵のカテゴリ設定
+
 	// プレイヤーの当たり判定
-	body = world.createRect(P2Dynamic, position, SizeF{ 55, 90 }, P2Material{ .restitution = 0.0, }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
+	body = world.createRect(P2Dynamic, position, SizeF{ 55, 90 }, P2Material{ .restitution = 0.0, }, P2Filter{ filter.categoryBits }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
 	body.setFixedRotation(true);
 
 	is_on_ground = false;
@@ -180,12 +184,6 @@ void Player::update()
 		isTriggeredOnce = true;
 		player_s = 2;
 
-		//すり抜け
-		if (body.getBodyType() == P2Dynamic)
-		{
-			body.setBodyType(P2Static);
-		}
-
 		//ダメージ受けたら死ぬ
 		if (flip_flg == true)
 		{
@@ -323,7 +321,8 @@ void Player::draw() const
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
-	Print << U"Player ; " << body.getInertia();
+	Print << U"Player カテゴリ ; " << filter.categoryBits;
+	Print << U"非干渉 マスク : " << filter.maskBits;
 
 #endif // DEBUG
 }
