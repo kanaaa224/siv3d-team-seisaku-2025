@@ -251,7 +251,7 @@ void EnemyBase::spawnBuff()
 	//タイプによって違う種類のBuffを生成する
 	switch (type)
 	{
-	case Scarerun:
+	case scarerun:
 		stage->createObject<AttackBuff>(body.getPos());
 		break;
 	default:

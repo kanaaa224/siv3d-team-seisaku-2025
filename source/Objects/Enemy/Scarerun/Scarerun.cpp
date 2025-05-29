@@ -7,7 +7,7 @@
 Scarerun::Scarerun(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
 {
-	type = eEnemyType::Scarerun;
+	type = eEnemyType::scarerun;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
 	body = world.createRect(P2Dynamic, position, SizeF{ 50, 60 },P2Material{ .friction = 0.0 });

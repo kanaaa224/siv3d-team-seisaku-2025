@@ -19,7 +19,7 @@
 
 enum eEnemyType
 {
-	Scarerun
+	scarerun
 };
 
 enum eEnemyState
