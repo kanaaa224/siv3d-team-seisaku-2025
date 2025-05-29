@@ -32,8 +32,12 @@ private:
 
 	Array <TextureRegion> idle_animation;	//待機状態アニメーション
 	Array <TextureRegion> run_animation;    //移動状態アニメーション
+	Array <TextureRegion> jump_animation;    //ジャンプ状態アニメーション
 	Array <TextureRegion> attack_animation;    //攻撃状態アニメーション
+	Array <TextureRegion> jump_attack_animation;    //ジャンプ攻撃状態アニメーション
 	Array <TextureRegion> roll_animation;    //回避状態アニメーション
+	Array <TextureRegion> damage_animation;    //ダメージアニメーション
+	Array <TextureRegion> die_animation;    //死亡アニメーション
 
 	int8 animation_number;		//画像切り替え用
 
@@ -45,8 +49,10 @@ private:
 
 	P2Filter filter;			//物理干渉のフィルター
 
-	//プレイヤーの状態
-	int player_s;
+	double hitStopTimer;  //ヒットストップタイマー
+	bool isHitStop;     //ヒットストップしたかどうか
+	bool isDamagedOnce; // 一度だけダメージ処理を通す
+
 
 public:
 

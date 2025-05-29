@@ -51,18 +51,34 @@ void Player::initialize()
 	run_animation = LoadDivGraph(U"Player Run", Size(288, 45));
 	attack_animation = LoadDivGraph(U"Player Attack", Size(288, 45));
 	roll_animation = LoadDivGraph(U"Player Roll", Size(288, 45));
+	//jump_animation = LoadDivGraph(U"Player Jump", Size(288, 45));
+	//jump_attack_animation = LoadDivGraph(U"Player Attack", Size(288, 45));
+	//damage_animation = LoadDivGraph(U"Player Damage", Size(288, 45));
+	//die_animation = LoadDivGraph(U"Player Die", Size(288, 45));
 
 	image = idle_animation[0];
 
-	player_s = 0;
-
 	body.setVelocity(Vec2(0.0, 0.0)); //移動量設定
+
+	hitStopTimer = 0.0;  //ヒットストップタイマー
+	isHitStop = false;   //ヒットストップしたかどうか
+	isDamagedOnce = false; // 一度だけダメージ処理を通す
 }
 
 void Player::update()
 {
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
+
+	// ヒットストップ処理
+	if (isHitStop == true) {
+		
+		hitStopTimer -= Scene::DeltaTime();
+		if (hitStopTimer <= 0.0) {
+			isHitStop = false;
+		}
+		return;
+	}
 
 	switch (playerState)
 	{
@@ -82,7 +98,7 @@ void Player::update()
 
 	case idle: //待機処理
 
-		player_s = 0;
+		isDamagedOnce = false;
 
 		if (isTriggeredOnce == true)
 		{
@@ -124,7 +140,7 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::avoidance;
 		}///////////////キーを押したらダメージを減らす
-		else if (KeyS.down() == true)
+		else if (KeyS.down() == true && !isDamagedOnce)////////敵に当たった時にも&& !isInvincibleを追加
 		{
 			playerState = ePlayerState::damage;
 		}///////////////
@@ -133,7 +149,8 @@ void Player::update()
 		break;
 	case move: //移動処理
 		isTriggeredOnce = true;
-		player_s = 0;
+		isDamagedOnce = false;
+
 		movement(controller);
 		animation(run_animation, 0.1,8,idle);
 
@@ -156,9 +173,9 @@ void Player::update()
 		break;
 	case jump: //ジャンプ処理
 		isTriggeredOnce = true;
-		player_s = 1;
 
 		jumpmovement(controller);
+		//animation(jump_animation, 0.1, 8, idle);
 
 		//ジャンプ攻撃
 		if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
@@ -180,7 +197,6 @@ void Player::update()
 		break;
 	case avoidance: //回避処理
 		isTriggeredOnce = true;
-		player_s = 2;
 
 		//ダメージ受けたら死ぬ
 		if (flip_flg == true)
@@ -233,7 +249,6 @@ void Player::update()
 		break;
 	case attack: //攻撃処理
 		isTriggeredOnce = true;
-		player_s = 3;
 
 		if (flip_flg == true)
 		{
@@ -253,9 +268,10 @@ void Player::update()
 		break;
 	case jump_attack: //ジャンプ攻撃処理
 		isTriggeredOnce = true;
-		player_s = 4;
 
 		jump_attack_flg = true;
+
+		//animation(jump_attack_animation, 0.1, 8, idle);
 
 		if (flip_flg == true)
 		{
@@ -274,12 +290,22 @@ void Player::update()
 		break;
 	case ePlayerState::die: //死亡処理
 
+		//animation(die_animation, 0.1, 8, idle);
 		die();
 
 		break;
 	case damage:
 
-		hp -= 50;
+		//animation(damage_animation, 0.1, 8, idle);
+		if (!isDamagedOnce) {
+			hp -= 10;
+
+			// ヒットストップ開始
+			isHitStop = true;
+			hitStopTimer = 3.0;  //後で時間調整
+
+			isDamagedOnce = true; // 一度だけ実行する
+		}
 		playerState = ePlayerState::idle;
 
 		break;
@@ -311,6 +337,11 @@ void Player::draw() const
 
 	auto type = body.getBodyType();
 
+	//無敵中は点滅
+	if (!(isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
+		image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
+	}
+
 #ifdef _DEBUG
 
 	Print << U"Player HP : " << hp;
@@ -325,7 +356,7 @@ void Player::draw() const
 
 void Player::onHit(ObjectBase& object)
 {
-	
+
 }
 
 void Player::finalize()
