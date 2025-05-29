@@ -379,6 +379,8 @@ bool Player::animation(Array<TextureRegion> image_container, double frame)
 			return false;
 		}
 	}
+	
+	return false;
 }
 
 void Player::movement(s3d::detail::XInput_impl controller)
