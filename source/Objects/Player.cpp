@@ -198,7 +198,7 @@ void Player::update()
 	case avoidance: //回避処理
 		isTriggeredOnce = true;
 
-		//ダメージ受けたら死ぬ
+		// 画像の左右反転
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
@@ -338,8 +338,8 @@ void Player::draw() const
 	auto type = body.getBodyType();
 
 	//無敵中は点滅
-	if (!(isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
-		image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
+	if ((isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
+		image.mirrored(flip_flg).resized(size).drawAt(body.getPos(), Palette::Red);
 	}
 
 #ifdef _DEBUG
@@ -350,6 +350,7 @@ void Player::draw() const
 	Print << U"Player State : " << playerState;
 	Print << U"Player カテゴリ ; " << filter.categoryBits;
 	Print << U"非干渉 マスク : " << filter.maskBits;
+	Print << U"ダメージ処理 : " << isDamagedOnce;
 
 #endif // DEBUG
 }
