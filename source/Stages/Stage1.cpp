@@ -69,6 +69,13 @@ void Stage1::update()
 				hitbox->setPlayerflip(player->getFlip());
 			}
 		}
+
+		GameUI* gameUI = GameUI::GetInstance();
+
+		gameUI->setPlayerHP(player_hp);
+		gameUI->update();
+		gameUI->setPlayerState(player->getplayerstate());
+		gameUI->setPlayerPos(player->getBody().getVelocity());
 	}
 	else
 	{
@@ -83,12 +90,6 @@ void Stage1::update()
 	}
 
 	camera.update();
-
-	GameUI* gameUI = GameUI::GetInstance();
-
-	gameUI->setPlayerHP(player_hp);
-	gameUI->update();
-	gameUI->setPlayerState(player->getplayerstate());
 
 }
 
