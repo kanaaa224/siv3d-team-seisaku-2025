@@ -49,6 +49,8 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Movement_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_movement_speed.png");
 
 	TextureAsset::Register({ U"avoidance_button",  { U"UI" } }, U"../assets/images/ui/button/short_button_animation1.png");
+
+	TextureAsset::Register({ U"Button",  { U"UI" } }, U"../assets/images/ui/x_box_botton/xbox_bigbotton_16_16.png");
 }
 
 void Initialize()
