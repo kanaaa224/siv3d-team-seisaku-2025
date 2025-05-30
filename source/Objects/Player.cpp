@@ -179,6 +179,7 @@ void Player::update()
 		//isTriggeredOnce = true;
 		isDamagedOnce = false;
 
+		//アニメーション初期化処理を1度だけ実行
 		if (isTriggeredOnce)
 		{
 			animation_number = 0;
@@ -265,6 +266,8 @@ void Player::update()
 		isTriggeredOnce = true;
 		isDamagedOnce = false;
 
+		///////////se
+
 		if (flip_flg == true)
 		{
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 98, body.getPos().y - 45));
@@ -284,7 +287,6 @@ void Player::update()
 	case jump_attack: //ジャンプ攻撃処理
 		isTriggeredOnce = true;
 		
-
 		jump_attack_flg = true;
 
 		if (flip_flg == true)
@@ -303,7 +305,7 @@ void Player::update()
 
 		break;
 	case ePlayerState::die: //死亡処理
-
+		//アニメーション初期化処理を1度だけ実行
 		if (isTriggeredOnce)
 		{
 			animation_number = 0;
@@ -311,7 +313,9 @@ void Player::update()
 		}
 
 		die();
+		////////se
 
+		//アニメーション
 		if (animation(damage_animation, 0.1))
 		{
 			isTriggeredOnce = true;
@@ -319,7 +323,7 @@ void Player::update()
 
 		break;
 	case damage:
-
+		//アニメーション初期化処理を1度だけ実行
 		if (isTriggeredOnce)
 		{
 			animation_number = 0;
@@ -335,6 +339,7 @@ void Player::update()
 
 			isDamagedOnce = true; // 一度だけ実行する
 		}
+		////////se
 
 		//アニメーション
 		if (animation(damage_animation, 0.1))
