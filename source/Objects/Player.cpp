@@ -121,7 +121,8 @@ void Player::update()
 			KeyA.pressed() == true ||
 			KeyD.pressed() == true ||
 			KeyLeft.pressed() == true ||
-			KeyRight.pressed() == true
+			KeyRight.pressed() == true||
+			std::abs(controller.leftThumbX) > 0.2
 			)
 		{
 			playerState = ePlayerState::move;
@@ -232,6 +233,7 @@ void Player::update()
 				if (//move
 					controller.buttonLeft.pressed() == true ||
 					controller.buttonRight.pressed() == true ||
+					controller.buttonLThumb.pressed() == true ||
 					KeyA.pressed() == true ||
 					KeyD.pressed() == true ||
 					KeyLeft.pressed() == true ||
@@ -425,6 +427,10 @@ bool Player::animation(Array<TextureRegion> image_container, double frame)
 
 void Player::movement(s3d::detail::XInput_impl controller)
 {
+	// 左スティックのXY軸
+	double lx = controller.leftThumbX;
+	double ly = controller.leftThumbY;
+
 	//移動処理
 	if (
 		controller.buttonLeft.pressed() == true ||
@@ -448,6 +454,14 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		flip_flg = false;
 
 		//移動状態のときボタンを押されたら
+	}
+	else if (std::abs(lx) > 0.2)  // デッドゾーン 0.2
+	{
+		// 移動速度をスティック傾きに応じて調整
+		body.setVelocity(Vec2(lx * VELOCITY, body.getVelocity().y));
+
+		// 左右の向き判定
+		flip_flg = (lx < 0);
 	}
 	else
 	{
