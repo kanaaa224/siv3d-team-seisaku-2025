@@ -6,7 +6,6 @@
 
 #define IMG_CHANGE_TIME 0.1f   //画像の切り替え速度
 #define MOVE_SPEED      20.0f  //移動速度
-#define GRAVITY 9.807f        //重力
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
@@ -64,7 +63,7 @@ protected:
 
 	Vec2 spawnPosition;                 //スポーン位置を格納
 
-	float damageStop_ct;                //ダメージを受けてから何秒経過しているか
+	double damageStop_ct;                //ダメージを受けてから何秒経過しているか
 	bool damageStopFlg;                 //ダメージを受けるのを止めるか止めないか
 
 	P2World* nowWorld;                  //現在の物理シュミレーション
@@ -91,7 +90,7 @@ protected:
 	/// ステートに合わせて画像を切り替える
 	/// </summary>
 	/// <param name="delta_second">1フレーム何秒経過したか</param>
-	virtual void animation(float delta_second);
+	virtual void animation(double delta_second);
 	/// <summary>
 	/// 敵のステートをセット
 	/// </summary>

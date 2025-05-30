@@ -29,7 +29,7 @@ void EnemyBase::update()
 		//設定した時間になったらFlgをFalseにする
 		if (damageStop_ct >= DAMAGE_STOP_TIME) {
 			damageStopFlg = false;
-			damageStop_ct = 0;
+			damageStop_ct = 0.0;
 		}
 	}
 
@@ -72,7 +72,7 @@ void EnemyBase::onHit(ObjectBase& object)
 {
 }
 
-void EnemyBase::animation(float delta_second)
+void EnemyBase::animation(double delta_second)
 {
 	switch (nowState)
 	{
