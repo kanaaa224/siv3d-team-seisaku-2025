@@ -1,7 +1,7 @@
-﻿# include "Vaillant.hpp"
+# include "Vaillant.hpp"
 # include "Player.hpp"
 
-Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(0), mirrored(false)
+Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(0), mirrored(false), attack_started(false)
 {
 	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
 
@@ -29,9 +29,49 @@ void Vaillant::update()
 	if (KeyJ.pressed()) body.applyLinearImpulse(Vec2{ -10,     0 });
 	if (KeyI.down())    body.applyLinearImpulse(Vec2{   0, -2500 });
 	if (KeyL.pressed()) body.applyLinearImpulse(Vec2{  10,     0 });
-#endif
-
+	
 	if (KeyH.down()) heal(10);
+#endif
+	
+	double distance = body.getPos().distanceFrom(player_position);
+	
+	if (distance <= 500) attack_started = true;
+	
+	if(attack_started)
+	{
+		static bool jumped = false;
+
+		bool walking_direction = false;
+		
+		distance = body.getPos().x - player_position.x;
+		
+		if (distance >  100) walking_direction = true;
+		if (distance < -100) walking_direction = false;
+		
+		body.applyLinearImpulse(walking_direction ? Vec2{ -10, 0 } : Vec2{ 10, 0 });
+		
+		distance = Abs(distance);
+		
+		if (!jumped && distance <= 300)
+		{
+			body.applyLinearImpulse(Vec2{ 0, -2500 });
+			
+			jumped = true;
+		}
+		
+		if (distance >= 400) jumped = false;
+	}
+	else
+	{
+		static bool roaming_flipped = false;
+
+		distance = body.getPos().x - start_position.x;
+		
+		if (distance >  100) roaming_flipped = true;
+		if (distance < -100) roaming_flipped = false;
+
+		body.applyLinearImpulse(roaming_flipped ? Vec2{ -8.5, 0 } : Vec2{ 8.5, 0 });
+	}
 	
 	state = 0;
 	
@@ -71,6 +111,8 @@ void Vaillant::draw() const
 			
 			currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
 			
+			if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
+			
 			if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
 
 			break;
@@ -104,7 +146,7 @@ void Vaillant::onHit(ObjectBase& object)
 	{
 		if (object.getBody().getPos().y < (body.getPos().y - 100))
 		{
-			object.getBody().applyLinearImpulse(Vec2{ 0, -300 });
+			object.getBody().applyLinearImpulse(Vec2{ 0, -100 });
 
 			this->applyDamage(10);
 		}
@@ -112,11 +154,11 @@ void Vaillant::onHit(ObjectBase& object)
 		{
 			if (object.getBody().getPos().x < body.getPos().x)
 			{
-				object.getBody().applyLinearImpulse(Vec2{ -100, -100 });
+				object.getBody().applyLinearImpulse(Vec2{ -50, -50 });
 			}
 			else
 			{
-				object.getBody().applyLinearImpulse(Vec2{ 100, -100 });
+				object.getBody().applyLinearImpulse(Vec2{ 50, -50 });
 			}
 
 			player->applyDamage(10);

@@ -1,4 +1,4 @@
-﻿# include "Stage1.hpp"
+# include "Stage1.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
@@ -6,6 +6,7 @@
 # include "../Objects/Enemy/Scarerun/Scarerun.hpp"
 # include "../Objects/GameUI.hpp"
 # include "../Objects/Hitbox.hpp"
+# include "../Objects/Vaillant.hpp"
 
 Stage1::Stage1()
 {
@@ -18,6 +19,7 @@ void Stage1::initialize()
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>(Vec2{ -5, 500 });
 	createObject<Scarerun>(Vec2{ 450, 500 });
+	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 1000, 500 });
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
@@ -60,6 +62,11 @@ void Stage1::update()
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
 			{
 				enemy->setPlayerPos(player->getBody().getPos());
+			}
+			
+			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
+			{
+				vaillant->setPlayerPosition(player->getBody().getPos());
 			}
 
 			if (HitBox* hitbox = dynamic_cast<HitBox*>(object))

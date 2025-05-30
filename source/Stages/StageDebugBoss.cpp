@@ -1,4 +1,4 @@
-﻿# include "StageDebugBoss.hpp"
+# include "StageDebugBoss.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
@@ -56,6 +56,11 @@ void StageDebugBoss::update()
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
 			{
 				enemy->setPlayerPos(player->getBody().getPos());
+			}
+			
+			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
+			{
+				vaillant->setPlayerPosition(player->getBody().getPos());
 			}
 		}
 	}
