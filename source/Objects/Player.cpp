@@ -179,7 +179,7 @@ void Player::update()
 
 		break;
 	case jump: //ジャンプ処理
-		//isTriggeredOnce = true;
+		isTriggeredOnce = true;
 		isDamagedOnce = false;
 
 		//アニメーション初期化処理を1度だけ実行
@@ -205,7 +205,7 @@ void Player::update()
 				body.setVelocity(Vec2(body.getVelocity().x, body.getVelocity().y));
 				is_on_ground = true;
 				jump_attack_flg = false;
-				isTriggeredOnce = true;
+				animation_number = 0;
 				playerState = ePlayerState::idle;
 			}
 		}
