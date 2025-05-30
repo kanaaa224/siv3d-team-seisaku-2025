@@ -120,7 +120,7 @@ void GameUI::draw() const
 
 	
 		// プレイヤーが地面にいる場合
-		if (player_state == idle)
+		if (player_vel.y == 0.0)
 		{
 			FontAsset(U"TitleFont")(U"攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 110 });
 			xbutton.resized(35,35).drawAt(210,115);
@@ -130,7 +130,7 @@ void GameUI::draw() const
 			Bbutton.resized(35, 35).drawAt(210, 195);
 		}
 		// プレイヤーが地面にいない場合（ジャンプ中など）
-		else if(player_state == jump)
+		else 
 		{
 			FontAsset(U"TitleFont")(U"ジャンプ攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 130, 110 });
 			xbutton.resized(35, 35).drawAt(270, 115);

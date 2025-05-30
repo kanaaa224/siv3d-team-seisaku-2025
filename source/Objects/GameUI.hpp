@@ -13,6 +13,7 @@ public:
 	
 	void setPlayerHP(float hp) { player_hp = hp; };
 	void setPlayerState(int state) { player_state = state; };
+	void setPlayerVel(Vec2 vel) { player_vel = vel; };
 
 	static GameUI* GetInstance();
 
@@ -45,6 +46,7 @@ private:
 
 	float player_hp;
 	float player_state;
+	Vec2 player_vel;
 
 	Player* m_player;
 };
