@@ -314,7 +314,6 @@ void Player::update()
 
 		if (animation(damage_animation, 0.1))
 		{
-			playerState = ePlayerState::idle;
 			isTriggeredOnce = true;
 		}
 
