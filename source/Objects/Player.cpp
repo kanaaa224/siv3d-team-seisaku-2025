@@ -55,8 +55,13 @@ void Player::initialize()
 	run_animation = LoadDivGraph(U"Player Run", Size(288, 45));
 	attack_animation = LoadDivGraph(U"Player Attack", Size(288, 45));
 	roll_animation = LoadDivGraph(U"Player Roll", Size(288, 45));
-	jump_animation = LoadDivGraph(U"Player Jump", Size(288, 45));
-	jump_attack_animation = LoadDivGraph(U"Player Jump_Attack", Size(288, 45));
+
+	jump_up_animation = LoadDivGraph(U"Player Jump up", Size(288, 46));
+	jump_full_animation = LoadDivGraph(U"Player Jump full", Size(288, 60));
+	jump_down_animation = LoadDivGraph(U"Player Jump down", Size(288, 60));
+
+	jump_attack_animation = LoadDivGraph(U"Player Jump_Attack", Size(288, 60));
+
 	damage_animation = LoadDivGraph(U"Player Damage", Size(288, 45));
 	die_animation = LoadDivGraph(U"Player Die", Size(288, 45));
 
@@ -83,6 +88,7 @@ void Player::update()
 		if (hitStopTimer <= 0.0) {
 			isHitStop = false;
 		}
+		//return;
 	}
 
 	switch (playerState)
@@ -148,13 +154,13 @@ void Player::update()
 		}///////////////キーを押したらダメージを減らす
 		else if (KeyS.down() == true && !isDamagedOnce)////////敵に当たった時にも&& !isInvincibleを追加
 		{
+			animation_number = 0;
 			playerState = ePlayerState::damage;
 		}///////////////
 
 
 		break;
 	case move: //移動処理
-		isAnimeOnce = true;
 		isDamagedOnce = false;
 
 		movement(controller);
@@ -179,15 +185,8 @@ void Player::update()
 
 		break;
 	case jump: //ジャンプ処理
-		isTriggeredOnce = true;
 		isDamagedOnce = false;
 
-		//アニメーション初期化処理を1度だけ実行
-		if (isAnimeOnce)
-		{
-			animation_number = 0;
-			isAnimeOnce = false;
-		}
 		//ジャンプ処理
 		jumpmovement(controller);
 		////////se追加する場合
@@ -197,25 +196,38 @@ void Player::update()
 		{
 			playerState = ePlayerState::jump_attack;
 		}
-		if ((animation(jump_animation, 0.1) == true))
-		{
-			//地面についた時の処理
-			if (body.getVelocity().y == 0.0) {
 
-				body.setVelocity(Vec2(body.getVelocity().x, body.getVelocity().y));
-				is_on_ground = true;
-				jump_attack_flg = false;
-				animation_number = 0;
-				playerState = ePlayerState::idle;
-			}
+		//ジャンプ開始
+		if (body.getVelocity().y >= -JUMPSPEED && body.getVelocity().y < 0.0)
+		{
+			animation(jump_up_animation, 0.1);
+		}
+		//滞空～降下
+		else if (body.getVelocity().y >= 0.0 && body.getVelocity().y < 200.0)
+		{
+			animation(jump_full_animation, 0.1);
+		}
+		//降下～着地まで
+		else if (body.getVelocity().y >= 200.0 && body.getVelocity().y == 0.0)
+		{
+			animation(jump_down_animation, 0.1);
+		}
+		
+
+		//地面についた時の処理
+		if (body.getVelocity().y == 0.0) {
+
+			body.setVelocity(Vec2(body.getVelocity().x, body.getVelocity().y));
+			is_on_ground = true;
+			jump_attack_flg = false;
+			animation_number = 0;
+			playerState = ePlayerState::idle;
 		}
 	
 		break;
 	case avoidance: //回避処理
-		isTriggeredOnce = true;
 		isDamagedOnce = false;
 
-		//ダメージ受けたら死ぬ
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
@@ -266,9 +278,7 @@ void Player::update()
 
 		break;
 	case attack: //攻撃処理
-		isTriggeredOnce = true;
-		isDamagedOnce = false;
-
+		//isDamagedOnce = false;
 		///////////se
 
 		if (flip_flg == true)
@@ -288,8 +298,8 @@ void Player::update()
 
 		break;
 	case jump_attack: //ジャンプ攻撃処理
-		isAnimeOnce = true;
 		jump_attack_flg = true;
+		isDamagedOnce = false;
 
 		if (flip_flg == true)
 		{
@@ -302,42 +312,31 @@ void Player::update()
 
 		if (animation(jump_attack_animation, 0.1)) {
 			playerState = ePlayerState::jump;
-			isAnimeOnce = true;
 		}
 
 		break;
 	case ePlayerState::die: //死亡処理
-		//アニメーション初期化処理を1度だけ実行
-		if (isAnimeOnce)
-		{
-			animation_number = 0;
-			isAnimeOnce = false;
-		}
-
-		die();
+		isDamagedOnce = false;
+		
 		////////se
 
 		//アニメーション
-		if (animation(damage_animation, 0.1))
+		if (animation(die_animation, 0.1))
 		{
-			isAnimeOnce = true;
+			die();
 		}
 
 		break;
 	case damage:
-		//アニメーション初期化処理を1度だけ実行
-		if (isAnimeOnce)
-		{
-			animation_number = 0;
-			isAnimeOnce = false;
-		}
+
+		
 
 		if (!isDamagedOnce) {
+			
 			hp -= 10;
-		
 			// ヒットストップ開始
 			isHitStop = true;
-			hitStopTimer = 0.1;  //後で時間調整
+			hitStopTimer = 3.0;  //後で時間調整
 
 			isDamagedOnce = true; // 一度だけ実行する
 		}
@@ -347,7 +346,6 @@ void Player::update()
 		if (animation(damage_animation, 0.1))
 		{
 			playerState = ePlayerState::idle;
-			isAnimeOnce = true;
 		}
 
 		break;
@@ -388,10 +386,6 @@ void Player::draw() const
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
-	Print << U"Player カテゴリ ; " << filter.categoryBits;
-	Print << U"非干渉 マスク : " << filter.maskBits;
-	Print << U"ダメージ処理 : " << isDamagedOnce;
-	Print << U"タイマー : " << hitStopTimer;
 	Print << U"Hit判定 : " << isHitFlg;
 
 #endif // DEBUG

@@ -37,7 +37,9 @@ private:
 
 	Array <TextureRegion> idle_animation;	//待機状態アニメーション
 	Array <TextureRegion> run_animation;    //移動状態アニメーション
-	Array <TextureRegion> jump_animation;    //ジャンプ状態アニメーション
+	Array <TextureRegion> jump_up_animation;    //ジャンプ開始状態アニメーション
+	Array <TextureRegion> jump_full_animation;    //ジャンプ中間状態アニメーション
+	Array <TextureRegion> jump_down_animation;    //ジャンプ降下状態アニメーション
 	Array <TextureRegion> attack_animation;    //攻撃状態アニメーション
 	Array <TextureRegion> jump_attack_animation;    //ジャンプ攻撃状態アニメーション
 	Array <TextureRegion> roll_animation;    //回避状態アニメーション
