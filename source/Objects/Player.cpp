@@ -2,6 +2,7 @@
 # include "../Utils/CustomImageLoader.hpp"
 # include "../Stages/Stage.hpp"
 # include "../Objects/HitBox.hpp"
+# include "../Objects/Enemy/Scarerun/Scarerun.hpp"
 
 #define VELOCITY 150.0	   //移動速度
 #define JUMPSPEED 550.0	   //ジャンプ速度
@@ -24,6 +25,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	flip_flg = false;
 	animation_number = 0;
 	isTriggeredOnce = true;
+	isHitFlg = false;
 
 	this->initialize();
 }
@@ -334,12 +336,10 @@ void Player::draw() const
 	body.drawFrame(1.0, ColorF(Palette::Blue));
 	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
-	auto type = body.getBodyType();
-
-	////無敵中は点滅
-	//if (!(isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
-	//	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
-	//}
+	//無敵中は点滅
+	if ((isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
+		image.mirrored(flip_flg).resized(size).drawAt(body.getPos(), Palette::Red);
+	}
 
 #ifdef _DEBUG
 
@@ -349,13 +349,23 @@ void Player::draw() const
 	Print << U"Player State : " << playerState;
 	Print << U"Player カテゴリ ; " << filter.categoryBits;
 	Print << U"非干渉 マスク : " << filter.maskBits;
+	Print << U"ダメージ処理 : " << isDamagedOnce;
+	Print << U"タイマー : " << hitStopTimer;
+	Print << U"Hit判定 : " << isHitFlg;
 
 #endif // DEBUG
 }
 
 void Player::onHit(ObjectBase& object)
 {
-
+	//プレイヤーに当たったら
+	if (Scarerun* scarerun = dynamic_cast<Scarerun*>(&object)) {
+		isHitFlg = true;
+	}
+	else
+	{
+		isHitFlg = false;
+	}
 }
 
 void Player::finalize()

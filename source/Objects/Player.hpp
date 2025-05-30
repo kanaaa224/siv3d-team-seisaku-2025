@@ -53,6 +53,7 @@ private:
 	bool isHitStop;     //ヒットストップしたかどうか
 	bool isDamagedOnce; // 一度だけダメージ処理を通す
 
+	bool isHitFlg;		// 当たったかどうか
 
 public:
 
@@ -72,7 +73,7 @@ public:
 
 private:
 	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
-	bool animation(Array<TextureRegion> image_container, double frame);
+	bool animation(Array<TextureRegion> image_container, double frame);	//攻撃アニメーション用関数
 	void movement(s3d::detail::XInput_impl controller);	//左右移動
 	void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理
 };
