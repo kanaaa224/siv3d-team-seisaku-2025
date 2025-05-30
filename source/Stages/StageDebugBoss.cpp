@@ -57,6 +57,11 @@ void StageDebugBoss::update()
 			{
 				enemy->setPlayerPos(player->getBody().getPos());
 			}
+			
+			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
+			{
+				vaillant->setPlayerPosition(player->getBody().getPos());
+			}
 		}
 	}
 	else
