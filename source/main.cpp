@@ -14,6 +14,10 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Player Run",  { U"Player" } }, U"../assets/images/player/run/run_288_45_8.png");
 	TextureAsset::Register({ U"Player Attack", { U"Player" } }, U"../assets/images/player/attack1/atk_288_45.png");
 	TextureAsset::Register({ U"Player Roll", { U"Player" } }, U"../assets/images/player/roll/roll_288_45_7.png");
+	TextureAsset::Register({ U"Player Jump", { U"Player" } }, U"../assets/images/player/jump_full/jump_between.png");
+	TextureAsset::Register({ U"Player Jump_Attack", { U"Player" } }, U"../assets/images/player/air_attak/air_atk1.png");
+	TextureAsset::Register({ U"Player Damage", { U"Player" } }, U"../assets/images/player/take_hit/take_hit_1.png");
+	TextureAsset::Register({ U"Player Die", { U"Player" } }, U"../assets/images/player/death/death_1.png");
 
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
 	TextureAsset::Register({ U"Scarerun Idle", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");

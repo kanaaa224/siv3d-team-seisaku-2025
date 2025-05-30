@@ -55,10 +55,10 @@ void Player::initialize()
 	run_animation = LoadDivGraph(U"Player Run", Size(288, 45));
 	attack_animation = LoadDivGraph(U"Player Attack", Size(288, 45));
 	roll_animation = LoadDivGraph(U"Player Roll", Size(288, 45));
-	jump_animation = LoadDivGraph(U"Player jump_full", Size(288, 45));
-	jump_attack_animation = LoadDivGraph(U"Player air_attak", Size(288, 45));
-	damage_animation = LoadDivGraph(U"Player take_hit", Size(288, 45));
-	die_animation = LoadDivGraph(U"Player death", Size(288, 45));
+	jump_animation = LoadDivGraph(U"Player Jump", Size(288, 45));
+	jump_attack_animation = LoadDivGraph(U"Player Jump_Attack", Size(288, 45));
+	damage_animation = LoadDivGraph(U"Player Damage", Size(288, 45));
+	die_animation = LoadDivGraph(U"Player Die", Size(288, 45));
 
 	image = idle_animation[0];
 
