@@ -117,9 +117,7 @@ protected:
 	/// </summary>
 	virtual void getDamageMovement() {};
 
-	/// <summary>
-	/// デバッグ用のHP表示
-	/// </summary>
+	//hpバーの表示
 	void drawHP() const;
 
 	/// <summary>
