@@ -14,7 +14,7 @@ Stage1::Stage1()
 
 void Stage1::initialize()
 {
-	createObject<StageBackground>(Vec2{ 0, 0 });
+	createObject<StageBackground>(Vec2{ -640, 0 });
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>(Vec2{ -5, 500 });
 	createObject<Scarerun>(Vec2{ 450, 500 });
