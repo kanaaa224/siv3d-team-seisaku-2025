@@ -7,6 +7,7 @@
 #define VELOCITY 150.0	   //移動速度
 #define JUMPSPEED 550.0	   //ジャンプ速度
 #define DISTANCE 150.0	   //回避距離
+#define ITIME	1.5		   //無敵時間
 
 Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
 {
@@ -26,6 +27,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	animation_number = 0;
 	isTriggeredOnce = true;
 	isHitFlg = false;
+	invincibleDuration = ITIME;
 
 	this->initialize();
 }

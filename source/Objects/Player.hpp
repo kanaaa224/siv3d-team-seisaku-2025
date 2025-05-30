@@ -61,7 +61,7 @@ private:
 	bool isHitFlg;		// 当たったかどうか
 
 	Stopwatch invincibleTimer;		 //無敵時間用タイマー
-	const double invincibleDuration; // 無敵時間（1.5秒）
+	double invincibleDuration; // 無敵時間（1.5秒）
 
 public:
 
