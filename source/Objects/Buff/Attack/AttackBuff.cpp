@@ -1,5 +1,6 @@
 ﻿#include "AttackBuff.h"
 
+
 AttackBuff::AttackBuff(P2World& world, const Vec2& position)
 	: BuffBase(world, position)
 {
@@ -15,4 +16,9 @@ void AttackBuff::update()
 void AttackBuff::draw() const
 {
 	BuffBase::draw();
+}
+
+void AttackBuff::onHit(ObjectBase& object)
+{
+	BuffBase::onHit(object);//親クラスのメゾットを呼び出す
 }

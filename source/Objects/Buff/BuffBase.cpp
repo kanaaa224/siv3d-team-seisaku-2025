@@ -1,4 +1,8 @@
 ﻿#include "BuffBase.hpp"
+//Player
+#include "../Player.hpp"
+//Stage1
+#include "../../Stages/Stage1.hpp"
 
 BuffBase::BuffBase(P2World& world, const Vec2& position) :
 	ObjectBase(world, position)//リスポーン位置
@@ -29,6 +33,9 @@ void BuffBase::draw() const
 
 void BuffBase::onHit(ObjectBase& object)
 {
+	if (Player* player = dynamic_cast<Player*>(&object)) {
+		Stage::GetInstance()->deleteObject(this);
+	}
 }
 
 void BuffBase::drop_movement()
