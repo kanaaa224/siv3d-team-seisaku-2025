@@ -88,6 +88,8 @@ void Stage1::update()
 
 	gameUI->setPlayerHP(player_hp);
 	gameUI->update();
+	gameUI->setPlayerState(player->getplayerstate());
+
 }
 
 void Stage1::draw() const

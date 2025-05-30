@@ -1,4 +1,6 @@
 ﻿# include "GameUI.hpp"
+#include "../Utils/CustomImageLoader.hpp"
+
 
 GameUI* GameUI::instance = nullptr;
 
@@ -30,6 +32,12 @@ void GameUI::initialize()
 	};
 
 	buff_amount = 0;
+
+	button = LoadDivGraph(U"Button", Size(16, 16));
+
+	xbutton = button[0];
+	Abutton = button[5];
+	Bbutton = button[15];
 
 }
 
@@ -90,7 +98,6 @@ void GameUI::draw() const
 
 	TextureAsset(U"time_frame").resized(200, 50).drawAt(195, 70);
 
-
 	// 読み込みたい画像のパスをmain.cppに書きます。
 	// 書いた「U"?? ??"」が名前です。
 	// これをTextureAsset(U"?? ??")の中に名前を入れないと呼び出しても描画されません。
@@ -108,9 +115,27 @@ void GameUI::draw() const
 		TextureAsset(iconNames[i]).resized(50, 50).drawAt(pos);
 	}
 
-	//buff_amountの値を文字列に変換して表示させら
-	//int値をStringに変換したら、U"×"と結合しますした。
 	fontBitmap(U"×" + Format(buff_amount)).draw(35, Vec2{ 560, 30 });
+
+
+	
+		// プレイヤーが地面にいる場合
+		if (player_state == idle)
+		{
+			FontAsset(U"TitleFont")(U"攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 110 });
+			xbutton.resized(35,35).drawAt(210,115);
+			FontAsset(U"TitleFont")(U"ジャンプボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 120, 150 });
+			Abutton.resized(35, 35).drawAt(260, 155);
+			FontAsset(U"TitleFont")(U"回避ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 190 });
+			Bbutton.resized(35, 35).drawAt(210, 195);
+		}
+		// プレイヤーが地面にいない場合（ジャンプ中など）
+		else if(player_state == jump)
+		{
+			FontAsset(U"TitleFont")(U"ジャンプ攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 130, 110 });
+			xbutton.resized(35, 35).drawAt(270, 115);
+		}
+	
 }
 
 GameUI* GameUI::GetInstance()
