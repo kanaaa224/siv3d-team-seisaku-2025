@@ -58,6 +58,8 @@ private:
 	bool isHitStop;     //ヒットストップしたかどうか
 	bool isDamagedOnce; // 一度だけダメージ処理を通す
 
+	bool isAnimeOnce; // 一度だけanime処理を通す
+
 	bool isHitFlg;		// 当たったかどうか
 
 	Stopwatch invincibleTimer;		 //無敵時間用タイマー
