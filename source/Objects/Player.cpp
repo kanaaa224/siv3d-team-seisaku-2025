@@ -77,7 +77,6 @@ void Player::update()
 		if (hitStopTimer <= 0.0) {
 			isHitStop = false;
 		}
-		return;
 	}
 
 	switch (playerState)
@@ -302,7 +301,7 @@ void Player::update()
 
 			// ヒットストップ開始
 			isHitStop = true;
-			hitStopTimer = 3.0;  //後で時間調整
+			hitStopTimer = 0.1;  //後で時間調整
 
 			isDamagedOnce = true; // 一度だけ実行する
 		}
@@ -337,10 +336,10 @@ void Player::draw() const
 
 	auto type = body.getBodyType();
 
-	//無敵中は点滅
-	if (!(isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
-		image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
-	}
+	////無敵中は点滅
+	//if (!(isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
+	//	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
+	//}
 
 #ifdef _DEBUG
 
