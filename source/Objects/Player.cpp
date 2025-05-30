@@ -65,6 +65,7 @@ void Player::initialize()
 	hitStopTimer = 0.0;  //ヒットストップタイマー
 	isHitStop = false;   //ヒットストップしたかどうか
 	isDamagedOnce = false; // 一度だけダメージ処理を通す
+
 }
 
 void Player::update()
@@ -175,6 +176,7 @@ void Player::update()
 		break;
 	case jump: //ジャンプ処理
 		isTriggeredOnce = true;
+		isDamagedOnce = false;
 
 		jumpmovement(controller);
 		//animation(jump_animation, 0.1, 8, idle);
@@ -199,6 +201,7 @@ void Player::update()
 		break;
 	case avoidance: //回避処理
 		isTriggeredOnce = true;
+		isDamagedOnce = false;
 
 		//ダメージ受けたら死ぬ
 		if (flip_flg == true)
@@ -252,6 +255,7 @@ void Player::update()
 		break;
 	case attack: //攻撃処理
 		isTriggeredOnce = true;
+		isDamagedOnce = false;
 
 		if (flip_flg == true)
 		{
@@ -363,6 +367,10 @@ void Player::onHit(ObjectBase& object)
 	//プレイヤーに当たったら
 	if (Scarerun* scarerun = dynamic_cast<Scarerun*>(&object)) {
 		isHitFlg = true;
+		if (!isDamagedOnce)
+		{
+			playerState =ePlayerState::damage;
+		}
 	}
 	else
 	{
@@ -379,6 +387,11 @@ ePlayerState Player::getplayerstate() const
 {
 	return playerState;
 }
+
+//void Player::setplayerstate(ePlayerState state)
+//{
+//	playerState = state;
+//}
 
 void Player::animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state)
 {

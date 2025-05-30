@@ -15,6 +15,11 @@ enum ePlayerState
 	null,		//何もなし(初期化用)
 };
 
+enum eItemState
+{
+	//バフアイテムの追加
+};
+
 class Player : public CharacterBase
 {
 private:
@@ -66,10 +71,13 @@ public:
 	void finalize();
 
 	ePlayerState getplayerstate() const;
-	//ePlayerState setplayerstate(int state);	//デバッグの時に使うかも
+	//void setplayerstate(ePlayerState state);	//デバッグの時に使うかも
 
 	void onHit(ObjectBase& object) override;
 	bool getFlip()    const { return flip_flg; }
+
+	//eItemState getItemstate() const;   //itemのステータスを返す
+	//setItemstate(eItemState item);  //itemの設定
 
 private:
 	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
