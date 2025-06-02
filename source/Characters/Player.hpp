@@ -35,16 +35,18 @@ private:
 
 	TextureRegion image;		//画像描画用
 
-	Array <TextureRegion> idle_animation;	//待機状態アニメーション
-	Array <TextureRegion> run_animation;    //移動状態アニメーション
-	Array <TextureRegion> jump_up_animation;    //ジャンプ開始状態アニメーション
-	Array <TextureRegion> jump_full_animation;    //ジャンプ中間状態アニメーション
-	Array <TextureRegion> jump_down_animation;    //ジャンプ降下状態アニメーション
-	Array <TextureRegion> attack_animation;    //攻撃状態アニメーション
+	Array <TextureRegion> idle_animation;			//待機状態アニメーション
+	Array <TextureRegion> run_animation;			//移動状態アニメーション
+
+	Array <TextureRegion> jump_up_animation;		//ジャンプ開始状態アニメーション
+	Array <TextureRegion> jump_full_animation;		//ジャンプ中間状態アニメーション
+	Array <TextureRegion> jump_down_animation;		//ジャンプ降下状態アニメーション
+
+	Array <TextureRegion> attack_animation;			//攻撃状態アニメーション
 	Array <TextureRegion> jump_attack_animation;    //ジャンプ攻撃状態アニメーション
-	Array <TextureRegion> roll_animation;    //回避状態アニメーション
-	Array <TextureRegion> damage_animation;    //ダメージアニメーション
-	Array <TextureRegion> die_animation;    //死亡アニメーション
+	Array <TextureRegion> roll_animation;			//回避状態アニメーション
+	Array <TextureRegion> damage_animation;			//ダメージアニメーション
+	Array <TextureRegion> die_animation;			//死亡アニメーション
 
 	int8 animation_number;		//画像切り替え用
 
@@ -58,14 +60,6 @@ private:
 
 	double hitStopTimer;  //ヒットストップタイマー
 	bool isHitStop;     //ヒットストップしたかどうか
-	bool isDamagedOnce; // 一度だけダメージ処理を通す
-
-	bool isAnimeOnce; // 一度だけanime処理を通す
-
-	bool isHitFlg;		// 当たったかどうか
-
-	Stopwatch invincibleTimer;		 //無敵時間用タイマー
-	double invincibleDuration; // 無敵時間（1.5秒）
 
 public:
 
@@ -81,6 +75,11 @@ public:
 	//void setplayerstate(ePlayerState state);	//デバッグの時に使うかも
 
 	void onHit(ObjectBase& object) override;
+	void onDamaged(float amount) override;	//ダメージを受けた時の処理
+	void destroy() override;				//死体が消える系
+
+	void die() override;					//死亡処理
+
 	bool getFlip()    const { return flip_flg; }
 
 	//eItemState getItemstate() const;   //itemのステータスを返す
