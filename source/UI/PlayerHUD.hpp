@@ -1,12 +1,12 @@
 ﻿# pragma once
-# include <Siv3D.hpp>
-#include"Player.hpp"
+# include "../Common.hpp"
+# include "../Characters/Player.hpp"
 
-class GameUI
+class PlayerHUD
 {
 public:
-	GameUI();
-	~GameUI() = default;
+	PlayerHUD();
+	~PlayerHUD() = default;
 
 	void update();
 	void draw()const;
@@ -15,7 +15,7 @@ public:
 	void setPlayerState(int state) { player_state = state; };
 	void setPlayerVel(Vec2 vel) { player_vel = vel; };
 
-	static GameUI* GetInstance();
+	static PlayerHUD* GetInstance();
 
 	// Playerインスタンスを設定する関数
 	void setPlayer(Player* player) { m_player = player; }
@@ -28,7 +28,7 @@ public:
 	TextureRegion xbutton;
 
 private:
-	static GameUI* instance;
+	static PlayerHUD* instance;
 
 	void initialize();
 	

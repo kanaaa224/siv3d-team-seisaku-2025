@@ -1,6 +1,6 @@
 ﻿# pragma once
 
-# include "CharacterBase.hpp"
+# include "Base.hpp"
 
 enum ePlayerState
 {

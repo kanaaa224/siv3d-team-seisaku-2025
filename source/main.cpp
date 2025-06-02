@@ -1,6 +1,6 @@
 ﻿# include "Common.hpp"
-# include "Scene/Title.hpp"
-# include "Scene/Game.hpp"
+# include "Scenes/Title.hpp"
+# include "Scenes/Game.hpp"
 
 void AssetsRegistration()
 {

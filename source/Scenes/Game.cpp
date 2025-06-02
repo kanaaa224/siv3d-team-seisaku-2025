@@ -1,6 +1,6 @@
 ﻿# include "Game.hpp"
-# include "../Stages/Stage1.hpp"
-# include "../Stages/StageDebugBoss.hpp"
+# include "../Stages/1.hpp"
+# include "../Stages/DebugBoss.hpp"
 
 Game::Game(const InitData& init) : IScene{ init }
 {
@@ -10,7 +10,7 @@ Game::Game(const InitData& init) : IScene{ init }
 		return;
 	}
 
-	switch (getData().nowStage)
+	switch (getData().current_stage)
 	{
 	case 0:
 		Stage::NewInstance();

@@ -1,8 +1,8 @@
 ﻿#include "BuffBase.hpp"
 //Player
-#include "../Player.hpp"
+#include "../../Characters/Player.hpp"
 //Stage1
-#include "../../Stages/Stage1.hpp"
+#include "../../Stages/1.hpp"
 
 BuffBase::BuffBase(P2World& world, const Vec2& position) :
 	ObjectBase(world, position)//リスポーン位置

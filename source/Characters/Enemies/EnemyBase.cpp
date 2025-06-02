@@ -1,7 +1,7 @@
 ﻿#include "EnemyBase.hpp"
-#include "../../Stages/Stage1.hpp"
-#include "../Buff/Attack/AttackBuff.h"
-#include "../Enemy/Scarerun/Scarerun.hpp"
+#include "../../Stages/1.hpp"
+#include "../../Objects/Buff/Attack/AttackBuff.h"
+#include "../../Characters/Enemies/Scarerun/Scarerun.hpp"
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
