@@ -4,6 +4,7 @@
 # include "../Objects/Wall.hpp"
 # include "../Characters/Player.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
+# include "../Characters/Enemies/Flot/Flot.hpp"
 # include "../UI/PlayerHUD.hpp"
 # include "../Objects/Hitbox.hpp"
 # include "../Characters/Vaillant.hpp"
@@ -19,6 +20,7 @@ void Stage1::initialize()
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>(Vec2{ -5, 500 });
 	createObject<Scarerun>(Vec2{ 450, 500 });
+	createObject<Flot>(Vec2{ 1000,500 });
 	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 1000, 500 });
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
 

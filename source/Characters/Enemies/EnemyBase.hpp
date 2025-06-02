@@ -18,7 +18,8 @@
 
 enum eEnemyType
 {
-	scarerun
+	scarerun,
+	flot
 };
 
 enum eEnemyState

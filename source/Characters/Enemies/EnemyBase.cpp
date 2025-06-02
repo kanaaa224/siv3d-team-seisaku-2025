@@ -232,6 +232,7 @@ void EnemyBase::animation(double delta_second)
 
 void EnemyBase::movement(float distance, eMovementDirection para)
 {
+	//X軸方向
 	if (para == eMovementDirection::X) {
 		if (spawnPosition.x <= body.getPos().x) {
 			body.setVelocity(Vec2{ -MOVE_SPEED,body.getVelocity().y });
@@ -242,8 +243,11 @@ void EnemyBase::movement(float distance, eMovementDirection para)
 			img_flipFlg = false;
 		}
 	}
+	//Y軸方向
 	else if (para == eMovementDirection::Y) {
+		if (spawnPosition.y <= body.getPos().y) {
 
+		}
 	}
 	
 }
@@ -264,6 +268,13 @@ void EnemyBase::getDamage(float damage)
 		hp -= damage;
 		getDamageFlg = true;
 		damageStopFlg = true;
+
+		if (playerPos.x > body.getPos().x) {
+			body.applyLinearImpulse(Vec2{ -100,-10 });
+		}
+		else {
+			body.applyLinearImpulse(Vec2{ 100,-10 });
+		}
 	}
 
 	//HPが０以下なら０にする
