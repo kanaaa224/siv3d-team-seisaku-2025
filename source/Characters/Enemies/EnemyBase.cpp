@@ -3,6 +3,10 @@
 #include "../Buff/Attack/AttackBuff.h"
 //Player
 #include "../Player.hpp"
+#include "../../Stages/1.hpp"
+#include "../../Objects/Buff/Attack/AttackBuff.h"
+#include "../../Characters/Enemies/Scarerun/Scarerun.hpp"
+
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置

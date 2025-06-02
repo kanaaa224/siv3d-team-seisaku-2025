@@ -1,8 +1,8 @@
 ﻿#pragma once
 //親クラス
-#include "../CharacterBase.hpp"
+#include "../Base.hpp"
 //Buffの親クラス
-#include "../Buff/BuffBase.hpp"
+#include "../../Objects/Buff/BuffBase.hpp"
 
 #define IMG_CHANGE_TIME 0.1f   //画像の切り替え速度
 #define MOVE_SPEED      20.0f  //移動速度

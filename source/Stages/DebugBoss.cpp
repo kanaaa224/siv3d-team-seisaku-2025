@@ -1,11 +1,11 @@
-# include "StageDebugBoss.hpp"
+﻿# include "DebugBoss.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
-# include "../Objects/Vaillant.hpp"
-# include "../Objects/Player.hpp"
-# include "../Objects/Enemy/EnemyBase.hpp"
-# include "../Objects/GameUI.hpp"
+# include "../Characters/Vaillant.hpp"
+# include "../Characters/Player.hpp"
+# include "../Characters/Enemies/EnemyBase.hpp"
+# include "../UI/PlayerHUD.hpp"
 
 StageDebugBoss::StageDebugBoss()
 {
@@ -78,9 +78,9 @@ void StageDebugBoss::update()
 
 	camera.update();
 
-	GameUI* gameUI = GameUI::GetInstance();
+	PlayerHUD* playerHUD = PlayerHUD::GetInstance();
 
-	gameUI->update();
+	playerHUD->update();
 }
 
 void StageDebugBoss::draw() const
@@ -97,7 +97,7 @@ void StageDebugBoss::draw() const
 		Stage::draw();
 	}
 
-	GameUI::GetInstance()->draw();
+	PlayerHUD::GetInstance()->draw();
 }
 
 void StageDebugBoss::NewInstance()

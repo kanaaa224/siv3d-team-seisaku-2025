@@ -1,6 +1,6 @@
 ﻿# include "HitBox.hpp"
-# include "../Objects/Enemy/EnemyBase.hpp"
-# include "../Objects/Player.hpp"
+# include "../Characters/Enemies/EnemyBase.hpp"
+# include "../Characters/Player.hpp"
 
 bool HitBox::flg = false;
 

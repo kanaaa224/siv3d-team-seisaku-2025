@@ -1,8 +1,8 @@
 ﻿# include "Player.hpp"
 # include "../Utils/CustomImageLoader.hpp"
-# include "../Stages/Stage.hpp"
+# include "../Stage.hpp"
 # include "../Objects/HitBox.hpp"
-# include "../Objects/Enemy/Scarerun/Scarerun.hpp"
+# include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 
 #define VELOCITY 150.0	   //移動速度
 #define JUMPSPEED 550.0	   //ジャンプ速度

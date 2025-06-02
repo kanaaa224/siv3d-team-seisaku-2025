@@ -1,15 +1,15 @@
-﻿# include "GameUI.hpp"
-#include "../Utils/CustomImageLoader.hpp"
+﻿# include "PlayerHUD.hpp"
+# include "../Utils/CustomImageLoader.hpp"
 
 
-GameUI* GameUI::instance = nullptr;
+PlayerHUD* PlayerHUD::instance = nullptr;
 
-GameUI::GameUI() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBitmap{ 48 }, player_hp(100)
+PlayerHUD::PlayerHUD() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBitmap{ 48 }, player_hp(100)
 {
 	initialize();
 }
 
-void GameUI::initialize()
+void PlayerHUD::initialize()
 {
 	flame_location = { 350.0, 55.0 };
 
@@ -41,7 +41,7 @@ void GameUI::initialize()
 
 }
 
-void GameUI::update()
+void PlayerHUD::update()
 {
 	if (KeyP.down())
 	{
@@ -49,7 +49,7 @@ void GameUI::update()
 	}
 }
 
-void GameUI::draw() const
+void PlayerHUD::draw() const
 {
 
 	Print << U"Player HP: " << player_hp;
@@ -138,9 +138,9 @@ void GameUI::draw() const
 	
 }
 
-GameUI* GameUI::GetInstance()
+PlayerHUD* PlayerHUD::GetInstance()
 {
-	if (instance == nullptr) instance = new GameUI();
+	if (instance == nullptr) instance = new PlayerHUD();
 
 	return instance;
 }

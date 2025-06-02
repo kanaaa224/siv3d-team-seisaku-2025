@@ -1,6 +1,6 @@
-﻿# pragma once
+# pragma once
 
-# include <Siv3D.hpp>
+# include "../Common.hpp"
 
 class ObjectBase
 {
@@ -8,17 +8,17 @@ public:
 	ObjectBase(P2World& world, const Vec2& position) { (void)world; (void)position; }
 	virtual ~ObjectBase() = default;
 
-	virtual void update() {}     // 更新時に自動で呼び出される関数
-	virtual void draw() const {} // 描画時に自動で呼び出される関数
+	virtual void update() {}
+	virtual void draw() const {}
 
-	virtual void onHit(ObjectBase& object) { (void)object; } // 衝突時に自動で呼び出される関数
+	virtual void onHit(ObjectBase& object) { (void)object; }
 
 	P2Body& getBody() { return body; }
 
-	virtual void destroy() { deleteSelf(); } // 自分自身を破壊する関数
+	virtual void destroy() { deleteSelf(); }
 
 protected:
-	P2Body body; // 物理演算のワールドに生成された物体
+	P2Body body;
 
-	void deleteSelf(); // 自分自身のオブジェクト（インスタンス）を削除する関数
+	void deleteSelf();
 };

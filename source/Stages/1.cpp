@@ -1,12 +1,12 @@
-# include "Stage1.hpp"
+﻿# include "1.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
-# include "../Objects/Player.hpp"
-# include "../Objects/Enemy/Scarerun/Scarerun.hpp"
-# include "../Objects/GameUI.hpp"
+# include "../Characters/Player.hpp"
+# include "../Characters/Enemies/Scarerun/Scarerun.hpp"
+# include "../UI/PlayerHUD.hpp"
 # include "../Objects/Hitbox.hpp"
-# include "../Objects/Vaillant.hpp"
+# include "../Characters/Vaillant.hpp"
 
 Stage1::Stage1()
 {
@@ -77,12 +77,12 @@ void Stage1::update()
 			}
 		}
 
-		GameUI* gameUI = GameUI::GetInstance();
+		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
 
-		gameUI->setPlayerHP(player_hp);
-		gameUI->update();
-		gameUI->setPlayerState(player->getplayerstate());
-		gameUI->setPlayerVel(player->getBody().getVelocity());
+		playerHUD->setPlayerHP(player_hp);
+		playerHUD->update();
+		playerHUD->setPlayerState(player->getplayerstate());
+		playerHUD->setPlayerVel(player->getBody().getVelocity());
 	}
 	else
 	{
@@ -114,7 +114,7 @@ void Stage1::draw() const
 		Stage::draw();
 	}
 
-	GameUI::GetInstance()->draw();
+	PlayerHUD::GetInstance()->draw();
 }
 
 void Stage1::NewInstance()
