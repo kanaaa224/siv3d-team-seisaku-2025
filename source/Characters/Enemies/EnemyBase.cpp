@@ -1,7 +1,11 @@
 ﻿#include "EnemyBase.hpp"
+
+//Player
+#include "../Player.hpp"
 #include "../../Stages/1.hpp"
 #include "../../Objects/Buff/Attack/AttackBuff.h"
 #include "../../Characters/Enemies/Scarerun/Scarerun.hpp"
+
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
@@ -14,6 +18,9 @@ EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 
 	spawnBuffFlg = false;//バフがスポーンしたか
 	playerFoundFlg = false;//プレイヤーを発見したか
+
+
+	hp_imgSize = Vec2(100, 100);//Hp画像サイズ
 }
 
 EnemyBase::~EnemyBase()
@@ -70,6 +77,23 @@ void EnemyBase::draw() const
 
 void EnemyBase::onHit(ObjectBase& object)
 {
+	//プレイヤーに当たったら
+	if (Player* player = dynamic_cast<Player*>(&object)) {
+		//プレイヤーが攻撃状態じゃないなら
+		if (player->getplayerstate() != ePlayerState::attack && (nowState == ATTACK)) {
+			player->applyDamage(10);//プレイヤーへダメージ
+
+			//プレイヤーのノックバック
+			if (object.getBody().getPos().x < body.getPos().x)
+			{
+				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
+			}
+			else
+			{
+				object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
+			}
+		}
+	}
 }
 
 void EnemyBase::animation(double delta_second)
@@ -221,11 +245,10 @@ void EnemyBase::movement(float distance)
 void EnemyBase::drawHP() const
 {
 	//現在のHP割合
-	float hp_rate = hp / max_hp;
-	float hp_x_size = HP_X_MAXSIZE * hp_rate;
+	//float hp_rate   = hp / max_hp;
+	//float hp_x_size = HP_X_MAXSIZE * hp_rate;
 
-	//HPバーをBoxで描画
-	
+	//HPバーを描画
 }
 
 void EnemyBase::getDamage(float damage)

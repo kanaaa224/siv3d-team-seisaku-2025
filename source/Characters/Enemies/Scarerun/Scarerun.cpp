@@ -1,8 +1,6 @@
 ﻿#include "Scarerun.hpp"
 //画像の分割読み込み
 #include "../../../Utils/CustomImageLoader.hpp"
-//Player
-#include "../../Player.hpp"
 
 Scarerun::Scarerun(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
@@ -10,7 +8,16 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	type = eEnemyType::scarerun;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
-	body = world.createRect(P2Dynamic, position, SizeF{ 50, 60 },P2Material{ .friction = 0.0 });
+	body = world.createRect(
+		P2Dynamic,
+		position,
+		SizeF{ 50, 60 },
+		P2Material{ .friction = 0.0 },
+		P2Filter{
+			.categoryBits = CollisionCategory::Enemy,
+			.maskBits = CollisionCategory::All
+		}
+	);
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 
 	//画像を分割読み込み
@@ -56,7 +63,7 @@ void Scarerun::draw() const
 	Vec2 size = Vec2(100, 100);
 	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
 	body.drawFrame();
-
+	drawHP();
 #ifdef _DEBUG
 	Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Scarerun_SpawnPos : " << spawnPosition;
@@ -69,27 +76,6 @@ void Scarerun::draw() const
 #endif // DEBUG
 }
 
-void Scarerun::onHit(ObjectBase& object)
-{
-	//プレイヤーに当たったら
-	if (Player* player = dynamic_cast<Player*>(&object)) {
-		//プレイヤーが攻撃状態じゃないなら
-		if (player->getplayerstate() != ePlayerState::attack && (nowState != IDLE && nowState != DIE)) {
-			player->applyDamage(10);//プレイヤーへダメージ
-
-			//プレイヤーのノックバック
-			if (object.getBody().getPos().x < body.getPos().x)
-			{
-				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
-			}
-			else
-			{
-				object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
-			}
-		}
-	}
-}
-
 void Scarerun::stateControl()
 {
 	switch (nowState)
@@ -97,7 +83,7 @@ void Scarerun::stateControl()
 	case NONE:
 		break;
 	case IDLE:
-		movement(70.0f);//左右移動（数値は移動する距離）
+		movement(70.0f, eMovementDirection::X);//左右移動（数値は移動する距離）
 		break;
 	case ATTACK_POSITION:
 		//body.setVelocity(Vec2{ 0.0,body.getVelocity().y});

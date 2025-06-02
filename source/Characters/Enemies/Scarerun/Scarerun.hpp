@@ -11,7 +11,7 @@ public:
 	void update() override;
 	void draw() const override;
 
-	void onHit(ObjectBase& object) override;
+	//void onHit(ObjectBase& object) override;
 
 private:
 	void stateControl() override;
