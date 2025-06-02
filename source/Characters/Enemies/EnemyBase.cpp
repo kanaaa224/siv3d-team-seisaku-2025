@@ -230,16 +230,22 @@ void EnemyBase::animation(double delta_second)
 	}
 }
 
-void EnemyBase::movement(float distance)
+void EnemyBase::movement(float distance, eMovementDirection para)
 {
-	if (spawnPosition.x <= body.getPos().x) {
-		body.setVelocity(Vec2{ -MOVE_SPEED,body.getVelocity().y});
-		img_flipFlg = true;
+	if (para == eMovementDirection::X) {
+		if (spawnPosition.x <= body.getPos().x) {
+			body.setVelocity(Vec2{ -MOVE_SPEED,body.getVelocity().y });
+			img_flipFlg = true;
+		}
+		if (spawnPosition.x - distance >= body.getPos().x) {
+			body.setVelocity(Vec2{ MOVE_SPEED,body.getVelocity().y });
+			img_flipFlg = false;
+		}
 	}
-	if (spawnPosition.x - distance >= body.getPos().x) {
-		body.setVelocity(Vec2{ MOVE_SPEED,body.getVelocity().y });
-		img_flipFlg = false;
+	else if (para == eMovementDirection::Y) {
+
 	}
+	
 }
 
 void EnemyBase::drawHP() const

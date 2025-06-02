@@ -37,6 +37,12 @@ enum eLookDirection
 	LEFT
 };
 
+enum eMovementDirection
+{
+	X,
+	Y
+};
+
 class EnemyBase : public CharacterBase
 {
 protected:
@@ -114,7 +120,7 @@ protected:
 	/// 始点に方向転換して移動する
 	/// </summary>
 	/// <param name="distance"></param>
-	virtual void movement(float distance);
+	virtual void movement(float distance, eMovementDirection para);
 
 	/// <summary>
 	/// ダメージを受けた時の移動
