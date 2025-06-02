@@ -1,6 +1,5 @@
 ﻿#include "EnemyBase.hpp"
-#include "../../Stages/Stage1.hpp"
-#include "../Buff/Attack/AttackBuff.h"
+
 //Player
 #include "../Player.hpp"
 #include "../../Stages/1.hpp"
