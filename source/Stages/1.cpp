@@ -17,7 +17,7 @@ Stage1::Stage1()
 void Stage1::initialize()
 {
 	//ステージオブジェクト
-	createObject<StageBackground>(Vec2{ -640, 0 });
+	createObject<StageBackground>(Vec2{ 0, 0 });
 	createObject<Ground>         (Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>           (Vec2{ -5, 500 });
 
@@ -87,7 +87,8 @@ void Stage1::update()
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
 			{
-				stagebackground->setCameraPos(camera.getCenter());
+				stagebackground->setCameraPos(camera.getTargetCenter());
+				stagebackground->setPlayerVelocity(player->getBody().getVelocity());
 			}
 		}
 

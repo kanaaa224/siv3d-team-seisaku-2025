@@ -1,25 +1,64 @@
 ﻿# include "StageBackground.hpp"
 
+#define SCREEN_WIDTH (1280.0)
+
 StageBackground::StageBackground(P2World& world, const Vec2& position) : ObjectBase(world, position)
 {
-	left_position = Vec2(position);
-	right_position = Vec2((position.x * -1), position.y);
+	pos_1st = Vec2(position);
+	pos_2nd = Vec2(Scene::Width(), position.y);
 }
 
 void StageBackground::update()
 {
-	
+	// ステージ1がカメラの左外に出た
+	if (pos_1st.x + Scene::Width() < camera_pos.x)
+	{
+		pos_1st.x = pos_2nd.x + Scene::Width();
+	}
+
+	//ステージ2がカメラの左外に出た
+	if (pos_2nd.x + Scene::Width() < camera_pos.x)
+	{
+		pos_2nd.x = pos_1st.x + Scene::Width();
+	}
+
+	//// ステージ1が右外に出た
+	//if (pos_1st.x > cameraTopLeft.x + Scene::Width())
+	//{
+	//	pos_1st.x = pos_2nd.x - Scene::Width();
+	//}
+
+	//// ステージ2が右外に出た
+	//if (pos_2nd.x > cameraTopLeft.x + Scene::Width())
+	//{
+	//	pos_2nd.x = pos_1st.x - Scene::Width();
+	//}
+
 }
 
 void StageBackground::draw() const
 {
-	//左側
-	TextureAsset(U"Stage 1 Background").resized(Scene::Size()).draw(left_position);
-	//右側
-	TextureAsset(U"Stage 1 Background").resized(Scene::Size()).draw(right_position);
+	//最初に描画されている背景 1枚目
+	TextureAsset(U"Stage 1 Background").resized(Scene::Size()).draw(pos_1st - (cameraTopLeft) / 2);
+	//右横に描画されている背景 2枚目
+	TextureAsset(U"Stage 1 Background").resized(Scene::Size()).draw(pos_2nd - (cameraTopLeft) / 2);
+
+	/*Print << U"Stage1: " << pos_1st;
+	Print << U"Stage2: " << pos_2nd;
+	Print << U"CameraLeft: " << cameraTopLeft.x;
+	Print << U"CameraLeft: " << cameraTopLeft.x;
+	Print << U"camera_pos: " << camera_pos;*/
+
 }
 
 void StageBackground::setCameraPos(Vec2 pos)
 {
 	camera_pos = pos;
+	cameraTopLeft = camera_pos - Vec2(Scene::Width() / 2, Scene::Height() / 2);
+	//cameraTopLeft = Vec2(camera_pos.x + 640.0, camera_pos.y);
+}
+
+void StageBackground::setPlayerVelocity(Vec2 velocity)
+{
+	playerVelocity = velocity;
 }
