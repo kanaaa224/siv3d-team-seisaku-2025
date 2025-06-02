@@ -62,7 +62,7 @@ void Flot::update()
 void Flot::draw() const
 {
 	Vec2 size = Vec2(100, 100);
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
+	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos(),Palette::Red);
 	body.drawFrame();
 	drawHP();
 }
