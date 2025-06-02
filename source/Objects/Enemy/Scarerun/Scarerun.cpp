@@ -1,8 +1,6 @@
 ﻿#include "Scarerun.hpp"
 //画像の分割読み込み
 #include "../../../Utils/CustomImageLoader.hpp"
-//Player
-#include "../../Player.hpp"
 
 Scarerun::Scarerun(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
@@ -56,7 +54,7 @@ void Scarerun::draw() const
 	Vec2 size = Vec2(100, 100);
 	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
 	body.drawFrame();
-
+	drawHP();
 #ifdef _DEBUG
 	Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Scarerun_SpawnPos : " << spawnPosition;
@@ -67,27 +65,6 @@ void Scarerun::draw() const
 	Print << U"Enemy_Scarerun_HP : " << hp;
 	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;
 #endif // DEBUG
-}
-
-void Scarerun::onHit(ObjectBase& object)
-{
-	//プレイヤーに当たったら
-	if (Player* player = dynamic_cast<Player*>(&object)) {
-		//プレイヤーが攻撃状態じゃないなら
-		if (player->getplayerstate() != ePlayerState::attack && (nowState != IDLE && nowState != DIE)) {
-			player->applyDamage(10);//プレイヤーへダメージ
-
-			//プレイヤーのノックバック
-			if (object.getBody().getPos().x < body.getPos().x)
-			{
-				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
-			}
-			else
-			{
-				object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
-			}
-		}
-	}
 }
 
 void Scarerun::stateControl()

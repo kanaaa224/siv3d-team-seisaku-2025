@@ -40,14 +40,14 @@ enum eLookDirection
 class EnemyBase : public CharacterBase
 {
 protected:
-	eEnemyType type;                    //敵のタイプ
+	eEnemyType type;                        //敵のタイプ
 
-	eEnemyState nowState;               //現在の状態
-	eEnemyState oldState;               //1フレーム前の状態
-	float nowStateTime;                 //現在の状態へ遷移してからの経過時間
+	eEnemyState nowState;                   //現在の状態
+	eEnemyState oldState;                   //1フレーム前の状態
+	double nowStateTime;                    //現在の状態へ遷移してからの経過時間
 
-	Vec2 playerPos;                     //プレイヤーの現在地
-	bool playerFoundFlg;                //プレイヤーを発見したか
+	Vec2 playerPos;                         //プレイヤーの現在地
+	bool playerFoundFlg;                    //プレイヤーを発見したか
 
 	TextureRegion now_texture;              //現在の画像
 
@@ -57,20 +57,24 @@ protected:
 	Array<TextureRegion> getAttack_img;     //攻撃を受ける画像
 	Array<TextureRegion> die_img;           //死亡の画像
 	int nowImageNum;                        //画像配列の現在の要素数を格納する用
-	float imageChangeTime;                  //画像切替用変数
+	double imageChangeTime;                 //画像切替用変数
+
+	TextureRegion hp_back_img;              //hpバーの後ろ画像
+	TextureRegion hp_front_img;             //hpバーの前画像
+	Vec2 hp_imgSize;                        //hpバーの画像サイズ
 
 	bool img_flipFlg;                       //画像を左右反転
 
-	Vec2 spawnPosition;                 //スポーン位置を格納
+	Vec2 spawnPosition;                     //スポーン位置を格納
 
-	double damageStop_ct;                //ダメージを受けてから何秒経過しているか
-	bool damageStopFlg;                 //ダメージを受けるのを止めるか止めないか
+	double damageStop_ct;                   //ダメージを受けてから何秒経過しているか
+	bool damageStopFlg;                     //ダメージを受けるのを止めるか止めないか
 
-	P2World* nowWorld;                  //現在の物理シュミレーション
+	P2World* nowWorld;                      //現在の物理シュミレーション
 
-	bool spawnBuffFlg;                  //buffが生成されたか
+	bool spawnBuffFlg;                      //buffが生成されたか
 
-	bool getDamageFlg;                  //ダメージを受けた時にTrue、ダメージを受けたアニメーションが終わったらFalse
+	bool getDamageFlg;                      //ダメージを受けた時にTrue、ダメージを受けたアニメーションが終わったらFalse
 
 	bool doOnceFlg;
 
