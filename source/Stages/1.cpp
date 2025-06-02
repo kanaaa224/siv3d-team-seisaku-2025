@@ -16,12 +16,19 @@ Stage1::Stage1()
 
 void Stage1::initialize()
 {
+	//ステージオブジェクト
 	createObject<StageBackground>(Vec2{ -640, 0 });
-	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
-	createObject<Wall>(Vec2{ -5, 500 });
+	createObject<Ground>         (Vec2{ 5000, (Scene::Height() + 5) });
+	createObject<Wall>           (Vec2{ -5, 500 });
+
+	//敵
 	createObject<Scarerun>(Vec2{ 450, 500 });
-	createObject<Flot>(Vec2{ 1000,500 });
+	createObject<Flot>    (Vec2{ 1000,500 });
+
+	//ボス
 	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 1000, 500 });
+
+	//プレイヤー
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
