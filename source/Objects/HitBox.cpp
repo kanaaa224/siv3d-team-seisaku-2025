@@ -10,6 +10,7 @@ HitBox::HitBox(P2World& world, const Vec2& position) : ObjectBase(world, positio
 		P2Kinematic,
 		position,
 		RectF{ 20, 90 },
+		// 物体の衝突判定の設定 ただし、すり抜けはできない
 		P2Filter{
 
 			// 自分のカテゴリ設定

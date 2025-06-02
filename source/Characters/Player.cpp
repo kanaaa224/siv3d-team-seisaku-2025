@@ -7,7 +7,7 @@
 #define VELOCITY 150.0	   //移動速度
 #define JUMPSPEED 550.0	   //ジャンプ速度
 #define DISTANCE 150.0	   //回避距離
-#define ITIME	1.5		   //無敵時間
+#define ITIME	2.0		   //無敵時間
 
 Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
 {
@@ -26,8 +26,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	flip_flg = false;
 	animation_number = 0;
 	isTriggeredOnce = true;
-	isHitFlg = false;
-	invincibleDuration = ITIME;
+	hitStopTimer = 0;
 
 	this->initialize();
 }
@@ -69,11 +68,8 @@ void Player::initialize()
 
 	body.setVelocity(Vec2(0.0, 0.0)); //移動量設定
 
-	hitStopTimer = 0.0;  //ヒットストップタイマー
+	hitStopTimer = ITIME;  //ヒットストップタイマー
 	isHitStop = false;   //ヒットストップしたかどうか
-	isDamagedOnce = false; // 一度だけダメージ処理を通す
-
-	isAnimeOnce = false;
 }
 
 void Player::update()
@@ -81,14 +77,9 @@ void Player::update()
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
-	// ヒットストップ処理
-	if (isHitStop == true) {
-		
-		hitStopTimer -= Scene::DeltaTime();
-		if (hitStopTimer <= 0.0) {
-			isHitStop = false;
-		}
-		//return;
+	if (hp <= 0)
+	{
+		playerState = ePlayerState::die;
 	}
 
 	switch (playerState)
@@ -108,8 +99,6 @@ void Player::update()
 		playerState = ePlayerState::idle;
 
 	case idle: //待機処理
-
-		isDamagedOnce = false;
 
 		if (isTriggeredOnce == true)
 		{
@@ -152,7 +141,7 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::avoidance;
 		}///////////////キーを押したらダメージを減らす
-		else if (KeyS.down() == true && !isDamagedOnce)////////敵に当たった時にも&& !isInvincibleを追加
+		else if (isHitStop == true && hitStopTimer >= ITIME)////////敵に当たった時にも&& !isInvincibleを追加
 		{
 			animation_number = 0;
 			playerState = ePlayerState::damage;
@@ -161,7 +150,6 @@ void Player::update()
 
 		break;
 	case move: //移動処理
-		isDamagedOnce = false;
 
 		movement(controller);
 		animation(run_animation, 0.1,8,idle);
@@ -185,7 +173,6 @@ void Player::update()
 
 		break;
 	case jump: //ジャンプ処理
-		isDamagedOnce = false;
 
 		//ジャンプ処理
 		jumpmovement(controller);
@@ -226,7 +213,6 @@ void Player::update()
 	
 		break;
 	case avoidance: //回避処理
-		isDamagedOnce = false;
 
 		if (flip_flg == true)
 		{
@@ -278,7 +264,6 @@ void Player::update()
 
 		break;
 	case attack: //攻撃処理
-		//isDamagedOnce = false;
 		///////////se
 
 		if (flip_flg == true)
@@ -299,7 +284,6 @@ void Player::update()
 		break;
 	case jump_attack: //ジャンプ攻撃処理
 		jump_attack_flg = true;
-		isDamagedOnce = false;
 
 		if (flip_flg == true)
 		{
@@ -315,31 +299,9 @@ void Player::update()
 		}
 
 		break;
-	case ePlayerState::die: //死亡処理
-		isDamagedOnce = false;
-		
-		////////se
 
-		//アニメーション
-		if (animation(die_animation, 0.1))
-		{
-			die();
-		}
-
-		break;
 	case damage:
 
-		
-
-		if (!isDamagedOnce) {
-			
-			hp -= 10;
-			// ヒットストップ開始
-			isHitStop = true;
-			hitStopTimer = 3.0;  //後で時間調整
-
-			isDamagedOnce = true; // 一度だけ実行する
-		}
 		////////se
 
 		//アニメーション
@@ -349,13 +311,26 @@ void Player::update()
 		}
 
 		break;
+
+	case ePlayerState::die: //死亡処理
+
+		////////se
+
+		die();
+
+		break;
 	default: //例外
 		break;
 	}
 
-	if (hp <= 0)
-	{
-		playerState = ePlayerState::die;
+	// ヒットストップ処理
+	if (isHitStop == true) {
+
+		hitStopTimer -= Scene::DeltaTime();
+		if (hitStopTimer <= 0.0) {
+			isHitStop = false;
+			hitStopTimer = ITIME;
+		}
 	}
 
 	// （仮） 落ちたら戻ってくる
@@ -376,7 +351,7 @@ void Player::draw() const
 	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
 	//無敵中は点滅
-	if ((isDamagedOnce && Fmod(Scene::Time(), 0.1) < 0.05)) {
+	if ((isHitStop && Fmod(Scene::Time(), 0.1) < 0.05)) {
 		image.mirrored(flip_flg).resized(size).drawAt(body.getPos(), Palette::Red);
 	}
 
@@ -386,24 +361,39 @@ void Player::draw() const
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
-	Print << U"Hit判定 : " << isHitFlg;
+	Print << U"hitStopTimer : " << hitStopTimer;
+	Print << U"isHitStop : " << isHitStop;
 
 #endif // DEBUG
 }
 
 void Player::onHit(ObjectBase& object)
 {
-	//プレイヤーに当たったら
-	if (Scarerun* scarerun = dynamic_cast<Scarerun*>(&object)) {
-		isHitFlg = true;
-		if (!isDamagedOnce)
-		{
-			playerState =ePlayerState::damage;
-		}
-	}
-	else
+	
+}
+
+void Player::onDamaged(float amount)
+{
+	if (isHitStop == false)
 	{
-		isHitFlg = false;
+		addHP(-amount);
+		isHitStop = true;
+	}
+}
+
+void Player::destroy()
+{
+	ObjectBase::destroy();
+}
+
+void Player::die()
+{
+	//アニメーション
+	if (animation(die_animation, 0.1))
+	{
+		//2秒待ったらにしたい
+
+		CharacterBase::die();
 	}
 }
 
