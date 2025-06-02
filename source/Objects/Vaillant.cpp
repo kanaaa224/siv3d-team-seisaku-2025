@@ -1,7 +1,7 @@
-﻿# include "Vaillant.hpp"
+# include "Vaillant.hpp"
 # include "Player.hpp"
 
-Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(0), mirrored(false)
+Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(0), mirrored(false), attack_started(false)
 {
 	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
 

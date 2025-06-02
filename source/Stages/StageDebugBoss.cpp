@@ -1,4 +1,4 @@
-﻿# include "StageDebugBoss.hpp"
+# include "StageDebugBoss.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
