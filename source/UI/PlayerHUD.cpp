@@ -79,19 +79,23 @@ void PlayerHUD::draw() const
 	Vec2 bar_size{ full_width, HP_size.y - 25 };
 	Vec2 bar_top_left = hp_location - Vec2{ bar_size.x / 2.0, bar_size.y / 2.0 };
 
-	if (hp_rate >= 1.0)
-	{
-		// HP満タン → 画像そのまま描画させる
-		TextureAsset(U"HP_bar").resized(bar_size).draw(bar_top_left);
-	}
-	else if (hp_rate > 0.0)
-	{
-		int cut_width = static_cast<int>(hp_width);
+	TextureAsset(U"HP_bar")(0, 0, static_cast<int>(hp_width), static_cast<int>(bar_size.y))
+		.resized(hp_width, bar_size.y)
+		.draw(bar_top_left);
 
-		// ひだりこてい
-		//TextureAsset(U"HP_bar")(0, 0, cut_width, static_cast<int>(bar_size.y)).resized(hp_width, bar_size.y).draw(bar_top_left);
-		TextureAsset(U"HP_bar").resized(100, bar_size.y).draw(bar_top_left);
-	}
+	//if (hp_rate >= 1.0)
+	//{
+	//	// HP満タン → 画像そのまま描画させる
+	//	TextureAsset(U"HP_bar").resized(bar_size).draw(bar_top_left);
+	//}
+	//else if (hp_rate > 0.0)
+	//{
+	//	int cut_width = static_cast<int>(hp_width);
+
+	//	// ひだりこてい
+	//	//TextureAsset(U"HP_bar")(0, 0, cut_width, static_cast<int>(bar_size.y)).resized(hp_width, bar_size.y).draw(bar_top_left);
+	//	TextureAsset(U"HP_bar").resized(100, bar_size.y).draw(bar_top_left);
+	//}
 
 
 
@@ -118,24 +122,24 @@ void PlayerHUD::draw() const
 	fontBitmap(U"×" + Format(buff_amount)).draw(35, Vec2{ 560, 30 });
 
 
-	
-		// プレイヤーが地面にいる場合
-		if (player_vel.y == 0.0)
-		{
-			FontAsset(U"TitleFont")(U"攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 110 });
-			xbutton.resized(35,35).drawAt(210,115);
-			FontAsset(U"TitleFont")(U"ジャンプボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 120, 150 });
-			Abutton.resized(35, 35).drawAt(260, 155);
-			FontAsset(U"TitleFont")(U"回避ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 190 });
-			Bbutton.resized(35, 35).drawAt(210, 195);
-		}
-		// プレイヤーが地面にいない場合（ジャンプ中など）
-		else 
-		{
-			FontAsset(U"TitleFont")(U"ジャンプ攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 130, 110 });
-			xbutton.resized(35, 35).drawAt(270, 115);
-		}
-	
+
+	// プレイヤーが地面にいる場合
+	if (player_vel.y == 0.0)
+	{
+		FontAsset(U"TitleFont")(U"攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 110 });
+		xbutton.resized(35, 35).drawAt(210, 115);
+		FontAsset(U"TitleFont")(U"ジャンプボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 120, 150 });
+		Abutton.resized(35, 35).drawAt(260, 155);
+		FontAsset(U"TitleFont")(U"回避ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 190 });
+		Bbutton.resized(35, 35).drawAt(210, 195);
+	}
+	// プレイヤーが地面にいない場合（ジャンプ中など）
+	else
+	{
+		FontAsset(U"TitleFont")(U"ジャンプ攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 130, 110 });
+		xbutton.resized(35, 35).drawAt(270, 115);
+	}
+
 }
 
 PlayerHUD* PlayerHUD::GetInstance()

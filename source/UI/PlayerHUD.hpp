@@ -10,7 +10,7 @@ public:
 
 	void update();
 	void draw()const;
-	
+
 	void setPlayerHP(float hp) { player_hp = hp; };
 	void setPlayerState(int state) { player_state = state; };
 	void setPlayerVel(Vec2 vel) { player_vel = vel; };
@@ -31,7 +31,7 @@ private:
 	static PlayerHUD* instance;
 
 	void initialize();
-	
+
 
 	Vec2 flame_location;
 	Vec2 hp_location;
@@ -49,4 +49,7 @@ private:
 	Vec2 player_vel;
 
 	Player* m_player;
+
+	double displayed_hp;
+	double hp_decrease_speed;
 };
