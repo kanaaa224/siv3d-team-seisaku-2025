@@ -61,6 +61,10 @@ void Flot::update()
 
 void Flot::draw() const
 {
+	Vec2 size = Vec2(100, 100);
+	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
+	body.drawFrame();
+	drawHP();
 }
 
 void Flot::stateControl()
@@ -70,14 +74,23 @@ void Flot::stateControl()
 	case NONE:
 		break;
 	case IDLE:
+		movement(70.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
 		break;
 	case ATTACK_POSITION:
+		doOncePosZero(Vec2{ 0.0,0.0 });
 		break;
 	case ATTACK:
+		movement(70.0f, eMovementDirection::Y);
+		//ここで玉を生成する
 		break;
 	case GET_ATTACK:
+		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
+			getDamageFlg = false;
+			setEnemyState(ATTACK_POSITION);
+		}
 		break;
 	case DIE:
+		doOncePosZero(Vec2{ 0.0,body.getVelocity().y });
 		break;
 	default:
 		break;
