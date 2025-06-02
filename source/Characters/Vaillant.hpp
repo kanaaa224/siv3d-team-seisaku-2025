@@ -12,6 +12,8 @@ public:
 	void draw() const override;
 
 	void onHit(ObjectBase& object) override;
+
+	void die() override;
 	
 	void setPlayerPosition(Vec2 position) { player_position = position; }
 
