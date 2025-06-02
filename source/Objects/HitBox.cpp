@@ -6,7 +6,18 @@ bool HitBox::flg = false;
 
 HitBox::HitBox(P2World& world, const Vec2& position) : ObjectBase(world, position)
 {
-	body = world.createRectSensor(P2Kinematic, position, RectF{ 20, 90 });
+	body = world.createRectSensor(
+		P2Kinematic,
+		position,
+		RectF{ 20, 90 },
+		P2Filter{
+
+			// 自分のカテゴリ設定
+			.categoryBits = CollisionCategory::Box1,
+			// Hitさせたいカテゴリを選ぶ
+			.maskBits = CollisionCategory::Enemy
+		}
+	);
 
 	initialize();
 }
