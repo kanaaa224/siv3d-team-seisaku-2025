@@ -32,8 +32,9 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Scarerun Idle", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");
 	
 	{ // ボス 1
-		TextureAsset::Register({ U"Vaillant Idle", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
-		TextureAsset::Register({ U"Vaillant Walk", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
+		TextureAsset::Register({ U"Vaillant Idle",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
+		TextureAsset::Register({ U"Vaillant Walk",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
+		TextureAsset::Register({ U"Vaillant Death", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/death.png");
 	}
 
 	//GameUI
