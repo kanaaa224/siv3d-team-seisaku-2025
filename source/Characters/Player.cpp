@@ -160,11 +160,6 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}
-		else if (controller.buttonB.down() == true || KeyQ.down() == true)
-		{
-			animation_number = 0;
-			playerState = ePlayerState::avoidance;
-		}
 		else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
 			animation_number = 0;
@@ -340,8 +335,7 @@ void Player::update()
 	}
 
 	// （仮） 落ちたら戻ってくる
-	if (body.getPos().y >= 1000) die();
-
+	if (body.getPos().y >= 1000) CharacterBase::die();
 	// 移動量計算
 	body.setPos(body.getPos() + body.getVelocity() *  Scene::DeltaTime());
 }
