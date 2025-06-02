@@ -56,7 +56,7 @@ void Player::initialize()
 	roll_animation = LoadDivGraph(U"Player Roll", Size(288, 45));
 
 	jump_up_animation = LoadDivGraph(U"Player Jump up", Size(288, 46));
-	jump_full_animation = LoadDivGraph(U"Player Jump full", Size(288, 60));
+	//jump_full_animation = LoadDivGraph(U"Player Jump full", Size(288, 60));
 	jump_down_animation = LoadDivGraph(U"Player Jump down", Size(288, 60));
 
 	jump_attack_animation = LoadDivGraph(U"Player Jump_Attack", Size(288, 60));
@@ -189,16 +189,22 @@ void Player::update()
 		{
 			animation(jump_up_animation, 0.1);
 		}
-		//滞空～降下
-		else if (body.getVelocity().y >= 0.0 && body.getVelocity().y < 200.0)
+		//下降中
+		else if (body.getVelocity().y > 50.0)
 		{
-			animation(jump_full_animation, 0.1);
-		}
-		//降下～着地まで
-		else if (body.getVelocity().y >= 200.0 && body.getVelocity().y == 0.0)
-		{
+			
 			animation(jump_down_animation, 0.1);
 		}
+		////滞空～降下
+		//else if (body.getVelocity().y >= 0.0 && body.getVelocity().y < 200.0)
+		//{
+		//	animation(jump_full_animation, 0.1);
+		//}
+		////降下～着地まで
+		//else if (body.getVelocity().y >= 200.0 && body.getVelocity().y == 0.0)
+		//{
+		//	animation(jump_down_animation, 0.1);
+		//}
 		
 
 		//地面についた時の処理
