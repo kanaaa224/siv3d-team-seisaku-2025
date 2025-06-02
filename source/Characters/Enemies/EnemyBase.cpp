@@ -80,7 +80,7 @@ void EnemyBase::onHit(ObjectBase& object)
 	//プレイヤーに当たったら
 	if (Player* player = dynamic_cast<Player*>(&object)) {
 		//プレイヤーが攻撃状態じゃないなら
-		if (player->getplayerstate() != ePlayerState::attack && (nowState != IDLE && nowState != DIE)) {
+		if (player->getplayerstate() != ePlayerState::attack && (nowState == ATTACK)) {
 			player->applyDamage(10);//プレイヤーへダメージ
 
 			//プレイヤーのノックバック
