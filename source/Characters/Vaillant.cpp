@@ -48,7 +48,7 @@ void Vaillant::update()
 		if (distance >  100) walking_direction = true;
 		if (distance < -100) walking_direction = false;
 		
-		body.applyLinearImpulse(walking_direction ? Vec2{ -10, 0 } : Vec2{ 10, 0 });
+		body.applyLinearImpulse((walking_direction ? Vec2{ -10, 0 } : Vec2{ 10, 0 }) * (240 / Profiler::FPS()));
 		
 		distance = Abs(distance);
 		
@@ -70,7 +70,7 @@ void Vaillant::update()
 		if (distance >  100) roaming_flipped = true;
 		if (distance < -100) roaming_flipped = false;
 
-		body.applyLinearImpulse(roaming_flipped ? Vec2{ -8.5, 0 } : Vec2{ 8.5, 0 });
+		body.applyLinearImpulse((roaming_flipped ? Vec2{ -8.5, 0 } : Vec2{ 8.5, 0 }) * (120 / Profiler::FPS()));
 	}
 	
 	state = 0;
