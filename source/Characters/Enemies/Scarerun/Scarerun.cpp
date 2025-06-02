@@ -8,7 +8,16 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	type = eEnemyType::scarerun;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
-	body = world.createRect(P2Dynamic, position, SizeF{ 50, 60 },P2Material{ .friction = 0.0 });
+	body = world.createRect(
+		P2Dynamic,
+		position,
+		SizeF{ 50, 60 },
+		P2Material{ .friction = 0.0 },
+		P2Filter{
+			.categoryBits = CollisionCategory::Enemy,
+			.maskBits = CollisionCategory::All
+		}
+	);
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 
 	//画像を分割読み込み
@@ -74,7 +83,7 @@ void Scarerun::stateControl()
 	case NONE:
 		break;
 	case IDLE:
-		movement(70.0f);//左右移動（数値は移動する距離）
+		movement(70.0f, eMovementDirection::X);//左右移動（数値は移動する距離）
 		break;
 	case ATTACK_POSITION:
 		//body.setVelocity(Vec2{ 0.0,body.getVelocity().y});
