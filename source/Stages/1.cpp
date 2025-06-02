@@ -84,6 +84,11 @@ void Stage1::update()
 				hitbox->setPlayerState(player->getplayerstate());
 				hitbox->setPlayerflip(player->getFlip());
 			}
+
+			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
+			{
+				stagebackground->setCameraPos(camera.getCenter());
+			}
 		}
 
 		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
