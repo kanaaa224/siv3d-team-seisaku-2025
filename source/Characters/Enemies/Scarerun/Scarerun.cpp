@@ -35,6 +35,7 @@ Scarerun::~Scarerun()
 
 void Scarerun::update()
 {
+	//親のメゾットを実行
 	EnemyBase::update();
 
 	//視界内にプレイヤーがいる場合
