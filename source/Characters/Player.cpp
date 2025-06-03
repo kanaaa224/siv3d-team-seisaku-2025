@@ -82,6 +82,12 @@ void Player::update()
 		playerState = ePlayerState::die;
 	}
 
+	//回避のクールタイム減らす
+	if (avoidanceCooldown > 0.0)
+	{
+		avoidanceCooldown -= Scene::DeltaTime();
+	}
+
 	switch (playerState)
 	{
 	case null: //何もなし
@@ -136,10 +142,11 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::attack;
 		}//avoidance
-		else if (controller.buttonB.down() == true || KeyQ.down() == true)
+		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
 		{
 			animation_number = 0;
 			playerState = ePlayerState::avoidance;
+			avoidanceCooldown = avoidanceCooldownDuration; // クールタイム設定
 		}///////////////キーを押したらダメージを減らす
 		else if (isHitStop == true && hitStopTimer >= ITIME)////////敵に当たった時にも&& !isInvincibleを追加
 		{
@@ -164,6 +171,12 @@ void Player::update()
 		{
 			animation_number = 0;
 			playerState = ePlayerState::attack;
+		}
+		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
+		{
+			animation_number = 0;
+			playerState = ePlayerState::avoidance;
+			avoidanceCooldown = avoidanceCooldownDuration; // クールタイム設定
 		}
 
 		break;
@@ -220,6 +233,8 @@ void Player::update()
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
 			if (animation(roll_animation, 0.1) == true)
 			{
+				body.setVelocity(Vec2(0.0, body.getVelocity().y));
+
 				//idle状態からボタンを押したごとの処理
 				if (//move
 					controller.buttonLeft.pressed() == true ||
@@ -243,6 +258,7 @@ void Player::update()
 			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
 			if (animation(roll_animation, 0.1) == true)
 			{
+				body.setVelocity(Vec2(0.0, body.getVelocity().y));
 				//idle状態からボタンを押したごとの処理
 				if (//move
 					controller.buttonLeft.pressed() == true ||
@@ -363,6 +379,7 @@ void Player::draw() const
 	Print << U"Player State : " << playerState;
 	Print << U"hitStopTimer : " << hitStopTimer;
 	Print << U"isHitStop : " << isHitStop;
+	Print << U"CoolDown : " << avoidanceCooldown;
 
 #endif // DEBUG
 }

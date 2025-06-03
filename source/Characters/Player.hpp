@@ -61,6 +61,9 @@ private:
 	double hitStopTimer;  //ヒットストップタイマー
 	bool isHitStop;     //ヒットストップしたかどうか
 
+	double avoidanceCooldown=0.0; // 回避のクールタイム秒数
+	const double avoidanceCooldownDuration=3.0; // クールタイム間隔
+
 public:
 
 	Player(P2World& world, const Vec2& position);
