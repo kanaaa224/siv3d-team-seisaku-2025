@@ -70,6 +70,9 @@ void Player::initialize()
 
 	hitStopTimer = ITIME;  //ヒットストップタイマー
 	isHitStop = false;   //ヒットストップしたかどうか
+
+
+
 }
 
 void Player::update()
@@ -87,6 +90,7 @@ void Player::update()
 	{
 		avoidanceCooldown -= Scene::DeltaTime();
 	}
+
 
 	switch (playerState)
 	{
@@ -112,7 +116,6 @@ void Player::update()
 			body.setVelocity(Vec2(0.0, body.getVelocity().y));
 			isTriggeredOnce = false;
 		}
-		
 
 		//ジャンプ攻撃有効化
 		jump_attack_flg = false;
@@ -203,17 +206,6 @@ void Player::update()
 			
 			animation(jump_down_animation, 0.1);
 		}
-		////滞空～降下
-		//else if (body.getVelocity().y >= 0.0 && body.getVelocity().y < 200.0)
-		//{
-		//	animation(jump_full_animation, 0.1);
-		//}
-		////降下～着地まで
-		//else if (body.getVelocity().y >= 200.0 && body.getVelocity().y == 0.0)
-		//{
-		//	animation(jump_down_animation, 0.1);
-		//}
-		
 
 		//地面についた時の処理
 		if (body.getVelocity().y == 0.0) {
@@ -233,7 +225,7 @@ void Player::update()
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
 			if (animation(roll_animation, 0.1) == true)
 			{
-				body.setVelocity(Vec2(0.0, body.getVelocity().y));
+				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
 
 				//idle状態からボタンを押したごとの処理
 				if (//move
@@ -285,7 +277,7 @@ void Player::update()
 
 		if (flip_flg == true)
 		{
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 98, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 48, body.getPos().y - 45));
 		}
 		else
 		{
@@ -304,7 +296,7 @@ void Player::update()
 
 		if (flip_flg == true)
 		{
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 98, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 50, body.getPos().y - 45));
 		}
 		else
 		{

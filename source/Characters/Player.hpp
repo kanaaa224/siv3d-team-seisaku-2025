@@ -85,6 +85,9 @@ public:
 
 	bool getFlip()    const { return flip_flg; }
 
+	// 回避クールタイムの残り秒数を取得
+	double getAvoidanceCooldown() const { return avoidanceCooldown; }
+
 	//eItemState getItemstate() const;   //itemのステータスを返す
 	//setItemstate(eItemState item);  //itemの設定
 
