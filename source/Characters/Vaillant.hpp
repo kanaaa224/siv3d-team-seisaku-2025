@@ -32,5 +32,7 @@ private:
 	
 	bool attack_started;
 
+	bool die_executed;
+
 	void initialize();
 };

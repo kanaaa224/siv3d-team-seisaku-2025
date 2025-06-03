@@ -1,7 +1,7 @@
 ﻿# include "Vaillant.hpp"
 # include "Player.hpp"
 
-Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(0), mirrored(false), attack_started(false)
+Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(0), mirrored(false), attack_started(false), die_executed(false)
 {
 	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
 
@@ -40,7 +40,7 @@ void Vaillant::update()
 
 	double distance = body.getPos().distanceFrom(player_position);
 
-	if (distance <= 500) attack_started = true;
+	if (distance <= 400) attack_started = true;
 
 	if (attack_started)
 	{
@@ -75,7 +75,7 @@ void Vaillant::update()
 		if (distance >  100) roaming_flipped = true;
 		if (distance < -100) roaming_flipped = false;
 
-		body.applyLinearImpulse((roaming_flipped ? Vec2{ -8.5, 0 } : Vec2{ 8.5, 0 }) * (120 / Profiler::FPS()));
+		body.applyLinearImpulse((roaming_flipped ? Vec2{ -10, 0 } : Vec2{ 10, 0 }) * (240 / Profiler::FPS()));
 	}
 
 	state = 0;
@@ -195,9 +195,14 @@ void Vaillant::die()
 {
 	state = 2;
 
-	std::thread([this]()
+	if (!die_executed)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(2));
-		destroy();
-	}).detach();
+		std::thread([this]()
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(2));
+			destroy();
+		}).detach();
+
+		die_executed = true;
+	}
 }
