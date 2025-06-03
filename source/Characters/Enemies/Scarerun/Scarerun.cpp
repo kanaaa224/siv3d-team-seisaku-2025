@@ -66,14 +66,14 @@ void Scarerun::draw() const
 	body.drawFrame();
 	drawHP();
 #ifdef _DEBUG
-	Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
+	/*Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Scarerun_SpawnPos : " << spawnPosition;
 	Print << U"Enemy_Scarerun_Pos : " << body.getPos();
 	Print << U"Enemy_Scarerun_NowState : " << nowState;
 	Print << U"Enemy_Scarerun_OldState : " << oldState;
 	Print << U"Enemy_Scarerun_StateNum : " << nowStateTime;
 	Print << U"Enemy_Scarerun_HP : " << hp;
-	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;
+	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;*/
 #endif // DEBUG
 }
 

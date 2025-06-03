@@ -10,7 +10,8 @@
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
 {
-	hp = 100.0f;//体力
+	max_hp = 100.0f;//最大体力の設定
+	hp = max_hp;//体力
 	setEnemyState(IDLE);//ステータス
 	body.setGravityScale(GRAVITY);//重力
 	spawnPosition = position;//スポーン位置
@@ -246,7 +247,7 @@ void EnemyBase::movement(float distance, eMovementDirection para)
 	//Y軸方向
 	else if (para == eMovementDirection::Y) {
 		if (spawnPosition.y <= body.getPos().y) {
-
+			body.applyLinearImpulse(Vec2{ 0.0,-distance });
 		}
 	}
 	

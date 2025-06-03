@@ -5,6 +5,9 @@
 Flot::Flot(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
 {
+	max_hp = 50;
+	hp = max_hp;
+
 	type = eEnemyType::flot;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
@@ -65,6 +68,17 @@ void Flot::draw() const
 	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos(),Palette::Red);
 	body.drawFrame();
 	drawHP();
+
+#ifdef _DEBUG
+	Print << U"Enemy_Flot_Velocity : " << body.getVelocity();
+	Print << U"Enemy_Flot_SpawnPos : " << spawnPosition;
+	Print << U"Enemy_Flot_Pos : " << body.getPos();
+	Print << U"Enemy_Flot_NowState : " << nowState;
+	Print << U"Enemy_Flot_OldState : " << oldState;
+	Print << U"Enemy_Flot_StateNum : " << nowStateTime;
+	Print << U"Enemy_Flot_HP : " << hp;
+	Print << U"Enemy_Flot_FlipFlg : " << img_flipFlg;
+#endif // DEBUG
 }
 
 void Flot::stateControl()
@@ -74,13 +88,13 @@ void Flot::stateControl()
 	case NONE:
 		break;
 	case IDLE:
-		movement(70.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
+		movement(30.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
 		break;
 	case ATTACK_POSITION:
-		doOncePosZero(Vec2{ 0.0,0.0 });
+		movement(30.0f, eMovementDirection::Y);
 		break;
 	case ATTACK:
-		movement(70.0f, eMovementDirection::Y);
+		movement(30.0f, eMovementDirection::Y);
 		//ここで玉を生成する
 		break;
 	case GET_ATTACK:
