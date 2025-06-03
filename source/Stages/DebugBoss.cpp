@@ -63,6 +63,13 @@ void StageDebugBoss::update()
 				vaillant->setPlayerPosition(player->getBody().getPos());
 			}
 		}
+
+		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
+
+		playerHUD->update();
+		playerHUD->setPlayerHP(player->getHP());
+		playerHUD->setPlayerState(player->getplayerstate());
+		playerHUD->setPlayerVel(player->getBody().getVelocity());
 	}
 	else
 	{
@@ -77,10 +84,6 @@ void StageDebugBoss::update()
 	}
 
 	camera.update();
-
-	PlayerHUD* playerHUD = PlayerHUD::GetInstance();
-
-	playerHUD->update();
 }
 
 void StageDebugBoss::draw() const
