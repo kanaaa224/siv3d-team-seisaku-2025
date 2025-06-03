@@ -31,7 +31,7 @@ void Game::update()
 
 	stage->update();
 
-	if (MouseL.down()) changeScene(SceneState::Title, 0.5s);
+	if (Key0.down()) changeScene(SceneState::Title, 0.5s);
 }
 
 void Game::draw() const
