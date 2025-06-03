@@ -53,8 +53,17 @@ private:
 	double displayed_hp;
 	double hp_decrease_speed;
 
+
+
+	// タイマー関連の変数
+	bool timerStarted = false;
+	double startTime = 0.0;
+	Vec2 m_prevPlayerVel = Vec2::Zero(); // 前フレームのプレイヤー速度
 	//経過時間
 	double m_elapsedTime = 0.0;
+
+	bool GO = false;//フラグ
+
 
 public:
 

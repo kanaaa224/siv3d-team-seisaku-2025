@@ -5,7 +5,7 @@
 
 PlayerHUD* PlayerHUD::instance = nullptr;
 
-PlayerHUD::PlayerHUD() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBitmap{ 48 }, player_hp(100)
+PlayerHUD::PlayerHUD() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBitmap{ 48 }, player_hp(100),GO(false)
 {
 	initialize();
 }
@@ -40,13 +40,38 @@ void PlayerHUD::initialize()
 	Abutton = button[5];
 	Bbutton = button[15];
 
+
+	//タイマー関連の変数を初期化
+	timerStarted = false;
+	startTime = 0.0;
+	GO = false;
+	m_elapsedTime = 0.0;
+
 }
 
 void PlayerHUD::update()
 {
+	//バフ
 	if (KeyP.down())
 	{
 		buff_amount++;
+	}
+
+
+
+	//タイマー用
+	if (!GO && player_state != 0)
+	{
+		GO = true;
+	}
+	if (GO && !timerStarted)
+	{
+		timerStarted = true;
+		startTime = Scene::Time(); // タイマーの開始時間を記録
+	}
+	if (timerStarted)
+	{
+		m_elapsedTime = Scene::Time() - startTime;
 	}
 }
 
@@ -104,15 +129,22 @@ void PlayerHUD::draw() const
 
 	TextureAsset(U"time_frame").resized(200, 50).drawAt(195, 70);
 
-	const Font& timeFont = FontAsset(U"TitleFont");
+	// タイマーが開始されていたら時間を表示させｒ
+	if (timerStarted)
+	{
+		const Font& timeFont = FontAsset(U"TitleFont");
+		double elapsedTime = Scene::Time() - startTime; // 経過時間を計算
 
-	timeFont(U"{:.2f}"_fmt(Scene::Time())).drawAt(30, Vec2{ 195, 70 }, ColorF{ 0.1, 0.1, 0.1 });
-	FontAsset(U"TitleFont")(U"{:.2f}"_fmt(Scene::Time())).drawAt(TextStyle::
-		OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
-
-
-
-
+		timeFont(U"{:.2f}"_fmt(elapsedTime)).drawAt(30, Vec2{ 195, 70 }, ColorF{ 0.1, 0.1, 0.1 });
+		FontAsset(U"TitleFont")(U"{:.2f}"_fmt(elapsedTime)).drawAt(TextStyle::
+			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
+	}
+	else
+	{
+		// タイマーが開始されていない場合の表示
+		FontAsset(U"TitleFont")(U"--:--").drawAt(TextStyle::
+			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
+	}
 
 	// 読み込みたい画像のパスをmain.cppに書きます。
 	// 書いた「U"?? ??"」が名前です。
