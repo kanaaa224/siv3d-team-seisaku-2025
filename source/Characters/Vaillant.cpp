@@ -171,7 +171,7 @@ void Vaillant::onHit(ObjectBase& object)
 	{
 		if (object.getBody().getPos().y < (body.getPos().y - 100))
 		{
-			object.getBody().applyLinearImpulse(Vec2{ 0, -100 });
+			object.getBody().applyLinearImpulse(Vec2{ 0, -10 });
 
 			this->applyDamage(10);
 		}
@@ -179,11 +179,11 @@ void Vaillant::onHit(ObjectBase& object)
 		{
 			if (object.getBody().getPos().x < body.getPos().x)
 			{
-				object.getBody().applyLinearImpulse(Vec2{ -50, -50 });
+				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
 			}
 			else
 			{
-				object.getBody().applyLinearImpulse(Vec2{ 50, -50 });
+				object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
 			}
 
 			player->applyDamage(10);
