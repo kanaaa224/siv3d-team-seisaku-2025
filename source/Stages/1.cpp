@@ -87,8 +87,7 @@ void Stage1::update()
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
 			{
-				stagebackground->setCameraPos(camera.getTargetCenter());
-				stagebackground->setPlayerVelocity(player->getBody().getVelocity());
+				stagebackground->setCameraPos(camera.getTargetCenter() - Scene::Center());
 			}
 		}
 

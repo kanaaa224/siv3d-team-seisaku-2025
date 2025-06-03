@@ -5,12 +5,10 @@
 class StageBackground : public ObjectBase
 {
 private:
-	Vec2 pos_1st;
-	Vec2 pos_2nd;
+	Vec2 texture_1_pos;
+	Vec2 texture_2_pos;
 
 	Vec2 camera_pos;
-	Vec2 cameraTopLeft;
-	Vec2 playerVelocity;
 
 public:
 	StageBackground(P2World& world, const Vec2& position);
@@ -19,6 +17,5 @@ public:
 	void update() override;
 	void draw() const override;
 
-	void setCameraPos(Vec2 pos);
-	void setPlayerVelocity(Vec2 velocity);
+	void setCameraPos(Vec2 pos) { camera_pos = pos; }
 };
