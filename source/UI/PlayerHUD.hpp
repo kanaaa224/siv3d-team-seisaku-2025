@@ -52,4 +52,13 @@ private:
 
 	double displayed_hp;
 	double hp_decrease_speed;
+
+	//経過時間
+	double m_elapsedTime = 0.0;
+
+public:
+
+	//時間リセット関数
+	void resetTime() { m_elapsedTime = 0.0; }
+
 };

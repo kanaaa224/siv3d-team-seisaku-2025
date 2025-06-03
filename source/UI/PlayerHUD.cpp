@@ -1,4 +1,5 @@
-﻿# include "PlayerHUD.hpp"
+﻿# include <Siv3D.hpp>
+# include "PlayerHUD.hpp"
 # include "../Utils/CustomImageLoader.hpp"
 
 
@@ -101,6 +102,16 @@ void PlayerHUD::draw() const
 
 
 	TextureAsset(U"time_frame").resized(200, 50).drawAt(195, 70);
+
+	const Font& timeFont = FontAsset(U"TitleFont");
+
+	timeFont(U"{:.2f}"_fmt(Scene::Time())).drawAt(30, Vec2{ 195, 70 }, ColorF{ 0.1, 0.1, 0.1 });
+	FontAsset(U"TitleFont")(U"{:.2f}"_fmt(Scene::Time())).drawAt(TextStyle::
+		OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
+
+
+
+
 
 	// 読み込みたい画像のパスをmain.cppに書きます。
 	// 書いた「U"?? ??"」が名前です。
