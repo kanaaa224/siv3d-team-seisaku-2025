@@ -52,8 +52,9 @@ void PlayerHUD::update()
 
 void PlayerHUD::draw() const
 {
-
+#ifdef _DEBUG
 	Print << U"Player HP: " << player_hp;
+#endif
 
 	Vec2 position{ 40, 40 };
 

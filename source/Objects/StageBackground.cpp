@@ -44,10 +44,12 @@ void StageBackground::draw() const
 	//右横に描画されている背景 2枚目
 	TextureAsset(U"Stage 1 Background").resized(Scene::Size()).draw(pos_2nd - (cameraTopLeft) / 2).drawFrame(2, ColorF{ Palette::Blue });
 
+#ifdef _DEBUG
 	Print << U"Stage1: " << pos_1st;
 	Print << U"Stage2: " << pos_2nd;
 	Print << U"CameraLeft: " << cameraTopLeft.x;
 	Print << U"camera_pos: " << camera_pos;
+#endif
 }
 
 void StageBackground::setCameraPos(Vec2 pos)
