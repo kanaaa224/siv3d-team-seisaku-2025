@@ -155,7 +155,11 @@ void Player::update()
 		{
 			animation_number = 0;
 			playerState = ePlayerState::damage;
-		}///////////////
+		}
+		else if (KeyS.down() == true)
+		{
+			hp -= 50;
+		}
 
 
 		break;
