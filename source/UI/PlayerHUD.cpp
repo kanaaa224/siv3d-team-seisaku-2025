@@ -77,10 +77,6 @@ void PlayerHUD::update()
 
 void PlayerHUD::draw() const
 {
-#ifdef _DEBUG
-	Print << U"Player HP: " << player_hp;
-#endif
-
 	Vec2 position{ 40, 40 };
 
 	Vec2 size{ 110, 110 };
@@ -89,10 +85,15 @@ void PlayerHUD::draw() const
 
 	// HPバー関係の定義
 	const int max_hp = 100;
-	double hp_rate = Clamp(static_cast<double>(player_hp) / max_hp, 0.0, 1.0); // 0～1に制限
+	//double hp_rate = Clamp(static_cast<double>(player_hp) / max_hp, 0.0, 1.0); // 0～1に制限
 
 	double full_width = HP_size.x - 25;
-	double hp_width = (HP_size.x - 25) * hp_rate;
+	double hp_width = 180.0;
+
+	double PlayerMaxHP = 100.0;
+	double PlayerHP = player_hp;
+
+	double gaugeWidth = static_cast<double>(PlayerHP) / PlayerMaxHP * 180;
 
 	// resizedで画像の描画サイズ(拡大率？) drawAtで中心座標を元に描画位置を設定(描画したい座標を設定)
 	// 変数を使ってるのはframeの中にiconを入れたいため
@@ -106,9 +107,8 @@ void PlayerHUD::draw() const
 	Vec2 bar_size{ full_width, HP_size.y - 25 };
 	Vec2 bar_top_left = hp_location - Vec2{ bar_size.x / 2.0, bar_size.y / 2.0 };
 
-	TextureAsset(U"HP_bar")(0, 0, static_cast<int>(hp_width), static_cast<int>(bar_size.y))
-		.resized(hp_width, bar_size.y)
-		.draw(bar_top_left);
+	//HPゲージの中身
+	TextureAsset(U"HP_bar").resized(gaugeWidth, bar_size.y).draw(bar_top_left);
 
 	//if (hp_rate >= 1.0)
 	//{
@@ -184,6 +184,10 @@ void PlayerHUD::draw() const
 		xbutton.resized(35, 35).drawAt(270, 115);
 	}
 
+
+#ifdef _DEBUG
+
+#endif
 }
 
 PlayerHUD* PlayerHUD::GetInstance()

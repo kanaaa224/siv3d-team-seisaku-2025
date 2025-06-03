@@ -93,7 +93,7 @@ void Stage1::update()
 
 		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
 
-		playerHUD->setPlayerHP(player_hp);
+		playerHUD->setPlayerHP(player->getHP());
 		playerHUD->update();
 		playerHUD->setPlayerState(player->getplayerstate());
 		playerHUD->setPlayerVel(player->getBody().getVelocity());
