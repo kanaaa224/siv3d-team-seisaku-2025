@@ -279,7 +279,7 @@ void Player::update()
 	case attack: //攻撃処理
 		///////////se
 
-		if (flip_flg == true)
+		if (flip_flg == true)  ///攻撃当たり判定
 		{
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 48, body.getPos().y - 45));
 		}
@@ -298,7 +298,7 @@ void Player::update()
 	case jump_attack: //ジャンプ攻撃処理
 		jump_attack_flg = true;
 
-		if (flip_flg == true)
+		if (flip_flg == true)  ///攻撃当たり判定
 		{
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 50, body.getPos().y - 55));
 		}
