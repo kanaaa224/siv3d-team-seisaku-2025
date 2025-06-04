@@ -1,6 +1,6 @@
 ﻿# include "SpriteAnimator.hpp"
 
-SpriteAnimator::SpriteAnimator(AnimationName animationName = AnimationName::None, bool looping = false) : frameTime(0.0), animationName(animationName), looping(looping) {}
+SpriteAnimator::SpriteAnimator(AnimationName animationName, bool looping) : frameTime(0.0), animationName(animationName), looping(looping) {}
 
 void SpriteAnimator::update()
 {
