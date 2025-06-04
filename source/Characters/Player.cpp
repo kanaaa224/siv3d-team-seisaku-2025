@@ -281,11 +281,11 @@ void Player::update()
 
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 48, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 70, body.getPos().y - 45));
 		}
 		else
 		{
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 28, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 		}
 		
 		
@@ -300,11 +300,11 @@ void Player::update()
 
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 50, body.getPos().y - 55));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 72, body.getPos().y - 55));
 		}
 		else
 		{
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 28, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 		}
 
 		if (animation(jump_attack_animation, 0.1)) {
