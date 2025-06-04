@@ -35,13 +35,10 @@ Scarerun::~Scarerun()
 
 void Scarerun::update()
 {
-	//親のメゾットを実行
-	EnemyBase::update();
-
 	//視界内にプレイヤーがいる場合
 	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && getDamageFlg == false) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
-		if (nowStateTime >= attackPosition_img.size() * IMG_CHANGE_TIME) {//アニメーションを終えたら攻撃へ
+		if (nowImageNum == attackPosition_img.size()) {//アニメーションを終えたら攻撃へ
 			setEnemyState(ATTACK);
 		}
 	}
@@ -57,6 +54,11 @@ void Scarerun::update()
 
 	//状態遷移
 	stateControl();
+
+	animation(Scene::DeltaTime(), 0.1, 0.1, 0.1, 0.05, 0.2);
+
+	//親のメゾットを実行
+	EnemyBase::update();
 }
 
 void Scarerun::draw() const
@@ -98,7 +100,7 @@ void Scarerun::stateControl()
 	case GET_ATTACK:
 		//ここにダメージを受けた時のエフェクト
 		//アニメーションが終わったら次の状態へ遷移
-		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
+		if (nowImageNum == getAttack_img.size()) {
 			getDamageFlg = false;
 			setEnemyState(ATTACK_POSITION);
 		}

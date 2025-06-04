@@ -44,8 +44,6 @@ void EnemyBase::update()
 		}
 	}
 
-	animation(Scene::DeltaTime());
-
 	//Buffの生成
 	if (nowState == DIE && nowImageNum == die_img.size()) {
 		spawnBuff();
@@ -100,7 +98,7 @@ void EnemyBase::onHit(ObjectBase& object)
 	}
 }
 
-void EnemyBase::animation(double delta_second)
+void EnemyBase::animation(double delta_second, double idle_ct, double attack_postion_ct, double attack_ct, double get_attack_ct, double die_ct)
 {
 	switch (nowState)
 	{
@@ -123,7 +121,7 @@ void EnemyBase::animation(double delta_second)
 		}
 
 		//画像切り替え
-		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= idle_img.size()) {
+		if (imageChangeTime >= idle_ct && nowImageNum <= idle_img.size()) {
 			now_texture = idle_img[nowImageNum];//画像を更新
 			imageChangeTime = 0;
 			nowImageNum++;
@@ -148,7 +146,7 @@ void EnemyBase::animation(double delta_second)
 		}
 
 		//画像切り替え
-		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= attackPosition_img.size()) {
+		if (imageChangeTime >= attack_postion_ct && nowImageNum <= attackPosition_img.size()) {
 			now_texture = attackPosition_img[nowImageNum];
 			imageChangeTime = 0;
 			nowImageNum++;
@@ -173,7 +171,7 @@ void EnemyBase::animation(double delta_second)
 		}
 
 		//画像切り替え
-		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= attack_img.size()) {
+		if (imageChangeTime >= attack_ct && nowImageNum <= attack_img.size()) {
 			now_texture = attack_img[nowImageNum];
 			imageChangeTime = 0;
 			nowImageNum++;
@@ -198,7 +196,7 @@ void EnemyBase::animation(double delta_second)
 		}
 
 		//画像切り替え
-		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= getAttack_img.size()) {
+		if (imageChangeTime >= get_attack_ct && nowImageNum <= getAttack_img.size()) {
 			now_texture = getAttack_img[nowImageNum];
 			imageChangeTime = 0;
 			nowImageNum++;
@@ -223,7 +221,7 @@ void EnemyBase::animation(double delta_second)
 		}
 
 		//画像切り替え
-		if (imageChangeTime >= (IMG_CHANGE_TIME * 2) && nowImageNum <= die_img.size()) {
+		if (imageChangeTime >= die_ct && nowImageNum <= die_img.size()) {
 			now_texture = die_img[nowImageNum];
 			imageChangeTime = 0;
 			nowImageNum++;
@@ -274,10 +272,12 @@ void EnemyBase::getDamage(float damage)
 		damageStopFlg = true;
 
 		if (playerPos.x > body.getPos().x) {
-			body.applyLinearImpulse(Vec2{ -100,-10 });
+			body.applyLinearImpulse(Vec2{ -200,-10 });
+			img_flipFlg = false;
 		}
 		else {
-			body.applyLinearImpulse(Vec2{ 100,-10 });
+			body.applyLinearImpulse(Vec2{ 200,-10 });
+			img_flipFlg = true;
 		}
 	}
 

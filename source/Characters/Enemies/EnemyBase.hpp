@@ -4,7 +4,8 @@
 //Buffの親クラス
 #include "../../Objects/Buff/BuffBase.hpp"
 
-#define IMG_CHANGE_TIME 0.1f   //画像の切り替え速度
+#define IMG_CHANGE_TIME 0.05f   //画像の切り替え速度
+
 #define MOVE_SPEED      20.0f  //移動速度
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
@@ -101,7 +102,7 @@ protected:
 	/// ステートに合わせて画像を切り替える
 	/// </summary>
 	/// <param name="delta_second">1フレーム何秒経過したか</param>
-	virtual void animation(double delta_second);
+	virtual void animation(double delta_second, double idle_ct, double attack_postion_ct, double attack_ct, double get_attack_ct, double die_ct);
 	/// <summary>
 	/// 敵のステートをセット
 	/// </summary>

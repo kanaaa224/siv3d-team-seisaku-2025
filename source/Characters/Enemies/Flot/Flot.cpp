@@ -44,7 +44,7 @@ void Flot::update()
 	//視界内にプレイヤーがいる場合
 	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && getDamageFlg == false) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
-		if (nowStateTime >= attackPosition_img.size() * IMG_CHANGE_TIME) {//アニメーションを終えたら攻撃へ
+		if (nowImageNum == attackPosition_img.size()) {//アニメーションを終えたら攻撃へ
 			setEnemyState(ATTACK);
 		}
 	}
@@ -102,7 +102,7 @@ void Flot::stateControl()
 		//ここで玉を生成する
 		break;
 	case GET_ATTACK:
-		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
+		if (nowImageNum == getAttack_img.size()) {
 			getDamageFlg = false;
 			setEnemyState(ATTACK_POSITION);
 		}
