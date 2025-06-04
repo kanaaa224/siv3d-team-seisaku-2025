@@ -3,8 +3,13 @@
 
 Title::Title(const InitData& init) : IScene{ init }
 {
+	m_backgroundTexture1 = TextureAsset(U"Title_Background1");
+	m_backgroundTexture2 = TextureAsset(U"Title_Background2");
+	m_backgroundTexture3 = TextureAsset(U"Title_Background3");
+	m_backgroundTexture4 = TextureAsset(U"Title_Background4");
 
 }
+	
 
 void Title::update()
 {
@@ -50,7 +55,12 @@ void Title::update()
 
 void Title::draw() const
 {
-	Scene::SetBackground(ColorF{ 0.5 });
+		
+	m_backgroundTexture4.resized(Scene::Size()).draw(0, 0);
+	m_backgroundTexture3.resized(Scene::Size()).draw(0, 0);
+	m_backgroundTexture2.resized(Scene::Size()).draw(0, 0);
+	m_backgroundTexture1.resized(Scene::Size()).draw(0, 0);
+
 
 	// タイトル描画
 	FontAsset(U"TitleFont")(U"Temple（仮）").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });

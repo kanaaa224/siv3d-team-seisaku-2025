@@ -4,16 +4,30 @@
 # include "../Objects/HitBox.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 
-#define VELOCITY 150.0	   //移動速度
-#define JUMPSPEED 550.0	   //ジャンプ速度
-#define DISTANCE 150.0	   //回避距離
-#define ITIME	2.0		   //無敵時間
+#define VELOCITY 150.0	   // 移動速度
+#define JUMPSPEED 550.0	   // ジャンプ速度
+#define DISTANCE 150.0	   // 回避距離
+#define ITIME	2.0		   // 無敵時間
+
+#define IDLE_ANIM_SPEED 0.1		// 待機アニメーションの切り替え速度
+#define MOVE_ANIM_SPEED 0.1		// 移動アニメーションの切り替え速度
+
+#define ATTAK_ANIM_SPEED 0.1	// 攻撃アニメーションの切り替え速度
+#define JUMPATTAK_ANIM_SPEED 0.1// 空中攻撃アニメーションの切り替え速度
+
+#define ROLL_ANIM_SPEED 0.1		// 回避アニメーションの切り替え速度
+
+#define JUMPUP_ANIM_SPEED 0.1	// ジャンプ開始アニメーションの切り替え速度
+#define JUMPDOWN_ANIM_SPEED 0.1	// ジャンプ降下アニメーションの切り替え速度
+
+#define DAMAGE_ANIM_SPEED 0.1	// ダメージアニメーションの切り替え速度
+#define DIE_ANIM_SPEED 0.1		// 死亡アニメーションの切り替え速度
 
 Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, position)
 {
 	// プレイヤーの干渉フィルター
-	filter.categoryBits = 0x0001;		// Playerのカテゴリ設定
-	filter.maskBits = 0x0001;			// 敵のカテゴリ設定
+	filter.categoryBits = CollisionCategory::Player;		// Playerのカテゴリ設定
+	filter.maskBits = CollisionCategory::All;			// 敵のカテゴリ設定
 
 	// プレイヤーの当たり判定
 	body = world.createRect(P2Dynamic, position, SizeF{ 55, 90 }, P2Material{ .restitution = 0.0, }, P2Filter{ filter.categoryBits }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
@@ -120,7 +134,7 @@ void Player::update()
 		//ジャンプ攻撃有効化
 		jump_attack_flg = false;
 
-		animation(idle_animation, 0.1,8,idle);
+		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
 
 		//idle状態からボタンを押したごとの処理
 		if (//move
@@ -166,7 +180,7 @@ void Player::update()
 	case move: //移動処理
 
 		movement(controller);
-		animation(run_animation, 0.1,8,idle);
+		animation(run_animation, MOVE_ANIM_SPEED,8,idle);
 		/////////se追加する場合
 
 		if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
@@ -202,13 +216,13 @@ void Player::update()
 		//ジャンプ開始
 		if (body.getVelocity().y >= -JUMPSPEED && body.getVelocity().y < 0.0)
 		{
-			animation(jump_up_animation, 0.1);
+			animation(jump_up_animation, JUMPUP_ANIM_SPEED);
 		}
 		//下降中
 		else if (body.getVelocity().y > 50.0)
 		{
 			
-			animation(jump_down_animation, 0.1);
+			animation(jump_down_animation, JUMPDOWN_ANIM_SPEED);
 		}
 
 		//地面についた時の処理
@@ -227,7 +241,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
-			if (animation(roll_animation, 0.1) == true)
+			if (animation(roll_animation, ROLL_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
 
@@ -252,7 +266,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
-			if (animation(roll_animation, 0.1) == true)
+			if (animation(roll_animation, ROLL_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
 				//idle状態からボタンを押したごとの処理
@@ -289,7 +303,7 @@ void Player::update()
 		}
 		
 		
-		if (animation(attack_animation, 0.1) == true)
+		if (animation(attack_animation, ATTAK_ANIM_SPEED) == true)
 		{
 			playerState = ePlayerState::idle;
 		}
@@ -307,7 +321,7 @@ void Player::update()
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 		}
 
-		if (animation(jump_attack_animation, 0.1)) {
+		if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED)) {
 			playerState = ePlayerState::jump;
 		}
 
@@ -318,7 +332,7 @@ void Player::update()
 		////////se
 
 		//アニメーション
-		if (animation(damage_animation, 0.1))
+		if (animation(damage_animation, DAMAGE_ANIM_SPEED))
 		{
 			playerState = ePlayerState::idle;
 		}
@@ -373,9 +387,9 @@ void Player::draw() const
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
-	Print << U"hitStopTimer : " << hitStopTimer;
-	Print << U"isHitStop : " << isHitStop;
-	Print << U"CoolDown : " << avoidanceCooldown;
+	//Print << U"hitStopTimer : " << hitStopTimer;
+	//Print << U"isHitStop : " << isHitStop;
+	//Print << U"CoolDown : " << avoidanceCooldown;
 
 #endif // DEBUG
 }
@@ -402,7 +416,7 @@ void Player::destroy()
 void Player::die()
 {
 	//アニメーション
-	if (animation(die_animation, 0.1))
+	if (animation(die_animation, DIE_ANIM_SPEED))
 	{
 		//2秒待ったらにしたい
 
