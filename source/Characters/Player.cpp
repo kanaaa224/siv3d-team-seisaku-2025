@@ -300,7 +300,7 @@ void Player::update()
 
 		if (flip_flg == true)
 		{
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 50, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 50, body.getPos().y - 55));
 		}
 		else
 		{
