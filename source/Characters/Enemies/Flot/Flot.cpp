@@ -24,11 +24,11 @@ Flot::Flot(P2World& world, const Vec2& position):
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 
 	//画像を分割読み込み
-	idle_img           = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//idle画像(仮)
-	attackPosition_img = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//attackPosition画像(仮)
-	attack_img         = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//attack画像(仮)
-	getAttack_img      = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//getAttack画像(仮)
-	die_img            = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//die画像(仮)
+	idle_img           = LoadDivGraph(U"Flot Idle",      Size(150, 35));//idle画像
+	attackPosition_img = LoadDivGraph(U"Flot Idle",      Size(150, 35));//attackPosition画像
+	attack_img         = LoadDivGraph(U"Flot Attack",    Size(150, 30));//attack画像
+	getAttack_img      = LoadDivGraph(U"Flot GetDamage", Size(150, 40));//getAttack画像
+	die_img            = LoadDivGraph(U"Flot Death",     Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
 }
 
@@ -38,13 +38,10 @@ Flot::~Flot()
 
 void Flot::update()
 {
-	//親のメゾットを実行
-	EnemyBase::update();
-
 	//視界内にプレイヤーがいる場合
 	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && getDamageFlg == false) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
-		if (nowStateTime >= attackPosition_img.size() * IMG_CHANGE_TIME) {//アニメーションを終えたら攻撃へ
+		if (nowImageNum == attackPosition_img.size()) {//アニメーションを終えたら攻撃へ
 			setEnemyState(ATTACK);
 		}
 	}
@@ -61,14 +58,21 @@ void Flot::update()
 	//状態遷移
 	stateControl();
 
+	animation(Scene::DeltaTime(), 0.1, 0.1, 0.1, 0.05, 0.2);
+
+	//親のメゾットを実行
+	EnemyBase::update();
+#ifdef _DEBUG
+	//玉発射のデバックキー　E+2
 	if (KeyE.pressed() && Key2.pressed()) {
 		spawnAmmo(10, false);
 	}
+#endif // _DEBUG
 }
 
 void Flot::draw() const
 {
-	Vec2 size = Vec2(100, 100);
+	Vec2 size = Vec2(150, 45);
 	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos(),Palette::Red);
 	body.drawFrame();
 	drawHP();
@@ -102,7 +106,7 @@ void Flot::stateControl()
 		//ここで玉を生成する
 		break;
 	case GET_ATTACK:
-		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
+		if (nowImageNum == getAttack_img.size()) {
 			getDamageFlg = false;
 			setEnemyState(ATTACK_POSITION);
 		}

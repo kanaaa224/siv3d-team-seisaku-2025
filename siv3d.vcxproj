@@ -130,6 +130,7 @@
     <ClCompile Include="source\Objects\HitBox.cpp" />
     <ClCompile Include="source\Objects\StageBackground.cpp" />
     <ClCompile Include="source\Objects\Wall.cpp" />
+    <ClCompile Include="source\Scenes\End.cpp" />
     <ClCompile Include="source\Scenes\Game.cpp" />
     <ClCompile Include="source\Scenes\Title.cpp" />
     <ClCompile Include="source\Stage.cpp" />
@@ -362,6 +363,7 @@
     <ClInclude Include="source\Objects\HitBox.hpp" />
     <ClInclude Include="source\Objects\StageBackground.hpp" />
     <ClInclude Include="source\Objects\Wall.hpp" />
+    <ClInclude Include="source\Scenes\End.hpp" />
     <ClInclude Include="source\Scenes\Game.hpp" />
     <ClInclude Include="source\Scenes\Title.hpp" />
     <ClInclude Include="source\Stage.hpp" />

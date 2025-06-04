@@ -11,7 +11,7 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	body = world.createRect(
 		P2Dynamic,
 		position,
-		SizeF{ 50, 60 },
+		SizeF{ 50, 80 },
 		P2Material{ .friction = 0.0 },
 		P2Filter{
 			.categoryBits = CollisionCategory::Enemy,
@@ -21,11 +21,11 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 
 	//画像を分割読み込み
-	idle_img           = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//idle画像
-	attackPosition_img = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//attackPosition画像(仮)
-	attack_img         = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//attack画像(仮)
-	getAttack_img      = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//getAttack画像(仮)
-	die_img            = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//die画像(仮)
+	idle_img           = LoadDivGraph(U"Scarerun Run", Size(150, 45));//idle画像
+	attackPosition_img = LoadDivGraph(U"Scarerun Idle", Size(150, 45));//attackPosition画像(仮)
+	attack_img         = LoadDivGraph(U"Scarerun Run", Size(150, 45));//attack画像
+	getAttack_img      = LoadDivGraph(U"Scarerun GetDamage", Size(150, 45));//getAttack画像
+	die_img            = LoadDivGraph(U"Scarerun Death", Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
 }
 
@@ -35,13 +35,10 @@ Scarerun::~Scarerun()
 
 void Scarerun::update()
 {
-	//親のメゾットを実行
-	EnemyBase::update();
-
 	//視界内にプレイヤーがいる場合
 	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && getDamageFlg == false) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
-		if (nowStateTime >= attackPosition_img.size() * IMG_CHANGE_TIME) {//アニメーションを終えたら攻撃へ
+		if (nowImageNum == attackPosition_img.size()) {//アニメーションを終えたら攻撃へ
 			setEnemyState(ATTACK);
 		}
 	}
@@ -57,11 +54,22 @@ void Scarerun::update()
 
 	//状態遷移
 	stateControl();
+
+	animation(
+		Scene::DeltaTime(),
+		SCARERUN_IMG_CT_IDLE,
+		SCARERUN_IMG_CT_ATTACK_POSTION,
+		SCARERUN_IMG_CT_ATTACK,
+		SCARERUN_IMG_CT_GET_ATTACK,
+		SCARERUN_IMG_CT_DIE);
+
+	//親のメゾットを実行
+	EnemyBase::update();
 }
 
 void Scarerun::draw() const
 {
-	Vec2 size = Vec2(100, 100);
+	Vec2 size = Vec2(150 * 2, 45 * 2);
 	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
 	body.drawFrame();
 	drawHP();
@@ -98,7 +106,7 @@ void Scarerun::stateControl()
 	case GET_ATTACK:
 		//ここにダメージを受けた時のエフェクト
 		//アニメーションが終わったら次の状態へ遷移
-		if (nowStateTime >= getAttack_img.size() * IMG_CHANGE_TIME) {
+		if (nowImageNum == getAttack_img.size()) {
 			getDamageFlg = false;
 			setEnemyState(ATTACK_POSITION);
 		}
