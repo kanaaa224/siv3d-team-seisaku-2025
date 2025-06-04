@@ -68,6 +68,7 @@ private:
 public:
 
 	//時間リセット関数
-	void resetTime() { m_elapsedTime = 0.0; }
+	void resetTime();
+
 
 };

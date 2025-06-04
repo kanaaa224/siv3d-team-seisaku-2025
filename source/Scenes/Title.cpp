@@ -1,4 +1,5 @@
 ﻿# include "Title.hpp"
+#include "../UI/PlayerHUD.hpp"
 
 Title::Title(const InitData& init) : IScene{ init }
 {
@@ -7,6 +8,9 @@ Title::Title(const InitData& init) : IScene{ init }
 
 void Title::update()
 {
+	//タイマー初期化
+	PlayerHUD::GetInstance()->resetTime();
+
 	auto controller = XInput(0); //コントローラーを取得
 
 	// ボタンの更新
