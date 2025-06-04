@@ -25,6 +25,12 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Player Damage", { U"Player" } }, U"../assets/images/player/take_hit/take_hit_1.png");
 	TextureAsset::Register({ U"Player Die", { U"Player" } }, U"../assets/images/player/death/death_1.png");
 
+	//title
+	TextureAsset::Register({ U"Title_Background1", { U"Title" } }, U"../assets/images/title/j1.png");
+	TextureAsset::Register({ U"Title_Background2", { U"Title" } }, U"../assets/images/title/j2.png");
+	TextureAsset::Register({ U"Title_Background3", { U"Title" } }, U"../assets/images/title/j3.png");
+	TextureAsset::Register({ U"Title_Background4", { U"Title" } }, U"../assets/images/title/j4.png");
+
 	// Stage
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
 
