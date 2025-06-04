@@ -14,8 +14,8 @@ Flot::Flot(P2World& world, const Vec2& position):
 	body = world.createRect(
 		P2Dynamic,
 		position,
-		SizeF{ 50, 60 },
-		P2Material{ .friction = 0.0 },
+		SizeF{ 75, 60 },
+		P2Material{ .density = 0.0, .friction = 0.0 },
 		P2Filter{
 			.categoryBits = CollisionCategory::Enemy,
 			.maskBits = CollisionCategory::All
@@ -24,10 +24,10 @@ Flot::Flot(P2World& world, const Vec2& position):
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 
 	//画像を分割読み込み
-	idle_img           = LoadDivGraph(U"Flot Idle",      Size(150, 35));//idle画像
-	attackPosition_img = LoadDivGraph(U"Flot Idle",      Size(150, 35));//attackPosition画像
-	attack_img         = LoadDivGraph(U"Flot Attack",    Size(150, 30));//attack画像
-	getAttack_img      = LoadDivGraph(U"Flot GetDamage", Size(150, 40));//getAttack画像
+	idle_img           = LoadDivGraph(U"Flot Idle",      Size(150, 45));//idle画像
+	attackPosition_img = LoadDivGraph(U"Flot Idle",      Size(150, 45));//attackPosition画像
+	attack_img         = LoadDivGraph(U"Flot Attack",    Size(150, 45));//attack画像
+	getAttack_img      = LoadDivGraph(U"Flot GetDamage", Size(150, 45));//getAttack画像
 	die_img            = LoadDivGraph(U"Flot Death",     Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
 }
@@ -58,7 +58,7 @@ void Flot::update()
 	//状態遷移
 	stateControl();
 
-	animation(Scene::DeltaTime(), 0.1, 0.1, 0.1, 0.05, 0.2);
+	animation(Scene::DeltaTime(), 0.07, 0.1, 0.1, 0.05, 0.2);
 
 	//親のメゾットを実行
 	EnemyBase::update();
@@ -72,8 +72,8 @@ void Flot::update()
 
 void Flot::draw() const
 {
-	Vec2 size = Vec2(150, 45);
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos(),Palette::Red);
+	Vec2 size = Vec2(150 * 2, 45 * 2);
+	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos() + Vec2{-5,-15});
 	body.drawFrame();
 	drawHP();
 
@@ -96,13 +96,13 @@ void Flot::stateControl()
 	case NONE:
 		break;
 	case IDLE:
-		movement(20.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
+		//movement(20.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
 		break;
 	case ATTACK_POSITION:
-		movement(20.0f, eMovementDirection::Y);
+		//movement(20.0f, eMovementDirection::Y);
 		break;
 	case ATTACK:
-		movement(20.0f, eMovementDirection::Y);
+		//movement(20.0f, eMovementDirection::Y);
 		//ここで玉を生成する
 		break;
 	case GET_ATTACK:
