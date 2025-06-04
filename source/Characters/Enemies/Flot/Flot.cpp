@@ -24,11 +24,11 @@ Flot::Flot(P2World& world, const Vec2& position):
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 
 	//画像を分割読み込み
-	idle_img           = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//idle画像(仮)
-	attackPosition_img = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//attackPosition画像(仮)
-	attack_img         = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//attack画像(仮)
-	getAttack_img      = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//getAttack画像(仮)
-	die_img            = LoadDivGraph(U"Scarerun Idle Old", Size(46, 40));//die画像(仮)
+	idle_img           = LoadDivGraph(U"Flot Idle",      Size(150, 35));//idle画像
+	attackPosition_img = LoadDivGraph(U"Flot Idle",      Size(150, 35));//attackPosition画像
+	attack_img         = LoadDivGraph(U"Flot Attack",    Size(150, 30));//attack画像
+	getAttack_img      = LoadDivGraph(U"Flot GetDamage", Size(150, 40));//getAttack画像
+	die_img            = LoadDivGraph(U"Flot Death",     Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
 }
 
@@ -72,7 +72,7 @@ void Flot::update()
 
 void Flot::draw() const
 {
-	Vec2 size = Vec2(100, 100);
+	Vec2 size = Vec2(150, 45);
 	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos(),Palette::Red);
 	body.drawFrame();
 	drawHP();
