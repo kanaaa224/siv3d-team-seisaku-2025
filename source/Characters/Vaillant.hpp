@@ -11,14 +11,17 @@ public:
 	void update() override;
 	void draw() const override;
 
-	void onHit(ObjectBase& object) override;
-
+	void destroy() override;
 	void die() override;
+
+	void onHit(ObjectBase& object) override;
+	void onDamaged(float amount) override;
 	
 	void setPlayerPosition(Vec2 position) { player_position = position; }
 
 private:
 	Vec2 start_position;
+	Vec2 player_position;
 	
 	SizeF size;
 	
@@ -27,11 +30,7 @@ private:
 	int state;
 	
 	bool mirrored;
-	
-	Vec2 player_position;
-	
 	bool attack_started;
-
 	bool die_executed;
 
 	void initialize();

@@ -171,7 +171,7 @@ void Vaillant::onHit(ObjectBase& object)
 	{
 		if (object.getBody().getPos().y < (body.getPos().y - 100))
 		{
-			object.getBody().applyLinearImpulse(Vec2{ 0, -10 });
+			object.getBody().applyLinearImpulse(Vec2{ 0, -40 });
 
 			this->applyDamage(10);
 		}
@@ -191,6 +191,11 @@ void Vaillant::onHit(ObjectBase& object)
 	}
 }
 
+void Vaillant::destroy()
+{
+	ObjectBase::destroy();
+}
+
 void Vaillant::die()
 {
 	state = 2;
@@ -200,9 +205,14 @@ void Vaillant::die()
 		std::thread([this]()
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(2));
-			destroy();
+			CharacterBase::die();
 		}).detach();
 
 		die_executed = true;
 	}
+}
+
+void Vaillant::onDamaged(float amount)
+{
+	CharacterBase::onDamaged(amount);
 }
