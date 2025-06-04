@@ -26,7 +26,7 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Player Die", { U"Player" } }, U"../assets/images/player/death/death_1.png");
 
 	// Stage
-	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
+	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest2.png");
 
 	// Enemy
 	TextureAsset::Register({ U"Scarerun Idle", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");

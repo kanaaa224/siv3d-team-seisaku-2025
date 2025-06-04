@@ -60,6 +60,10 @@ void Flot::update()
 
 	//状態遷移
 	stateControl();
+
+	if (KeyE.pressed() && Key2.pressed()) {
+		spawnAmmo(10, false);
+	}
 }
 
 void Flot::draw() const
@@ -88,13 +92,13 @@ void Flot::stateControl()
 	case NONE:
 		break;
 	case IDLE:
-		movement(30.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
+		movement(20.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
 		break;
 	case ATTACK_POSITION:
-		movement(30.0f, eMovementDirection::Y);
+		movement(20.0f, eMovementDirection::Y);
 		break;
 	case ATTACK:
-		movement(30.0f, eMovementDirection::Y);
+		movement(20.0f, eMovementDirection::Y);
 		//ここで玉を生成する
 		break;
 	case GET_ATTACK:

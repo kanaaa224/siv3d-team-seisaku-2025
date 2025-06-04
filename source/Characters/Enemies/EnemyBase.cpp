@@ -2,9 +2,12 @@
 
 //Player
 #include "../Player.hpp"
+//Stage
 #include "../../Stages/1.hpp"
+//Buff
 #include "../../Objects/Buff/Attack/AttackBuff.h"
-#include "../../Characters/Enemies/Scarerun/Scarerun.hpp"
+//Ammo
+#include "../../Objects/Ammo.hpp"
 
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
@@ -368,4 +371,12 @@ void EnemyBase::doOncePosZero(Vec2 para)
 		this->getBody().setVelocity(para);
 		doOnceFlg = true;
 	}
+}
+
+void EnemyBase::spawnAmmo(double speed, bool playerTargetFlg)
+{
+	//ステージのインスタンスを取得
+	Stage* stage = Stage::GetInstance();
+
+	stage->createObject<Ammo>(body.getPos(), speed, playerTargetFlg);
 }
