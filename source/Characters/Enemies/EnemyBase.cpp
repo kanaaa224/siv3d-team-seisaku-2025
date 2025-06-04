@@ -369,3 +369,8 @@ void EnemyBase::doOncePosZero(Vec2 para)
 		doOnceFlg = true;
 	}
 }
+
+void EnemyBase::spawnAmmo(double speed, bool playerTargetFlg)
+{
+
+}
