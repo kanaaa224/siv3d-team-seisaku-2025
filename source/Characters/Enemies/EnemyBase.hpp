@@ -162,6 +162,7 @@ protected:
 	//１種類のステータスの処理内で１回のみ座標にゼロを入れる
 	void doOncePosZero(Vec2 para);
 
+	// スポーン処理 //
 	//玉の生成
 	void spawnAmmo(double speed,bool playerTargetFlg);
 public:

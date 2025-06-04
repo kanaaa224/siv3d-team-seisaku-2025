@@ -47,7 +47,7 @@ void EnemyBase::update()
 	animation(Scene::DeltaTime());
 
 	//Buffの生成
-	if (nowState == DIE && nowStateTime >= SPAWN_BUFF_TIME && spawnBuffFlg == false) {
+	if (nowState == DIE && nowImageNum == die_img.size()) {
 		spawnBuff();
 		spawnBuffFlg = true;
 	}
@@ -223,7 +223,7 @@ void EnemyBase::animation(double delta_second)
 		}
 
 		//画像切り替え
-		if (imageChangeTime >= IMG_CHANGE_TIME && nowImageNum <= die_img.size()) {
+		if (imageChangeTime >= (IMG_CHANGE_TIME * 2) && nowImageNum <= die_img.size()) {
 			now_texture = die_img[nowImageNum];
 			imageChangeTime = 0;
 			nowImageNum++;
