@@ -38,9 +38,6 @@ Flot::~Flot()
 
 void Flot::update()
 {
-	//親のメゾットを実行
-	EnemyBase::update();
-
 	//視界内にプレイヤーがいる場合
 	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && getDamageFlg == false) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
@@ -61,9 +58,16 @@ void Flot::update()
 	//状態遷移
 	stateControl();
 
+	animation(Scene::DeltaTime(), 0.1, 0.1, 0.1, 0.05, 0.2);
+
+	//親のメゾットを実行
+	EnemyBase::update();
+#ifdef _DEBUG
+	//玉発射のデバックキー　E+2
 	if (KeyE.pressed() && Key2.pressed()) {
 		spawnAmmo(10, false);
 	}
+#endif // _DEBUG
 }
 
 void Flot::draw() const
