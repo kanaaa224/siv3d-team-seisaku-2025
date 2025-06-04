@@ -12,6 +12,7 @@ PlayerHUD::PlayerHUD() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBit
 
 void PlayerHUD::initialize()
 {
+
 	flame_location = { 350.0, 55.0 };
 
 	hp_location = { 195.0,22.0 };
@@ -49,6 +50,7 @@ void PlayerHUD::initialize()
 
 }
 
+
 void PlayerHUD::update()
 {
 	//バフ
@@ -56,8 +58,6 @@ void PlayerHUD::update()
 	{
 		buff_amount++;
 	}
-
-
 
 	//タイマー用
 	if (!GO && player_state != 0)
@@ -170,17 +170,17 @@ void PlayerHUD::draw() const
 	// プレイヤーが地面にいる場合
 	if (player_vel.y == 0.0)
 	{
-		FontAsset(U"TitleFont")(U"攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 110 });
+		FontAsset(U"TitleFont")(U"攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 110 });
 		xbutton.resized(35, 35).drawAt(210, 115);
-		FontAsset(U"TitleFont")(U"ジャンプボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 120, 150 });
+		FontAsset(U"TitleFont")(U"ジャンプ：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 120, 150 });
 		Abutton.resized(35, 35).drawAt(260, 155);
-		FontAsset(U"TitleFont")(U"回避ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 190 });
+		FontAsset(U"TitleFont")(U"回避：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 190 });
 		Bbutton.resized(35, 35).drawAt(210, 195);
 	}
 	// プレイヤーが地面にいない場合（ジャンプ中など）
 	else
 	{
-		FontAsset(U"TitleFont")(U"ジャンプ攻撃ボタン：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 130, 110 });
+		FontAsset(U"TitleFont")(U"ジャンプ攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 130, 110 });
 		xbutton.resized(35, 35).drawAt(270, 115);
 	}
 
@@ -195,4 +195,16 @@ PlayerHUD* PlayerHUD::GetInstance()
 	if (instance == nullptr) instance = new PlayerHUD();
 
 	return instance;
+}
+
+
+void PlayerHUD::resetTime()
+{
+	m_elapsedTime = 0.0;
+
+	//タイマー関連の変数を初期化
+	timerStarted = false;
+	startTime = 0.0;
+	GO = false;
+	m_elapsedTime = 0.0;
 }
