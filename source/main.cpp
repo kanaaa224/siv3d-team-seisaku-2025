@@ -29,7 +29,20 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
 
 	// Enemy
-	TextureAsset::Register({ U"Scarerun Idle", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");
+	TextureAsset::Register({ U"Scarerun Idle Old", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");//旧画像
+	TextureAsset::Register({ U"Scarerun Idle",     { U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Idle.png");
+	TextureAsset::Register({ U"Scarerun Attack",   { U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Attack.png");
+	TextureAsset::Register({ U"Scarerun Run",      { U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Run.png");
+	TextureAsset::Register({ U"Scarerun GetDamage",{ U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Take Hit.png");
+	TextureAsset::Register({ U"Scarerun Death",    { U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Death.png");
+
+	TextureAsset::Register({ U"Flot Idle",     { U"Enemy" } }, U"../assets/images/enemy/flotte/Flight.png");
+	TextureAsset::Register({ U"Flot Attack",   { U"Enemy" } }, U"../assets/images/enemy/flotte/Attack.png");
+	TextureAsset::Register({ U"Flot GetDamage",{ U"Enemy" } }, U"../assets/images/enemy/flotte/Take Hit.png");
+	TextureAsset::Register({ U"Flot Death",    { U"Enemy" } }, U"../assets/images/enemy/flotte/Death.png");
+
+	TextureAsset::Register({ U"Ammo",       { U"Enemy" } }, U"../assets/images/enemy/flotte/Energy ball/EnergyBall.png");
+	TextureAsset::Register({ U"Ammo Impact",{ U"Enemy" } }, U"../assets/images/enemy/flotte/Energy ball/energyBallImpact.png");
 	
 	{ // ボス 1
 		TextureAsset::Register({ U"Vaillant Idle",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
