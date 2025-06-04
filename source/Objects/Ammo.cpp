@@ -31,7 +31,10 @@ void Ammo::update()
 
 void Ammo::draw() const
 {
+#ifdef _DEBUG
+	//当たり判定表示
 	body.drawFrame();
+#endif // DEBUG
 }
 
 void Ammo::onHit(ObjectBase& object)
@@ -39,5 +42,10 @@ void Ammo::onHit(ObjectBase& object)
 }
 
 void Ammo::movement()
+{
+
+}
+
+void Ammo::animation()
 {
 }
