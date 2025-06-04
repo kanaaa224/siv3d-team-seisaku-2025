@@ -60,6 +60,10 @@ void Flot::update()
 
 	//状態遷移
 	stateControl();
+
+	if (KeyE.pressed() && Key2.pressed()) {
+		spawnAmmo(10, false);
+	}
 }
 
 void Flot::draw() const

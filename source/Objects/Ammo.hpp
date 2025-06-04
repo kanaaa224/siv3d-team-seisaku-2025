@@ -6,6 +6,8 @@
 class Ammo : public ObjectBase
 {
 private:
+	Vec2 size;
+
 	double speed;        //玉の発射速度
 	bool playerTargetFlg;//プレイヤーに向かって玉が飛ぶか
 
