@@ -4,8 +4,6 @@
 //Buffの親クラス
 #include "../../Objects/Buff/BuffBase.hpp"
 
-#define IMG_CHANGE_TIME 0.05f   //画像の切り替え速度
-
 #define MOVE_SPEED      20.0f  //移動速度
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ

@@ -21,7 +21,7 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 
 	//画像を分割読み込み
-	idle_img           = LoadDivGraph(U"Scarerun Idle", Size(150, 45));//idle画像
+	idle_img           = LoadDivGraph(U"Scarerun Run", Size(150, 45));//idle画像
 	attackPosition_img = LoadDivGraph(U"Scarerun Idle", Size(150, 45));//attackPosition画像(仮)
 	attack_img         = LoadDivGraph(U"Scarerun Run", Size(150, 45));//attack画像
 	getAttack_img      = LoadDivGraph(U"Scarerun GetDamage", Size(150, 45));//getAttack画像
@@ -55,7 +55,13 @@ void Scarerun::update()
 	//状態遷移
 	stateControl();
 
-	animation(Scene::DeltaTime(), 0.1, 0.1, 0.1, 0.05, 0.2);
+	animation(
+		Scene::DeltaTime(),
+		SCARERUN_IMG_CT_IDLE,
+		SCARERUN_IMG_CT_ATTACK_POSTION,
+		SCARERUN_IMG_CT_ATTACK,
+		SCARERUN_IMG_CT_GET_ATTACK,
+		SCARERUN_IMG_CT_DIE);
 
 	//親のメゾットを実行
 	EnemyBase::update();
