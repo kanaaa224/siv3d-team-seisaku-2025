@@ -21,6 +21,9 @@ public:
 	void onHit(ObjectBase& object) override;
 
 private:
+	//移動処理
 	void movement();
+	//アニメーション
+	void animation();
 };
 
