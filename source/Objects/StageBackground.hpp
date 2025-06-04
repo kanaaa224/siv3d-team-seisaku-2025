@@ -5,8 +5,7 @@
 class StageBackground : public ObjectBase
 {
 private:
-	Vec2 texture_1_pos;
-	Vec2 texture_2_pos;
+	Vec2 texture_1_pos, texture_2_pos, texture_3_pos;
 
 	Vec2 camera_pos;
 
