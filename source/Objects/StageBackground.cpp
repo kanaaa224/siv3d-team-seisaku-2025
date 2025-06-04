@@ -12,7 +12,7 @@ void StageBackground::update()
 	int offsetX = static_cast<int>(std::floor(camera_pos.x / width)) * width;
 
 	texture_1_pos.x = offsetX;
-	texture_2_pos.x = offsetX + width;
+	texture_2_pos.x = offsetX + width + 10.0;
 }
 
 void StageBackground::draw() const
