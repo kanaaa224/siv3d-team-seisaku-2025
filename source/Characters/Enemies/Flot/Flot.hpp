@@ -13,5 +13,9 @@ public:
 
 private:
 	void stateControl() override;
+
+	void fireAmmo();
+	bool fireFlg;
+	double fire_coolTime;
 };
 

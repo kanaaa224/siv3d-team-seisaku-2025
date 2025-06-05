@@ -113,6 +113,7 @@ protected:
 			nowState = setState;
 
 			nowStateTime = 0.0f;
+			nowImageNum = 0;
 		}
 	};
 	/// <summary>

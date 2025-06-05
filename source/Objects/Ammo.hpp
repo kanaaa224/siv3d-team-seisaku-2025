@@ -3,28 +3,26 @@
 //親クラス
 #include "Base.hpp"
 
-enum eAmmoState
-{
-	eA_NONE,
-	eA_MOVE,
-	eA_HIT,
-	eA_DIE
-};
+#define _LIFE_TIME_ 3.0
 
 class Ammo : public ObjectBase
 {
 private:
+	double lifeTime;
+
 	Vec2 size;
 	Vec2 playerPos;
 	Vec2 pos;
 
 	bool img_flipFlg;
 
-	eAmmoState nowState, oldState;
 	double nowStateTime;
 
 	double speed;        //玉の発射速度
 	bool playerTargetFlg;//プレイヤーに向かって玉が飛ぶか
+
+	Vec2 moveDirection; // ← グローバル or クラスメンバとして保持
+	bool initialized = false;
 
 public:
 	Ammo(P2World& world, const Vec2& position, double setSpeed, bool setPlayerTargetFlg, Vec2 pPos);
@@ -40,15 +38,5 @@ private:
 	void movement();
 	//アニメーション
 	void animation();
-	
-	void setState(eAmmoState state)
-	{
-		if (oldState != nowState) {
-			oldState = nowState;
-			nowState = state;
-
-			nowStateTime = 0.0;
-		}
-	};
 };
 

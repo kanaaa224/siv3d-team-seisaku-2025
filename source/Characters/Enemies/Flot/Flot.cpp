@@ -8,6 +8,8 @@ Flot::Flot(P2World& world, const Vec2& position):
 	max_hp = 50;
 	hp = max_hp;
 
+	fireFlg = false;
+
 	type = eEnemyType::flot;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
@@ -65,7 +67,7 @@ void Flot::update()
 #ifdef _DEBUG
 	//玉発射のデバックキー　E+2
 	if (KeyE.pressed() && Key2.pressed()) {
-		spawnAmmo(10, false);
+		spawnAmmo(1000, true);
 	}
 #endif // _DEBUG
 }
@@ -104,6 +106,7 @@ void Flot::stateControl()
 	case ATTACK:
 		//movement(20.0f, eMovementDirection::Y);
 		//ここで玉を生成する
+		fireAmmo();
 		break;
 	case GET_ATTACK:
 		if (nowImageNum == getAttack_img.size()) {
@@ -117,5 +120,19 @@ void Flot::stateControl()
 		break;
 	default:
 		break;
+	}
+}
+
+void Flot::fireAmmo()
+{
+	if (nowImageNum == attack_img.size()) {
+		fireFlg = true;
+	}
+	else {
+		fireFlg = false;
+	}
+
+	if (fireFlg == true) {
+		spawnAmmo(200, true);
 	}
 }
