@@ -84,6 +84,8 @@ protected:
 
 	bool doOnceFlg;
 
+	Vec2 pos;
+
 public:
 	EnemyBase(P2World& world, const Vec2& position);
 	~EnemyBase();
