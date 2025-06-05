@@ -44,6 +44,10 @@ void EnemyBase::update()
 		}
 	}
 
+	if (body) {
+		pos = body.getPos();
+	}
+
 	//Buffの生成
 	if (nowState == DIE && nowImageNum == die_img.size()) {
 		spawnBuff();
@@ -296,7 +300,7 @@ void EnemyBase::spawnBuff()
 	switch (type)
 	{
 	case scarerun:
-		stage->createObject<AttackBuff>(body.getPos());
+		stage->createObject<AttackBuff>(pos);
 		break;
 	default:
 		break;

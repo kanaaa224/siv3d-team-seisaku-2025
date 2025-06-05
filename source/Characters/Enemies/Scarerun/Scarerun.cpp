@@ -70,18 +70,19 @@ void Scarerun::update()
 void Scarerun::draw() const
 {
 	Vec2 size = Vec2(150 * 2, 45 * 2);
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos());
+
+	now_texture.mirrored(img_flipFlg).resized(size).drawAt(pos);
 	body.drawFrame();
 	drawHP();
 #ifdef _DEBUG
-	/*Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
+	Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Scarerun_SpawnPos : " << spawnPosition;
 	Print << U"Enemy_Scarerun_Pos : " << body.getPos();
 	Print << U"Enemy_Scarerun_NowState : " << nowState;
 	Print << U"Enemy_Scarerun_OldState : " << oldState;
 	Print << U"Enemy_Scarerun_StateNum : " << nowStateTime;
 	Print << U"Enemy_Scarerun_HP : " << hp;
-	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;*/
+	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;
 #endif // DEBUG
 }
 
@@ -113,6 +114,7 @@ void Scarerun::stateControl()
 		break;
 	case DIE:
 		//body.setVelocity(Vec2{ 0.0,body.getVelocity().y });
+		body.release();
 		doOncePosZero(Vec2{ 0.0,body.getVelocity().y });
 		//ここに死亡時のエフェクト
 		//ここに死亡時のSE
