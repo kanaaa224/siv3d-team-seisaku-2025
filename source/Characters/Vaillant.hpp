@@ -1,6 +1,7 @@
 ﻿# pragma once
 
 # include "Base.hpp"
+# include "../Effects/SpriteAnimator.hpp"
 
 class Vaillant : public CharacterBase
 {
@@ -32,6 +33,8 @@ private:
 	bool mirrored;
 	bool attack_started;
 	bool die_executed;
+
+	SpriteAnimator spriteAnimator;
 
 	void initialize();
 };

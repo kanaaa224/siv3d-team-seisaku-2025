@@ -4,23 +4,34 @@
 
 enum class AnimationName
 {
-	None
+	None,
+	Spark1,
+	Spark2
 };
 
 class SpriteAnimator
 {
 public:
-	SpriteAnimator(AnimationName animationName = AnimationName::None, bool looping = false);
+	SpriteAnimator(AnimationName name = AnimationName::None);
 	~SpriteAnimator() = default;
 
 	void update();
 	void draw() const;
 
-	void setAnimationName(AnimationName name) { animationName = name; }
-	void setAnimationSpeed(double speed) { animationSpeed = speed; }
-	void setLooping(bool b) { looping = b; }
-	void setPosition(Vec2 p) { position = p; }
-	void setSize(SizeF s) { size = s; }
+	void setAnimationName(AnimationName name) { animationName = name; } // アニメーション名を設定
+	void setAnimationSpeed(double speed) { animationSpeed = speed; }    // アニメーションの速度を設定
+	void setLooping(bool b) { looping = b; }                            // ループ再生するかどうかを設定
+	void setMirrored(bool b) { mirrored = b; }                          // 反転するかどうかを設定
+	void setPosition(Vec2 p) { position = p; }                          // 位置を設定
+	void setSize(SizeF s) { size = s; }                                 // 大きさを設定
+
+	void play () { state = 1; }; // 再生
+	void pause() { state = 0; }; // 一時停止
+
+	void stop() { state = 0; frameTime = 0.0; }; // 停止
+
+	void show() { visible = true;  }; // 表示する
+	void hide() { visible = false; }; // 隠す
 
 private:
 	double frameTime;
@@ -30,6 +41,12 @@ private:
 	double animationSpeed;
 
 	bool looping;
+
+	bool mirrored;
+
+	bool visible;
+
+	int state;
 
 	Vec2 position;
 
