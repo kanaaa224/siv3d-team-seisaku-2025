@@ -207,6 +207,18 @@ void Player::update()
 		jumpmovement(controller);
 		////////se追加する場合
 
+		//ジャンプ中左右移動可能
+		if (controller.buttonLeft.pressed() == true ||
+			controller.buttonRight.pressed() == true ||
+			KeyA.pressed() == true ||
+			KeyD.pressed() == true ||
+			KeyLeft.pressed() == true ||
+			KeyRight.pressed() == true ||
+			std::abs(controller.leftThumbX) > 0.2)
+		{
+			movement(controller);
+		}
+
 		//ジャンプ攻撃
 		if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
