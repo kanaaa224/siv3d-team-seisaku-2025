@@ -382,5 +382,17 @@ void EnemyBase::spawnAmmo(double speed, bool playerTargetFlg)
 	//ステージのインスタンスを取得
 	Stage* stage = Stage::GetInstance();
 
-	stage->createObject<Ammo>(body.getPos(), speed, playerTargetFlg);
+	//スポーンする場所を生成する敵の前にする
+	Vec2 spawnPos = Vec2{ 0,0 };
+	
+	if (img_flipFlg == true) {
+		spawnPos.x = body.getPos().x - 60;
+		spawnPos.y = body.getPos().y;
+	}
+	else if (img_flipFlg == false) {
+		spawnPos.x = body.getPos().x + 60;
+		spawnPos.y = body.getPos().y;
+	}
+
+	stage->createObject<Ammo>(spawnPos, speed, playerTargetFlg, playerPos);
 }

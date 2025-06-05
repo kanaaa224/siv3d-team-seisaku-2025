@@ -165,7 +165,7 @@ protected:
 
 	// スポーン処理 //
 	//玉の生成
-	void spawnAmmo(double speed,bool playerTargetFlg);
+    void spawnAmmo(double speed,bool playerTargetFlg);
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 };
