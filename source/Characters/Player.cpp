@@ -3,16 +3,19 @@
 # include "../Stage.hpp"
 # include "../Objects/HitBox.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
+# include "../Objects/Ground.hpp"
 
-#define VELOCITY 150.0	   // 移動速度
-#define JUMPSPEED 550.0	   // ジャンプ速度
-#define DISTANCE 150.0	   // 回避距離
-#define ITIME	2.0		   // 無敵時間
+#define VELOCITY 150.0			// 移動速度
+#define JUMPSPEED 550.0			// ジャンプ速度
+#define DISTANCE 150.0			// 回避距離
+#define AVOIDANCE_COOLTIME 3.0	// 回避クールタイム
+#define ITIME	2.0				// 無敵時間
+#define ATTACK_RANGE 200.0		// 攻撃距離
 
 #define IDLE_ANIM_SPEED 0.1		// 待機アニメーションの切り替え速度
 #define MOVE_ANIM_SPEED 0.1		// 移動アニメーションの切り替え速度
 
-#define ATTAK_ANIM_SPEED 0.1	// 攻撃アニメーションの切り替え速度
+#define ATTAK_ANIM_SPEED 0.05	// 攻撃アニメーションの切り替え速度
 #define JUMPATTAK_ANIM_SPEED 0.1// 空中攻撃アニメーションの切り替え速度
 
 #define ROLL_ANIM_SPEED 0.1		// 回避アニメーションの切り替え速度
@@ -41,6 +44,8 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	animation_number = 0;
 	isTriggeredOnce = true;
 	hitStopTimer = 0;
+	avoidanceCooldown = 0.0;
+	avoidanceCooldownDuration = AVOIDANCE_COOLTIME;
 
 	this->initialize();
 }
@@ -61,7 +66,6 @@ void Player::initialize()
 	flip_flg = false;
 	hp = 100;
 	max_hp = 100;
-	//ground_y = 640.0f;  //地面のlocation
 
 	// 分割画像の登録
 	idle_animation = LoadDivGraph(U"Player Idle", Size(288, 45));
@@ -84,9 +88,6 @@ void Player::initialize()
 
 	hitStopTimer = ITIME;  //ヒットストップタイマー
 	isHitStop = false;   //ヒットストップしたかどうか
-
-
-
 }
 
 void Player::update()
@@ -94,8 +95,9 @@ void Player::update()
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
-	if (hp <= 0)
+	if (hp <= 0 && is_on_ground == true)
 	{
+		isTriggeredOnce = true;
 		playerState = ePlayerState::die;
 	}
 
@@ -172,7 +174,7 @@ void Player::update()
 		}
 		else if (KeyS.down() == true)
 		{
-			hp -= 50;
+			hp -= 90;
 		}
 
 
@@ -206,6 +208,11 @@ void Player::update()
 		//ジャンプ処理
 		jumpmovement(controller);
 		////////se追加する場合
+
+		if (KeyS.down() == true)
+		{
+			hp -= 90;
+		}
 
 		//ジャンプ中左右移動可能
 		if (controller.buttonLeft.pressed() == true ||
@@ -253,7 +260,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
-			if (animation(roll_animation, ROLL_ANIM_SPEED) == true)
+			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
 
@@ -267,10 +274,17 @@ void Player::update()
 					KeyRight.pressed() == true
 					)
 				{
+					animation_number = 0;
 					playerState = ePlayerState::move;
+				}
+				else if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
+				{
+					animation_number = 0;
+					playerState = ePlayerState::jump;
 				}
 				else
 				{
+					animation_number = 0;
 					playerState = ePlayerState::idle;
 				}
 			}
@@ -278,7 +292,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
-			if (animation(roll_animation, ROLL_ANIM_SPEED) == true)
+			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
 				//idle状態からボタンを押したごとの処理
@@ -292,10 +306,17 @@ void Player::update()
 					KeyRight.pressed() == true
 					)
 				{
+					animation_number = 0;
 					playerState = ePlayerState::move;
+				}
+				else if(controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
+				{
+					animation_number = 0;
+					playerState = ePlayerState::jump;
 				}
 				else
 				{
+					animation_number = 0;
 					playerState = ePlayerState::idle;
 				}
 			}
@@ -307,16 +328,19 @@ void Player::update()
 
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
+			body.setVelocity(Vec2(-ATTACK_RANGE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 70, body.getPos().y - 45));
 		}
 		else
 		{
+			body.setVelocity(Vec2(ATTACK_RANGE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 		}
 		
 		
 		if (animation(attack_animation, ATTAK_ANIM_SPEED) == true)
 		{
+			animation_number = 0;
 			playerState = ePlayerState::idle;
 		}
 
@@ -326,14 +350,17 @@ void Player::update()
 
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
+			body.setVelocity(Vec2(-DISTANCE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 72, body.getPos().y - 55));
 		}
 		else
 		{
+			body.setVelocity(Vec2(DISTANCE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 		}
 
 		if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED)) {
+			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}
 
@@ -346,6 +373,7 @@ void Player::update()
 		//アニメーション
 		if (animation(damage_animation, DAMAGE_ANIM_SPEED))
 		{
+			animation_number = 0;
 			playerState = ePlayerState::idle;
 		}
 
@@ -408,7 +436,14 @@ void Player::draw() const
 
 void Player::onHit(ObjectBase& object)
 {
-	
+	if (Ground* ground = dynamic_cast<Ground*>(&object))
+	{
+		is_on_ground = true;
+	}
+	else
+	{
+		is_on_ground = false;
+	}
 }
 
 void Player::onDamaged(float amount)
@@ -427,6 +462,12 @@ void Player::destroy()
 
 void Player::die()
 {
+	if (isTriggeredOnce == true)
+	{
+		//移動量なし
+		body.setVelocity(Vec2(0.0, body.getVelocity().y));
+		isTriggeredOnce = false;
+	}
 	//アニメーション
 	if (animation(die_animation, DIE_ANIM_SPEED))
 	{

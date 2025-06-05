@@ -61,8 +61,8 @@ private:
 	double hitStopTimer;  //ヒットストップタイマー
 	bool isHitStop;     //ヒットストップしたかどうか
 
-	double avoidanceCooldown=0.0; // 回避のクールタイム秒数
-	const double avoidanceCooldownDuration=3.0; // クールタイム間隔
+	double avoidanceCooldown; // 回避のクールタイム秒数
+	double avoidanceCooldownDuration; // クールタイム間隔
 
 public:
 
