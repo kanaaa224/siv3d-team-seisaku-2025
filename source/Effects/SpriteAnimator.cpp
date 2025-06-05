@@ -1,22 +1,53 @@
 ﻿# include "SpriteAnimator.hpp"
 
-SpriteAnimator::SpriteAnimator(AnimationName animationName, bool looping) : frameTime(0.0), animationName(animationName), animationSpeed(0.0), looping(looping) {}
+SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(true), state(0) {}
 
 void SpriteAnimator::update()
 {
-	frameTime += Scene::DeltaTime();
+	if (state) frameTime += Scene::DeltaTime();
 }
 
 void SpriteAnimator::draw() const
 {
-	switch (animationName)
+	Vec2 margin;
+
+	SizeF cutoutSize;
+
+	switch (animationName) // アニメーションごとの位置やサイズ決め
 	{
+	case AnimationName::Spark1:
+	case AnimationName::Spark2:
+		break;
+
 	case AnimationName::None:
 	default:
 		break;
 	}
 
-#ifdef _DEBUG
+	String assetName;
 
-#endif
+	switch (animationName) // アニメーションごとのアセット名
+	{
+	case AnimationName::Spark1:
+		assetName = U"Effect 1 1";
+		break;
+
+	case AnimationName::Spark2:
+		assetName = U"Effect 1 2";
+		break;
+
+	case AnimationName::None:
+	default:
+		break;
+	}
+
+	if (assetName && visible)
+	{
+		Texture       texture = TextureAsset(assetName);
+		TextureRegion region  = texture(margin, cutoutSize);
+
+		if (size != SizeF{ 0, 0 }) region = region.resized(size);
+
+		region.mirrored(mirrored).drawAt(position);
+	}
 }
