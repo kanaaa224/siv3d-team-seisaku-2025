@@ -4,15 +4,16 @@
 
 enum ePlayerState
 {
-	idle,		//待機
-	move,		//移動
-	jump,		//ジャンプ
-	avoidance,	//回避
-	attack,		//攻撃
-	jump_attack,//ジャンプ攻撃
-	damage,     //ダメージ
-	die,		//死亡
-	null,		//何もなし(初期化用)
+	idle,			//待機
+	move,			//移動
+	jump,			//ジャンプ
+	avoidance,		//回避
+	attack,			//攻撃
+	jump_attack,	//空中攻撃
+	jump_avoidance,	//空中回避
+	damage,			//ダメージ
+	die,			//死亡
+	null,			//何もなし(初期化用)
 };
 
 enum eItemState

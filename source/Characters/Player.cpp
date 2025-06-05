@@ -229,7 +229,15 @@ void Player::update()
 		//ジャンプ攻撃
 		if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
+			animation_number = 0;
 			playerState = ePlayerState::jump_attack;
+		}
+		//空中回避
+		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
+		{
+			animation_number = 0;
+			playerState = ePlayerState::jump_avoidance;
+			avoidanceCooldown = avoidanceCooldownDuration; // クールタイム設定
 		}
 
 		//ジャンプ開始
@@ -328,12 +336,12 @@ void Player::update()
 
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
-			body.setVelocity(Vec2(-ATTACK_RANGE, 0.0));
+			//body.setVelocity(Vec2(-ATTACK_RANGE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 70, body.getPos().y - 45));
 		}
 		else
 		{
-			body.setVelocity(Vec2(ATTACK_RANGE, 0.0));
+			//body.setVelocity(Vec2(ATTACK_RANGE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 		}
 		
@@ -350,18 +358,69 @@ void Player::update()
 
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
-			body.setVelocity(Vec2(-DISTANCE, 0.0));
+			body.setVelocity(Vec2(-15.0, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 72, body.getPos().y - 55));
 		}
 		else
 		{
-			body.setVelocity(Vec2(DISTANCE, 0.0));
+			body.setVelocity(Vec2(15.0, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 		}
 
-		if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED)) {
+		if (animation(attack_animation, ATTAK_ANIM_SPEED)) {
 			animation_number = 0;
 			playerState = ePlayerState::jump;
+		}
+
+		break;
+
+	case jump_avoidance:
+
+		if (flip_flg == true)
+		{
+			body.setVelocity(Vec2(-DISTANCE, 0.0));
+			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
+			{
+				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
+
+				//idle状態からボタンを押したごとの処理
+				if (//move
+					controller.buttonLeft.pressed() == true ||
+					controller.buttonRight.pressed() == true ||
+					KeyA.pressed() == true ||
+					KeyD.pressed() == true ||
+					KeyLeft.pressed() == true ||
+					KeyRight.pressed() == true
+					)
+				{
+					movement(controller);
+				}
+
+				playerState = ePlayerState::jump;
+			}
+		}
+		else
+		{
+			body.setVelocity(Vec2(DISTANCE, 0.0));
+			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
+			{
+				body.setVelocity(Vec2(0.0, body.getVelocity().y));
+				//idle状態からボタンを押したごとの処理
+				if (//move
+					controller.buttonLeft.pressed() == true ||
+					controller.buttonRight.pressed() == true ||
+					controller.buttonLThumb.pressed() == true ||
+					KeyA.pressed() == true ||
+					KeyD.pressed() == true ||
+					KeyLeft.pressed() == true ||
+					KeyRight.pressed() == true
+					)
+				{
+					movement(controller);
+				}
+
+				playerState = ePlayerState::jump;
+			}
 		}
 
 		break;
