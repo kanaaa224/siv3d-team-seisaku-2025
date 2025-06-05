@@ -73,7 +73,7 @@ void Flot::update()
 void Flot::draw() const
 {
 	Vec2 size = Vec2(150 * 2, 45 * 2);
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(body.getPos() + Vec2{-5,-15});
+	now_texture.mirrored(img_flipFlg).resized(size).drawAt(pos + Vec2{-5,-15});
 	body.drawFrame();
 	drawHP();
 
@@ -112,6 +112,7 @@ void Flot::stateControl()
 		}
 		break;
 	case DIE:
+		body.release();
 		doOncePosZero(Vec2{ 0.0,body.getVelocity().y });
 		break;
 	default:
