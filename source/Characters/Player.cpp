@@ -480,6 +480,7 @@ void Player::draw() const
 
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
 
+	const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
 	body.drawFrame(1.0, ColorF(Palette::Blue));
 	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
 
