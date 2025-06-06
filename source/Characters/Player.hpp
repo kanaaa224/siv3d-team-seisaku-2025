@@ -45,6 +45,9 @@ private:
 
 	Array <TextureRegion> attack_animation;			//攻撃状態アニメーション
 	Array <TextureRegion> jump_attack_animation;    //ジャンプ攻撃状態アニメーション
+
+	Array <TextureRegion> jump_attack_2_animation;	//ジャンプ攻撃
+
 	Array <TextureRegion> roll_animation;			//回避状態アニメーション
 	Array <TextureRegion> damage_animation;			//ダメージアニメーション
 	Array <TextureRegion> die_animation;			//死亡アニメーション
