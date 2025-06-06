@@ -97,8 +97,14 @@ void Player::update()
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
+	if (body)
+	{
+		pos = body.getPos();
+	}
+
 	if (hp <= 0 && is_on_ground == true)
 	{
+		body.release();
 		isTriggeredOnce = true;
 		playerState = ePlayerState::die;
 	}
@@ -138,7 +144,7 @@ void Player::update()
 		//ジャンプ攻撃有効化
 		jump_attack_flg = false;
 
-		animation(jump_attack_2_animation, IDLE_ANIM_SPEED,8,idle);
+		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
 
 		//idle状態からボタンを押したごとの処理
 		if (//move
@@ -480,9 +486,11 @@ void Player::draw() const
 
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
 
+	// 画像を滑らかに補完
 	const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
+
 	body.drawFrame(1.0, ColorF(Palette::Blue));
-	image.mirrored(flip_flg).resized(size).drawAt(body.getPos());
+	image.mirrored(flip_flg).resized(size).drawAt(pos);
 
 	//無敵中は点滅
 	if ((isHitStop && Fmod(Scene::Time(), 0.1) < 0.05)) {
@@ -536,6 +544,7 @@ void Player::die()
 		body.setVelocity(Vec2(0.0, body.getVelocity().y));
 		isTriggeredOnce = false;
 	}
+
 	//アニメーション
 	if (animation(die_animation, DIE_ANIM_SPEED))
 	{
