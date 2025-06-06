@@ -7,8 +7,10 @@
 Ammo::Ammo(P2World& world, const Vec2& position, double setSpeed, bool setPlayerTargetFlg, Vec2 pPos)
 	: ObjectBase(world, position)
 {
+	assetName = U"Ammo";
+	margin = Vec2{ 0.0,0.0 };
 	lifeTime = 0.0;
-	size = Vec2{ 25.0,25.0 };
+	size = Vec2{ 30.0,30.0 };
 	playerPos = pPos;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
@@ -25,6 +27,14 @@ Ammo::Ammo(P2World& world, const Vec2& position, double setSpeed, bool setPlayer
 
 	speed = setSpeed;//発射速度
 	playerTargetFlg = setPlayerTargetFlg;//プレイヤーに向かって発射するか
+
+	//
+	if (playerPos.x < body.getPos().x) {
+		img_flipFlg = true;
+	}
+	else if(playerPos.x > body.getPos().x){
+		img_flipFlg = false;
+	}
 }
 
 Ammo::~Ammo()
@@ -33,9 +43,17 @@ Ammo::~Ammo()
 
 void Ammo::update()
 {
+	//現在の生存時間を更新
 	lifeTime += Scene::DeltaTime();
-
+	//移動
 	movement();
+	//画像の回転
+	
+	img_rotated = std::atan2(body.getVelocity().y, body.getVelocity().x);
+	if (img_flipFlg) {
+		img_rotated += Math::TwoPi;
+	}
+
 
 	if (body) {
 		pos = body.getPos();
@@ -48,6 +66,11 @@ void Ammo::update()
 
 void Ammo::draw() const
 {
+
+	TextureAsset(assetName)(margin, Vec2{ _IMG_SIZE_X_,_IMG_SIZE_Y_ })
+		.resized(Vec2{ _IMG_RESIZE_X_,_IMG_RESIZE_Y_ })
+		.rotated(img_rotated)
+		.drawAt(pos);
 #ifdef _DEBUG
 	//当たり判定表示
 	body.drawFrame();
