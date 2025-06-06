@@ -48,11 +48,13 @@ void Ammo::update()
 	//移動
 	movement();
 	//画像の回転
-	
 	img_rotated = std::atan2(body.getVelocity().y, body.getVelocity().x);
-	if (img_flipFlg) {
+	if (img_flipFlg) {//画像を左右反転
 		img_rotated += Math::TwoPi;
 	}
+
+	//アニメーション
+	animation();
 
 
 	if (body) {
@@ -122,4 +124,15 @@ void Ammo::movement()
 
 void Ammo::animation()
 {
+	//画像表示時間を更新
+	nowImgTime += Scene::DeltaTime();
+
+	if (nowImgTime >= _IMG_CHANG_TIME_) {
+		nowImgTime = 0;
+		margin = margin + Vec2{ _IMG_SIZE_X_,0.0 };
+
+		if (margin.x == 1152.0) {
+			margin = Vec2{ 0.0,0.0 };
+		}
+	}
 }
