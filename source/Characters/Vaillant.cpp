@@ -34,6 +34,26 @@ void Vaillant::update()
 
 	if (KeyH.down()) heal(10);
 	if (KeyP.down()) applyDamage(10);
+
+	{
+		spriteAnimator.setAnimationName(AnimationName::Spark1);
+		spriteAnimator.setSize({ 100, 100 });
+
+		if (KeyZ.down())
+		{
+			spriteAnimator.show();
+			spriteAnimator.play();
+		}
+
+		if (KeyX.down())
+		{
+			spriteAnimator.hide();
+			spriteAnimator.stop();
+		}
+
+		spriteAnimator.setPosition(body.getPos());
+		spriteAnimator.update();
+	}
 #endif
 
 	if (state == 2) return;
@@ -162,6 +182,8 @@ void Vaillant::draw() const
 	body.drawFrame();
 
 	Print << U"Vaillant HP: " << hp << U" / " << max_hp;
+
+	spriteAnimator.draw();
 #endif
 }
 

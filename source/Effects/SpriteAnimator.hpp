@@ -25,6 +25,8 @@ public:
 	void setPosition(Vec2 p) { position = p; }                          // 位置を設定
 	void setSize(SizeF s) { size = s; }                                 // 大きさを設定
 
+	SizeF getTextureSize(AnimationName name = AnimationName::None) const;
+
 	void play () { state = 1; }; // 再生
 	void pause() { state = 0; }; // 一時停止
 
