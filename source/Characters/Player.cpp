@@ -268,6 +268,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 70, body.getPos().y - 45));
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -300,6 +301,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
@@ -379,6 +381,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, 0.0));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 72, body.getPos().y - 55));
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -402,6 +405,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, 0.0));
+			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
