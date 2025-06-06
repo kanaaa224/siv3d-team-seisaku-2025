@@ -1,6 +1,6 @@
 ﻿# include "SpriteAnimator.hpp"
 
-SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(true), state(0) {}
+SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(false), state(0) {}
 
 void SpriteAnimator::update()
 {
@@ -16,8 +16,28 @@ void SpriteAnimator::draw() const
 	switch (animationName) // アニメーションごとの位置やサイズ決め
 	{
 	case AnimationName::Spark1:
-	case AnimationName::Spark2:
+	case AnimationName::Spark2: {
+		margin = Vec2{ 0, 0 };
+
+		int marginR = 0;
+
+		SizeF textureSize = getTextureSize();
+
+		double frameDuration = animationSpeed ? animationSpeed : 0.085; // 切り替え速度
+		int    frameCount    = 12;                                      // 全フレーム数
+		int    framesPerRow  = frameCount / 2;                          // 横方向のフレーム数
+
+		int currentFrame = looping ? static_cast<int>(frameTime / frameDuration) % frameCount : std::min(static_cast<int>(frameTime / frameDuration), frameCount - 1);
+
+		int frameX = currentFrame % framesPerRow;
+		int frameY = currentFrame / framesPerRow;
+
+		margin.x += (marginR + textureSize.x) * frameX;
+		margin.y +=            textureSize.y  * frameY;
+
+		cutoutSize = textureSize;
 		break;
+	}
 
 	case AnimationName::None:
 	default:
@@ -50,4 +70,23 @@ void SpriteAnimator::draw() const
 
 		region.mirrored(mirrored).drawAt(position);
 	}
+}
+
+SizeF SpriteAnimator::getTextureSize(AnimationName name) const
+{
+	if (name == AnimationName::None) name = animationName;
+
+	switch (name)
+	{
+	case AnimationName::Spark1:
+	case AnimationName::Spark2:
+		return { 32, 32 };
+		break;
+
+	case AnimationName::None:
+	default:
+		break;
+	}
+
+	return { 0, 0 };
 }
