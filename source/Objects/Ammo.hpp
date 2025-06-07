@@ -27,11 +27,14 @@ private:
 	bool initialized = false;
 
 	//画像関係
-	String assetName;  //画像のタグ
-	Vec2 margin;       //画像の左上
-	double img_rotated;//画像の角度
-	bool img_flipFlg;  //画像を左右反転
-	double nowImgTime; //現在の画像の表示時間
+	String assetName;   //画像のタグ
+	Vec2 margin;        //画像の左上
+	double img_rotated; //画像の角度
+	bool img_flipFlg;   //画像を左右反転
+	double nowImgTime;  //現在の画像の表示時間
+	bool destroyAnimEndFlg;//玉が消えるアニメーションが終わったか
+
+	bool destroyInitFlg;//destroy関数内で初期化をやったか
 
 public:
 	Ammo(P2World& world, const Vec2& position, double setSpeed, bool setPlayerTargetFlg, Vec2 pPos);
@@ -41,6 +44,8 @@ public:
 	void draw() const override;
 
 	void onHit(ObjectBase& object) override;
+
+	void destroy() override;
 
 private:
 	//移動処理

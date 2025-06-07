@@ -7,8 +7,8 @@
 Ammo::Ammo(P2World& world, const Vec2& position, double setSpeed, bool setPlayerTargetFlg, Vec2 pPos)
 	: ObjectBase(world, position)
 {
-	assetName = U"Ammo";
-	margin = Vec2{ 0.0,0.0 };
+	assetName = U"Ammo";//使用する画像
+	margin = Vec2{ 0.0,0.0 };//使用画像の最初に使う左上の位置
 	lifeTime = 0.0;
 	size = Vec2{ 30.0,30.0 };
 	playerPos = pPos;
@@ -28,7 +28,7 @@ Ammo::Ammo(P2World& world, const Vec2& position, double setSpeed, bool setPlayer
 	speed = setSpeed;//発射速度
 	playerTargetFlg = setPlayerTargetFlg;//プレイヤーに向かって発射するか
 
-	//
+	//画像を反転するか判定する
 	if (playerPos.x < body.getPos().x) {
 		img_flipFlg = true;
 	}
@@ -61,8 +61,9 @@ void Ammo::update()
 		pos = body.getPos();
 	}
 
+	//指定した時間になったら自分をデストロイ
 	if (lifeTime >= _LIFE_TIME_) {
-		deleteSelf();
+		destroy();
 	}
 }
 
@@ -84,11 +85,27 @@ void Ammo::onHit(ObjectBase& object)
 	//プレイヤーに当たった時
 	if (Player* p = dynamic_cast<Player*>(&object)) {
 		p->onDamaged(10);
-		deleteSelf();
+		destroy();
 	}
 	//地面に当たった時
 	if (Ground* g = dynamic_cast<Ground*>(&object)) {
-		deleteSelf();
+		destroy();
+	}
+}
+
+void Ammo::destroy()
+{
+	body.release();//当たり判定を消す
+	if (!destroyInitFlg) {//初期化処理（一度のみ）
+		margin = Vec2{ 0.0,0.0 };
+		assetName = U"Ammo Impact";
+
+		destroyInitFlg = true;
+	}
+	
+
+	if (destroyAnimEndFlg) {
+		ObjectBase::destroy();
 	}
 }
 
@@ -127,12 +144,22 @@ void Ammo::animation()
 	//画像表示時間を更新
 	nowImgTime += Scene::DeltaTime();
 
-	if (nowImgTime >= _IMG_CHANG_TIME_) {
+	if (nowImgTime >= _IMG_CHANG_TIME_) {//画像切替
 		nowImgTime = 0;
-		margin = margin + Vec2{ _IMG_SIZE_X_,0.0 };
 
-		if (margin.x == 1152.0) {
-			margin = Vec2{ 0.0,0.0 };
+		if (assetName == U"Ammo") {//通常画像
+			margin = margin + Vec2{ _IMG_SIZE_X_,0.0 };
+
+			if (margin.x == 1152.0) {
+				margin = Vec2{ 0.0,0.0 };
+			}
+		}
+		else if (assetName == U"Ammo Impact") {//消滅時の画像
+			margin = margin + Vec2{ 0.0,_IMG_SIZE_Y_ };
+
+			if (margin.y == 1024) {
+				destroyAnimEndFlg = true;
+			}
 		}
 	}
 }
