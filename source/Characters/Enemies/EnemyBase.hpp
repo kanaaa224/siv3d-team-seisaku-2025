@@ -9,7 +9,7 @@
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
 
-#define DAMAGE_STOP_TIME 1.0f //ダメージストップ時間
+#define DAMAGE_STOP_TIME 0.5f //ダメージストップ時間
 
 #define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 

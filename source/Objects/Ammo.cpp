@@ -48,18 +48,19 @@ void Ammo::update()
 	//移動
 	movement();
 	//画像の回転
-	img_rotated = std::atan2(body.getVelocity().y, body.getVelocity().x);
-	if (img_flipFlg) {//画像を左右反転
-		img_rotated += Math::TwoPi;
+	
+	if (body) {
+		pos = body.getPos();
+
+		img_rotated = std::atan2(body.getVelocity().y, body.getVelocity().x);
+		if (img_flipFlg) {//画像を左右反転
+			img_rotated += Math::TwoPi;
+		}
+		body.setAngle(img_rotated);
 	}
 
 	//アニメーション
 	animation();
-
-
-	if (body) {
-		pos = body.getPos();
-	}
 
 	//指定した時間になったら自分をデストロイ
 	if (lifeTime >= _LIFE_TIME_) {
