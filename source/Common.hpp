@@ -6,7 +6,8 @@
 enum class SceneState
 {
 	Title,
-	Game
+	Game,
+	End
 };
 
 // シーン間で共有するデータ

@@ -110,23 +110,6 @@ void PlayerHUD::draw() const
 	//HPゲージの中身
 	TextureAsset(U"HP_bar").resized(gaugeWidth, bar_size.y).draw(bar_top_left);
 
-	//if (hp_rate >= 1.0)
-	//{
-	//	// HP満タン → 画像そのまま描画させる
-	//	TextureAsset(U"HP_bar").resized(bar_size).draw(bar_top_left);
-	//}
-	//else if (hp_rate > 0.0)
-	//{
-	//	int cut_width = static_cast<int>(hp_width);
-
-	//	// ひだりこてい
-	//	//TextureAsset(U"HP_bar")(0, 0, cut_width, static_cast<int>(bar_size.y)).resized(hp_width, bar_size.y).draw(bar_top_left);
-	//	TextureAsset(U"HP_bar").resized(100, bar_size.y).draw(bar_top_left);
-	//}
-
-
-
-
 	TextureAsset(U"time_frame").resized(200, 50).drawAt(195, 70);
 
 	// タイマーが開始されていたら時間を表示させｒ
@@ -174,8 +157,22 @@ void PlayerHUD::draw() const
 		xbutton.resized(35, 35).drawAt(210, 115);
 		FontAsset(U"TitleFont")(U"ジャンプ：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 120, 150 });
 		Abutton.resized(35, 35).drawAt(260, 155);
-		FontAsset(U"TitleFont")(U"回避：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 190 });
-		Bbutton.resized(35, 35).drawAt(210, 195);
+
+		FontAsset(U"TitleFont")(U"回避：").drawAt(
+				TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
+				25, Vec2{ 100, 190 });
+
+		if (player_avoid > 0.0)
+		{
+			// クールタイム中 → 暗く表示（例：グレーで乗算）
+			Bbutton.resized(35, 35).drawAt(210, 195, ColorF{ 0.5, 0.5, 0.5 }); // RGBの各値を0.5にすることで暗くする
+		}
+		else
+		{
+			// クールタイム中ではない → 通常表示
+			Bbutton.resized(35, 35).drawAt(210, 195);
+		}
+		
 	}
 	// プレイヤーが地面にいない場合（ジャンプ中など）
 	else

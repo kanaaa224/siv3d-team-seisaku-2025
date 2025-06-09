@@ -13,7 +13,8 @@ public:
 
 	void setPlayerHP(float hp) { player_hp = hp; };
 	void setPlayerState(int state) { player_state = state; };
-	void setPlayerVel(Vec2 vel) { player_vel = vel; };
+	void setPlayerVel(Vec2 vel) { player_vel = vel; }; //位置
+	void setPlayeravoid(float avoid) { player_avoid = avoid; }; //回避
 
 	static PlayerHUD* GetInstance();
 
@@ -47,6 +48,7 @@ private:
 	float player_hp;
 	float player_state;
 	Vec2 player_vel;
+	float player_avoid;
 
 	Player* m_player;
 

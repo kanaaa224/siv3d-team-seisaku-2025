@@ -3,7 +3,7 @@
 
 End::End(const InitData& init) : IScene{ init }
 {
-
+	end_background = TextureAsset(U"End_Background1");
 }
 
 void End::update()
@@ -47,6 +47,8 @@ void End::update()
 
 void End::draw() const
 {
+	end_background.resized(Scene::Size()).draw(0, 0);
+
 	Scene::SetBackground(ColorF{ 0.5 });
 
 	// end描画
@@ -71,7 +73,7 @@ void End::draw() const
 		}
 
 		const Font& boldFont = FontAsset(U"Bold");
-		boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
+		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
 		boldFont(U"EXIT").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
 }
