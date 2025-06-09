@@ -17,9 +17,10 @@ void StageDebugBoss::initialize()
 	createObject<StageBackground>();
 
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
-	createObject<Wall>(Vec2{ -5, 500 });
-	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 200, 500 });
-	createObject<Player>(Vec2{ (Scene::Width() / 2), 500 });
+	createObject<Wall>  (Vec2{ -5, 500 });
+
+	createObject<Vaillant>(Vec2{ Scene::Width() + 200, (Scene::Height() / 2) });
+	createObject<Player>  (Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 }
@@ -48,7 +49,7 @@ void StageDebugBoss::update()
 		int centerHeight = (Scene::Height() / 2);
 
 		if (centerWidth  > x) x = centerWidth;
-		if (centerHeight < y) y = centerHeight;
+		/*if (centerHeight < y)*/ y = centerHeight;
 
 		camera.setTargetCenter(Vec2{ x, y });
 
@@ -62,6 +63,11 @@ void StageDebugBoss::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
+			}
+
+			if (StageBackground* stageBackground = dynamic_cast<StageBackground*>(object))
+			{
+				stageBackground->setCameraPos(camera.getTargetCenter() - Scene::Center());
 			}
 		}
 
@@ -83,6 +89,10 @@ void StageDebugBoss::update()
 			respawnTimer.reset();
 		}
 	}
+
+#ifdef _DEBUG
+	if(Key1.down()) createObject<Vaillant>(Vec2{ Scene::Width() + 200, (Scene::Height() / 2) });
+#endif
 
 	camera.update();
 }

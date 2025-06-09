@@ -3,6 +3,12 @@
 # include "Base.hpp"
 # include "../Effects/SpriteAnimator.hpp"
 
+enum class VaillantState {
+	Idle,
+	Walk,
+	Death
+};
+
 class Vaillant : public CharacterBase
 {
 public:
@@ -28,7 +34,7 @@ private:
 	
 	double animationTime;
 	
-	int state;
+	VaillantState state;
 	
 	bool mirrored;
 	bool attack_started;

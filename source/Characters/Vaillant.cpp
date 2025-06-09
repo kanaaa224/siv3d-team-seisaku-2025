@@ -1,7 +1,7 @@
 ﻿# include "Vaillant.hpp"
 # include "Player.hpp"
 
-Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(0), mirrored(false), attack_started(false), die_executed(false)
+Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(VaillantState::Idle), mirrored(false), attack_started(false), die_executed(false)
 {
 	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
 
@@ -56,7 +56,7 @@ void Vaillant::update()
 	}
 #endif
 
-	if (state == 2) return;
+	if (state == VaillantState::Death) return;
 
 	double distance = body.getPos().distanceFrom(player_position);
 
@@ -98,17 +98,17 @@ void Vaillant::update()
 		body.applyLinearImpulse((roaming_flipped ? Vec2{ -10, 0 } : Vec2{ 10, 0 }) * (240 / Profiler::FPS()));
 	}
 
-	state = 0;
+	state = VaillantState::Idle;
 
-	if (not InRange(body.getVelocity().x, -1.0, 1.0)) state = 1;
+	if (not InRange(body.getVelocity().x, -1.0, 1.0)) state = VaillantState::Walk;
 	if (not InRange(body.getVelocity().x, -1.0, 1.0)) mirrored = body.getVelocity().x > 0.0;
 
 	switch (state)
 	{
-		case 0:
-		case 1:
-			mirrored = !mirrored;
-			break;
+	case VaillantState::Idle:
+	case VaillantState::Walk:
+		mirrored = !mirrored;
+		break;
 	}
 }
 
@@ -123,57 +123,57 @@ void Vaillant::draw() const
 
 	switch (state)
 	{
-		case 0:
-		case 1:
-		{
-			margin = Vec2{ 112, 81 };
+	case VaillantState::Idle:
+	case VaillantState::Walk:
+	{
+		margin = Vec2{ 112, 81 };
 
-			int marginR = 247;
+		int marginR = 247;
 
-			frameDuration = 0.085;
-			frameCount    = 16;
+		frameDuration = 0.085;
+		frameCount    = 16;
 
-			currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
+		currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
 
-			if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
+		if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
 
-			if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
+		if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
 
-			break;
-		}
+		break;
+	}
 
-		case 2:
-		{
-			margin = Vec2{ 112, 81 };
+	case VaillantState::Death:
+	{
+		margin = Vec2{ 112, 81 };
 
-			int marginR = 247;
+		int marginR = 247;
 
-			frameDuration = 0.085;
-			frameCount    = 16;
+		frameDuration = 0.085;
+		frameCount    = 16;
 
-			if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
+		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
 
-			if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
+		if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
 
-			break;
-		}
+		break;
+	}
 	}
 
 	String assetName;
 
 	switch (state)
 	{
-		case 0:
-			assetName = U"Vaillant Idle";
-			break;
+	case VaillantState::Idle:
+		assetName = U"Vaillant Idle";
+		break;
 
-		case 1:
-			assetName = U"Vaillant Walk";
-			break;
+	case VaillantState::Walk:
+		assetName = U"Vaillant Walk";
+		break;
 
-		case 2:
-			assetName = U"Vaillant Death";
-			break;
+	case VaillantState::Death:
+		assetName = U"Vaillant Death";
+		break;
 	}
 
 	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(body.getPos());
@@ -220,7 +220,7 @@ void Vaillant::destroy()
 
 void Vaillant::die()
 {
-	state = 2;
+	state = VaillantState::Death;
 
 	if (!die_executed)
 	{
