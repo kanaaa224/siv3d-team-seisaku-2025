@@ -1,6 +1,7 @@
 ﻿# include "Common.hpp"
 # include "Scenes/Title.hpp"
 # include "Scenes/Game.hpp"
+# include "Scenes/End.hpp"
 
 void AssetsRegistration()
 {
@@ -31,6 +32,9 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Title_Background2", { U"Title" } }, U"../assets/images/title/j2.png");
 	TextureAsset::Register({ U"Title_Background3", { U"Title" } }, U"../assets/images/title/j3.png");
 	TextureAsset::Register({ U"Title_Background4", { U"Title" } }, U"../assets/images/title/j4.png");
+
+	//End
+	TextureAsset::Register({ U"End_Background1", { U"End" } }, U"../assets/images/end/End.png");
 
 	// Stage
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
@@ -109,6 +113,7 @@ void Main()
 
 	manager.add<Title>(SceneState::Title);
 	manager.add<Game>(SceneState::Game);
+	manager.add<End>(SceneState::End);
 
 	manager.init(SceneState::Title, 0.5s);
 
