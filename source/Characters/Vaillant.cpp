@@ -29,7 +29,9 @@ void Vaillant::update()
 {
 	frameTime += Scene::DeltaTime();
 
-	if (body.getPos().y >= 1000)
+	if (body) position = body.getPos();
+
+	if (position.y >= 1000)
 	{
 		body.setPos(start_position);
 		body.setVelocity(Vec2{});
@@ -59,14 +61,14 @@ void Vaillant::update()
 			spriteAnimator.stop();
 		}
 
-		spriteAnimator.setPosition(body.getPos());
+		spriteAnimator.setPosition(position);
 		spriteAnimator.update();
 	}
 #endif
 
 	if (state >= VaillantState::Death) return;
 
-	double distance = body.getPos().distanceFrom(player_position);
+	double distance = position.distanceFrom(player_position);
 
 	if (distance <= 400) attack_started = true;
 
@@ -76,7 +78,7 @@ void Vaillant::update()
 
 		bool walking_direction = false;
 
-		distance = body.getPos().x - player_position.x;
+		distance = position.x - player_position.x;
 
 		if (distance >  100) walking_direction = true;
 		if (distance < -100) walking_direction = false;
@@ -98,7 +100,7 @@ void Vaillant::update()
 	{
 		static bool roaming_flipped = false;
 
-		distance = body.getPos().x - start_position.x;
+		distance = position.x - start_position.x;
 
 		if (distance >  100) roaming_flipped = true;
 		if (distance < -100) roaming_flipped = false;
@@ -198,7 +200,7 @@ void Vaillant::draw() const
 		break;
 	}
 
-	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(body.getPos(), ColorF{ 1.0, 1.0, 1.0, alpha });
+	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(position, ColorF{ 1.0, 1.0, 1.0, alpha });
 
 #ifdef _DEBUG
 	body.drawFrame();
@@ -214,7 +216,7 @@ void Vaillant::onHit(ObjectBase& object)
 {
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{
-		if (object.getBody().getPos().y < (body.getPos().y - 100))
+		if (object.getBody().getPos().y < (position.y - 100))
 		{
 			object.getBody().applyLinearImpulse(Vec2{ 0, -40 });
 
@@ -222,7 +224,7 @@ void Vaillant::onHit(ObjectBase& object)
 		}
 		else
 		{
-			if (object.getBody().getPos().x < body.getPos().x)
+			if (object.getBody().getPos().x < position.x)
 			{
 				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
 			}
@@ -243,6 +245,8 @@ void Vaillant::destroy()
 	if (!destroy_executed)
 	{
 		frameTime = 0.0;
+
+		body.release();
 
 		std::thread([this]()
 		{

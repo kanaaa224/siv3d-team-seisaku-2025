@@ -25,9 +25,11 @@ public:
 	void onHit(ObjectBase& object) override;
 	void onDamaged(float amount) override;
 	
-	void setPlayerPosition(Vec2 position) { player_position = position; }
+	void setPlayerPosition(Vec2 pos) { player_position = pos; }
 
 private:
+	Vec2 position;
+
 	Vec2 start_position;
 	Vec2 player_position;
 	
