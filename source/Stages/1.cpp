@@ -97,6 +97,7 @@ void Stage1::update()
 		playerHUD->update();
 		playerHUD->setPlayerState(player->getplayerstate());
 		playerHUD->setPlayerVel(player->getBody().getVelocity());
+		playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 	}
 	else
 	{
