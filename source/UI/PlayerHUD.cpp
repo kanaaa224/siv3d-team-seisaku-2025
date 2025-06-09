@@ -35,12 +35,13 @@ void PlayerHUD::initialize()
 
 	buff_amount = 0;
 
+	Avoid_button_image = TextureAsset(U"Buf_Movement");
+
 	button = LoadDivGraph(U"Button", Size(16, 16));
 
 	xbutton = button[0];
 	Abutton = button[5];
 	Bbutton = button[15];
-
 
 	//タイマー関連の変数を初期化
 	timerStarted = false;
@@ -153,38 +154,43 @@ void PlayerHUD::draw() const
 	// プレイヤーが地面にいる場合
 	if (player_vel.y == 0.0)
 	{
-		FontAsset(U"TitleFont")(U"攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 100, 110 });
-		xbutton.resized(35, 35).drawAt(210, 115);
-		FontAsset(U"TitleFont")(U"ジャンプ：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 120, 150 });
-		Abutton.resized(35, 35).drawAt(260, 155);
+		FontAsset(U"TitleFont")(U"攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1155, 110 });
+		xbutton.resized(35, 35).drawAt(1205, 115);
+		FontAsset(U"TitleFont")(U"ジャンプ：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1175, 150 });
+		Abutton.resized(35, 35).drawAt(1255, 155);
+		
+		FontAsset(U"TitleFont")(U"回避：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),25, Vec2{ 1155, 190 });
+		Bbutton.resized(35, 35).drawAt(1205, 195);
 
-		FontAsset(U"TitleFont")(U"回避：").drawAt(
-				TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
-				25, Vec2{ 100, 190 });
-
-		if (player_avoid > 0.0)
-		{
-			// クールタイム中 → 暗く表示
-			Bbutton.resized(35, 35).drawAt(210, 195, ColorF{ 0.5, 0.5, 0.5 }); // RGBの各値を0.5にすることで暗くする
-		}
-		else
-		{
-			// クールタイム中ではない → 通常表示
-			Bbutton.resized(35, 35).drawAt(210, 195);
-		}
 		
 	}
 	// プレイヤーが地面にいない場合（ジャンプ中など）
 	else
 	{
-		FontAsset(U"TitleFont")(U"ジャンプ攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 130, 110 });
-		xbutton.resized(35, 35).drawAt(270, 115);
+		FontAsset(U"TitleFont")(U"ジャンプ攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1125, 110 });
+		xbutton.resized(35, 35).drawAt(1225, 115);
 	}
+
+
+	if (player_avoid > 0.0)
+	{
+		// クールタイム中→暗く表示
+		Avoid_button_image.resized(35, 35).drawAt(1205, 250, ColorF{ 0.5, 0.5, 0.5 });
+
+	}
+	else
+	{
+		// クールタイム中ではない→通常表示
+		Avoid_button_image.resized(60, 60).drawAt(1205, 250);
+	}
+
 
 
 #ifdef _DEBUG
 
 #endif
+
+
 }
 
 PlayerHUD* PlayerHUD::GetInstance()
