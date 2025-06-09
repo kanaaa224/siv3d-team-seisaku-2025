@@ -12,7 +12,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	destroy_executed(false),
 	damaged(false)
 {
-	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
+	body = world.createRect(P2Dynamic, position, size = { 203, 233 });
 
 	body.setFixedRotation(true);
 
@@ -35,13 +35,13 @@ void Vaillant::update()
 	if (position.y >= 1000)
 	{
 		body.setPos(start_position);
-		body.setVelocity(Vec2{});
+		body.setVelocity({ 0, 0 });
 	}
 
 #ifdef _DEBUG
-	if (KeyJ.pressed()) body.applyLinearImpulse(Vec2{ -10,     0 });
-	if (KeyI.down())    body.applyLinearImpulse(Vec2{   0, -2500 });
-	if (KeyL.pressed()) body.applyLinearImpulse(Vec2{  10,     0 });
+	if (KeyJ.pressed()) body.applyLinearImpulse({ -10,     0 });
+	if (KeyI.down())    body.applyLinearImpulse({   0, -2500 });
+	if (KeyL.pressed()) body.applyLinearImpulse({  10,     0 });
 
 	if (KeyH.down()) heal(10);
 	if (KeyP.down()) applyDamage(10);
@@ -127,6 +127,8 @@ void Vaillant::draw() const
 {
 	Vec2 margin;
 
+	SizeF cutoutSize = size;
+
 	double frameDuration = 0.0;
 	int    frameCount    = 0;
 
@@ -139,7 +141,7 @@ void Vaillant::draw() const
 	case VaillantState::Idle:
 	case VaillantState::Walk:
 	{
-		margin = Vec2{ 112, 81 };
+		margin = { 112, 81 };
 
 		int marginR = 247;
 
@@ -150,7 +152,7 @@ void Vaillant::draw() const
 
 		if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
 
-		if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
+		if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
 		break;
 	}
@@ -158,7 +160,7 @@ void Vaillant::draw() const
 	case VaillantState::Death:
 	case VaillantState::Destroy:
 	{
-		margin = Vec2{ 112, 81 };
+		margin = { 112, 81 };
 
 		int marginR = 247;
 
@@ -167,7 +169,7 @@ void Vaillant::draw() const
 
 		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
-		if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
+		if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
 		break;
 	}
@@ -205,7 +207,7 @@ void Vaillant::draw() const
 		break;
 	}
 
-	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(position, mask);
+	TextureAsset(assetName)(margin, cutoutSize).mirrored(mirrored).drawAt(position, mask);
 
 #ifdef _DEBUG
 	body.drawFrame();

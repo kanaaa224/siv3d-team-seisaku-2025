@@ -13,7 +13,7 @@ enum class VaillantState {
 class Vaillant : public CharacterBase
 {
 public:
-	Vaillant(P2World& world, const Vec2& position);
+	Vaillant(P2World& world, const Vec2& position = { 0, 0 });
 	~Vaillant() = default;
 
 	void update() override;
@@ -25,7 +25,7 @@ public:
 	void onHit(ObjectBase& object) override;
 	void onDamaged(float amount) override;
 	
-	void setPlayerPosition(Vec2 pos) { player_position = pos; }
+	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
 
 private:
 	Vec2 position;
