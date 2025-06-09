@@ -21,8 +21,8 @@ void Title::update()
 	// ボタンの更新
 	{
 		// マウスオーバーとコントローラーのAボタン、Bボタンに対応
-		m_startTransition.update(m_startButton.mouseOver() || controller.buttonA.pressed() || m_selectedButtonIndex == 0); // 選択中もトランジションを更新
-		m_exitTransition.update(m_exitButton.mouseOver() || controller.buttonB.pressed() || m_selectedButtonIndex == 1); // 選択中もトランジションを更新
+		m_startTransition.update(m_startButton.mouseOver() || controller.buttonA.pressed() || m_selectedButtonIndex == 0);
+		m_exitTransition.update(m_exitButton.mouseOver() || controller.buttonB.pressed() || m_selectedButtonIndex == 1);
 
 		if (m_startButton.mouseOver() || m_exitButton.mouseOver() || controller.isConnected())
 		{

@@ -164,7 +164,7 @@ void PlayerHUD::draw() const
 
 		if (player_avoid > 0.0)
 		{
-			// クールタイム中 → 暗く表示（例：グレーで乗算）
+			// クールタイム中 → 暗く表示
 			Bbutton.resized(35, 35).drawAt(210, 195, ColorF{ 0.5, 0.5, 0.5 }); // RGBの各値を0.5にすることで暗くする
 		}
 		else
