@@ -34,7 +34,7 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Title_Background4", { U"Title" } }, U"../assets/images/title/j4.png");
 
 	//End
-	TextureAsset::Register({ U"End_Background1", { U"End" } }, U"../assets/images/end/End.png");
+	TextureAsset::Register({ U"End_Background1", { U"End" } }, U"../assets/images/end/End4.png");
 
 	// Stage
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
@@ -115,7 +115,7 @@ void Main()
 	manager.add<Game>(SceneState::Game);
 	manager.add<End>(SceneState::End);
 
-	manager.init(SceneState::End, 0.5s);
+	manager.init(SceneState::Title, 0.5s);
 
 	while (System::Update())
 	{
