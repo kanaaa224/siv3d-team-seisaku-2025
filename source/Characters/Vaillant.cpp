@@ -9,7 +9,8 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	mirrored(false),
 	attack_started(false),
 	die_executed(false),
-	destroy_executed(false)
+	destroy_executed(false),
+	damaged(false)
 {
 	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
 
@@ -131,7 +132,7 @@ void Vaillant::draw() const
 
 	static int currentFrame = 0;
 
-	double alpha = 1.0;
+	ColorF mask = { 1.0, 1.0, 1.0, 1.0 };
 
 	switch (state)
 	{
@@ -172,13 +173,17 @@ void Vaillant::draw() const
 	}
 	}
 
+	if (damaged) mask = ColorF{ 1.0, 0.0, 0.0, 0.5 };
+
 	switch (state)
 	{
 	case VaillantState::Destroy:
 	{
 		constexpr double fadeDuration = 1.5;
 
-		alpha = Max(0.0, 1.0 - (frameTime / fadeDuration));
+		double alpha = Max(0.0, 1.0 - (frameTime / fadeDuration));
+
+		mask = ColorF{ 1.0, 1.0, 1.0, alpha };
 	}
 	}
 
@@ -200,7 +205,7 @@ void Vaillant::draw() const
 		break;
 	}
 
-	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(position, ColorF{ 1.0, 1.0, 1.0, alpha });
+	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(position, mask);
 
 #ifdef _DEBUG
 	body.drawFrame();
@@ -250,7 +255,8 @@ void Vaillant::destroy()
 
 		std::thread([this]()
 		{
-			std::this_thread::sleep_for(std::chrono::seconds(2));
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
 			ObjectBase::destroy();
 		}).detach();
 
@@ -266,7 +272,8 @@ void Vaillant::die()
 	{
 		std::thread([this]()
 		{
-			std::this_thread::sleep_for(std::chrono::seconds(2));
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
 			CharacterBase::die();
 		}).detach();
 
@@ -277,4 +284,16 @@ void Vaillant::die()
 void Vaillant::onDamaged(float amount)
 {
 	CharacterBase::onDamaged(amount);
+
+	if (!damaged)
+	{
+		std::thread([this]()
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+
+			damaged = false;
+		}).detach();
+
+		damaged = true;
+	}
 }

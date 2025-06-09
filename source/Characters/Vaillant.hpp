@@ -46,5 +46,7 @@ private:
 
 	SpriteAnimator spriteAnimator;
 
+	bool damaged;
+
 	void initialize();
 };
