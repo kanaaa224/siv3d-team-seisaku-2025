@@ -11,6 +11,9 @@
 
 //移動速度
 #define FLY_MOVE_SPEED 100.0
+#define AMMO_SPEED 200.0
+
+#define AWAY_PLAYER 450.0
 
 class Flot : public EnemyBase
 {

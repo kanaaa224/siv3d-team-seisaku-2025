@@ -391,11 +391,11 @@ void EnemyBase::spawnAmmo(double speed, bool playerTargetFlg)
 	Vec2 spawnPos = Vec2{ 0,0 };
 	
 	if (img_flipFlg == true) {
-		spawnPos.x = body.getPos().x - 60;
+		spawnPos.x = body.getPos().x - 40;
 		spawnPos.y = body.getPos().y;
 	}
 	else if (img_flipFlg == false) {
-		spawnPos.x = body.getPos().x + 60;
+		spawnPos.x = body.getPos().x + 40;
 		spawnPos.y = body.getPos().y;
 	}
 

@@ -59,7 +59,7 @@ void Flot::update()
 
 	//状態遷移
 	stateControl();
-
+	//アニメーション
 	animation(
 		Scene::DeltaTime(),
 		Flot_IMG_CT_IDLE,
@@ -108,9 +108,16 @@ void Flot::stateControl()
 		break;
 	case ATTACK_POSITION:
 		//プレイヤーから距離を取る
-		MoveAwayFromPlayer(600.0);
+		MoveAwayFromPlayer(AWAY_PLAYER);
 		break;
 	case ATTACK:
+		if (playerPos.x - pos.x > 0) {//プレイヤーが左
+			img_flipFlg = false;
+		}
+		else {//プレイヤーが右
+			img_flipFlg = true;
+		}
+
 		fireAmmo();//玉の生成
 		if (fireFlg) {
 			setEnemyState(ATTACK_POSITION);
@@ -142,7 +149,7 @@ void Flot::fireAmmo()
 	}
 
 	if (fireFlg == true) {
-		spawnAmmo(200, true);
+		spawnAmmo(AMMO_SPEED, true);
 	}
 }
 
@@ -150,21 +157,22 @@ void Flot::MoveAwayFromPlayer(double awayDistance)
 {
 	//初期化
 	if (!MoveAwayInitFlg) {
-		if ((playerPos - pos).length() <= awayDistance) {
-			if (playerPos.x - pos.x > 0) {//プレイヤーが左
-				movePoint = Vec2{ playerPos.x - awayDistance,pos.y };
-
-			}
-			else {//プレイヤーが右
-				movePoint = Vec2{ playerPos.x + awayDistance,pos.y };
-			}
-		}
-		else {
-			movePoint = Vec2{ pos.x,pos.y };
-		}
-
 		moveAwayEndFlg = false;
 		MoveAwayInitFlg = true;
+	}
+
+	if ((playerPos - pos).length() <= awayDistance) {
+		if (playerPos.x - pos.x > 0) {//プレイヤーが左
+			movePoint = Vec2{ playerPos.x - awayDistance,pos.y };
+			img_flipFlg = false;
+		}
+		else {//プレイヤーが右
+			movePoint = Vec2{ playerPos.x + awayDistance,pos.y };
+			img_flipFlg = true;
+		}
+	}
+	else {
+		movePoint = Vec2{ pos.x,pos.y };
 	}
 
 	Vec2 dir = movePoint - pos;
