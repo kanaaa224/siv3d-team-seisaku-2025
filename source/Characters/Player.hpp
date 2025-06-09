@@ -64,9 +64,12 @@ private:
 
 	double hitStopTimer;  //ヒットストップタイマー
 	bool isHitStop;     //ヒットストップしたかどうか
+	bool Damageflg;		//ダメージフラグ
 
 	double avoidanceCooldown; // 回避のクールタイム秒数
 	double avoidanceCooldownDuration; // クールタイム間隔
+
+	double alpha;
 
 	Vec2 pos;
 
