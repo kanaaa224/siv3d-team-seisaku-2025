@@ -1,7 +1,15 @@
 ﻿# include "Vaillant.hpp"
 # include "Player.hpp"
 
-Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(VaillantState::Idle), mirrored(false), attack_started(false), die_executed(false)
+Vaillant::Vaillant(P2World& world, const Vec2& position) :
+	CharacterBase(world, position),
+	start_position(position),
+	frameTime(0.0),
+	state(VaillantState::Idle),
+	mirrored(false),
+	attack_started(false),
+	die_executed(false),
+	destroy_executed(false)
 {
 	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
 
@@ -19,7 +27,7 @@ void Vaillant::initialize()
 
 void Vaillant::update()
 {
-	animationTime += Scene::DeltaTime();
+	frameTime += Scene::DeltaTime();
 
 	if (body.getPos().y >= 1000)
 	{
@@ -56,7 +64,7 @@ void Vaillant::update()
 	}
 #endif
 
-	if (state == VaillantState::Death) return;
+	if (state >= VaillantState::Death) return;
 
 	double distance = body.getPos().distanceFrom(player_position);
 
@@ -121,6 +129,8 @@ void Vaillant::draw() const
 
 	static int currentFrame = 0;
 
+	double alpha = 1.0;
+
 	switch (state)
 	{
 	case VaillantState::Idle:
@@ -133,7 +143,7 @@ void Vaillant::draw() const
 		frameDuration = 0.085;
 		frameCount    = 16;
 
-		currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
+		currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
 		if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
 
@@ -143,6 +153,7 @@ void Vaillant::draw() const
 	}
 
 	case VaillantState::Death:
+	case VaillantState::Destroy:
 	{
 		margin = Vec2{ 112, 81 };
 
@@ -151,11 +162,21 @@ void Vaillant::draw() const
 		frameDuration = 0.085;
 		frameCount    = 16;
 
-		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
+		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
 		if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
 
 		break;
+	}
+	}
+
+	switch (state)
+	{
+	case VaillantState::Destroy:
+	{
+		constexpr double fadeDuration = 1.5;
+
+		alpha = Max(0.0, 1.0 - (frameTime / fadeDuration));
 	}
 	}
 
@@ -172,16 +193,18 @@ void Vaillant::draw() const
 		break;
 
 	case VaillantState::Death:
+	case VaillantState::Destroy:
 		assetName = U"Vaillant Death";
 		break;
 	}
 
-	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(body.getPos());
+	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(body.getPos(), ColorF{ 1.0, 1.0, 1.0, alpha });
 
 #ifdef _DEBUG
 	body.drawFrame();
 
 	Print << U"Vaillant HP: " << hp << U" / " << max_hp;
+	Print << U"Vaillant State: " << static_cast<int>(state);
 
 	spriteAnimator.draw();
 #endif
@@ -215,7 +238,20 @@ void Vaillant::onHit(ObjectBase& object)
 
 void Vaillant::destroy()
 {
-	ObjectBase::destroy();
+	state = VaillantState::Destroy;
+
+	if (!destroy_executed)
+	{
+		frameTime = 0.0;
+
+		std::thread([this]()
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(2));
+			ObjectBase::destroy();
+		}).detach();
+
+		destroy_executed = true;
+	}
 }
 
 void Vaillant::die()

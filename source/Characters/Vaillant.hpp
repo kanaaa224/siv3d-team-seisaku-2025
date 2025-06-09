@@ -6,7 +6,8 @@
 enum class VaillantState {
 	Idle,
 	Walk,
-	Death
+	Death,
+	Destroy
 };
 
 class Vaillant : public CharacterBase
@@ -32,13 +33,14 @@ private:
 	
 	SizeF size;
 	
-	double animationTime;
+	double frameTime;
 	
 	VaillantState state;
 	
 	bool mirrored;
 	bool attack_started;
 	bool die_executed;
+	bool destroy_executed;
 
 	SpriteAnimator spriteAnimator;
 
