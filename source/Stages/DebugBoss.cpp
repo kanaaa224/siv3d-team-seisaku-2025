@@ -14,7 +14,8 @@ StageDebugBoss::StageDebugBoss()
 
 void StageDebugBoss::initialize()
 {
-	createObject<StageBackground>(Vec2{ 0, 0 });
+	createObject<StageBackground>();
+
 	createObject<Ground>(Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>(Vec2{ -5, 500 });
 	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 200, 500 });

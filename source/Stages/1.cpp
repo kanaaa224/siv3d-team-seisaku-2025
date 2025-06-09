@@ -17,7 +17,7 @@ Stage1::Stage1()
 void Stage1::initialize()
 {
 	//ステージオブジェクト
-	createObject<StageBackground>(Vec2{ 0, 0 });
+	createObject<StageBackground>();
 	createObject<Ground>         (Vec2{ 5000, (Scene::Height() + 5) });
 	createObject<Wall>           (Vec2{ -5, 500 });
 
