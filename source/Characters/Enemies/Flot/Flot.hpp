@@ -9,6 +9,9 @@
 #define Flot_IMG_CT_GET_ATTACK     0.05
 #define Flot_IMG_CT_DIE            0.2
 
+//移動速度
+#define FLY_MOVE_SPEED 100.0
+
 class Flot : public EnemyBase
 {
 public:
@@ -21,8 +24,15 @@ public:
 private:
 	void stateControl() override;
 
+	//玉の生成
 	void fireAmmo();
-	bool fireFlg;
-	double fire_coolTime;
+	bool fireFlg;//玉を生成するか？
+	double fire_coolTime;//次の玉の発射までのクールタイム
+
+	//プレイヤーから距離を取る
+	void MoveAwayFromPlayer(double awayDistance);
+	Vec2 movePoint;//移動する場所
+	bool MoveAwayInitFlg;//moveAwayFromPlayerの中で初期化
+	bool moveAwayEndFlg;//移動する場所に着いたか
 };
 
