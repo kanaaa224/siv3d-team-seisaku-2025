@@ -5,7 +5,7 @@
 Flot::Flot(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
 {
-	max_hp = 50;
+	max_hp = 60;
 	hp = max_hp;
 
 	fireFlg = false;
@@ -13,17 +13,18 @@ Flot::Flot(P2World& world, const Vec2& position):
 	type = eEnemyType::flot;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
-	body = world.createRect(
+	body = world.createRectSensor(
 		P2Dynamic,
 		position,
 		SizeF{ 75, 60 },
-		P2Material{ .density = 0.0, .friction = 0.0 },
+		//P2Material{ .density = 0.0, .friction = 0.0 },
 		P2Filter{
 			.categoryBits = CollisionCategory::Enemy,
 			.maskBits = CollisionCategory::All
 		}
 	);
 	body.setFixedRotation(true);//当たり判定の回転を無くす
+	body.setGravityScale(0.0);
 
 	//画像を分割読み込み
 	idle_img           = LoadDivGraph(U"Flot Idle",      Size(150, 45));//idle画像
@@ -55,6 +56,13 @@ void Flot::update()
 	//hpが０になったら死亡
 	if (hp <= 0) {
 		setEnemyState(DIE);
+	}
+
+	if (nowState == DIE) {
+		if (pos.y <= Scene::Height() + 5) {
+			pos.y += 2.0;
+		}
+		
 	}
 
 	//状態遷移
