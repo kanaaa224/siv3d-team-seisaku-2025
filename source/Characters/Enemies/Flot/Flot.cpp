@@ -60,7 +60,13 @@ void Flot::update()
 	//状態遷移
 	stateControl();
 
-	animation(Scene::DeltaTime(), 0.07, 0.1, 0.1, 0.05, 0.2);
+	animation(
+		Scene::DeltaTime(),
+		Flot_IMG_CT_IDLE,
+		Flot_IMG_CT_ATTACK_POSTION,
+		Flot_IMG_CT_ATTACK,
+		Flot_IMG_CT_GET_ATTACK,
+		Flot_IMG_CT_DIE);
 
 	//親のメゾットを実行
 	EnemyBase::update();
@@ -98,15 +104,13 @@ void Flot::stateControl()
 	case NONE:
 		break;
 	case IDLE:
-		//movement(20.0f, eMovementDirection::Y);//左右移動（数値は移動する距離）
+		
 		break;
 	case ATTACK_POSITION:
-		//movement(20.0f, eMovementDirection::Y);
+		
 		break;
 	case ATTACK:
-		//movement(20.0f, eMovementDirection::Y);
-		//ここで玉を生成する
-		fireAmmo();
+		fireAmmo();//玉の生成
 		break;
 	case GET_ATTACK:
 		if (nowImageNum == getAttack_img.size()) {
