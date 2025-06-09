@@ -46,6 +46,8 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	hitStopTimer = 0;
 	avoidanceCooldown = 0.0;
 	avoidanceCooldownDuration = AVOIDANCE_COOLTIME;
+	Damageflg = false;
+	alpha = 1.0;
 
 	this->initialize();
 }
@@ -442,12 +444,20 @@ void Player::update()
 	case damage:
 
 		////////se
-
+		Damageflg = true;
 		//アニメーション
 		if (animation(damage_animation, DAMAGE_ANIM_SPEED))
 		{
 			animation_number = 0;
-			playerState = ePlayerState::idle;
+			Damageflg = false;
+			if (playerState == ePlayerState::jump || playerState == ePlayerState::jump_attack)
+			{
+				playerState = ePlayerState::jump;
+			}
+			else
+			{
+				playerState = ePlayerState::idle;
+			}
 		}
 
 		break;
@@ -467,8 +477,11 @@ void Player::update()
 	if (isHitStop == true) {
 
 		hitStopTimer -= Scene::DeltaTime();
+		// 画像の透明度を設定 7.0を増やすと点滅速度が速くなる
+		alpha = (1.0 + Sin(Scene::Time() * 7.0 * Math::Pi)) * 0.5;
 		if (hitStopTimer <= 0.0) {
 			isHitStop = false;
+			alpha = 1.0;
 			hitStopTimer = ITIME;
 		}
 	}
@@ -490,11 +503,11 @@ void Player::draw() const
 	const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
 
 	body.drawFrame(1.0, ColorF(Palette::Blue));
-	image.mirrored(flip_flg).resized(size).drawAt(pos);
+	image.mirrored(flip_flg).resized(size).drawAt(pos, ColorF{ 1.0, 1.0, 1.0, alpha});
 
 	//無敵中は点滅
-	if ((isHitStop && Fmod(Scene::Time(), 0.1) < 0.05)) {
-		image.mirrored(flip_flg).resized(size).drawAt(body.getPos(), Palette::Red);
+	if ((Damageflg == true && Fmod(Scene::Time(), 0.1) < 0.05)) {
+		image.mirrored(flip_flg).resized(size).drawAt(pos, Palette::Red);
 	}
 
 #ifdef _DEBUG
@@ -504,7 +517,7 @@ void Player::draw() const
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
 	//Print << U"hitStopTimer : " << hitStopTimer;
-	//Print << U"isHitStop : " << isHitStop;
+	Print << U"isHitStop : " << isHitStop;
 	//Print << U"CoolDown : " << avoidanceCooldown;
 
 #endif // DEBUG
@@ -528,6 +541,8 @@ void Player::onDamaged(float amount)
 	{
 		addHP(-amount);
 		isHitStop = true;
+		animation_number = 0;
+		playerState = ePlayerState::damage;
 	}
 }
 
