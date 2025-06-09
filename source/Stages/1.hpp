@@ -2,7 +2,7 @@
 
 # include "../Stage.hpp"
 
-#define STAGE1_WIDTH 4140
+#define STAGE1_WIDTH 6140
 
 class Stage1 : public Stage
 {
