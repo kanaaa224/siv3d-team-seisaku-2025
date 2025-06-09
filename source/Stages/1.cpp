@@ -18,7 +18,7 @@ void Stage1::initialize()
 {
 	//ステージオブジェクト
 	createObject<StageBackground>();
-	createObject<Ground>         (Vec2{ 5000, (Scene::Height() + 5) });
+	createObject<Ground>         (Vec2{ STAGE1_WIDTH, (Scene::Height() + 5) });
 	createObject<Wall>           (Vec2{ -5, 500 });
 
 	//敵
@@ -59,13 +59,17 @@ void Stage1::update()
 		double x = player->getBody().getPos().x;
 		double y = player->getBody().getPos().y;
 
-		int centerWidth  = (Scene::Width()  / 2);
-		int centerHeight = (Scene::Height() / 2);
+		if (BossEreaflg == false)
+		{
+			int centerWidth = (Scene::Width() / 2);
+			int centerHeight = (Scene::Height() / 2);
 
-		if (centerWidth  > x) x = centerWidth;
-		/*if (centerHeight < y)*/ y = centerHeight;
+			if (centerWidth > x) x = centerWidth;
+			/*if (centerHeight < y)*/ y = centerHeight;
 
-		camera.setTargetCenter(Vec2{ x, y });
+			camera.setTargetCenter(Vec2{ x, y });
+		}
+		
 
 		for (const auto& object : objects)
 		{
@@ -91,15 +95,20 @@ void Stage1::update()
 				stagebackground->setCameraPos(camera.getTargetCenter() - Scene::Center());
 			}
 
-			if (BossEreaflg == false && player->getBody().getPos().x >= 3500.0)
+			if (BossEreaflg == false && player->getBody().getPos().x >= STAGE1_WIDTH - (Scene::Width() / 2))
 			{
-				//Test = camera.getCenter();
 				if (Wall* wall = dynamic_cast<Wall*>(object))
 				{
+					wall->getBody().setPos(Vec2(camera.getCenter().x - Scene::Width() / 2, 500.0));
 					BossEreaflg = true;
-					wall->getBody().setPos(Vec2(camera.getCenter().x - Scene::Width() / 2, 0.0));
 				}
 			}
+		}
+
+		static bool excuted;
+		if (!excuted && BossEreaflg) {
+			createObject<Wall>(Vec2(STAGE1_WIDTH, 500.0));
+			excuted = true;
 		}
 
 		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
@@ -132,7 +141,6 @@ void Stage1::draw() const
 
 #ifdef _DEBUG
 	Print << U"オブジェクト数: " << objects.size();
-	Print << U"Test : " << Test;
 #endif
 
 	{

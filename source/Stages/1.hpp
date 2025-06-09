@@ -2,6 +2,8 @@
 
 # include "../Stage.hpp"
 
+#define STAGE1_WIDTH 4140
+
 class Stage1 : public Stage
 {
 public:
@@ -15,7 +17,6 @@ public:
 
 private:
 	Camera2D camera;
-	Vec2 Test;
 	bool BossEreaflg;
 
 	void initialize();
