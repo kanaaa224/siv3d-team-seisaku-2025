@@ -43,7 +43,7 @@ void Flot::update()
 	//視界内にプレイヤーがいる場合
 	if (isPlayerInSight() == true && (nowState != DIE && nowState != ATTACK && getDamageFlg == false) || nowState == ATTACK_POSITION) {
 		setEnemyState(ATTACK_POSITION);//攻撃姿勢状態へ
-		if (nowImageNum == attackPosition_img.size()) {//アニメーションを終えたら攻撃へ
+		if (moveAwayEndFlg) {//プレイヤーから一定距離離れたら
 			setEnemyState(ATTACK);
 		}
 	}
@@ -107,10 +107,15 @@ void Flot::stateControl()
 		
 		break;
 	case ATTACK_POSITION:
-		
+		//プレイヤーから距離を取る
+		MoveAwayFromPlayer(600.0);
 		break;
 	case ATTACK:
 		fireAmmo();//玉の生成
+		if (fireFlg) {
+			setEnemyState(ATTACK_POSITION);
+			moveAwayEndFlg = false;
+		}
 		break;
 	case GET_ATTACK:
 		if (nowImageNum == getAttack_img.size()) {
@@ -138,5 +143,38 @@ void Flot::fireAmmo()
 
 	if (fireFlg == true) {
 		spawnAmmo(200, true);
+	}
+}
+
+void Flot::MoveAwayFromPlayer(double awayDistance)
+{
+	//初期化
+	if (!MoveAwayInitFlg) {
+		if ((playerPos - pos).length() <= awayDistance) {
+			if (playerPos.x - pos.x > 0) {//プレイヤーが左
+				movePoint = Vec2{ playerPos.x - awayDistance,pos.y };
+
+			}
+			else {//プレイヤーが右
+				movePoint = Vec2{ playerPos.x + awayDistance,pos.y };
+			}
+		}
+		else {
+			movePoint = Vec2{ pos.x,pos.y };
+		}
+
+		moveAwayEndFlg = false;
+		MoveAwayInitFlg = true;
+	}
+
+	Vec2 dir = movePoint - pos;
+	double distance = dir.length();
+
+	body.setVelocity((distance > 0.0) ? (dir / distance) * FLY_MOVE_SPEED : Vec2{ 0, 0 });
+
+	if (distance <= 10.0) {
+		moveAwayEndFlg = true;
+		MoveAwayInitFlg = false;
+		body.setVelocity(Vec2{ 0.0,0.0 });
 	}
 }
