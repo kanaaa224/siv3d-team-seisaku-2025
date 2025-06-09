@@ -3,7 +3,7 @@
 
 End::End(const InitData& init) : IScene{ init }
 {
-	end_background = TextureAsset(U"Title_Background1");
+	end_background = TextureAsset(U"End_Background1");
 }
 
 void End::update()

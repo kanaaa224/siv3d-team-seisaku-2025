@@ -115,7 +115,7 @@ void Main()
 	manager.add<Game>(SceneState::Game);
 	manager.add<End>(SceneState::End);
 
-	manager.init(SceneState::Title, 0.5s);
+	manager.init(SceneState::End, 0.5s);
 
 	while (System::Update())
 	{
