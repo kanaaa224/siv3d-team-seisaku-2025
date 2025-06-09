@@ -15,6 +15,8 @@ public:
 
 private:
 	Camera2D camera;
+	Vec2 Test;
+	bool BossEreaflg;
 
 	void initialize();
 };

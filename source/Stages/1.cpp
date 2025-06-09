@@ -32,6 +32,7 @@ void Stage1::initialize()
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
+	BossEreaflg = false;
 }
 
 void Stage1::update()
@@ -89,6 +90,16 @@ void Stage1::update()
 			{
 				stagebackground->setCameraPos(camera.getTargetCenter() - Scene::Center());
 			}
+
+			if (BossEreaflg == false && player->getBody().getPos().x >= 3500.0)
+			{
+				//Test = camera.getCenter();
+				if (Wall* wall = dynamic_cast<Wall*>(object))
+				{
+					BossEreaflg = true;
+					wall->getBody().setPos(Vec2(camera.getCenter().x - Scene::Width() / 2, 0.0));
+				}
+			}
 		}
 
 		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
@@ -121,6 +132,7 @@ void Stage1::draw() const
 
 #ifdef _DEBUG
 	Print << U"オブジェクト数: " << objects.size();
+	Print << U"Test : " << Test;
 #endif
 
 	{
