@@ -1,64 +1,60 @@
 ﻿# include "HitBox.hpp"
-# include "../Characters/Enemies/EnemyBase.hpp"
 # include "../Characters/Player.hpp"
+# include "../Characters/Enemies/EnemyBase.hpp"
+# include "../Characters/Vaillant.hpp"
 
-bool HitBox::flg = false;
-
-HitBox::HitBox(P2World& world, const Vec2& position) : ObjectBase(world, position)
+HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner, float damageAmount) : ObjectBase(world, position), owner(&owner), damageAmount(damageAmount)
 {
 	body = world.createRectSensor(
 		P2Kinematic,
 		position,
-		RectF{ 20, 90 },
-		// 物体の衝突判定の設定 ただし、すり抜けはできない
-		P2Filter{
-
-			// 自分のカテゴリ設定
-			.categoryBits = CollisionCategory::Box1,
-			// Hitさせたいカテゴリを選ぶ
-			.maskBits = CollisionCategory::Enemy
+		RectF { 20, 90 },
+		P2Filter {
+			.categoryBits = CollisionCategory::HitBox, // 自分のカテゴリ
+			.maskBits     = CollisionCategory::Enemy   // Hitさせたいカテゴリ
 		}
 	);
-
-	initialize();
-}
-
-void HitBox::initialize()
-{
-	if (flg == true) deleteSelf();
-
-	flg = true;
 }
 
 void HitBox::update()
 {
-	if (flip_flg == false)
+	if (Player* player = dynamic_cast<Player*>(owner))
 	{
-		body.setPos(Vec2(playerPos.x + 28, playerPos.y - 45));
-	}
-	else if(flip_flg == true)
-	{
-		body.setPos(Vec2(playerPos.x - 48, playerPos.y - 45));
-	}
+		Vec2 pos = player->getBody().getPos();
 
-	if (playerState != ePlayerState::attack)
-	{
-		deleteSelf();
-		flg = false;
+		if (player->getFlip())
+		{
+			body.setPos({ pos.x - 48, pos.y - 45 });
+		}
+		else
+		{
+			body.setPos({ pos.x + 28, pos.y - 45 });
+		}
+
+		if (player->getplayerstate() != ePlayerState::attack) destroy();
 	}
 }
 
 void HitBox::draw() const
 {
-	body.drawFrame(1.0, ColorF(Palette::Red));
+#ifdef _DEBUG
+	body.drawFrame(1.0, Palette::Red);
+#endif
 }
 
 void HitBox::onHit(ObjectBase& object)
 {
 	if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(&object))
 	{
-		enemy->onDamaged(50);
-		deleteSelf();
-		flg = false;
+		enemy->applyDamage(damageAmount);
+
+		destroy();
+	}
+
+	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(&object))
+	{
+		vaillant->applyDamage(damageAmount);
+
+		destroy();
 	}
 }

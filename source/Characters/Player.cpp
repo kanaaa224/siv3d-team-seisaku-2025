@@ -278,7 +278,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 70, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -311,7 +311,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
@@ -349,12 +349,12 @@ void Player::update()
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
 			//body.setVelocity(Vec2(-ATTACK_RANGE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 70, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
 		}
 		else
 		{
 			//body.setVelocity(Vec2(ATTACK_RANGE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
 		}
 		
 		
@@ -372,13 +372,13 @@ void Player::update()
 		{
 			//body.setVelocity(Vec2(-15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 72, body.getPos().y - 55));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 72, body.getPos().y - 55 }, *this, 20.0f);
 		}
 		else
 		{
 			//body.setVelocity(Vec2(15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
 		}
 
 		if (animation(jump_attack_2_animation, 0.09)) {
@@ -393,7 +393,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x - 72, body.getPos().y - 55));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 72, body.getPos().y - 55 }, *this, 20.0f);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -417,7 +417,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2(body.getPos().x + 70, body.getPos().y - 45));
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));

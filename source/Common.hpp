@@ -26,6 +26,5 @@ namespace CollisionCategory
 	constexpr uint16 Default = 0x0001;
 	constexpr uint16 Player  = 0x0002;
 	constexpr uint16 Enemy   = 0x0004;
-	constexpr uint16 Box1    = 0x0008;
-	constexpr uint16 Box2    = 0x0010;
+	constexpr uint16 HitBox  = 0x0008;
 }

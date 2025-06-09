@@ -12,7 +12,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	destroy_executed(false),
 	damaged(false)
 {
-	body = world.createRect(P2Dynamic, position, size = { 203, 233 });
+	body = world.createRect(P2Dynamic, position, size = { 203, 233 }, {}, { .categoryBits = CollisionCategory::Enemy });
 
 	body.setFixedRotation(true);
 
@@ -221,28 +221,7 @@ void Vaillant::draw() const
 
 void Vaillant::onHit(ObjectBase& object)
 {
-	if (Player* player = dynamic_cast<Player*>(&object))
-	{
-		if (object.getBody().getPos().y < (position.y - 100))
-		{
-			object.getBody().applyLinearImpulse(Vec2{ 0, -40 });
-
-			this->applyDamage(10);
-		}
-		else
-		{
-			if (object.getBody().getPos().x < position.x)
-			{
-				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
-			}
-			else
-			{
-				object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
-			}
-
-			player->applyDamage(10);
-		}
-	}
+	if (Player* player = dynamic_cast<Player*>(&object)) {}
 }
 
 void Vaillant::destroy()
@@ -285,10 +264,10 @@ void Vaillant::die()
 
 void Vaillant::onDamaged(float amount)
 {
-	CharacterBase::onDamaged(amount);
-
 	if (!damaged)
 	{
+		CharacterBase::onDamaged(amount);
+
 		std::thread([this]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(250));

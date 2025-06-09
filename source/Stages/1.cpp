@@ -6,7 +6,6 @@
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Characters/Enemies/Flot/Flot.hpp"
 # include "../UI/PlayerHUD.hpp"
-# include "../Objects/Hitbox.hpp"
 # include "../Characters/Vaillant.hpp"
 
 Stage1::Stage1()
@@ -81,13 +80,6 @@ void Stage1::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
-			}
-
-			if (HitBox* hitbox = dynamic_cast<HitBox*>(object))
-			{
-				hitbox->setPlayerPos(player->getBody().getPos());
-				hitbox->setPlayerState(player->getplayerstate());
-				hitbox->setPlayerflip(player->getFlip());
 			}
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
