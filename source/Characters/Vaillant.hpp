@@ -6,7 +6,8 @@
 enum class VaillantState {
 	Idle,
 	Walk,
-	Death
+	Death,
+	Destroy
 };
 
 class Vaillant : public CharacterBase
@@ -24,23 +25,28 @@ public:
 	void onHit(ObjectBase& object) override;
 	void onDamaged(float amount) override;
 	
-	void setPlayerPosition(Vec2 position) { player_position = position; }
+	void setPlayerPosition(Vec2 pos) { player_position = pos; }
 
 private:
+	Vec2 position;
+
 	Vec2 start_position;
 	Vec2 player_position;
 	
 	SizeF size;
 	
-	double animationTime;
+	double frameTime;
 	
 	VaillantState state;
 	
 	bool mirrored;
 	bool attack_started;
 	bool die_executed;
+	bool destroy_executed;
 
 	SpriteAnimator spriteAnimator;
+
+	bool damaged;
 
 	void initialize();
 };

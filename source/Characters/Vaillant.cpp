@@ -1,7 +1,16 @@
 ﻿# include "Vaillant.hpp"
 # include "Player.hpp"
 
-Vaillant::Vaillant(P2World& world, const Vec2& position) : CharacterBase(world, position), start_position(position), animationTime(0.0), state(VaillantState::Idle), mirrored(false), attack_started(false), die_executed(false)
+Vaillant::Vaillant(P2World& world, const Vec2& position) :
+	CharacterBase(world, position),
+	start_position(position),
+	frameTime(0.0),
+	state(VaillantState::Idle),
+	mirrored(false),
+	attack_started(false),
+	die_executed(false),
+	destroy_executed(false),
+	damaged(false)
 {
 	body = world.createRect(P2Dynamic, position, size = SizeF{ 203, 233 });
 
@@ -19,9 +28,11 @@ void Vaillant::initialize()
 
 void Vaillant::update()
 {
-	animationTime += Scene::DeltaTime();
+	frameTime += Scene::DeltaTime();
 
-	if (body.getPos().y >= 1000)
+	if (body) position = body.getPos();
+
+	if (position.y >= 1000)
 	{
 		body.setPos(start_position);
 		body.setVelocity(Vec2{});
@@ -51,14 +62,14 @@ void Vaillant::update()
 			spriteAnimator.stop();
 		}
 
-		spriteAnimator.setPosition(body.getPos());
+		spriteAnimator.setPosition(position);
 		spriteAnimator.update();
 	}
 #endif
 
-	if (state == VaillantState::Death) return;
+	if (state >= VaillantState::Death) return;
 
-	double distance = body.getPos().distanceFrom(player_position);
+	double distance = position.distanceFrom(player_position);
 
 	if (distance <= 400) attack_started = true;
 
@@ -68,7 +79,7 @@ void Vaillant::update()
 
 		bool walking_direction = false;
 
-		distance = body.getPos().x - player_position.x;
+		distance = position.x - player_position.x;
 
 		if (distance >  100) walking_direction = true;
 		if (distance < -100) walking_direction = false;
@@ -90,7 +101,7 @@ void Vaillant::update()
 	{
 		static bool roaming_flipped = false;
 
-		distance = body.getPos().x - start_position.x;
+		distance = position.x - start_position.x;
 
 		if (distance >  100) roaming_flipped = true;
 		if (distance < -100) roaming_flipped = false;
@@ -121,6 +132,8 @@ void Vaillant::draw() const
 
 	static int currentFrame = 0;
 
+	ColorF mask = { 1.0, 1.0, 1.0, 1.0 };
+
 	switch (state)
 	{
 	case VaillantState::Idle:
@@ -133,7 +146,7 @@ void Vaillant::draw() const
 		frameDuration = 0.085;
 		frameCount    = 16;
 
-		currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
+		currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
 		if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
 
@@ -143,6 +156,7 @@ void Vaillant::draw() const
 	}
 
 	case VaillantState::Death:
+	case VaillantState::Destroy:
 	{
 		margin = Vec2{ 112, 81 };
 
@@ -151,11 +165,25 @@ void Vaillant::draw() const
 		frameDuration = 0.085;
 		frameCount    = 16;
 
-		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(animationTime / frameDuration) % frameCount;
+		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
 		if (currentFrame) margin.x += (marginR + size.x) * currentFrame;
 
 		break;
+	}
+	}
+
+	if (damaged) mask = ColorF{ 1.0, 0.0, 0.0, 0.5 };
+
+	switch (state)
+	{
+	case VaillantState::Destroy:
+	{
+		constexpr double fadeDuration = 1.5;
+
+		double alpha = Max(0.0, 1.0 - (frameTime / fadeDuration));
+
+		mask = ColorF{ 1.0, 1.0, 1.0, alpha };
 	}
 	}
 
@@ -172,16 +200,18 @@ void Vaillant::draw() const
 		break;
 
 	case VaillantState::Death:
+	case VaillantState::Destroy:
 		assetName = U"Vaillant Death";
 		break;
 	}
 
-	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(body.getPos());
+	TextureAsset(assetName)(margin, size).mirrored(mirrored).drawAt(position, mask);
 
 #ifdef _DEBUG
 	body.drawFrame();
 
 	Print << U"Vaillant HP: " << hp << U" / " << max_hp;
+	Print << U"Vaillant State: " << static_cast<int>(state);
 
 	spriteAnimator.draw();
 #endif
@@ -191,7 +221,7 @@ void Vaillant::onHit(ObjectBase& object)
 {
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{
-		if (object.getBody().getPos().y < (body.getPos().y - 100))
+		if (object.getBody().getPos().y < (position.y - 100))
 		{
 			object.getBody().applyLinearImpulse(Vec2{ 0, -40 });
 
@@ -199,7 +229,7 @@ void Vaillant::onHit(ObjectBase& object)
 		}
 		else
 		{
-			if (object.getBody().getPos().x < body.getPos().x)
+			if (object.getBody().getPos().x < position.x)
 			{
 				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
 			}
@@ -215,7 +245,23 @@ void Vaillant::onHit(ObjectBase& object)
 
 void Vaillant::destroy()
 {
-	ObjectBase::destroy();
+	state = VaillantState::Destroy;
+
+	if (!destroy_executed)
+	{
+		frameTime = 0.0;
+
+		body.release();
+
+		std::thread([this]()
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+			ObjectBase::destroy();
+		}).detach();
+
+		destroy_executed = true;
+	}
 }
 
 void Vaillant::die()
@@ -226,7 +272,8 @@ void Vaillant::die()
 	{
 		std::thread([this]()
 		{
-			std::this_thread::sleep_for(std::chrono::seconds(2));
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
 			CharacterBase::die();
 		}).detach();
 
@@ -237,4 +284,16 @@ void Vaillant::die()
 void Vaillant::onDamaged(float amount)
 {
 	CharacterBase::onDamaged(amount);
+
+	if (!damaged)
+	{
+		std::thread([this]()
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+
+			damaged = false;
+		}).detach();
+
+		damaged = true;
+	}
 }
