@@ -25,7 +25,7 @@ void Stage1::initialize()
 	createObject<Flot>    (Vec2{ 1000,500 });
 
 	//ボス
-	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 5500, 500 });
+	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4500, 500 });
 
 	//プレイヤー
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
