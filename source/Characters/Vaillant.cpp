@@ -209,7 +209,10 @@ void Vaillant::draw() const
 
 void Vaillant::onHit(ObjectBase& object)
 {
-	if (Player* player = dynamic_cast<Player*>(&object)) {}
+	if (Player* player = dynamic_cast<Player*>(&object))
+	{
+		player->applyDamage(10);
+	}
 }
 
 void Vaillant::destroy()
