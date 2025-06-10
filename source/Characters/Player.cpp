@@ -8,7 +8,7 @@
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度
 #define DISTANCE 150.0			// 回避距離
-#define AVOIDANCE_COOLTIME 3.0	// 回避クールタイム
+#define AVOIDANCE_COOLTIME 1.5	// 回避クールタイム
 #define ITIME	2.0				// 無敵時間
 #define ATTACK_RANGE 200.0		// 攻撃距離
 
@@ -35,7 +35,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	filter.maskBits = CollisionCategory::All;			// 敵のカテゴリ設定
 
 	// プレイヤーの当たり判定
-	body = world.createRect(P2Dynamic, position, SizeF{ 55, 90 }, P2Material{ .restitution = 0.0, }, P2Filter{ filter.categoryBits }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
+	body = world.createRect(P2Dynamic, position, SizeF{ 30, 90 }, P2Material{ .restitution = 0.0, }, P2Filter{ filter.categoryBits }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
 	body.setFixedRotation(true);
 
 	is_on_ground = false;
@@ -280,7 +280,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 168, body.getPos().y - 45 }, *this, 20.0f);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -313,7 +313,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, 20.0f);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 16, body.getPos().y - 45 }, *this, 20.0f);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
@@ -351,12 +351,12 @@ void Player::update()
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
 			//body.setVelocity(Vec2(-ATTACK_RANGE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 48, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 166, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 		}
 		else
 		{
 			//body.setVelocity(Vec2(ATTACK_RANGE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 28, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 		}
 		
 		
@@ -374,13 +374,13 @@ void Player::update()
 		{
 			//body.setVelocity(Vec2(-15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 50, body.getPos().y - 55 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 166, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 		}
 		else
 		{
 			//body.setVelocity(Vec2(15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 28, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 		}
 
 		if (animation(jump_attack_2_animation, 0.09)) {
@@ -395,7 +395,7 @@ void Player::update()
 		if (flip_flg == true)
 		{
 			body.setVelocity(Vec2(-DISTANCE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 72, body.getPos().y - 55 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 168, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -419,7 +419,7 @@ void Player::update()
 		else
 		{
 			body.setVelocity(Vec2(DISTANCE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 70, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 16, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));

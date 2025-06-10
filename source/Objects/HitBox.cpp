@@ -9,7 +9,16 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner, float da
 
 	if (Player* player = dynamic_cast<Player*>(this->owner))
 	{
-		size = { 20, 90 };
+		if (player->getplayerstate() == ePlayerState::avoidance ||
+			player->getplayerstate() == ePlayerState::jump_avoidance
+			)
+		{
+			size = { 150, 90 };
+		}
+		else
+		{
+			size = { 150, 90 };
+		}
 	}
 
 	body = world.createRectSensor(
@@ -25,21 +34,7 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner, float da
 
 void HitBox::update()
 {
-	if (Player* player = dynamic_cast<Player*>(owner))
-	{
-		Vec2 pos = player->getBody().getPos();
 
-		if (player->getFlip())
-		{
-			body.setPos({ pos.x - 48, pos.y - 45 });
-		}
-		else
-		{
-			body.setPos({ pos.x + 28, pos.y - 45 });
-		}
-
-		if (player->getplayerstate() != ePlayerState::attack) destroy();
-	}
 }
 
 void HitBox::draw() const
