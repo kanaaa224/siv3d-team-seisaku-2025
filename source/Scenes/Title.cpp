@@ -10,7 +10,6 @@ Title::Title(const InitData& init) : IScene{ init }
 
 	AudioAsset(U"Title_BGM").setVolume(0.2);
 	AudioAsset(U"Title_BGM").play();
-
 }
 
 Title::~Title()

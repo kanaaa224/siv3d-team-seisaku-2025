@@ -15,14 +15,16 @@ Stage1::Stage1()
 {
 	state = 0;
 
-	AudioAsset(U"Battle_BGM").setVolume(0.2);
-	AudioAsset(U"Battle_BGM").play();
-
 	initialize();
 }
 
 void Stage1::initialize()
 {
+	//BGM
+	AudioAsset(U"Title_BGM").stop();
+	AudioAsset(U"Battle_BGM").setVolume(0.2);
+	AudioAsset(U"Battle_BGM").play();
+
 	//ステージオブジェクト
 	createObject<StageBackground>();
 	createObject<Ground>(Vec2{ STAGE1_WIDTH, (Scene::Height() + 5) });
