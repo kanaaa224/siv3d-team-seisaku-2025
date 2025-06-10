@@ -15,10 +15,14 @@ public:
 
 	static void NewInstance();
 
+	static int GetState() { return state; }
+
 private:
 	Camera2D camera;
 
 	bool BossEreaflg;
 
 	void initialize();
+
+	static int state;
 };

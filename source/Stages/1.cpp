@@ -9,8 +9,12 @@
 # include "../UI/PlayerHUD.hpp"
 # include "../Characters/Vaillant.hpp"
 
+int Stage1::state = 0;
+
 Stage1::Stage1()
 {
+	state = 0;
+
 	AudioAsset(U"Battle_BGM").setVolume(0.2);
 	AudioAsset(U"Battle_BGM").play();
 
@@ -21,8 +25,8 @@ void Stage1::initialize()
 {
 	//ステージオブジェクト
 	createObject<StageBackground>();
-	createObject<Ground>         (Vec2{ STAGE1_WIDTH, (Scene::Height() + 5) });
-	createObject<Wall>           (Vec2{ -5, 500 });
+	createObject<Ground>(Vec2{ STAGE1_WIDTH, (Scene::Height() + 5) });
+	createObject<Wall>(Vec2{ -5, 500 });
 
 	for (int8 i = 1; i < 6; i++)
 	{
@@ -85,11 +89,30 @@ void Stage1::update()
 			{
 				enemy->setPlayerPos(player->getBody().getPos());
 			}
-			
+
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
 				playerHUD->setBossState(vaillant->getState());
+
+				if (vaillant->getState() == VaillantState::Death)
+				{
+					static bool aaaaa = false;
+
+					if (!aaaaa)
+					{
+						std::thread([this]()
+						{
+							std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+
+							state = 1;
+
+							aaaaa = false;
+						}).detach();
+
+						aaaaa = true;
+					}
+				}
 			}
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
@@ -146,7 +169,6 @@ void Stage1::update()
 	}
 
 	camera.update();
-
 }
 
 void Stage1::draw() const

@@ -31,6 +31,24 @@ void Game::update()
 
 	stage->update();
 
+	switch (getData().current_stage)
+	{
+	case 1:
+		switch (Stage1::GetState())
+		{
+		case 1:
+			changeScene(SceneState::Title, 0.5s);
+			break;
+
+		default:
+			break;
+		}
+		break;
+
+	default:
+		break;
+	}
+
 	if (Key0.down()) changeScene(SceneState::Title, 0.5s);
 }
 
