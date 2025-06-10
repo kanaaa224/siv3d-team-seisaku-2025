@@ -71,8 +71,6 @@ void Stage1::update()
 			camera.setTargetCenter(Vec2{ x, y });
 		}
 
-		bool hitBox_generated = false;
-
 		for (const auto& object : objects)
 		{
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
@@ -92,9 +90,7 @@ void Stage1::update()
 
 			if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
 			{
-				if (hitBox_generated) hitBox->destroy();
-
-				hitBox_generated = true;
+				hitBox->destroy();
 			}
 
 			if (BossEreaflg == false && player->getBody().getPos().x >= STAGE1_WIDTH - (Scene::Width() / 2))
