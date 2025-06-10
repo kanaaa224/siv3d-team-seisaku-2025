@@ -26,7 +26,7 @@ void Stage1::initialize()
 	createObject<Flot>    (Vec2{ 1000,500 });
 
 	//ボス
-	createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4500, 500 });
+	//createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4300, 500 });
 
 	//プレイヤー
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
@@ -104,9 +104,17 @@ void Stage1::update()
 		}
 
 		static bool excuted;
-		if (!excuted && BossEreaflg) {
+		if (!excuted && BossEreaflg)
+		{
 			createObject<Wall>(Vec2(STAGE1_WIDTH, 500.0));
 			excuted = true;
+		}
+
+		static bool boss_spawn;
+		if (!boss_spawn && BossEreaflg)
+		{
+			createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4300, 500 });
+			boss_spawn = true;
 		}
 
 		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
