@@ -5,10 +5,17 @@
 
 HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner, float damageAmount) : ObjectBase(world, position), owner(&owner), damageAmount(damageAmount)
 {
+	SizeF size;
+
+	if (Player* player = dynamic_cast<Player*>(this->owner))
+	{
+		size = { 20, 90 };
+	}
+
 	body = world.createRectSensor(
 		P2Kinematic,
 		position,
-		RectF { 20, 90 },
+		RectF { size },
 		P2Filter {
 			.categoryBits = CollisionCategory::HitBox, // 自分のカテゴリ
 			.maskBits     = CollisionCategory::Enemy   // Hitさせたいカテゴリ
