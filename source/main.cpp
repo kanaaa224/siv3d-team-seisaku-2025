@@ -96,6 +96,9 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"avoidance_button",  { U"UI" } }, U"../assets/images/ui/button/short_button_animation1.png");
 
 	TextureAsset::Register({ U"Button",  { U"UI" } }, U"../assets/images/ui/x_box_botton/xbox_bigbotton_16_16.png");
+
+	//BGM
+	AudioAsset::Register(U"Title_BGM", Audio::Stream, U"../assets/sounds/title_BGM.wav");
 }
 
 void Initialize()

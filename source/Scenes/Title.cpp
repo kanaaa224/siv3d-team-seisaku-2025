@@ -8,6 +8,14 @@ Title::Title(const InitData& init) : IScene{ init }
 	m_backgroundTexture3 = TextureAsset(U"Title_Background3");
 	m_backgroundTexture4 = TextureAsset(U"Title_Background4");
 
+	AudioAsset(U"Title_BGM").setVolume(0.2);
+	AudioAsset(U"Title_BGM").play();
+
+}
+
+Title::~Title()
+{
+
 }
 	
 
@@ -44,6 +52,7 @@ void Title::update()
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	if ((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0))
 	{
+		AudioAsset(U"Title_BGM").stop();
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
