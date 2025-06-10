@@ -17,6 +17,7 @@ public:
 
 private:
 	Camera2D camera;
+
 	bool BossEreaflg;
 
 	void initialize();

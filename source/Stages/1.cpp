@@ -2,6 +2,7 @@
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
+# include "../Objects/HitBox.hpp"
 # include "../Characters/Player.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Characters/Enemies/Flot/Flot.hpp"
@@ -31,6 +32,7 @@ void Stage1::initialize()
 	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
+
 	BossEreaflg = false;
 }
 
@@ -68,7 +70,8 @@ void Stage1::update()
 
 			camera.setTargetCenter(Vec2{ x, y });
 		}
-		
+
+		bool hitBox_generated = false;
 
 		for (const auto& object : objects)
 		{
@@ -85,6 +88,13 @@ void Stage1::update()
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
 			{
 				stagebackground->setCameraPos(camera.getTargetCenter() - Scene::Center());
+			}
+
+			if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
+			{
+				if (hitBox_generated) hitBox->destroy();
+
+				hitBox_generated = true;
 			}
 
 			if (BossEreaflg == false && player->getBody().getPos().x >= STAGE1_WIDTH - (Scene::Width() / 2))
