@@ -13,7 +13,7 @@ PlayerHUD::PlayerHUD() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBit
 void PlayerHUD::initialize()
 {
 
-	flame_location = { 350.0, 55.0 };
+	flame_location = { 20.0, 125.0 };
 
 	hp_location = { 195.0,22.0 };
 
@@ -36,6 +36,7 @@ void PlayerHUD::initialize()
 	buff_amount = 0;
 
 	Avoid_button_image = TextureAsset(U"Buf_Movement");
+	Avoid_button_frame = TextureAsset(U"avoidance_button");
 
 	button = LoadDivGraph(U"Button", Size(16, 16));
 
@@ -136,52 +137,56 @@ void PlayerHUD::draw() const
 	// .resized()は 0 0 以外の値を入れてください ちなみに画像のサイズです。
 	// .drawAt()は描画したい画像の中心座標になります。
 
-	Vec2 start = flame_location; //描画の開始位置　左側
-	int spacing = 180;            //横間隔
 
-	for (size_t i = 0; i < frameNames.size(); ++i)
-	{
-		Vec2 pos = start + Vec2{ spacing * i, 0 };//X方向にずらしたい
+	//バフのアイコンとフレーム表示
+	//Vec2 start = flame_location; //描画の開始位置　左側
+	//int spacing = 100;            //横間隔
 
-		TextureAsset(frameNames[i]).resized(50, 50).drawAt(pos);
-		TextureAsset(iconNames[i]).resized(50, 50).drawAt(pos);
-	}
+	//for (size_t i = 0; i < frameNames.size(); ++i)
+	//{
+	//	Vec2 pos = start + Vec2{ spacing * i, 0 };//X方向にずらしたい
 
-	fontBitmap(U"×" + Format(buff_amount)).draw(35, Vec2{ 560, 30 });
+	//	int a = 30;
+
+	//	TextureAsset(frameNames[i]).resized(a, a).drawAt(pos);
+	//	TextureAsset(iconNames[i]).resized(a, a).drawAt(pos);
+	//}
+
+	//fontBitmap(U"×" + Format(buff_amount)).draw(25, Vec2{ 10, 50 });
 
 
 
 	// プレイヤーが地面にいる場合
 	if (player_vel.y == 0.0)
 	{
-		FontAsset(U"TitleFont")(U"攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1155, 110 });
-		xbutton.resized(35, 35).drawAt(1205, 115);
-		FontAsset(U"TitleFont")(U"ジャンプ：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1175, 150 });
-		Abutton.resized(35, 35).drawAt(1255, 155);
-		
-		FontAsset(U"TitleFont")(U"回避：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),25, Vec2{ 1155, 190 });
-		Bbutton.resized(35, 35).drawAt(1205, 195);
-
+		FontAsset(U"TitleFont")(U"攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1110, 40 });
+		xbutton.resized(35, 35).drawAt(1205, 45);
+		FontAsset(U"TitleFont")(U"回避攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1130, 80 });
+		Bbutton.resized(35, 35).drawAt(1205, 85);
+		FontAsset(U"TitleFont")(U"ジャンプ：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1130, 120 });
+		Abutton.resized(35, 35).drawAt(1206, 125);
 		
 	}
 	// プレイヤーが地面にいない場合（ジャンプ中など）
 	else
 	{
-		FontAsset(U"TitleFont")(U"ジャンプ攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1125, 110 });
-		xbutton.resized(35, 35).drawAt(1225, 115);
+		FontAsset(U"TitleFont")(U"ジャンプ攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1110, 40 });
+		xbutton.resized(35, 35).drawAt(1210, 45);
 	}
 
 
 	if (player_avoid > 0.0)
 	{
+		Avoid_button_frame.resized(50, 50).drawAt(340, 75);
 		// クールタイム中→暗く表示
-		Avoid_button_image.resized(35, 35).drawAt(1205, 250, ColorF{ 0.5, 0.5, 0.5 });
+		Avoid_button_image.resized(55, 55).drawAt(340, 75, ColorF{ 0.5, 0.5, 0.5 });
 
 	}
 	else
 	{
+		Avoid_button_frame.resized(50, 50).drawAt(340, 70);
 		// クールタイム中ではない→通常表示
-		Avoid_button_image.resized(60, 60).drawAt(1205, 250);
+		Avoid_button_image.resized(55, 55).drawAt(340, 70);
 	}
 
 

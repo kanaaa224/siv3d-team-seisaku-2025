@@ -29,6 +29,7 @@ public:
 	TextureRegion xbutton;
 
 	TextureRegion Avoid_button_image;
+	TextureRegion Avoid_button_frame;
 
 
 private:
