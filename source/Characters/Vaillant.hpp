@@ -5,7 +5,7 @@
 
 # define VAILLANT_SIZE { 203, 233 }
 # define VAILLANT_MAX_HP 100
-# define VAILLANT_WALK_POWER 10
+# define VAILLANT_WALK_POWER 7.5
 # define VAILLANT_JUMP_POWER 2500
 
 enum class VaillantState {
