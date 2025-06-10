@@ -28,6 +28,9 @@ public:
 	TextureRegion Bbutton;
 	TextureRegion xbutton;
 
+	TextureRegion Avoid_button_image;
+
+
 private:
 	static PlayerHUD* instance;
 
