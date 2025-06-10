@@ -86,7 +86,7 @@ void Stage1::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
-				playerHUD->setBossHP(vaillant->getHP());
+				playerHUD->setBossState(vaillant->getState());
 			}
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))

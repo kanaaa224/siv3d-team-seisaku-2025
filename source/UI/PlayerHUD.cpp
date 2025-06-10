@@ -190,7 +190,7 @@ void PlayerHUD::draw() const
 	}
 
 	// GameOver表示
-	if (boss_hp <= 0 && boss_erea_flg == true)
+	if (boss_erea_flg == true && boss_state == VaillantState::Death)
 	{
 		FontAsset(U"TitleFont")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 200, Vec2{ 640, 200 });
 	}
