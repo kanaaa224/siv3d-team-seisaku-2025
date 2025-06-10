@@ -189,7 +189,15 @@ void PlayerHUD::draw() const
 		Avoid_button_image.resized(55, 55).drawAt(340, 70);
 	}
 
-
+	// GameOver表示
+	if (boss_hp <= 0 && boss_erea_flg == true)
+	{
+		FontAsset(U"TitleFont")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 200, Vec2{ 640, 200 });
+	}
+	else if(player_hp <= 0)
+	{
+		FontAsset(U"TitleFont")(U"Game Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 200, Vec2{ 640, 200 });
+	}
 
 #ifdef _DEBUG
 

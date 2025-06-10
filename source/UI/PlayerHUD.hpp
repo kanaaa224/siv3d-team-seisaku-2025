@@ -15,6 +15,8 @@ public:
 	void setPlayerState(int state) { player_state = state; };
 	void setPlayerVel(Vec2 vel) { player_vel = vel; }; //位置
 	void setPlayeravoid(float avoid) { player_avoid = avoid; }; //回避
+	void setBossHP(double hp) { boss_hp = hp; };
+	void setBossEreaFlg(bool flg) { boss_erea_flg = flg; };
 
 	static PlayerHUD* GetInstance();
 
@@ -53,6 +55,9 @@ private:
 	float player_state;
 	Vec2 player_vel;
 	float player_avoid;
+
+	double boss_hp;
+	bool boss_erea_flg;
 
 	Player* m_player;
 

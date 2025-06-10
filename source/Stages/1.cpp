@@ -49,6 +49,8 @@ void Stage1::update()
 
 	Player* player = nullptr;
 
+	PlayerHUD* playerHUD = PlayerHUD::GetInstance();
+
 	for (const auto& object : objects)
 	{
 		if ((player = dynamic_cast<Player*>(object))) break;
@@ -84,6 +86,7 @@ void Stage1::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
+				playerHUD->setBossHP(vaillant->getHP());
 			}
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
@@ -120,13 +123,12 @@ void Stage1::update()
 			boss_spawn = true;
 		}
 
-		PlayerHUD* playerHUD = PlayerHUD::GetInstance();
-
 		playerHUD->setPlayerHP(player->getHP());
 		playerHUD->update();
 		playerHUD->setPlayerState(player->getplayerstate());
 		playerHUD->setPlayerVel(player->getBody().getVelocity());
 		playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
+		playerHUD->setBossEreaFlg(BossEreaflg);
 	}
 	else
 	{
