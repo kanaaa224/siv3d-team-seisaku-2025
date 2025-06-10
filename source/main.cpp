@@ -98,7 +98,10 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Button",  { U"UI" } }, U"../assets/images/ui/x_box_botton/xbox_bigbotton_16_16.png");
 
 	//BGM
-	AudioAsset::Register(U"Title_BGM", Audio::Stream, U"../assets/sounds/title_BGM.wav");
+	AudioAsset::Register(U"Title_BGM", Audio::Stream, U"../assets/sounds/title_BGM.wav");//タイトル
+	AudioAsset::Register(U"End_BGM", Audio::Stream, U"../assets/sounds/end_BGM.wav");//エンド
+	AudioAsset::Register(U"Battle_BGM", Audio::Stream, U"../assets/sounds/battle_BGM.wav");//戦闘
+	AudioAsset::Register(U"Boss_Battle_BGM", Audio::Stream, U"../assets/sounds/boss_battle_BGM.wav");//ボス戦闘
 }
 
 void Initialize()

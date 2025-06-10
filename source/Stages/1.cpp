@@ -11,6 +11,9 @@
 
 Stage1::Stage1()
 {
+	AudioAsset(U"Battle_BGM").setVolume(0.2);
+	AudioAsset(U"Battle_BGM").play();
+
 	initialize();
 }
 
