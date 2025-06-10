@@ -54,8 +54,6 @@ void StageDebugBoss::update()
 
 		camera.setTargetCenter(Vec2{ x, y });
 
-		bool hitBox_generated = false;
-
 		for (const auto& object : objects)
 		{
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
@@ -75,9 +73,7 @@ void StageDebugBoss::update()
 
 			if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
 			{
-				if (hitBox_generated) hitBox->destroy();
-
-				hitBox_generated = true;
+				hitBox->destroy();
 			}
 		}
 
