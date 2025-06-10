@@ -85,7 +85,13 @@ void Ammo::onHit(ObjectBase& object)
 {
 	//プレイヤーに当たった時
 	if (Player* p = dynamic_cast<Player*>(&object)) {
-		p->onDamaged(10);
+		if (p->getplayerstate() != ePlayerState::attack &&
+			p->getplayerstate() != ePlayerState::avoidance &&
+			p->getplayerstate() != ePlayerState::jump_attack &&
+			p->getplayerstate() != ePlayerState::jump_avoidance)
+		{
+			p->onDamaged(10);
+		}
 		destroy();
 	}
 	//地面に当たった時

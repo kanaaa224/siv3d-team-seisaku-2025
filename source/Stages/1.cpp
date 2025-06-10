@@ -21,15 +21,18 @@ void Stage1::initialize()
 	createObject<Ground>         (Vec2{ STAGE1_WIDTH, (Scene::Height() + 5) });
 	createObject<Wall>           (Vec2{ -5, 500 });
 
-	//敵
-	createObject<Scarerun>(Vec2{ 450, 500 });
-	createObject<Flot>    (Vec2{ 1000,500 });
+	for (int8 i = 1; i < 6; i++)
+	{
+		//敵
+		createObject<Scarerun>(Vec2{ 700 * i, 700 });
+		createObject<Flot>(Vec2{ 800 * i ,500 });
+	}
 
 	//ボス
 	//createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4300, 500 });
 
 	//プレイヤー
-	createObject<Player>(Vec2{ (Scene::Width() / 2), 650 });
+	createObject<Player>(Vec2{ (100), 650 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 
@@ -113,7 +116,7 @@ void Stage1::update()
 		static bool boss_spawn;
 		if (!boss_spawn && BossEreaflg)
 		{
-			createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4300, 500 });
+			createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4900, 500 });
 			boss_spawn = true;
 		}
 
