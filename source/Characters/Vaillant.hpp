@@ -38,7 +38,9 @@ private:
 	double frameTime;
 	
 	VaillantState state;
-	
+
+	bool jumped;
+	bool roaming_flipped;
 	bool mirrored;
 	bool attack_started;
 	bool die_executed;

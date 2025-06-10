@@ -1,6 +1,6 @@
 ﻿# include "SpriteAnimator.hpp"
 
-SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(false), state(0) {}
+SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(false), state(0), mask({ 1.0, 1.0, 1.0, 1.0 }) {}
 
 void SpriteAnimator::update()
 {
@@ -16,7 +16,8 @@ void SpriteAnimator::draw() const
 	switch (animationName) // アニメーションごとの位置やサイズ決め
 	{
 	case AnimationName::Spark1:
-	case AnimationName::Spark2: {
+	case AnimationName::Spark2:
+	case AnimationName::Smoke1: {
 		margin = Vec2{ 0, 0 };
 
 		int marginR = 0;
@@ -56,6 +57,10 @@ void SpriteAnimator::draw() const
 		assetName = U"Effect 1 2";
 		break;
 
+	case AnimationName::Smoke1:
+		assetName = U"Effect 1 29";
+		break;
+
 	case AnimationName::None:
 	default:
 		break;
@@ -68,7 +73,7 @@ void SpriteAnimator::draw() const
 
 		if (size != SizeF{ 0, 0 }) region = region.resized(size);
 
-		region.mirrored(mirrored).drawAt(position);
+		region.mirrored(mirrored).drawAt(position, mask);
 	}
 }
 
@@ -80,6 +85,7 @@ SizeF SpriteAnimator::getTextureSize(AnimationName name) const
 	{
 	case AnimationName::Spark1:
 	case AnimationName::Spark2:
+	case AnimationName::Smoke1:
 		return { 32, 32 };
 		break;
 

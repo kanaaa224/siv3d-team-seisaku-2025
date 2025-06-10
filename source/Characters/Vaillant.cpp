@@ -6,6 +6,8 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	start_position(position),
 	frameTime(0.0),
 	state(VaillantState::Idle),
+	jumped(false),
+	roaming_flipped(false),
 	mirrored(false),
 	attack_started(false),
 	die_executed(false),
@@ -45,27 +47,9 @@ void Vaillant::update()
 
 	if (KeyH.down()) heal(10);
 	if (KeyP.down()) applyDamage(10);
-
-	{
-		spriteAnimator.setAnimationName(AnimationName::Spark1);
-		spriteAnimator.setSize({ 100, 100 });
-
-		if (KeyZ.down())
-		{
-			spriteAnimator.show();
-			spriteAnimator.play();
-		}
-
-		if (KeyX.down())
-		{
-			spriteAnimator.hide();
-			spriteAnimator.stop();
-		}
-
-		spriteAnimator.setPosition(position);
-		spriteAnimator.update();
-	}
 #endif
+
+	spriteAnimator.update();
 
 	if (state >= VaillantState::Death) return;
 
@@ -75,8 +59,6 @@ void Vaillant::update()
 
 	if (attack_started)
 	{
-		static bool jumped = false;
-
 		bool walking_direction = false;
 
 		distance = position.x - player_position.x;
@@ -92,6 +74,14 @@ void Vaillant::update()
 		{
 			body.applyLinearImpulse(Vec2{ 0, -2500 });
 
+			spriteAnimator.setAnimationName(AnimationName::Smoke1);
+			spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
+			spriteAnimator.setSize({ 200, 150 });
+			spriteAnimator.setPosition({ position.x, (position.y + (size.y / 2)) });
+			spriteAnimator.stop();
+			spriteAnimator.show();
+			spriteAnimator.play();
+
 			jumped = true;
 		}
 
@@ -99,8 +89,6 @@ void Vaillant::update()
 	}
 	else
 	{
-		static bool roaming_flipped = false;
-
 		distance = position.x - start_position.x;
 
 		if (distance >  100) roaming_flipped = true;
@@ -209,13 +197,13 @@ void Vaillant::draw() const
 
 	TextureAsset(assetName)(margin, cutoutSize).mirrored(mirrored).drawAt(position, mask);
 
+	spriteAnimator.draw();
+
 #ifdef _DEBUG
 	body.drawFrame();
 
 	Print << U"Vaillant HP: " << hp << U" / " << max_hp;
 	Print << U"Vaillant State: " << static_cast<int>(state);
-
-	spriteAnimator.draw();
 #endif
 }
 
