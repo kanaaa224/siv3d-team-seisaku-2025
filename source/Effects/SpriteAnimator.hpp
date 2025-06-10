@@ -7,7 +7,8 @@ enum class AnimationName
 	None,
 	Spark1,
 	Spark2,
-	Smoke1
+	Smoke1,
+	Smoke2
 };
 
 class SpriteAnimator
@@ -25,8 +26,9 @@ public:
 	void setMirrored(bool b) { mirrored = b; }                          // 反転するかどうかを設定
 	void setPosition(Vec2 p) { position = p; }                          // 位置を設定
 	void setSize(SizeF s) { size = s; }                                 // 大きさを設定
-	void setMask(ColorF c) { mask = c; }                                 // 大きさを設定
+	void setMask(ColorF c) { mask = c; }                                // マスクカラーを設定
 
+	int   getState() const { return state; }
 	SizeF getTextureSize(AnimationName name = AnimationName::None) const;
 
 	void play () { state = 1; }; // 再生

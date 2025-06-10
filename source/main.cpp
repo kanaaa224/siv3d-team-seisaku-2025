@@ -65,6 +65,7 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"Effect 1 1",   { U"Effect" } }, U"../assets/images/effect/1/01.png");
 		TextureAsset::Register({ U"Effect 1 2",   { U"Effect" } }, U"../assets/images/effect/1/02.png");
 		TextureAsset::Register({ U"Effect 1 29",  { U"Effect" } }, U"../assets/images/effect/1/29.png");
+		TextureAsset::Register({ U"Effect 1 35",  { U"Effect" } }, U"../assets/images/effect/1/35.png");
 	}
 
 	//GameUI

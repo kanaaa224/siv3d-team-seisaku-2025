@@ -17,7 +17,8 @@ void SpriteAnimator::draw() const
 	{
 	case AnimationName::Spark1:
 	case AnimationName::Spark2:
-	case AnimationName::Smoke1: {
+	case AnimationName::Smoke1:
+	case AnimationName::Smoke2: {
 		margin = Vec2{ 0, 0 };
 
 		int marginR = 0;
@@ -61,6 +62,10 @@ void SpriteAnimator::draw() const
 		assetName = U"Effect 1 29";
 		break;
 
+	case AnimationName::Smoke2:
+		assetName = U"Effect 1 35";
+		break;
+
 	case AnimationName::None:
 	default:
 		break;
@@ -86,6 +91,7 @@ SizeF SpriteAnimator::getTextureSize(AnimationName name) const
 	case AnimationName::Spark1:
 	case AnimationName::Spark2:
 	case AnimationName::Smoke1:
+	case AnimationName::Smoke2:
 		return { 32, 32 };
 		break;
 
