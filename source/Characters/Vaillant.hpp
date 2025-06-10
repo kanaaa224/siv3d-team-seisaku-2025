@@ -32,6 +32,8 @@ public:
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
 
+	VaillantState getState() { return state; }
+
 private:
 	Vec2 position;
 
