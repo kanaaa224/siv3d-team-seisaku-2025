@@ -14,7 +14,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	destroy_executed(false),
 	damaged(false)
 {
-	body = world.createRect(P2Dynamic, position, size = { 203, 233 }, {}, { .categoryBits = CollisionCategory::Enemy });
+	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, {}, { .categoryBits = CollisionCategory::Enemy });
 
 	body.setFixedRotation(true);
 
@@ -23,7 +23,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 
 void Vaillant::initialize()
 {
-	max_hp = 100;
+	max_hp = VAILLANT_MAX_HP;
 
 	hp = max_hp;
 }
@@ -34,7 +34,7 @@ void Vaillant::update()
 
 	if (body) position = body.getPos();
 
-	if (position.y >= 1000)
+	if (position.y >= (Scene::Height() + 100))
 	{
 		body.setPos(start_position);
 		body.setVelocity({ 0, 0 });
@@ -66,13 +66,13 @@ void Vaillant::update()
 		if (distance >  100) walking_direction = true;
 		if (distance < -100) walking_direction = false;
 
-		body.applyLinearImpulse((walking_direction ? Vec2{ -10, 0 } : Vec2{ 10, 0 }) * (240 / Profiler::FPS()));
+		body.applyLinearImpulse((walking_direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 
 		distance = Abs(distance);
 
 		if (!jumped && distance <= 300)
 		{
-			body.applyLinearImpulse(Vec2{ 0, -2500 });
+			body.applyLinearImpulse(Vec2{ 0, -VAILLANT_JUMP_POWER });
 
 			spriteAnimator.setAnimationName(AnimationName::Smoke1);
 			spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
@@ -94,7 +94,7 @@ void Vaillant::update()
 		if (distance >  100) roaming_flipped = true;
 		if (distance < -100) roaming_flipped = false;
 
-		body.applyLinearImpulse((roaming_flipped ? Vec2{ -10, 0 } : Vec2{ 10, 0 }) * (240 / Profiler::FPS()));
+		body.applyLinearImpulse((roaming_flipped ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 	}
 
 	state = VaillantState::Idle;

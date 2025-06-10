@@ -2,6 +2,7 @@
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
+# include "../Objects/HitBox.hpp"
 # include "../Characters/Vaillant.hpp"
 # include "../Characters/Player.hpp"
 # include "../Characters/Enemies/EnemyBase.hpp"
@@ -53,6 +54,8 @@ void StageDebugBoss::update()
 
 		camera.setTargetCenter(Vec2{ x, y });
 
+		bool hitBox_generated = false;
+
 		for (const auto& object : objects)
 		{
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
@@ -68,6 +71,13 @@ void StageDebugBoss::update()
 			if (StageBackground* stageBackground = dynamic_cast<StageBackground*>(object))
 			{
 				stageBackground->setCameraPos(camera.getTargetCenter() - Scene::Center());
+			}
+
+			if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
+			{
+				if (hitBox_generated) hitBox->destroy();
+
+				hitBox_generated = true;
 			}
 		}
 
