@@ -1,6 +1,6 @@
 ﻿# include "SpriteAnimator.hpp"
 
-SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(false), state(0), mask({ 1.0, 1.0, 1.0, 1.0 }) {}
+SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(false), state(0), mask(ColorF{ 1.0, 1.0, 1.0, 1.0 }) {}
 
 void SpriteAnimator::update()
 {
