@@ -85,7 +85,7 @@ void Title::draw() const
 
 
 	// タイトル描画
-	FontAsset(U"TitleFont")(U"Temple（仮）").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });
+	FontAsset(U"TitleFont")(U"Temple").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });
 
 	// ボタン描画
 	{
