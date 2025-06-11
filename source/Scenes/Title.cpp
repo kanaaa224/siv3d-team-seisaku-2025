@@ -12,6 +12,8 @@ Title::Title(const InitData& init) : IScene{ init }
 	AudioAsset(U"End_BGM").stop();
 	AudioAsset(U"Title_BGM").setVolume(0.7);
 	AudioAsset(U"Title_BGM").play();
+
+	AudioAsset(U"kettei_SE").setVolume(0.7);
 }
 
 Title::~Title()
@@ -64,12 +66,14 @@ void Title::update()
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	if ((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0))
 	{
+		AudioAsset(U"kettei_SE").play();
 		AudioAsset(U"Title_BGM").stop();
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	else if(m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1))
 	{
+		AudioAsset(U"kettei_SE").play();
 		AudioAsset(U"Title_BGM").stop();
 		changeScene(SceneState::End, 0.5s);
 		//System::Exit();
