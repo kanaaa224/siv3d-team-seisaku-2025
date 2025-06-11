@@ -59,9 +59,9 @@ void End::update()
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	else if ((m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1)))
 	{
-		//System::Exit();
-		changeScene(SceneState::Title, 0.5s);
+		AudioAsset(U"End_BGM").stop();
 		AudioAsset(U"kettei_SE").play();
+		changeScene(SceneState::Title, 0.5s);
 	}
 
 }
