@@ -5,9 +5,10 @@ End::End(const InitData& init) : IScene{ init }
 {
 	end_background = TextureAsset(U"End_Background1");
 
-	AudioAsset(U"End_BGM").setVolume(20);
+	AudioAsset(U"End_BGM").setVolume(0.7);
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
+	AudioAsset(U"kettei_SE").setVolume(0.7);
 }
 
 void End::update()
@@ -51,14 +52,20 @@ void End::update()
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	if ((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0))
 	{
+		AudioAsset(U"kettei_SE").play();
 		AudioAsset(U"End_BGM").stop();
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	else if ((m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1)))
 	{
+<<<<<<< Updated upstream
 		//System::Exit();
 		changeScene(SceneState::Title, 0.5s);
+=======
+		AudioAsset(U"kettei_SE").play();
+		System::Exit();
+>>>>>>> Stashed changes
 	}
 
 }
