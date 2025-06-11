@@ -161,7 +161,7 @@ void Flot::fireAmmo()
 	}
 }
 
-void Flot::MoveAwayFromPlayer(double awayDistance, double awayStopDistance)
+void Flot::MoveAwayFromPlayer(double awayDistance, double approachDistance)
 {
 	//初期化
 	if (!MoveAwayInitFlg) {
@@ -169,7 +169,7 @@ void Flot::MoveAwayFromPlayer(double awayDistance, double awayStopDistance)
 		MoveAwayInitFlg = true;
 	}
 
-	if ((playerPos - pos).length() <= awayDistance || (playerPos - pos).length() >= awayStopDistance) {
+	if ((playerPos - pos).length() <= awayDistance || (playerPos - pos).length() >= approachDistance) {
 		if (playerPos.x - pos.x > 0) {//プレイヤーが左
 			movePoint = Vec2{ playerPos.x - awayDistance,pos.y };
 			img_flipFlg = false;
