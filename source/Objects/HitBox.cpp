@@ -54,7 +54,7 @@ void HitBox::onHit(ObjectBase& object)
 
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(&object))
 	{
-		vaillant->applyDamage(20);
+		vaillant->applyDamage(5);
 
 		destroy();
 	}
