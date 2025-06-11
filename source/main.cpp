@@ -2,6 +2,8 @@
 # include "Scenes/Title.hpp"
 # include "Scenes/Game.hpp"
 # include "Scenes/End.hpp"
+# include "Scenes/CreditRoll.h"
+
 
 void AssetsRegistration()
 {
@@ -140,6 +142,7 @@ void Main()
 	manager.add<Title>(SceneState::Title);
 	manager.add<Game>(SceneState::Game);
 	manager.add<End>(SceneState::End);
+	manager.add<CreditRoll>(SceneState::Credit);
 
 	manager.init(SceneState::Title, 0.5s);
 

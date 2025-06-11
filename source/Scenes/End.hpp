@@ -23,5 +23,7 @@ private:
 	// 0: PLAY (スタート), 1: EXIT (終了)
 	int m_selectedButtonIndex = 0;
 
+	double m_inactiveTime = 0.0;
+
 	Texture end_background;
 };
