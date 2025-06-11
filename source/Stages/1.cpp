@@ -33,7 +33,7 @@ void Stage1::initialize()
 	for (int8 i = 1; i < 6; i++)
 	{
 		//敵
-		createObject<Scarerun>(Vec2{ 700 * i, 700 });
+		createObject<Scarerun>(Vec2{ 700 * i, Scene::Height() - 45 });
 		createObject<Flot>(Vec2{ 800 * i ,500 });
 	}
 

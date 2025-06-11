@@ -117,6 +117,9 @@ void AssetsRegistration()
 	//Boss
 	AudioAsset::Register(U"Boss_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
 	AudioAsset::Register(U"Boss_run_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");
+
+	//SE
+	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
 }
 
 void Initialize()
