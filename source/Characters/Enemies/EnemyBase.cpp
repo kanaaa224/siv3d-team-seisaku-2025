@@ -59,6 +59,11 @@ void EnemyBase::update()
 		die();
 	}
 
+	//ステージの左端の外側にいかないようにする処理
+	if (body.getPos().x <= 0) {
+		body.setVelocity(Vec2{ - body.getVelocity().x,body.getVelocity().y });
+	}
+
 #ifdef _DEBUG
 	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
 		hp = 0;
@@ -280,12 +285,13 @@ void EnemyBase::getDamage(float damage)
 		getDamageFlg = true;
 		damageStopFlg = true;
 
+		//ダメージを受けた時のノックバック処理
 		if (playerPos.x > body.getPos().x) {
-			body.applyLinearImpulse(Vec2{ -200,-10 });
+			body.applyLinearImpulse(Vec2{ -130,0 });
 			img_flipFlg = false;
 		}
 		else {
-			body.applyLinearImpulse(Vec2{ 200,-10 });
+			body.applyLinearImpulse(Vec2{ 130,0 });
 			img_flipFlg = true;
 		}
 	}
