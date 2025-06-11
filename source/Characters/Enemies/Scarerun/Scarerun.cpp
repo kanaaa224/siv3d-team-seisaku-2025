@@ -8,11 +8,11 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	type = eEnemyType::scarerun;
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
-	body = world.createRect(
+	body = world.createRectSensor(
 		P2Dynamic,
 		position,
 		SizeF{ 50, 80 },
-		P2Material{ .friction = 0.0 },
+		//P2Material{ .friction = 0.0 },
 		P2Filter{
 			.categoryBits = CollisionCategory::Enemy,
 			.maskBits = CollisionCategory::All
@@ -65,6 +65,14 @@ void Scarerun::update()
 
 	//親のメゾットを実行
 	EnemyBase::update();
+
+	if (pos.y >= Scene::Height() - 45) {//画像サイズ
+		body.setGravityScale(0.0);
+		body.setVelocity(Vec2{ body.getVelocity().x,0.0 });
+	}
+	else {
+		body.setGravityScale(GRAVITY);
+	}
 }
 
 void Scarerun::draw() const
