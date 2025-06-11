@@ -117,14 +117,14 @@ void Vaillant::draw() const
 {
 	Vec2 margin;
 
-	SizeF cutoutSize { 203, 233 };
+	SizeF cutoutSize { 255, 233 };
 
 	double frameDuration = 0.0;
 	int    frameCount    = 0;
 
 	static int currentFrame = 0;
 
-	ColorF mask = { 1.0, 1.0, 1.0, 1.0 };
+	ColorF mask { 1.0, 1.0, 1.0, 1.0 };
 	
 	Vec2 shiftAmount { 0, -16 };
 
@@ -133,9 +133,9 @@ void Vaillant::draw() const
 	case VaillantState::Idle:
 	case VaillantState::Walk:
 	{
-		margin = { 112, 81 };
+		margin = { 86, 81 };
 
-		int marginR = 247;
+		int marginR = 195;
 
 		frameDuration = 0.085;
 		frameCount    = 16;
@@ -152,9 +152,9 @@ void Vaillant::draw() const
 	case VaillantState::Death:
 	case VaillantState::Destroy:
 	{
-		margin = { 112, 81 };
+		margin = { 86, 81 };
 
-		int marginR = 247;
+		int marginR = 195;
 
 		frameDuration = 0.085;
 		frameCount    = 16;
