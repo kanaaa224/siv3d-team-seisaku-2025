@@ -1,28 +1,42 @@
 ﻿#include"CreditRoll.h"
+# include "../Utils/CustomImageLoader.hpp"
 
 CreditRoll::CreditRoll(const InitData& init) : IScene{ init }
 {
 	m_scrollX = Scene::Width();
 	AudioAsset(U"Credit_BGM").play();
+
+	m_runAnimation = LoadDivGraph(U"Player Run", Size(288, 45));
+	m_runAnimationFrame = 0;
+	m_runAnimationTime = 0.0;
 }
 
 void CreditRoll::update()
 {
-	m_scrollX -= 100 * Scene::DeltaTime(); // 横に左スクロール
+	m_scrollX -= 100 * Scene::DeltaTime(); //スクロール
 
-	// スキップ(クリックかBボタン)
+	//アニメーション更新
+	m_runAnimationTime += Scene::DeltaTime();
+	if (m_runAnimationTime >= 0.1) 
+	{
+		m_runAnimationFrame = (m_runAnimationFrame + 1) % m_runAnimation.size();
+		m_runAnimationTime = 0.0;
+	}
+
+	//スキップ(クリックかBボタン)
 	if (m_exitButton.leftClicked() || XInput(0).buttonB.down())
 	{
 		AudioAsset(U"Credit_BGM").stop();
 		changeScene(SceneState::Title, 0.5s);
 	}
 
-	// 一番最後の文字が画面左端を通過したら終了
-	if (m_scrollX < -800) // 調整可能
+	//一番最後の文字が画面左端を通過したら終了
+	if (m_scrollX < -2100) //後で変える
 	{
 		AudioAsset(U"Credit_BGM").stop();
-		changeScene(SceneState::Title, 0.5s);
+		changeScene(SceneState::Title, 2.0s);  //タイトルシーンに戻る
 	}
+
 }
 
 void CreditRoll::draw() const
@@ -32,11 +46,20 @@ void CreditRoll::draw() const
 	const Font& font = FontAsset(U"TitleFont");
 	const double centerY = Scene::Height() / 2.0;
 
-	font(U"CREDIT ROLL").draw(m_scrollX, centerY - 100);
-	//font(U"Director: You").draw(m_scrollX + 200, centerY);
-	//font(U"Programmer: You").draw(m_scrollX + 600, centerY);
-	//font(U"Designer: You").draw(m_scrollX + 1000, centerY);
-	//font(U"Sound: You").draw(m_scrollX + 1400, centerY);
-	//font(U"Special Thanks: Everyone!").draw(m_scrollX + 1800, centerY);
-	//font(U"Thank you for playing!").draw(m_scrollX + 2200, centerY + 100);
+	font(U"CREDIT").draw(m_scrollX, centerY-100);
+	font(U"チーム").draw(m_scrollX + 520, centerY-100);
+	font(U"さんぴん茶").draw(m_scrollX + 475, centerY);
+	font(U"画像").draw(m_scrollX + 1005, centerY-120);
+	font(U"itch.io").draw(m_scrollX + 980, centerY-30);
+	font(U"ゲームまてりあるず").draw(m_scrollX + 850, centerY + 30);
+	font(U"SE").draw(m_scrollX + 1520, centerY - 100);
+	font(U"Audiostock").draw(m_scrollX + 1420, centerY);
+	font(U"Thank You For Playing!").draw(m_scrollX + 2500, centerY);
+
+
+		//左下にプレイヤー表示
+	if (!m_runAnimation.isEmpty())
+	{
+		m_runAnimation[m_runAnimationFrame].scaled(2.0).draw(30, Scene::Height() - 120);
+	}
 }
