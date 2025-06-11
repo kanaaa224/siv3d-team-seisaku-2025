@@ -101,6 +101,14 @@ void Player::update()
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
+// デバッグ用 //////////////////////////////////////////////////////
+
+	if (KeyS.down()) hp -= 90;
+
+	if (KeyL.down()) body.setPos(Vec2( 5000.0, body.getPos().y));
+
+//////////////////////////////////////////////////////////////////////
+
 	if (body)
 	{
 		pos = body.getPos();
@@ -193,10 +201,6 @@ void Player::update()
 		{
 			animation_number = 0;
 			playerState = ePlayerState::damage;
-		}
-		else if (KeyS.down() == true)
-		{
-			hp -= 90;
 		}
 
 
