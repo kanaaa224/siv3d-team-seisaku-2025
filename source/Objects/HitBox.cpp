@@ -3,15 +3,14 @@
 # include "../Characters/Enemies/EnemyBase.hpp"
 # include "../Characters/Vaillant.hpp"
 
-HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner, float damageAmount) : ObjectBase(world, position), owner(&owner), damageAmount(damageAmount)
+HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : ObjectBase(world, position), owner(&owner)
 {
 	SizeF size;
 
 	if (Player* player = dynamic_cast<Player*>(this->owner))
 	{
 		if (player->getplayerstate() == ePlayerState::avoidance ||
-			player->getplayerstate() == ePlayerState::jump_avoidance
-			)
+			player->getplayerstate() == ePlayerState::jump_avoidance)
 		{
 			size = { 150, 90 };
 		}
@@ -48,7 +47,7 @@ void HitBox::onHit(ObjectBase& object)
 {
 	if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(&object))
 	{
-		enemy->applyDamage(damageAmount);
+		enemy->applyDamage(20);
 
 		destroy();
 	}

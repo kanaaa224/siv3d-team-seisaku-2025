@@ -5,7 +5,7 @@
 class HitBox : public ObjectBase
 {
 public:
-	HitBox(P2World& world, const Vec2& position, ObjectBase& owner, float damageAmount);
+	HitBox(P2World& world, const Vec2& position, ObjectBase& owner);
 	~HitBox() = default;
 
 	void update() override;
@@ -15,6 +15,4 @@ public:
 
 private:
 	ObjectBase* owner = nullptr;
-
-	float damageAmount;
 };

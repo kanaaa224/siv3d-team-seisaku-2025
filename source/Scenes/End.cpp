@@ -26,6 +26,17 @@ void End::update()
 		}
 	}
 
+	//マウス選択でも枠線切り替わるように
+	if (m_startButton.mouseOver())
+	{
+		m_selectedButtonIndex = 0;
+	}
+	else if (m_exitButton.mouseOver())
+	{
+		m_selectedButtonIndex = 1;
+	}
+
+
 	// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
 	if (controller.buttonDown.down() || KeyDown.down())
 	{
@@ -58,7 +69,7 @@ void End::draw() const
 	Scene::SetBackground(ColorF{ 0.5 });
 
 	// end描画
-	FontAsset(U"TitleFont")(U"End").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });
+	FontAsset(U"TitleFont")(U"GameClear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });
 
 	// ボタン描画
 	{
