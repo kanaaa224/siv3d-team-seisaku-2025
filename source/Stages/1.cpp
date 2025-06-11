@@ -22,7 +22,7 @@ void Stage1::initialize()
 {
 	//BGM
 	AudioAsset(U"Title_BGM").stop();
-	AudioAsset(U"Battle_BGM").setVolume(0.2);
+	AudioAsset(U"Battle_BGM").setVolume(20);
 	AudioAsset(U"Battle_BGM").play();
 
 	//ステージオブジェクト
@@ -46,6 +46,8 @@ void Stage1::initialize()
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 
 	BossEreaflg = false;
+	excuted = false;
+	boss_spawn = false;
 }
 
 void Stage1::update()
@@ -137,14 +139,12 @@ void Stage1::update()
 			}
 		}
 
-		static bool excuted;
 		if (!excuted && BossEreaflg)
 		{
 			createObject<Wall>(Vec2(STAGE1_WIDTH, 500.0));
 			excuted = true;
 		}
 
-		static bool boss_spawn;
 		if (!boss_spawn && BossEreaflg)
 		{
 			createObject<Vaillant>(Vec2{ (Scene::Width() / 2) + 4900, 500 });
