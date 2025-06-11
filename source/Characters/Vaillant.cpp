@@ -14,7 +14,9 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	destroy_executed(false),
 	damaged(false)
 {
-	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, {}, { .categoryBits = CollisionCategory::Enemy });
+	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
+
+	body.addRectSensor(RectF{ -(size / 2), size }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::Player });
 
 	body.setFixedRotation(true);
 
@@ -63,8 +65,8 @@ void Vaillant::update()
 
 		distance = position.x - player_position.x;
 
-		if (distance >  100) walking_direction = true;
-		if (distance < -100) walking_direction = false;
+		if (distance >  10) walking_direction = true;
+		if (distance < -10) walking_direction = false;
 
 		body.applyLinearImpulse((walking_direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 
