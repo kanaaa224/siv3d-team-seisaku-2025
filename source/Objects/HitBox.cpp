@@ -17,7 +17,7 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner, float da
 		}
 		else
 		{
-			size = { 150, 90 };
+			size = { 95, 90 };
 		}
 	}
 

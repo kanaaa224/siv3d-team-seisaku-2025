@@ -8,7 +8,7 @@
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度
 #define DISTANCE 150.0			// 回避距離
-#define AVOIDANCE_COOLTIME 1.5	// 回避クールタイム
+#define AVOIDANCE_COOLTIME 5.0 	// 回避クールタイム
 #define ITIME	2.0				// 無敵時間
 #define ATTACK_RANGE 200.0		// 攻撃距離
 
@@ -351,7 +351,7 @@ void Player::update()
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
 			//body.setVelocity(Vec2(-ATTACK_RANGE, 0.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 166, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 		}
 		else
 		{
@@ -374,7 +374,7 @@ void Player::update()
 		{
 			//body.setVelocity(Vec2(-15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
-			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 166, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
+			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this, ENEMY_DAMAGE);
 		}
 		else
 		{
