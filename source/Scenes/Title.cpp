@@ -13,7 +13,7 @@ Title::Title(const InitData& init) : IScene{ init }
 	AudioAsset(U"Title_BGM").setVolume(0.7);
 	AudioAsset(U"Title_BGM").play();
 
-	AudioAsset(U"kettei_SE").setVolume(0.7);
+	AudioAsset(U"kettei_SE").setVolume(1.0);
 }
 
 Title::~Title()

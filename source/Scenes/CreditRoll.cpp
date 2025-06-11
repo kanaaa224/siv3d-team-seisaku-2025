@@ -1,81 +1,42 @@
-﻿#include "CreditRoll.h"
-#include "../UI/PlayerHUD.hpp"
+﻿#include"CreditRoll.h"
 
 CreditRoll::CreditRoll(const InitData& init) : IScene{ init }
 {
-	m_scrollY = Scene::Height();
-
-	credit_background = TextureAsset(U"Credit_Background1");
-
-	//AudioAsset(U"End_BGM").setVolume(20);
-	AudioAsset(U"End_BGM").stop();
-	//AudioAsset(U"End_BGM").play();
+	m_scrollX = Scene::Width();
+	AudioAsset(U"Credit_BGM").play();
 }
 
 void CreditRoll::update()
 {
-	m_scrollY -= 50 * Scene::DeltaTime();
+	m_scrollX -= 100 * Scene::DeltaTime(); // 横に左スクロール
 
-	auto controller = XInput(0); //コントローラーを取得
-
-	// ボタンの更新
+	// スキップ(クリックかBボタン)
+	if (m_exitButton.leftClicked() || XInput(0).buttonB.down())
 	{
-		// マウスオーバーとコントローラーのAボタン、Bボタンに対応
-		m_exitTransition.update(m_exitButton.mouseOver() || controller.buttonB.pressed() || m_selectedButtonIndex == 1); // 選択中もトランジションを更新
-
-		if (m_exitButton.mouseOver() || controller.isConnected())
-		{
-			Cursor::RequestStyle(CursorStyle::Hand);
-		}
+		AudioAsset(U"Credit_BGM").stop();
+		changeScene(SceneState::Title, 0.5s);
 	}
 
-	//マウス選択でも枠線切り替わるように
-	if (m_exitButton.mouseOver())
+	// 一番最後の文字が画面左端を通過したら終了
+	if (m_scrollX < -800) // 調整可能
 	{
-		m_selectedButtonIndex = 1;
+		AudioAsset(U"Credit_BGM").stop();
+		changeScene(SceneState::Title, 0.5s);
 	}
-
-
-	// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
-	if (controller.buttonDown.down() || KeyDown.down())
-	{
-		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
-	}
-	else if (controller.buttonUp.down() || KeyUp.down())
-	{
-		m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
-	}
-
-	// ボタンのクリック処理
-	// マウス左クリックまたはコントローラーのAボタンで決定
-	if ((m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1)))
-	{
-		changeScene(SceneState::Game, 0.5s);
-	}
-
 }
 
 void CreditRoll::draw() const
 {
-	//画像
-	//end_background.resized(Scene::Size()).draw(0, 0);
+	Scene::SetBackground(ColorF{ 0.1, 0.1, 0.1 });
 
-	Scene::SetBackground(ColorF{ 0.5 });
+	const Font& font = FontAsset(U"TitleFont");
+	const double centerY = Scene::Height() / 2.0;
 
-	// end描画
-	FontAsset(U"TitleFont")(U"Credit").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });
-
-	// ボタン描画
-	{
-		// EXITボタン
-		m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(1);
-		// 選択されている場合は枠の色を変える
-		if (m_selectedButtonIndex == 1)
-		{
-			m_exitButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
-		}
-
-		const Font& boldFont = FontAsset(U"Bold");
-		boldFont(U"EXIT").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
-	}
+	font(U"CREDIT ROLL").draw(m_scrollX, centerY - 100);
+	//font(U"Director: You").draw(m_scrollX + 200, centerY);
+	//font(U"Programmer: You").draw(m_scrollX + 600, centerY);
+	//font(U"Designer: You").draw(m_scrollX + 1000, centerY);
+	//font(U"Sound: You").draw(m_scrollX + 1400, centerY);
+	//font(U"Special Thanks: Everyone!").draw(m_scrollX + 1800, centerY);
+	//font(U"Thank you for playing!").draw(m_scrollX + 2200, centerY + 100);
 }

@@ -8,7 +8,7 @@ End::End(const InitData& init) : IScene{ init }
 	AudioAsset(U"End_BGM").setVolume(0.7);
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
-	AudioAsset(U"kettei_SE").setVolume(0.7);
+	AudioAsset(U"kettei_SE").setVolume(1.0);
 }
 
 void End::update()
@@ -64,6 +64,20 @@ void End::update()
 		changeScene(SceneState::Title, 0.5s);
 	}
 
+
+	if (MouseL.down() || KeyEnter.down() || XInput(0).buttonA.down() || XInput(0).buttonB.down()
+	|| KeyUp.down() || KeyDown.down() || XInput(0).buttonUp.down() || XInput(0).buttonDown.down())
+	{
+		m_inactiveTime = 0.0;
+	}
+	else
+	{
+		m_inactiveTime += Scene::DeltaTime();
+		if (m_inactiveTime > 6.0)
+		{
+			changeScene(SceneState::Credit, 1.0s);
+		}
+	}
 }
 
 void End::draw() const
