@@ -156,8 +156,17 @@ void Vaillant::draw() const
 
 		int marginR = 195;
 
-		frameDuration = 0.085;
+		frameDuration = 0.15;
 		frameCount    = 16;
+		
+		static bool initialized = false;
+		
+		if (!initialized)
+		{
+			currentFrame = 0;
+			
+			initialized = true;
+		}
 
 		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
