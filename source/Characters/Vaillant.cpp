@@ -117,7 +117,7 @@ void Vaillant::draw() const
 {
 	Vec2 margin;
 
-	SizeF cutoutSize = size;
+	SizeF cutoutSize { 203, 233 };
 
 	double frameDuration = 0.0;
 	int    frameCount    = 0;
@@ -125,6 +125,8 @@ void Vaillant::draw() const
 	static int currentFrame = 0;
 
 	ColorF mask = { 1.0, 1.0, 1.0, 1.0 };
+	
+	Vec2 shiftAmount { 0, -16 };
 
 	switch (state)
 	{
@@ -197,7 +199,7 @@ void Vaillant::draw() const
 		break;
 	}
 
-	TextureAsset(assetName)(margin, cutoutSize).mirrored(mirrored).drawAt(position, mask);
+	TextureAsset(assetName)(margin, cutoutSize).mirrored(mirrored).drawAt(position + shiftAmount, mask);
 
 	spriteAnimator.draw();
 
