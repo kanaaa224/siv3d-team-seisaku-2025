@@ -8,7 +8,8 @@ enum class AnimationName
 	Spark1,
 	Spark2,
 	Smoke1,
-	Smoke2
+	Smoke2,
+	SpawnEffect
 };
 
 class SpriteAnimator
