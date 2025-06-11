@@ -1,6 +1,7 @@
 ﻿# pragma once
 
 # include "Base.hpp"
+# include "../Effects/SpriteAnimator.hpp"
 
 enum ePlayerState
 {
@@ -70,6 +71,10 @@ private:
 	double avoidanceCooldownDuration; // クールタイム間隔
 
 	double alpha;
+
+	SpriteAnimator spriteAnimator;
+
+	Size effect_size;
 
 	Vec2 pos;
 

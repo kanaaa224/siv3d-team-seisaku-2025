@@ -204,6 +204,15 @@
     <ClCompile Include="source\Objects\Ammo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Effects\SpriteAnimator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scenes\End.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scenes\CreditRoll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -933,6 +942,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Ammo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Effects\SpriteAnimator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\End.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\CreditRoll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
