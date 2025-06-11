@@ -51,6 +51,16 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	Damageflg = false;
 	alpha = 1.0;
 	effect_size = Size(30, 90);
+
+	AudioAsset(U"player_attack1_SE").setVolume(1.0);
+	AudioAsset(U"player_attack2_SE").setVolume(1.0);
+	AudioAsset(U"player_attack3_SE").setVolume(1.0);
+	AudioAsset(U"player_dies_SE").setVolume(2.0);
+	AudioAsset(U"player_jump_SE").setVolume(1.5);
+	run_se = AudioAsset(U"player_run1_SE").setVolume(0.5).setSpeed(2.0);
+
+	//run_se.setSpeed(2.0);
+
 	this->initialize();
 }
 
@@ -94,6 +104,7 @@ void Player::initialize()
 
 	hitStopTimer = ITIME;  //ヒットストップタイマー
 	isHitStop = false;   //ヒットストップしたかどうか
+
 }
 
 void Player::update()
@@ -143,6 +154,7 @@ void Player::update()
 			controller.setRightThumbDeadZone(DeadZone{});
 		}
 
+
 		playerState = ePlayerState::idle;
 
 	case idle: //待機処理
@@ -158,6 +170,8 @@ void Player::update()
 		jump_attack_flg = false;
 
 		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
+
+		
 
 		spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
 		spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
@@ -179,7 +193,7 @@ void Player::update()
 			KeyRight.pressed() == true||
 			std::abs(controller.leftThumbX) > 0.2
 			)
-		{
+		{		
 			playerState = ePlayerState::move;
 		}//jump
 		else if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
@@ -189,14 +203,18 @@ void Player::update()
 		}//attack
 		else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
+			AudioAsset(U"player_attack2_SE").playOneShot();//通常攻撃SE
 			animation_number = 0;
 			playerState = ePlayerState::attack;
+			AudioAsset(U"player_run1_SE").stop();//走るSE停止
 		}//avoidance
 		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
 		{
+			AudioAsset(U"player_attack3_SE").play();//回避攻撃SE
 			animation_number = 0;
 			playerState = ePlayerState::avoidance;
 			avoidanceCooldown = avoidanceCooldownDuration; // クールタイム設定
+			AudioAsset(U"player_run1_SE").stop();//走るSE停止
 		}///////////////キーを押したらダメージを減らす
 		else if (isHitStop == true && hitStopTimer >= ITIME)////////敵に当たった時にも&& !isInvincibleを追加
 		{
@@ -211,24 +229,32 @@ void Player::update()
 		movement(controller);
 		animation(run_animation, MOVE_ANIM_SPEED,8,idle);
 		/////////se追加する場合
-
+		// 
+		//地面にいたら走るSE
+		if (is_on_ground == true)
+		{
+			run_se.setVolume(0.5).setSpeed(2.0).play();
+		}
+		
 		if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
 		{
+			run_se.stop();
 			animation_number = 0;
 			playerState = ePlayerState::jump;
 		}
 		else if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
+			AudioAsset(U"player_attack2_SE").playOneShot();//通常攻撃
 			animation_number = 0;
 			playerState = ePlayerState::attack;
 		}
 		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
 		{
+			AudioAsset(U"player_attack3_SE").playOneShot();//回避攻撃
 			animation_number = 0;
 			playerState = ePlayerState::avoidance;
 			avoidanceCooldown = avoidanceCooldownDuration; // クールタイム設定
 		}
-
 		break;
 	case jump: //ジャンプ処理
 
@@ -256,12 +282,14 @@ void Player::update()
 		//ジャンプ攻撃
 		if (controller.buttonX.down() == true && jump_attack_flg == false || KeyE.down() == true && jump_attack_flg == false)
 		{
+			AudioAsset(U"player_attack2_SE").playOneShot();//ジャンプ中攻撃SE
 			animation_number = 0;
 			playerState = ePlayerState::jump_attack;
 		}
 		//空中回避
 		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
 		{
+			AudioAsset(U"player_attack3_SE").play();//回避攻撃SE
 			animation_number = 0;
 			playerState = ePlayerState::jump_avoidance;
 			avoidanceCooldown = avoidanceCooldownDuration; // クールタイム設定
@@ -482,7 +510,7 @@ void Player::update()
 	case ePlayerState::die: //死亡処理
 
 		////////se
-
+		AudioAsset(U"player_dies_SE").play();
 		die();
 
 		break;
@@ -701,5 +729,6 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 	{
 		is_on_ground = false;
 		body.setVelocity(Vec2(body.getVelocity().x, -JUMPSPEED));
+		AudioAsset(U"player_jump_SE").play();//ジャンプSE
 	}
 }

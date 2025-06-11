@@ -78,6 +78,8 @@ private:
 
 	Vec2 pos;
 
+	s3d::Audio m_runLoopSE; // 走行ループSE用
+
 public:
 
 	Player(P2World& world, const Vec2& position);
@@ -104,6 +106,8 @@ public:
 
 	//eItemState getItemstate() const;   //itemのステータスを返す
 	//setItemstate(eItemState item);  //itemの設定
+
+	s3d::Audio run_se;
 
 private:
 	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
