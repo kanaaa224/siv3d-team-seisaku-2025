@@ -22,7 +22,7 @@ void Stage1::initialize()
 {
 	//BGM
 	AudioAsset(U"Title_BGM").stop();
-	AudioAsset(U"Battle_BGM").setVolume(20);
+	AudioAsset(U"Battle_BGM").setVolume(0.7);
 	AudioAsset(U"Battle_BGM").play();
 
 	//ステージオブジェクト

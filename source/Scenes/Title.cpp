@@ -9,7 +9,7 @@ Title::Title(const InitData& init) : IScene{ init }
 	m_backgroundTexture4 = TextureAsset(U"Title_Background4");
 
 	AudioAsset(U"Battle_BGM").stop();
-	AudioAsset(U"Title_BGM").setVolume(20);
+	AudioAsset(U"Title_BGM").setVolume(0.7);
 	AudioAsset(U"Title_BGM").play();
 }
 
