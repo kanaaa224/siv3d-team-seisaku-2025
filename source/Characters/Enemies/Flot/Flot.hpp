@@ -33,7 +33,7 @@ private:
 	double fire_coolTime;//次の玉の発射までのクールタイム
 
 	//プレイヤーから距離を取る
-	void MoveAwayFromPlayer(double awayDistance);
+	void MoveAwayFromPlayer(double awayDistance,double awayStopDistance);
 	Vec2 movePoint;//移動する場所
 	bool MoveAwayInitFlg;//moveAwayFromPlayerの中で初期化
 	bool moveAwayEndFlg;//移動する場所に着いたか

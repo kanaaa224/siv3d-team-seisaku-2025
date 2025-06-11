@@ -116,7 +116,7 @@ void Flot::stateControl()
 		break;
 	case ATTACK_POSITION:
 		//プレイヤーから距離を取る
-		MoveAwayFromPlayer(AWAY_PLAYER);
+		MoveAwayFromPlayer(AWAY_PLAYER, AWAY_PLAYER + 100);
 		break;
 	case ATTACK:
 		if (playerPos.x - pos.x > 0) {//プレイヤーが左
@@ -161,7 +161,7 @@ void Flot::fireAmmo()
 	}
 }
 
-void Flot::MoveAwayFromPlayer(double awayDistance)
+void Flot::MoveAwayFromPlayer(double awayDistance, double awayStopDistance)
 {
 	//初期化
 	if (!MoveAwayInitFlg) {
@@ -169,7 +169,7 @@ void Flot::MoveAwayFromPlayer(double awayDistance)
 		MoveAwayInitFlg = true;
 	}
 
-	if ((playerPos - pos).length() <= awayDistance) {
+	if ((playerPos - pos).length() <= awayDistance || (playerPos - pos).length() >= awayStopDistance) {
 		if (playerPos.x - pos.x > 0) {//プレイヤーが左
 			movePoint = Vec2{ playerPos.x - awayDistance,pos.y };
 			img_flipFlg = false;
