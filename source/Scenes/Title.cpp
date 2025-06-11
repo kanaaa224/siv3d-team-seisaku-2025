@@ -8,7 +8,7 @@ Title::Title(const InitData& init) : IScene{ init }
 	m_backgroundTexture3 = TextureAsset(U"Title_Background3");
 	m_backgroundTexture4 = TextureAsset(U"Title_Background4");
 
-	AudioAsset(U"Title_BGM").setVolume(0.2);
+	AudioAsset(U"Title_BGM").setVolume(20);
 	AudioAsset(U"Title_BGM").play();
 }
 
@@ -37,6 +37,17 @@ void Title::update()
 		}
 	}
 
+	//マウス選択でも枠線切り替わるように
+	if (m_startButton.mouseOver())
+	{
+		m_selectedButtonIndex = 0;
+	}
+	else if (m_exitButton.mouseOver())
+	{
+		m_selectedButtonIndex = 1;
+	}
+
+
 	 // D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
 	if (controller.buttonDown.down() || KeyDown.down())
 	{
@@ -55,9 +66,11 @@ void Title::update()
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
-	else if ((m_exitButton.leftClicked() && m_selectedButtonIndex == 1) || (controller.buttonA.down() && m_selectedButtonIndex == 1))
+	else if(m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1))
 	{
-		System::Exit();
+		AudioAsset(U"Title_BGM").stop();
+		changeScene(SceneState::End, 0.5s);
+		//System::Exit();
 	}
 }
 
@@ -93,6 +106,6 @@ void Title::draw() const
 
 		const Font& boldFont = FontAsset(U"Bold");
 		boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
-		boldFont(U"EXIT").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+		boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
 }
