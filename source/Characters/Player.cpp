@@ -50,7 +50,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	avoidanceCooldownDuration = AVOIDANCE_COOLTIME;
 	Damageflg = false;
 	alpha = 1.0;
-
+	effect_size = Size(30, 90);
 	this->initialize();
 }
 
@@ -101,6 +101,14 @@ void Player::update()
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
+// デバッグ用 //////////////////////////////////////////////////////
+
+	if (KeyS.down()) hp -= 90;
+
+	if (KeyL.down()) body.setPos(Vec2( 5000.0, body.getPos().y));
+
+//////////////////////////////////////////////////////////////////////
+
 	if (body)
 	{
 		pos = body.getPos();
@@ -150,6 +158,16 @@ void Player::update()
 
 		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
 
+		spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
+		spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
+		spriteAnimator.setSize({ 200, 150 });
+		spriteAnimator.setPosition({ pos.x, (pos.y + (effect_size.y / 2)) });
+		spriteAnimator.setLooping(true);
+		spriteAnimator.setAnimationSpeed(0.1);
+		spriteAnimator.stop();
+		spriteAnimator.show();
+		spriteAnimator.play();
+
 		//idle状態からボタンを押したごとの処理
 		if (//move
 			controller.buttonLeft.pressed() == true ||
@@ -183,10 +201,6 @@ void Player::update()
 		{
 			animation_number = 0;
 			playerState = ePlayerState::damage;
-		}
-		else if (KeyS.down() == true)
-		{
-			hp -= 90;
 		}
 
 

@@ -66,7 +66,7 @@ void Scarerun::update()
 	//親のメゾットを実行
 	EnemyBase::update();
 
-	if (pos.y >= Scene::Height() - 45) {//画像サイズ
+	if (pos.y >= Scene::Height() - 45) {//数字は画像サイズ
 		body.setGravityScale(0.0);
 		body.setVelocity(Vec2{ body.getVelocity().x,0.0 });
 	}
@@ -110,6 +110,10 @@ void Scarerun::stateControl()
 		break;
 	case ATTACK:
 		attackMove();
+		//４秒後にIDLEにする
+		if (nowStateTime >= 4.0) {
+			setEnemyState(IDLE);
+		}
 		//ここに攻撃のSE
 		break;
 	case GET_ATTACK:
