@@ -37,7 +37,7 @@ void Game::update()
 		switch (Stage1::GetState())
 		{
 		case 1:
-			changeScene(SceneState::Title, 0.5s);
+			changeScene(SceneState::End, 0.5s);
 			break;
 
 		default:
@@ -50,6 +50,7 @@ void Game::update()
 	}
 
 	if (Key0.down()) changeScene(SceneState::Title, 0.5s);
+
 }
 
 void Game::draw() const
