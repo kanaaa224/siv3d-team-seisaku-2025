@@ -4,6 +4,9 @@
 End::End(const InitData& init) : IScene{ init }
 {
 	end_background = TextureAsset(U"End_Background1");
+
+	AudioAsset(U"End_BGM").setVolume(0.5);
+	AudioAsset(U"End_BGM").play();
 }
 
 void End::update()
@@ -36,6 +39,7 @@ void End::update()
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	if ((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0))
 	{
+		AudioAsset(U"End_BGM").stop();
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
@@ -43,6 +47,7 @@ void End::update()
 	{
 		System::Exit();
 	}
+
 }
 
 void End::draw() const

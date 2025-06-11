@@ -2,6 +2,7 @@
 
 # include "../Common.hpp"
 
+
 // ゲームシーン
 class Game : public App::Scene
 {

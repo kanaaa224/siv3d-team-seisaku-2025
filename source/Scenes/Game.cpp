@@ -50,6 +50,7 @@ void Game::update()
 	}
 
 	if (Key0.down()) changeScene(SceneState::Title, 0.5s);
+
 }
 
 void Game::draw() const

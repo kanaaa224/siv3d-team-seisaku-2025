@@ -2,6 +2,7 @@
 
 # include "../Common.hpp"
 
+
 // エンドシーン
 class End : public App::Scene
 {
@@ -10,6 +11,7 @@ public:
 
 	void update() override;
 	void draw() const override;
+
 
 private:
 	RoundRect m_startButton{ Arg::center(640, 400), 300, 60, 8 };
@@ -22,5 +24,4 @@ private:
 	int m_selectedButtonIndex = 0;
 
 	Texture end_background;
-
 };
