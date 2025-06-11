@@ -213,6 +213,9 @@
     <ClCompile Include="source\Scenes\CreditRoll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scenes\GameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -951,6 +954,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\CreditRoll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\GameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
