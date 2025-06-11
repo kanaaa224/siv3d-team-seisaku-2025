@@ -21,6 +21,8 @@ private:
 	Camera2D camera;
 
 	bool BossEreaflg;
+	bool excuted;
+	bool boss_spawn;
 
 	void initialize();
 
