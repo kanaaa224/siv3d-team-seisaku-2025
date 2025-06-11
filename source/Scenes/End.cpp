@@ -57,7 +57,8 @@ void End::update()
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	else if ((m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1)))
 	{
-		System::Exit();
+		//System::Exit();
+		changeScene(SceneState::Title, 0.5s);
 	}
 
 }
@@ -91,6 +92,6 @@ void End::draw() const
 
 		const Font& boldFont = FontAsset(U"Bold");
 		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
-		boldFont(U"EXIT").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
 }
