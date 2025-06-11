@@ -127,6 +127,7 @@ void Player::update()
 		avoidanceCooldown -= Scene::DeltaTime();
 	}
 
+	spriteAnimator.update();
 
 	switch (playerState)
 	{
@@ -525,6 +526,8 @@ void Player::draw() const
 	if ((Damageflg == true && Fmod(Scene::Time(), 0.1) < 0.05)) {
 		image.mirrored(flip_flg).resized(size).drawAt(pos, Palette::Red);
 	}
+
+	spriteAnimator.draw();
 
 #ifdef _DEBUG
 
