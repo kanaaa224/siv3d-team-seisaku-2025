@@ -13,7 +13,8 @@
 #define FLY_MOVE_SPEED 100.0
 #define AMMO_SPEED 200.0
 
-#define AWAY_PLAYER 450.0
+#define AWAY_PLAYER 350.0
+#define APPROACDDISTANCE AWAY_PLAYER + 100.0
 
 class Flot : public EnemyBase
 {

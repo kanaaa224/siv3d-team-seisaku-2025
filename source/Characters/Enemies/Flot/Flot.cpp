@@ -116,7 +116,7 @@ void Flot::stateControl()
 		break;
 	case ATTACK_POSITION:
 		//プレイヤーから距離を取る
-		MoveAwayFromPlayer(AWAY_PLAYER, AWAY_PLAYER + 100);
+		MoveAwayFromPlayer(AWAY_PLAYER, APPROACDDISTANCE);
 		break;
 	case ATTACK:
 		if (playerPos.x - pos.x > 0) {//プレイヤーが左
