@@ -115,8 +115,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Scenes\GameOver.cpp" />
-    <ClCompile Include="source\Scenes\CreditRoll.cpp" />
     <ClCompile Include="source\Characters\Enemies\EnemyBase.cpp" />
     <ClCompile Include="source\Characters\Enemies\Flot\Flot.cpp" />
     <ClCompile Include="source\Characters\Enemies\Scarerun\Scarerun.cpp" />
@@ -132,12 +130,15 @@
     <ClCompile Include="source\Objects\HitBox.cpp" />
     <ClCompile Include="source\Objects\StageBackground.cpp" />
     <ClCompile Include="source\Objects\Wall.cpp" />
+    <ClCompile Include="source\Scenes\CreditRoll.cpp" />
     <ClCompile Include="source\Scenes\End.cpp" />
     <ClCompile Include="source\Scenes\Game.cpp" />
+    <ClCompile Include="source\Scenes\GameOver.cpp" />
     <ClCompile Include="source\Scenes\Title.cpp" />
     <ClCompile Include="source\Stage.cpp" />
     <ClCompile Include="source\Stages\1.cpp" />
     <ClCompile Include="source\Stages\DebugBoss.cpp" />
+    <ClCompile Include="source\UI\EnemyBoss.cpp" />
     <ClCompile Include="source\UI\PlayerHUD.cpp" />
     <ClCompile Include="source\Utils\CustomImageLoader.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -349,8 +350,6 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Scenes\GameOver.h" />
-    <ClInclude Include="source\Scenes\CreditRoll.h" />
     <ClInclude Include="source\Characters\Base.hpp" />
     <ClInclude Include="source\Characters\Enemies\EnemyBase.hpp" />
     <ClInclude Include="source\Characters\Enemies\Flot\Flot.hpp" />
@@ -367,12 +366,16 @@
     <ClInclude Include="source\Objects\HitBox.hpp" />
     <ClInclude Include="source\Objects\StageBackground.hpp" />
     <ClInclude Include="source\Objects\Wall.hpp" />
+    <ClInclude Include="source\Scenes\CreditRoll.h" />
     <ClInclude Include="source\Scenes\End.hpp" />
     <ClInclude Include="source\Scenes\Game.hpp" />
+    <ClInclude Include="source\Scenes\GameOver.h" />
     <ClInclude Include="source\Scenes\Title.hpp" />
     <ClInclude Include="source\Stage.hpp" />
     <ClInclude Include="source\Stages\1.hpp" />
     <ClInclude Include="source\Stages\DebugBoss.hpp" />
+    <ClInclude Include="source\UI\EnemyBoss.hpp" />
+    <ClInclude Include="source\UI\HPBar.hpp" />
     <ClInclude Include="source\UI\PlayerHUD.hpp" />
     <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
     <ClInclude Include="stdafx.h" />

@@ -7,6 +7,7 @@
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Characters/Enemies/Flot/Flot.hpp"
 # include "../UI/PlayerHUD.hpp"
+# include "../UI/EnemyBoss.hpp"
 # include "../Characters/Vaillant.hpp"
 
 int Stage1::state = 0;
@@ -97,6 +98,13 @@ void Stage1::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
+
+				EnemyBossUI* enemyBossUI = EnemyBossUI::GetInstance();
+
+				enemyBossUI->setHP(vaillant->getHP());
+				enemyBossUI->setName(U"バイラント");
+				enemyBossUI->update();
+
 				playerHUD->setBossState(vaillant->getState());
 
 				if (vaillant->getState() == VaillantState::Death)
@@ -107,7 +115,7 @@ void Stage1::update()
 					{
 						std::thread([this]()
 						{
-							std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+							std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 
 							state = 1;
 
@@ -196,6 +204,11 @@ void Stage1::draw() const
 	}
 
 	PlayerHUD::GetInstance()->draw();
+
+	for (const auto& object : objects)
+	{
+		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object)) EnemyBossUI::GetInstance()->draw();
+	}
 }
 
 void Stage1::NewInstance()
