@@ -172,6 +172,7 @@ void PlayerHUD::draw() const
 	{
 		FontAsset(U"TitleFont")(U"ジャンプ攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1110, 40 });
 		xbutton.resized(35, 35).drawAt(1210, 45);
+		Bbutton.resized(35, 35).drawAt(1245, 45);
 	}
 
 
