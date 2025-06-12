@@ -116,10 +116,10 @@ void AssetsRegistration()
 	AudioAsset::Register(U"player_run1_SE", Audio::Stream, U"../assets/sounds/PlayerSE/run2.wav");
 
 	//EnemySE
+	AudioAsset::Register(U"Enemy_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDies.wav");//敵が死ぬ音
 	//Boss
-	AudioAsset::Register(U"Boss_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
-	AudioAsset::Register(U"Boss_run_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");
-
+	AudioAsset::Register(U"Boss_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");//ボスが死ぬ音
+	AudioAsset::Register(U"Boss_run_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");//歩く音（仮）小さくしたら使えるかも？
 	//SE
 	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
 }
