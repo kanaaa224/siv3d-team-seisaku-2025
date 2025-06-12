@@ -129,6 +129,14 @@ void Stage1::update()
 				hitBox->destroy();
 			}
 
+			if (BossEreaflg)
+			{
+				if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
+				{
+					enemy->destroy();
+				}
+			}
+
 			if (BossEreaflg == false && player->getBody().getPos().x >= STAGE1_WIDTH - (Scene::Width() / 2))
 			{
 				if (Wall* wall = dynamic_cast<Wall*>(object))
