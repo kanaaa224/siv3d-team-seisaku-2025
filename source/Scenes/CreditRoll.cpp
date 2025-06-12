@@ -52,8 +52,9 @@ void CreditRoll::draw() const
 	font(U"画像").draw(m_scrollX + 1005, centerY-120);
 	font(U"itch.io").draw(m_scrollX + 980, centerY-30);
 	font(U"ゲームまてりあるず").draw(m_scrollX + 850, centerY + 30);
-	font(U"SE").draw(m_scrollX + 1520, centerY - 100);
-	font(U"Audiostock").draw(m_scrollX + 1420, centerY);
+	font(U"SE").draw(m_scrollX + 1520, centerY - 120);
+	font(U"Audiostock").draw(m_scrollX + 1420, centerY-30);
+	font(U"効果音ラボ").draw(m_scrollX + 1440, centerY+30);
 	font(U"Thank You For Playing!").draw(m_scrollX + 2500, centerY);
 
 

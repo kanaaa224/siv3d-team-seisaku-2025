@@ -1,19 +1,33 @@
 ﻿#include "GameOver.h"
 #include "../UI/PlayerHUD.hpp"
+# include "../Utils/CustomImageLoader.hpp"
 
 GameOver::GameOver(const InitData& init) : IScene{ init }
 {
-	end_background = TextureAsset(U"End_Background1");
+	p_dieanime = LoadDivGraph(U"Player Die", Size(288, 45));
 
 	AudioAsset(U"End_BGM").setVolume(0.7);
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
+	dieAnimationFrame = 0;
+	dieAnimationTime = 0.0;
 }
 
 void GameOver::update()
 {
 	auto controller = XInput(0); //コントローラーを取得
+
+	dieAnimationTime += Scene::DeltaTime();
+
+	if (dieAnimationTime >= 0.1)
+	{
+		if (dieAnimationFrame < (p_dieanime.size() - 1))  // 最後のフレームで止める
+		{
+			++dieAnimationFrame;
+		}
+		dieAnimationTime = 0.0;
+	}
 
 	// ボタンの更新
 	{
@@ -65,29 +79,30 @@ void GameOver::update()
 	}
 
 
-	if (MouseL.down() || KeyEnter.down() || XInput(0).buttonA.down() || XInput(0).buttonB.down()
-	|| KeyUp.down() || KeyDown.down() || XInput(0).buttonUp.down() || XInput(0).buttonDown.down())
-	{
-		m_inactiveTime = 0.0;
-	}
-	else
-	{
-		m_inactiveTime += Scene::DeltaTime();
-		if (m_inactiveTime > 6.0)
-		{
-			changeScene(SceneState::Credit, 1.0s);
-		}
-	}
+	//if (MouseL.down() || KeyEnter.down() || XInput(0).buttonA.down() || XInput(0).buttonB.down()
+	//|| KeyUp.down() || KeyDown.down() || XInput(0).buttonUp.down() || XInput(0).buttonDown.down())
+	//{
+	//	m_inactiveTime = 0.0;
+	//}
+	//else
+	//{
+	//	m_inactiveTime += Scene::DeltaTime();
+	//	if (m_inactiveTime > 6.0)
+	//	{
+	//		changeScene(SceneState::Credit, 1.0s);
+	//	}
+	//}
 }
 
 void GameOver::draw() const
 {
-	end_background.resized(Scene::Size()).draw(0, 0);
+	//end_background.resized(Scene::Size()).draw(0, 0);
 
-	Scene::SetBackground(ColorF{ 0.5 });
+	Scene::SetBackground(ColorF{ 0.1, 0.1, 0.1 });
 
 	// end描画
-	FontAsset(U"TitleFont")(U"GameOver").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });
+	FontAsset(U"TitleFont")(U"Game Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 180 });
+	//FontAsset(U"TitleFont")(U"Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 230 });
 
 	// ボタン描画
 	{
@@ -101,6 +116,7 @@ void GameOver::draw() const
 
 		// EXITボタン
 		m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(1);
+
 		// 選択されている場合は枠の色を変える
 		if (m_selectedButtonIndex == 1)
 		{
@@ -108,7 +124,18 @@ void GameOver::draw() const
 		}
 
 		const Font& boldFont = FontAsset(U"Bold");
-		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
-		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+
+		boldFont(U"REPLAY").drawAt(25, m_startButton.center(),
+			(m_selectedButtonIndex == 0) ? ColorF{ 0.1 } : ColorF{ Palette::White });
+
+		boldFont(U"TITLE").drawAt(25, m_exitButton.center(),
+			(m_selectedButtonIndex == 1) ? ColorF{ 0.1 } : ColorF{ Palette::White });
+
+
+		//左下にプレイヤー表示
+		if (!p_dieanime.isEmpty())
+		{
+			p_dieanime[dieAnimationFrame].scaled(2.0).draw(380, Scene::Height()-120);
+		}
 	}
 }

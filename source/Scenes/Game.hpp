@@ -2,6 +2,12 @@
 
 # include "../Common.hpp"
 
+enum StageState
+{
+	Playing,
+	Cleared,
+	Gameover
+};
 
 // ゲームシーン
 class Game : public App::Scene

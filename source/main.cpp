@@ -145,7 +145,7 @@ void Main()
 	manager.add<GameOver>(SceneState::GameOver);
 	manager.add<CreditRoll>(SceneState::Credit);
 
-	manager.init(SceneState::Title, 0.5s);
+	manager.init(SceneState::GameOver, 0.5s);
 
 	while (System::Update())
 	{
