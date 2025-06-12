@@ -113,7 +113,7 @@ void AssetsRegistration()
 	AudioAsset::Register(U"player_attack3_SE", Audio::Stream, U"../assets/sounds/PlayerSE/attack3.wav");
 	AudioAsset::Register(U"player_dies_SE", Audio::Stream, U"../assets/sounds/PlayerSE/dies.wav");
 	AudioAsset::Register(U"player_jump_SE", Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
-	AudioAsset::Register(U"player_run1_SE", Audio::Stream, U"../assets/sounds/PlayerSE/run2.wav");
+	AudioAsset::Register(U"player_run1_SE", Audio::Stream, U"../assets/sounds/PlayerSE/run5.wav");
 
 	//EnemySE
 	AudioAsset::Register(U"Enemy_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDies.wav");//敵が死ぬ音

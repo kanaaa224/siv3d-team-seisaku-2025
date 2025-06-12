@@ -57,7 +57,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	AudioAsset(U"player_attack3_SE").setVolume(1.0);
 	AudioAsset(U"player_dies_SE").setVolume(2.0);
 	AudioAsset(U"player_jump_SE").setVolume(1.5);
-	run_se = AudioAsset(U"player_run1_SE").setVolume(0.5).setSpeed(2.0);
+	run_se = AudioAsset(U"player_run1_SE").setVolume(10.5).setSpeed(2.0);
 
 	//run_se.setSpeed(2.0);
 
@@ -233,7 +233,7 @@ void Player::update()
 		//地面にいたら走るSE
 		if (is_on_ground == true)
 		{
-			run_se.setVolume(0.5).setSpeed(2.0).play();
+			run_se.setVolume(10.5).setSpeed(2.0).play();
 		}
 		
 		if (controller.buttonA.down() == true && is_on_ground == true || KeySpace.down() == true && is_on_ground == true)
