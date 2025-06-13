@@ -17,7 +17,7 @@
 #define IDLE_ANIM_SPEED 0.1		// 待機アニメーションの切り替え速度
 #define MOVE_ANIM_SPEED 0.1		// 移動アニメーションの切り替え速度
 
-#define ATTAK_ANIM_SPEED 0.05	// 攻撃アニメーションの切り替え速度
+#define ATTAK_ANIM_SPEED 0.1	// 攻撃アニメーションの切り替え速度 0.05
 #define JUMPATTAK_ANIM_SPEED 0.1// 空中攻撃アニメーションの切り替え速度
 
 #define ROLL_ANIM_SPEED 0.1		// 回避アニメーションの切り替え速度

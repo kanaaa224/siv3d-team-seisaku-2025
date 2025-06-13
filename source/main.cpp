@@ -41,6 +41,7 @@ void AssetsRegistration()
 
 	// Stage
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
+	TextureAsset::Register({ U"Stage Background", { U"Stage" } }, U"../assets/images/stage/stage1/Background.png");
 
 	// Enemy
 	TextureAsset::Register({ U"Scarerun Idle Old", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");//旧画像
