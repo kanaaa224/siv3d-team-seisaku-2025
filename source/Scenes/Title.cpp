@@ -16,9 +16,13 @@ Title::Title(const InitData& init) : IScene{ init }
 
 	AudioAsset(U"kettei_SE").setVolume(1.0);
 
-	m_runAnimation = LoadDivGraph(U"Scarerun Idle", Size(150, 45));
-	m_runAnimationFrame = 0;
-	m_runAnimationTime = 0.0;
+	//m_runAnimation = LoadDivGraph(U"Scarerun Idle", Size(150, 45));
+	//m_runAnimationFrame = 0;
+	//m_runAnimationTime = 0.0;
+
+	//m_runnerAnimation = LoadDivGraph(U"Flot Idle", Size(150, 45));
+	//m_runnerAnimationTime = 0.0;
+	
 }
 
 Title::~Title()
@@ -84,13 +88,36 @@ void Title::update()
 		//System::Exit();
 	}
 
-	//アニメーション更新
-	m_runAnimationTime += Scene::DeltaTime();
-	if (m_runAnimationTime >= 0.1)
-	{
-		m_runAnimationFrame = (m_runAnimationFrame + 1) % m_runAnimation.size();
-		m_runAnimationTime = 0.0;
-	}
+	////アニメーション更新
+	//m_runAnimationTime += Scene::DeltaTime();
+	//if (m_runAnimationTime >= 0.1)
+	//{
+	//	m_runAnimationFrame = (m_runAnimationFrame + 1) % m_runAnimation.size();
+	//	m_runAnimationTime = 0.0;
+	//}
+
+	//m_runnerAnimationTime += Scene::DeltaTime();
+	//if (m_runnerAnimationTime >= 0.1) // アニメーション速度（0.1秒ごとにフレーム更新）
+	//{
+	//	m_runnerAnimationFrame = (m_runnerAnimationFrame + 1) % m_runnerAnimation.size();
+	//	m_runnerAnimationTime = 0.0;
+	//
+	//	 if (x != 840)
+	//	 {
+	//		 x += 5.0;
+	//	 }
+	//	 if (x >= 650 && y <= 600)
+	//	 {
+	//		 y += 8.0;
+	//	 }
+	//	 if (x == 840)
+	//	 {
+	//		 x += 0.0;
+	//		 y += 0.0;
+	//		
+	//		 m_runnerAnimation = LoadDivGraph(U"Scarerun Idle", Size(150, 45));
+	//	 }
+	//}
 }
 
 void Title::draw() const
@@ -128,9 +155,17 @@ void Title::draw() const
 		boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
 
-	//左下にプレイヤー表示
-	if (!m_runAnimation.isEmpty())
-	{
-		m_runAnimation[m_runAnimationFrame].scaled(2.0).draw(520, Scene::Height() - 120);
-	}
+	////左下にプレイヤー表示
+	//if (!m_runAnimation.isEmpty())
+	//{
+	//	m_runAnimation[m_runAnimationFrame].scaled(2.0).draw(840, Scene::Height() - 120);
+	//}
+
+	//if (!m_runnerAnimation.isEmpty())
+	//{
+	//	// スケールを調整したい場合は .scaled() を追加
+	//	//m_runnerAnimation[m_runnerAnimationFrame].draw(m_runnerPos);
+	//	m_runnerAnimation[m_runAnimationFrame].scaled(2.0).draw(x,y);
+	//}
+
 }

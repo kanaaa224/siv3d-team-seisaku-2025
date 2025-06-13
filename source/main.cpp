@@ -118,9 +118,11 @@ void AssetsRegistration()
 	AudioAsset::Register(U"player_dies_SE", Audio::Stream, U"../assets/sounds/PlayerSE/dies.wav");
 	AudioAsset::Register(U"player_jump_SE", Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
 	AudioAsset::Register(U"player_run1_SE", Audio::Stream, U"../assets/sounds/PlayerSE/run5.wav");
+	AudioAsset::Register(U"player_damage_SE", Audio::Stream, U"../assets/sounds/PlayerSE/damage.wav");//playerがダメージをうける
 
 	//EnemySE
 	AudioAsset::Register(U"Enemy_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDies.wav");//敵が死ぬ音
+	AudioAsset::Register(U"Enemy_damage_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");//Enemyがダメージをうける音
 	//Boss
 	AudioAsset::Register(U"Boss_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");//ボスが死ぬ音
 	AudioAsset::Register(U"Boss_run_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");//歩く音（仮）小さくしたら使えるかも？
