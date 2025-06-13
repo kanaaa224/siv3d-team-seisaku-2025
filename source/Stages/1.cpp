@@ -99,6 +99,8 @@ void Stage1::update()
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
 
+				if (player_hp == 0.0f) vaillant->setAttackStarted(false);
+
 				EnemyBossUI* enemyBossUI = EnemyBossUI::GetInstance();
 
 				enemyBossUI->setHP(vaillant->getHP());
