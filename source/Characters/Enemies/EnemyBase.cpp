@@ -8,9 +8,6 @@
 #include "../../Objects/Buff/Attack/AttackBuff.h"
 //Ammo
 #include "../../Objects/Ammo.hpp"
-//hpBar
-#include "../../UI/HPBar.hpp"
-
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
@@ -70,6 +67,9 @@ void EnemyBase::update()
 	//現在のHP割合を更新
 	hp_rate = hp / max_hp;
 
+	hpbar.damage(hpbar.getHP() - hp);//HPの差分処理
+	hpbar.update();//hpバーの更新処理
+
 #ifdef _DEBUG
 	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
 		hp = 0;
@@ -82,8 +82,6 @@ void EnemyBase::update()
 
 void EnemyBase::draw() const
 {
-
-
 #ifdef _DEBUG
 	//画像ができるまでの仮表示
 	//Rect(position.x, position.y, size.x, size.y).draw(Palette::Red);

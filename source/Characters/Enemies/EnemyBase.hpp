@@ -3,13 +3,15 @@
 #include "../Base.hpp"
 //Buffの親クラス
 #include "../../Objects/Buff/BuffBase.hpp"
+//hpBar
+#include "../../UI/HPBar.hpp"
 
 #define MOVE_SPEED      20.0f  //移動速度
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
 
-#define DAMAGE_STOP_TIME 0.5f //ダメージストップ時間
+#define DAMAGE_STOP_TIME 0.7f //ダメージストップ時間
 
 #define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
@@ -46,6 +48,8 @@ enum eMovementDirection
 class EnemyBase : public CharacterBase
 {
 protected:
+	HPBar hpbar;
+
 	eEnemyType type;                        //敵のタイプ
 	Vec2 body_size;                         //bodyの大きさ
 

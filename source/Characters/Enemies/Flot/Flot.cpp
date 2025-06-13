@@ -7,6 +7,7 @@ Flot::Flot(P2World& world, const Vec2& position):
 {
 	max_hp = 60;
 	hp = max_hp;
+	hpbar.setMaxHP(max_hp);//hpバーに最大HPを設定
 
 	fireFlg = false;
 
@@ -92,7 +93,8 @@ void Flot::draw() const
 {
 	now_texture.mirrored(img_flipFlg).resized(img_size).drawAt(pos + Vec2{-5,-15});
 	body.drawFrame();
-	drawHP();
+
+	hpbar.draw({ Vec2{(pos.x - body_size.x / 2),(pos.y - body_size.y / 2 - 10)},hp_imgSize });
 
 #ifdef _DEBUG
 	Print << U"Enemy_Flot_Velocity : " << body.getVelocity();

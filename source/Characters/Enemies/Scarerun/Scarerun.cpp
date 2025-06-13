@@ -7,6 +7,7 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 {
 	type = eEnemyType::scarerun;
 	body_size = Vec2{ 50, 80 };
+	hpbar.setMaxHP(max_hp);//hpバーに最大HPを設定
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
 	body = world.createRectSensor(
@@ -81,8 +82,8 @@ void Scarerun::draw() const
 {
 	now_texture.mirrored(img_flipFlg).resized(img_size).drawAt(pos);
 	body.drawFrame();
-	drawHP();
 
+	hpbar.draw({ Vec2{(pos.x - body_size.x / 2 - 10),(pos.y - body_size.y / 2 - 10)},hp_imgSize });
 #ifdef _DEBUG
 	Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Scarerun_SpawnPos : " << spawnPosition;
