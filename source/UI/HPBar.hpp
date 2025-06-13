@@ -133,6 +133,13 @@ public:
 		m_delayVelocity = 0.0;
 	}
 
+	/// @brief MaxHP を変更します。遅延エフェクトは発生しません。
+	/// @param hp 新しい MaxHP
+	constexpr void setMaxHP(int32 hp) noexcept
+	{
+		m_maxHP = hp;
+	}
+
 	/// @brief HP を減らします。
 	/// @param damage 減らす量
 	constexpr void damage(int32 damage) noexcept

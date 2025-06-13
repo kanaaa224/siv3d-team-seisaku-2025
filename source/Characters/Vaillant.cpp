@@ -1,10 +1,13 @@
 ﻿# include "Vaillant.hpp"
 # include "Player.hpp"
+# include "../Stage.hpp"
+# include "../Objects/HitBox.hpp"
 
 Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	CharacterBase(world, position),
 	start_position(position),
 	frameTime(0.0),
+	attack_frame(0.0f),
 	state(VaillantState::Idle),
 	jumped(false),
 	roaming_flipped(false),
@@ -12,7 +15,8 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	attack_started(false),
 	die_executed(false),
 	destroy_executed(false),
-	damaged(false)
+	damaged(false),
+	attacking(false)
 {
 	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
 
@@ -61,6 +65,34 @@ void Vaillant::update()
 
 	if (attack_started)
 	{
+		if (state == VaillantState::Attack)
+		{
+			if (!attacking)
+			{
+				attack_frame = frameTime;
+
+				std::thread([this]()
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+
+					Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 200 : size.x / 2), 0 }, *this);
+				}).detach();
+
+				std::thread([this]()
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+					state = VaillantState::Idle;
+
+					attacking = false;
+				}).detach();
+
+				attacking = true;
+			}
+
+			return;
+		}
+
 		bool walking_direction = false;
 
 		distance = position.x - player_position.x;
@@ -74,6 +106,15 @@ void Vaillant::update()
 
 		if (!jumped && distance <= 300)
 		{
+			if (Random(0, 1))
+			{
+				state = VaillantState::Attack;
+
+				mirrored = player_position.x <= position.x ? true : false;
+
+				return;
+			}
+
 			body.applyLinearImpulse(Vec2{ 0, -VAILLANT_JUMP_POWER });
 
 			spriteAnimator.setAnimationName(AnimationName::Smoke1);
@@ -87,7 +128,7 @@ void Vaillant::update()
 			jumped = true;
 		}
 
-		if (distance >= 400) jumped = false;
+		if (InRange(body.getVelocity().y, -1.0, 1.0) && position.y > start_position.y && !Random(0, 200)) jumped = false;
 	}
 	else
 	{
@@ -104,13 +145,7 @@ void Vaillant::update()
 	if (not InRange(body.getVelocity().x, -1.0, 1.0)) state = VaillantState::Walk;
 	if (not InRange(body.getVelocity().x, -1.0, 1.0)) mirrored = body.getVelocity().x > 0.0;
 
-	switch (state)
-	{
-	case VaillantState::Idle:
-	case VaillantState::Walk:
-		mirrored = !mirrored;
-		break;
-	}
+	mirrored = !mirrored;
 }
 
 void Vaillant::draw() const
@@ -145,6 +180,32 @@ void Vaillant::draw() const
 		if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
 
 		if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
+
+		break;
+	}
+
+	case VaillantState::Attack:
+	{
+		margin = { 86, 81 };
+
+		const int marginR = 195;
+		frameDuration = 0.15;
+		frameCount = 16;
+
+		double elapsed = frameTime - attack_frame;
+
+		int frameIndex = static_cast<int>(elapsed / frameDuration);
+		if (frameIndex >= frameCount) {
+			frameIndex = frameCount - 1;
+		}
+
+		currentFrame = frameIndex;
+
+		if (currentFrame > 0) {
+			margin.x += (marginR + cutoutSize.x) * currentFrame;
+		}
+
+		RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw({ 1.0, 0.0, 0.0, 0.1 });
 
 		break;
 	}
@@ -202,6 +263,10 @@ void Vaillant::draw() const
 		assetName = U"Vaillant Walk";
 		break;
 
+	case VaillantState::Attack:
+		assetName = U"Vaillant Attack";
+		break;
+
 	case VaillantState::Death:
 	case VaillantState::Destroy:
 		assetName = U"Vaillant Death";
@@ -229,7 +294,7 @@ void Vaillant::onHit(ObjectBase& object)
 			player->getplayerstate() != ePlayerState::jump_attack &&
 			player->getplayerstate() != ePlayerState::jump_avoidance)
 		{
-			player->applyDamage(10);
+			player->applyDamage(20);
 		}
 	}
 }
@@ -280,7 +345,7 @@ void Vaillant::onDamaged(float amount)
 
 		std::thread([this]()
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+			std::this_thread::sleep_for(std::chrono::milliseconds(750));
 
 			damaged = false;
 		}).detach();

@@ -29,15 +29,14 @@ private:
 
 	//アニメーション用1
 	Array<TextureRegion> m_runAnimation;
-
 	size_t m_runAnimationFrame = 0;
 	double m_runAnimationTime = 0.0;
 
-	//アニメーション用２
-	Array<TextureRegion> m_runAnimation2;
-
-	size_t m_runAnimationFrame2 = 0;
-	double m_runAnimationTime2 = 0.0;
-
+	Array<TextureRegion> m_runnerAnimation; // ランナーのアニメーション画像
+	int32 m_runnerAnimationFrame;         // 現在のアニメーションフレーム
+	double m_runnerAnimationTime;         // アニメーションの時間管理
+	Vec2 m_runnerPos;                    // ランナーの現在位置
+	int x = 500;
+	int y = 280;
 
 };

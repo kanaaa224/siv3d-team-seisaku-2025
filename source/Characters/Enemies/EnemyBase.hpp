@@ -3,13 +3,15 @@
 #include "../Base.hpp"
 //Buffの親クラス
 #include "../../Objects/Buff/BuffBase.hpp"
+//hpBar
+#include "../../UI/HPBar.hpp"
 
 #define MOVE_SPEED      20.0f  //移動速度
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
 
-#define DAMAGE_STOP_TIME 0.5f //ダメージストップ時間
+#define DAMAGE_STOP_TIME 0.7f //ダメージストップ時間
 
 #define SPAWN_BUFF_TIME 1.0f  //ステータスがDIEになってから何秒でBuffを生成するか
 
@@ -46,7 +48,10 @@ enum eMovementDirection
 class EnemyBase : public CharacterBase
 {
 protected:
+	HPBar hpbar;
+
 	eEnemyType type;                        //敵のタイプ
+	Vec2 body_size;                         //bodyの大きさ
 
 	eEnemyState nowState;                   //現在の状態
 	eEnemyState oldState;                   //1フレーム前の状態
@@ -64,12 +69,14 @@ protected:
 	Array<TextureRegion> die_img;           //死亡の画像
 	int nowImageNum;                        //画像配列の現在の要素数を格納する用
 	double imageChangeTime;                 //画像切替用変数
-
-	TextureRegion hp_back_img;              //hpバーの後ろ画像
-	TextureRegion hp_front_img;             //hpバーの前画像
-	Vec2 hp_imgSize;                        //hpバーの画像サイズ
+	Vec2 img_size;                          //画像サイズ
 
 	bool img_flipFlg;                       //画像を左右反転
+
+	TextureRegion hp_frame_img;             //hpバーの後ろ画像
+	const Texture hp_bar_img{ U"../assets/images/ui/hp_bar_front.png" };//hpバーの前画像
+	Vec2 hp_imgSize;                        //hpバーの画像サイズ
+	double hp_rate;
 
 	Vec2 spawnPosition;                     //スポーン位置を格納
 

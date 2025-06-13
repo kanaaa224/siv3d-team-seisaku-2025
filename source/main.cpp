@@ -60,9 +60,10 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Ammo Impact",{ U"Enemy" } }, U"../assets/images/enemy/flotte/Energy ball/energyBallImpact.png");
 	
 	{ // ボス 1
-		TextureAsset::Register({ U"Vaillant Idle",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
-		TextureAsset::Register({ U"Vaillant Walk",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
-		TextureAsset::Register({ U"Vaillant Death", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/death.png");
+		TextureAsset::Register({ U"Vaillant Idle",   { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
+		TextureAsset::Register({ U"Vaillant Walk",   { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
+		TextureAsset::Register({ U"Vaillant Attack", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/attack.png");
+		TextureAsset::Register({ U"Vaillant Death",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/death.png");
 	}
 
 	{ // エフェクト
@@ -79,6 +80,7 @@ void AssetsRegistration()
 
 	TextureAsset::Register({ U"HP_frame",  { U"UI" } }, U"../assets/images/ui/hp_frame.png");
 	TextureAsset::Register({ U"HP_bar",  { U"UI" } }, U"../assets/images/ui/hp_bar_back.png");
+	TextureAsset::Register({ U"HP_bar_Enemy",  { U"UI" } }, U"../assets/images/ui/hp_bar_front.png");
 
 	TextureAsset::Register({ U"time_frame",  { U"UI" } }, U"../assets/images/ui/timer_frame.png");
 
@@ -117,9 +119,11 @@ void AssetsRegistration()
 	AudioAsset::Register(U"player_dies_SE", Audio::Stream, U"../assets/sounds/PlayerSE/dies.wav");
 	AudioAsset::Register(U"player_jump_SE", Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
 	AudioAsset::Register(U"player_run1_SE", Audio::Stream, U"../assets/sounds/PlayerSE/run5.wav");
+	AudioAsset::Register(U"player_damage_SE", Audio::Stream, U"../assets/sounds/PlayerSE/damage.wav");//playerがダメージをうける
 
 	//EnemySE
 	AudioAsset::Register(U"Enemy_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDies.wav");//敵が死ぬ音
+	AudioAsset::Register(U"Enemy_damage_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");//Enemyがダメージをうける音
 	//Boss
 	AudioAsset::Register(U"Boss_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");//ボスが死ぬ音
 	AudioAsset::Register(U"Boss_run_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");//歩く音（仮）小さくしたら使えるかも？

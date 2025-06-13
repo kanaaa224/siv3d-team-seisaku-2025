@@ -9,12 +9,12 @@
 //Ammo
 #include "../../Objects/Ammo.hpp"
 
-
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
 {
 	max_hp = 100.0f;//最大体力の設定
 	hp = max_hp;//体力
+	hp_rate = hp / max_hp;
 	setEnemyState(IDLE);//ステータス
 	body.setGravityScale(GRAVITY);//重力
 	spawnPosition = position;//スポーン位置
@@ -23,8 +23,8 @@ EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	spawnBuffFlg = false;//バフがスポーンしたか
 	playerFoundFlg = false;//プレイヤーを発見したか
 
-
-	hp_imgSize = Vec2(100, 100);//Hp画像サイズ
+	hp_frame_img = TextureAsset(U"HP_frame");
+	hp_imgSize = Vec2(70, 7);//Hp画像サイズ
 }
 
 EnemyBase::~EnemyBase()
@@ -64,6 +64,12 @@ void EnemyBase::update()
 		body.setVelocity(Vec2{ - body.getVelocity().x,body.getVelocity().y });
 	}
 
+	//現在のHP割合を更新
+	hp_rate = hp / max_hp;
+
+	hpbar.damage(hpbar.getHP() - hp);//HPの差分処理
+	hpbar.update();//hpバーの更新処理
+
 #ifdef _DEBUG
 	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
 		hp = 0;
@@ -76,13 +82,9 @@ void EnemyBase::update()
 
 void EnemyBase::draw() const
 {
-
-
 #ifdef _DEBUG
 	//画像ができるまでの仮表示
 	//Rect(position.x, position.y, size.x, size.y).draw(Palette::Red);
-
-	
 #endif // DEBUG
 }
 
@@ -270,11 +272,14 @@ void EnemyBase::movement(float distance, eMovementDirection para)
 
 void EnemyBase::drawHP() const
 {
-	//現在のHP割合
-	//float hp_rate   = hp / max_hp;
-	//float hp_x_size = HP_X_MAXSIZE * hp_rate;
+	//hpの位置
+	Vec2 hp_pos = Vec2{ pos.x,pos.y - (body_size.y - 30) };//ここの値は位置を調整している
 
-	//HPバーを描画
+	//hpフレーム画像の描画
+	hp_frame_img.resized(hp_imgSize.x + 5, hp_imgSize.y + 5).drawAt(hp_pos);
+	//hpバー画像の描画
+	double rate = 1 - hp_rate;
+	hp_bar_img.uv(rate, 1.0, 1.0, 1.0).resized(hp_imgSize.x, hp_imgSize.y).drawAt(hp_pos);
 }
 
 void EnemyBase::getDamage(float damage)

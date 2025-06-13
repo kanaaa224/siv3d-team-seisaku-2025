@@ -12,6 +12,7 @@ enum class VaillantState
 {
 	Idle,
 	Walk,
+	Attack,
 	Death,
 	Destroy
 };
@@ -32,6 +33,7 @@ public:
 	void onDamaged(float amount) override;
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
+	void setAttackStarted(bool b = false) { attack_started = b; }
 
 	VaillantState getState() { return state; }
 
@@ -44,6 +46,7 @@ private:
 	SizeF size;
 	
 	double frameTime;
+	double attack_frame;
 	
 	VaillantState state;
 
@@ -53,10 +56,10 @@ private:
 	bool attack_started;
 	bool die_executed;
 	bool destroy_executed;
+	bool damaged;
+	bool attacking;
 
 	SpriteAnimator spriteAnimator;
-
-	bool damaged;
 
 	void initialize();
 };
