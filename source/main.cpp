@@ -60,9 +60,10 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Ammo Impact",{ U"Enemy" } }, U"../assets/images/enemy/flotte/Energy ball/energyBallImpact.png");
 	
 	{ // ボス 1
-		TextureAsset::Register({ U"Vaillant Idle",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
-		TextureAsset::Register({ U"Vaillant Walk",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
-		TextureAsset::Register({ U"Vaillant Death", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/death.png");
+		TextureAsset::Register({ U"Vaillant Idle",   { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
+		TextureAsset::Register({ U"Vaillant Walk",   { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
+		TextureAsset::Register({ U"Vaillant Attack", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/attack.png");
+		TextureAsset::Register({ U"Vaillant Death",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/death.png");
 	}
 
 	{ // エフェクト

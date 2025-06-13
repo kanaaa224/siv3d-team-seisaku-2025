@@ -18,9 +18,8 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 		{
 			size = { 95, 90 };
 		}
-	}
 
-	body = world.createRectSensor(
+		body = world.createRectSensor(
 		P2Kinematic,
 		position,
 		RectF { size },
@@ -29,6 +28,22 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 			.maskBits     = CollisionCategory::Enemy   // Hitさせたいカテゴリ
 		}
 	);
+	}
+
+	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(this->owner))
+	{
+		size = { 200, 100 };
+
+		body = world.createRectSensor(
+			P2Kinematic,
+			position,
+			RectF { size },
+			P2Filter {
+				.categoryBits = CollisionCategory::HitBox,
+				.maskBits     = CollisionCategory::Player
+			}
+		);
+	}
 }
 
 void HitBox::update()
@@ -45,6 +60,13 @@ void HitBox::draw() const
 
 void HitBox::onHit(ObjectBase& object)
 {
+	if (Player* player = dynamic_cast<Player*>(&object))
+	{
+		player->applyDamage(30);
+
+		destroy();
+	}
+
 	if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(&object))
 	{
 		enemy->applyDamage(20);

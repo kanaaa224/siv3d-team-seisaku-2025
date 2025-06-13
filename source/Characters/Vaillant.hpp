@@ -12,6 +12,7 @@ enum class VaillantState
 {
 	Idle,
 	Walk,
+	Attack,
 	Death,
 	Destroy
 };
@@ -44,6 +45,7 @@ private:
 	SizeF size;
 	
 	double frameTime;
+	double attack_frame;
 	
 	VaillantState state;
 
@@ -53,10 +55,10 @@ private:
 	bool attack_started;
 	bool die_executed;
 	bool destroy_executed;
+	bool damaged;
+	bool attacking;
 
 	SpriteAnimator spriteAnimator;
-
-	bool damaged;
 
 	void initialize();
 };
