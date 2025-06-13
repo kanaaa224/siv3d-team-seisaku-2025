@@ -75,8 +75,8 @@ void Title::update()
 	{
 		AudioAsset(U"kettei_SE").play();
 		AudioAsset(U"Title_BGM").stop();
-		//changeScene(SceneState::End, 0.5s);
-		System::Exit();
+		changeScene(SceneState::Credit, 0.5s);
+		//System::Exit();
 	}
 }
 
@@ -112,6 +112,6 @@ void Title::draw() const
 
 		const Font& boldFont = FontAsset(U"Bold");
 		boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
-		boldFont(U"EXIT").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+		boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
 }
