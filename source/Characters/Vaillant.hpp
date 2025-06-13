@@ -8,7 +8,8 @@
 # define VAILLANT_WALK_POWER 5.0
 # define VAILLANT_JUMP_POWER 3000
 
-enum class VaillantState {
+enum class VaillantState
+{
 	Idle,
 	Walk,
 	Death,

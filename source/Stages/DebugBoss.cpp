@@ -7,6 +7,7 @@
 # include "../Characters/Player.hpp"
 # include "../Characters/Enemies/EnemyBase.hpp"
 # include "../UI/PlayerHUD.hpp"
+# include "../UI/EnemyBoss.hpp"
 
 StageDebugBoss::StageDebugBoss()
 {
@@ -64,6 +65,12 @@ void StageDebugBoss::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
+
+				EnemyBossUI* enemyBossUI = EnemyBossUI::GetInstance();
+
+				enemyBossUI->setHP(vaillant->getHP());
+				enemyBossUI->setName(U"バイラント");
+				enemyBossUI->update();
 			}
 
 			if (StageBackground* stageBackground = dynamic_cast<StageBackground*>(object))
@@ -96,11 +103,11 @@ void StageDebugBoss::update()
 		}
 	}
 
-#ifdef _DEBUG
-	if(Key1.down()) createObject<Vaillant>(Vec2{ Scene::Width() + 200, (Scene::Height() / 2) });
-#endif
-
 	camera.update();
+
+#ifdef _DEBUG
+	if (Key1.down()) createObject<Vaillant>(Vec2{ Scene::Width() + 200, (Scene::Height() / 2) });
+#endif
 }
 
 void StageDebugBoss::draw() const
@@ -118,6 +125,11 @@ void StageDebugBoss::draw() const
 	}
 
 	PlayerHUD::GetInstance()->draw();
+
+	for (const auto& object : objects)
+	{
+		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object)) EnemyBossUI::GetInstance()->draw();
+	}
 }
 
 void StageDebugBoss::NewInstance()

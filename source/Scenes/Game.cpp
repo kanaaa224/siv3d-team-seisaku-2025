@@ -36,18 +36,16 @@ void Game::update()
 	case 1:
 		switch (Stage1::GetState())
 		{
-		case 1:
+		case 1: //ゲームクリア
 			changeScene(SceneState::End, 0.5s);
 			break;
-
-		default:
+		case 2:
+			changeScene(SceneState::GameOver, 0.5s);
 			break;
 		}
 		break;
-
-	default:
-		break;
 	}
+
 
 	if (Key0.down()) changeScene(SceneState::Title, 0.5s);
 

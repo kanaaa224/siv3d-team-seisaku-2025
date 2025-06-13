@@ -2,8 +2,6 @@
 
 # include "../Common.hpp"
 
-
-// エンドシーン
 class GameOver : public App::Scene
 {
 public:
@@ -25,5 +23,9 @@ private:
 
 	double m_inactiveTime = 0.0;
 
-	Texture end_background;
+
+	size_t dieAnimationFrame = 0;
+	double dieAnimationTime = 0.0;
+
+	Array<TextureRegion> p_dieanime;
 };

@@ -7,6 +7,7 @@
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Characters/Enemies/Flot/Flot.hpp"
 # include "../UI/PlayerHUD.hpp"
+# include "../UI/EnemyBoss.hpp"
 # include "../Characters/Vaillant.hpp"
 
 int Stage1::state = 0;
@@ -97,8 +98,16 @@ void Stage1::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
+
+				EnemyBossUI* enemyBossUI = EnemyBossUI::GetInstance();
+
+				enemyBossUI->setHP(vaillant->getHP());
+				enemyBossUI->setName(U"バイラント");
+				enemyBossUI->update();
+
 				playerHUD->setBossState(vaillant->getState());
 
+				// GameClear or Over 遷移条件
 				if (vaillant->getState() == VaillantState::Death)
 				{
 					static bool aaaaa = false;
@@ -107,9 +116,27 @@ void Stage1::update()
 					{
 						std::thread([this]()
 						{
-							std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+							std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
 							state = 1;
+
+							aaaaa = false;
+						}).detach();
+
+						aaaaa = true;
+					}
+				}
+				else if(player->getplayerstate() == ePlayerState::die)
+				{
+					static bool aaaaa = false;
+
+					if (!aaaaa)
+					{
+						std::thread([this]()
+						{
+							std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+							state = 2;
 
 							aaaaa = false;
 						}).detach();
@@ -127,6 +154,14 @@ void Stage1::update()
 			if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
 			{
 				hitBox->destroy();
+			}
+
+			if (BossEreaflg)
+			{
+				if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
+				{
+					enemy->destroy();
+				}
 			}
 
 			if (BossEreaflg == false && player->getBody().getPos().x >= STAGE1_WIDTH - (Scene::Width() / 2))
@@ -188,6 +223,11 @@ void Stage1::draw() const
 	}
 
 	PlayerHUD::GetInstance()->draw();
+
+	for (const auto& object : objects)
+	{
+		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object)) EnemyBossUI::GetInstance()->draw();
+	}
 }
 
 void Stage1::NewInstance()

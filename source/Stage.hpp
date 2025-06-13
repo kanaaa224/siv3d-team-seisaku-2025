@@ -2,8 +2,20 @@
 
 # include "Objects/Base.hpp"
 
+enum StageState
+{
+	play,
+	clear,
+	gameover
+};
+
+
 class Stage
 {
+
+private:
+	StageState m_state;
+
 public:
 	Stage();
 	virtual ~Stage();
@@ -17,6 +29,9 @@ public:
 
 	static void   NewInstance(); // 新規インスタンスを生成する関数
 	static Stage* GetInstance(); // 既存のインスタンスを返す関数
+
+	StageState GetState() const { return m_state; }
+
 
 protected:
 	Array<ObjectBase*> objects;         // ステージ上に存在するオブジェクト

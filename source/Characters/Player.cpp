@@ -555,7 +555,7 @@ void Player::draw() const
 		image.mirrored(flip_flg).resized(size).drawAt(pos, Palette::Red);
 	}
 
-	spriteAnimator.draw();
+	//spriteAnimator.draw();
 
 #ifdef _DEBUG
 

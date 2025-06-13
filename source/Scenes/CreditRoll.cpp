@@ -24,17 +24,19 @@ void CreditRoll::update()
 	}
 
 	//スキップ(クリックかBボタン)
-	if (m_exitButton.leftClicked() || XInput(0).buttonB.down())
+	if (m_exitButton.leftClicked() || XInput(0).buttonB.down() || XInput(0).buttonStart.down())
 	{
 		AudioAsset(U"Credit_BGM").stop();
-		changeScene(SceneState::Title, 0.5s);
+		//changeScene(SceneState::Title, 0.5s);
+		System::Exit();	//2秒待つ処理とかほしい
 	}
 
 	//一番最後の文字が画面左端を通過したら終了
 	if (m_scrollX < -2100) //後で変える
 	{
 		AudioAsset(U"Credit_BGM").stop();
-		changeScene(SceneState::Title, 2.0s);  //タイトルシーンに戻る
+		//changeScene(SceneState::Title, 2.0s);  //タイトルシーンに戻る
+		System::Exit();	//2秒待つ処理とかほしい
 	}
 
 }
@@ -52,8 +54,9 @@ void CreditRoll::draw() const
 	font(U"画像").draw(m_scrollX + 1005, centerY-120);
 	font(U"itch.io").draw(m_scrollX + 980, centerY-30);
 	font(U"ゲームまてりあるず").draw(m_scrollX + 850, centerY + 30);
-	font(U"SE").draw(m_scrollX + 1520, centerY - 100);
-	font(U"Audiostock").draw(m_scrollX + 1420, centerY);
+	font(U"SE").draw(m_scrollX + 1520, centerY - 120);
+	font(U"Audiostock").draw(m_scrollX + 1420, centerY-30);
+	font(U"効果音ラボ").draw(m_scrollX + 1440, centerY+30);
 	font(U"Thank You For Playing!").draw(m_scrollX + 2500, centerY);
 
 

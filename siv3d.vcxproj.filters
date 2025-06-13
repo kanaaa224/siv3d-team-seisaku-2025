@@ -141,6 +141,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Characters\Enemies\Flot\Flot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="source\Characters\Enemies\Scarerun\Scarerun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -153,10 +156,16 @@
     <ClCompile Include="source\Characters\Vaillant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Effects\SpriteAnimator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="source\Objects\Buff\Attack\AttackBuff.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Objects\Buff\BuffBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Objects\Ammo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Objects\Base.cpp">
@@ -174,7 +183,16 @@
     <ClCompile Include="source\Objects\Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scenes\CreditRoll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scenes\End.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="source\Scenes\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scenes\GameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Scenes\Title.cpp">
@@ -184,6 +202,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Stages\DebugBoss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\EnemyBoss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\UI\PlayerHUD.cpp">
@@ -196,24 +217,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Stage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Characters\Enemies\Flot\Flot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Objects\Ammo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Effects\SpriteAnimator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Scenes\End.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Scenes\CreditRoll.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Scenes\GameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -881,6 +884,9 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Characters\Enemies\Flot\Flot.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="source\Characters\Enemies\Scarerun\Scarerun.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -896,10 +902,16 @@
     <ClInclude Include="source\Characters\Vaillant.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Effects\SpriteAnimator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="source\Objects\Buff\Attack\AttackBuff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Buff\BuffBase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Objects\Ammo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Base.hpp">
@@ -917,7 +929,16 @@
     <ClInclude Include="source\Objects\Wall.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Scenes\CreditRoll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\End.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="source\Scenes\Game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\GameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\Title.hpp">
@@ -927,6 +948,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Stages\DebugBoss.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\EnemyBoss.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\HPBar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\UI\PlayerHUD.hpp">
@@ -939,24 +966,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Stage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Characters\Enemies\Flot\Flot.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Objects\Ammo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Effects\SpriteAnimator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Scenes\End.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Scenes\CreditRoll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Scenes\GameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
