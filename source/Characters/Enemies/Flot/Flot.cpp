@@ -11,12 +11,13 @@ Flot::Flot(P2World& world, const Vec2& position):
 	fireFlg = false;
 
 	type = eEnemyType::flot;
+	body_size = Vec2{ 75, 60 };
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
 	body = world.createRectSensor(
 		P2Dynamic,
 		position,
-		SizeF{ 75, 60 },
+		SizeF{ body_size.x, body_size.y },
 		//P2Material{ .density = 0.0, .friction = 0.0 },
 		P2Filter{
 			.categoryBits = CollisionCategory::Enemy,
@@ -33,6 +34,7 @@ Flot::Flot(P2World& world, const Vec2& position):
 	getAttack_img      = LoadDivGraph(U"Flot GetDamage", Size(150, 45));//getAttack画像
 	die_img            = LoadDivGraph(U"Flot Death",     Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
+	img_size = Vec2{ 150 * 2, 45 * 2 };
 }
 
 Flot::~Flot()
@@ -88,8 +90,7 @@ void Flot::update()
 
 void Flot::draw() const
 {
-	Vec2 size = Vec2(150 * 2, 45 * 2);
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(pos + Vec2{-5,-15});
+	now_texture.mirrored(img_flipFlg).resized(img_size).drawAt(pos + Vec2{-5,-15});
 	body.drawFrame();
 	drawHP();
 

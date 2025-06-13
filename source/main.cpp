@@ -78,6 +78,7 @@ void AssetsRegistration()
 
 	TextureAsset::Register({ U"HP_frame",  { U"UI" } }, U"../assets/images/ui/hp_frame.png");
 	TextureAsset::Register({ U"HP_bar",  { U"UI" } }, U"../assets/images/ui/hp_bar_back.png");
+	TextureAsset::Register({ U"HP_bar_Enemy",  { U"UI" } }, U"../assets/images/ui/hp_bar_front.png");
 
 	TextureAsset::Register({ U"time_frame",  { U"UI" } }, U"../assets/images/ui/timer_frame.png");
 

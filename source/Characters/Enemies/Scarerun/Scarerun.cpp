@@ -6,12 +6,13 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
 {
 	type = eEnemyType::scarerun;
+	body_size = Vec2{ 50, 80 };
 
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
 	body = world.createRectSensor(
 		P2Dynamic,
 		position,
-		SizeF{ 50, 80 },
+		SizeF{ body_size.x, body_size.y },
 		//P2Material{ .friction = 0.0 },
 		P2Filter{
 			.categoryBits = CollisionCategory::Enemy,
@@ -27,6 +28,7 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	getAttack_img      = LoadDivGraph(U"Scarerun GetDamage", Size(150, 45));//getAttack画像
 	die_img            = LoadDivGraph(U"Scarerun Death", Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
+	img_size = Vec2{ 150 * 2, 45 * 2 };
 }
 
 Scarerun::~Scarerun()
@@ -77,11 +79,10 @@ void Scarerun::update()
 
 void Scarerun::draw() const
 {
-	Vec2 size = Vec2(150 * 2, 45 * 2);
-
-	now_texture.mirrored(img_flipFlg).resized(size).drawAt(pos);
+	now_texture.mirrored(img_flipFlg).resized(img_size).drawAt(pos);
 	body.drawFrame();
 	drawHP();
+
 #ifdef _DEBUG
 	Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Scarerun_SpawnPos : " << spawnPosition;
@@ -91,6 +92,7 @@ void Scarerun::draw() const
 	Print << U"Enemy_Scarerun_StateNum : " << nowStateTime;
 	Print << U"Enemy_Scarerun_HP : " << hp;
 	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;
+	Print << U"Enemy_Scarerun_HP_Rate : " << hp_rate;
 #endif // DEBUG
 }
 

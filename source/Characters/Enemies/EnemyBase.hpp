@@ -47,6 +47,7 @@ class EnemyBase : public CharacterBase
 {
 protected:
 	eEnemyType type;                        //敵のタイプ
+	Vec2 body_size;                         //bodyの大きさ
 
 	eEnemyState nowState;                   //現在の状態
 	eEnemyState oldState;                   //1フレーム前の状態
@@ -64,12 +65,14 @@ protected:
 	Array<TextureRegion> die_img;           //死亡の画像
 	int nowImageNum;                        //画像配列の現在の要素数を格納する用
 	double imageChangeTime;                 //画像切替用変数
-
-	TextureRegion hp_back_img;              //hpバーの後ろ画像
-	TextureRegion hp_front_img;             //hpバーの前画像
-	Vec2 hp_imgSize;                        //hpバーの画像サイズ
+	Vec2 img_size;                          //画像サイズ
 
 	bool img_flipFlg;                       //画像を左右反転
+
+	TextureRegion hp_frame_img;             //hpバーの後ろ画像
+	const Texture hp_bar_img{ U"../assets/images/ui/hp_bar_front.png" };//hpバーの前画像
+	Vec2 hp_imgSize;                        //hpバーの画像サイズ
+	double hp_rate;
 
 	Vec2 spawnPosition;                     //スポーン位置を格納
 
