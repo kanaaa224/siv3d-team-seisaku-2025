@@ -39,9 +39,9 @@ void Game::update()
 		case 1: //ゲームクリア
 			changeScene(SceneState::End, 0.5s);
 			break;
-		/*case 2:
+		case 2:
 			changeScene(SceneState::GameOver, 0.5s);
-			break;*/
+			break;
 		}
 		break;
 	}

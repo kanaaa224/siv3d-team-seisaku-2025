@@ -24,17 +24,19 @@ void CreditRoll::update()
 	}
 
 	//スキップ(クリックかBボタン)
-	if (m_exitButton.leftClicked() || XInput(0).buttonB.down())
+	if (m_exitButton.leftClicked() || XInput(0).buttonB.down() || XInput(0).buttonStart.down())
 	{
 		AudioAsset(U"Credit_BGM").stop();
-		changeScene(SceneState::Title, 0.5s);
+		//changeScene(SceneState::Title, 0.5s);
+		System::Exit();	//2秒待つ処理とかほしい
 	}
 
 	//一番最後の文字が画面左端を通過したら終了
 	if (m_scrollX < -2100) //後で変える
 	{
 		AudioAsset(U"Credit_BGM").stop();
-		changeScene(SceneState::Title, 2.0s);  //タイトルシーンに戻る
+		//changeScene(SceneState::Title, 2.0s);  //タイトルシーンに戻る
+		System::Exit();	//2秒待つ処理とかほしい
 	}
 
 }

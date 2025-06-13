@@ -107,6 +107,7 @@ void Stage1::update()
 
 				playerHUD->setBossState(vaillant->getState());
 
+				// GameClear or Over 遷移条件
 				if (vaillant->getState() == VaillantState::Death)
 				{
 					static bool aaaaa = false;
@@ -115,9 +116,27 @@ void Stage1::update()
 					{
 						std::thread([this]()
 						{
-							std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+							std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
 							state = 1;
+
+							aaaaa = false;
+						}).detach();
+
+						aaaaa = true;
+					}
+				}
+				else if(player->getplayerstate() == ePlayerState::die)
+				{
+					static bool aaaaa = false;
+
+					if (!aaaaa)
+					{
+						std::thread([this]()
+						{
+							std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+							state = 2;
 
 							aaaaa = false;
 						}).detach();
