@@ -27,5 +27,17 @@ private:
 	Texture m_backgroundTexture3;
 	Texture m_backgroundTexture4;
 
+	//アニメーション用1
+	Array<TextureRegion> m_runAnimation;
+
+	size_t m_runAnimationFrame = 0;
+	double m_runAnimationTime = 0.0;
+
+	//アニメーション用２
+	Array<TextureRegion> m_runAnimation2;
+
+	size_t m_runAnimationFrame2 = 0;
+	double m_runAnimationTime2 = 0.0;
+
 
 };
