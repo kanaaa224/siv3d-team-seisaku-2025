@@ -107,6 +107,7 @@ void AssetsRegistration()
 	AudioAsset::Register(U"Battle_BGM", Audio::Stream, U"../assets/sounds/BGM/battle_BGM.wav");//戦闘
 	AudioAsset::Register(U"Boss_Battle_BGM", Audio::Stream, U"../assets/sounds/BGM/boss_battle_BGM.wav");//ボス戦闘
 	AudioAsset::Register(U"GameOver_BGM", Audio::Stream, U"../assets/sounds/BGM/GameOver_BGM2.wav");//ゲームオーバー
+	AudioAsset::Register(U"Credit_BGM", Audio::Stream, U"../assets/sounds/BGM/GameOver_BGM3.wav");
 
 	//playerSE
 	AudioAsset::Register(U"player_attack1_SE", Audio::Stream, U"../assets/sounds/PlayerSE/attack.wav");

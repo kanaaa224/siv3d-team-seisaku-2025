@@ -4,7 +4,11 @@
 CreditRoll::CreditRoll(const InitData& init) : IScene{ init }
 {
 	m_scrollX = Scene::Width();
+
+	AudioAsset(U"Credit_BGM").setVolume(0.3);
+	AudioAsset(U"End_BGM").stop();
 	AudioAsset(U"Credit_BGM").play();
+
 
 	m_runAnimation = LoadDivGraph(U"Player Run", Size(288, 45));
 	m_runAnimationFrame = 0;
