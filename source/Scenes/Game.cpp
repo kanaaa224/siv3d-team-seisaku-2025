@@ -4,8 +4,6 @@
 
 Game::Game(const InitData& init) : IScene{ init }
 {
-	StageState::Playing;
-
 	if (Key1.pressed())
 	{
 		StageDebugBoss::NewInstance();
