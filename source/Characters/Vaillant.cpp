@@ -73,6 +73,13 @@ void Vaillant::update()
 
 				std::thread([this]()
 				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+					AudioAsset(U"Vaillant Attack").playOneShot();
+				}).detach();
+
+				std::thread([this]()
+				{
 					std::this_thread::sleep_for(std::chrono::milliseconds(1500));
 
 					Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 200 : size.x / 2), 0 }, *this);
@@ -326,6 +333,8 @@ void Vaillant::die()
 
 	if (!die_executed)
 	{
+		AudioAsset(U"Vaillant Death").playOneShot();
+
 		std::thread([this]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
@@ -342,6 +351,8 @@ void Vaillant::onDamaged(float amount)
 	if (!damaged)
 	{
 		CharacterBase::onDamaged(amount);
+
+		AudioAsset(U"Vaillant Damage").playOneShot();
 
 		std::thread([this]()
 		{

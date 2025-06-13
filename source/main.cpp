@@ -64,6 +64,10 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"Vaillant Walk",   { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
 		TextureAsset::Register({ U"Vaillant Attack", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/attack.png");
 		TextureAsset::Register({ U"Vaillant Death",  { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/death.png");
+
+		AudioAsset::Register(U"Vaillant Attack", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");
+		AudioAsset::Register(U"Vaillant Death",  Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
+		AudioAsset::Register(U"Vaillant Damage", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");
 	}
 
 	{ // エフェクト
