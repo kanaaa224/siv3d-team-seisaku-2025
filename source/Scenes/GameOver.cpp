@@ -6,9 +6,9 @@ GameOver::GameOver(const InitData& init) : IScene{ init }
 {
 	p_dieanime = LoadDivGraph(U"Player Die", Size(288, 45));
 
-	AudioAsset(U"End_BGM").setVolume(0.7);
 	AudioAsset(U"Battle_BGM").stop();
-	AudioAsset(U"End_BGM").play();
+	AudioAsset(U"GameOver_BGM").setVolume(0.7);
+	AudioAsset(U"GameOver_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
 	dieAnimationFrame = 0;
 	dieAnimationTime = 0.0;
@@ -67,31 +67,16 @@ void GameOver::update()
 	if ((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0))
 	{
 		AudioAsset(U"kettei_SE").play();
-		AudioAsset(U"End_BGM").stop();
+		AudioAsset(U"GameOver_BGM").stop();
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
 	else if ((m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1)))
 	{
-		AudioAsset(U"End_BGM").stop();
+		AudioAsset(U"GameOver_BGM").stop();
 		AudioAsset(U"kettei_SE").play();
 		changeScene(SceneState::Title, 0.5s);
 	}
-
-
-	//if (MouseL.down() || KeyEnter.down() || XInput(0).buttonA.down() || XInput(0).buttonB.down()
-	//|| KeyUp.down() || KeyDown.down() || XInput(0).buttonUp.down() || XInput(0).buttonDown.down())
-	//{
-	//	m_inactiveTime = 0.0;
-	//}
-	//else
-	//{
-	//	m_inactiveTime += Scene::DeltaTime();
-	//	if (m_inactiveTime > 6.0)
-	//	{
-	//		changeScene(SceneState::Credit, 1.0s);
-	//	}
-	//}
 }
 
 void GameOver::draw() const
@@ -102,7 +87,6 @@ void GameOver::draw() const
 
 	// end描画
 	FontAsset(U"TitleFont")(U"Game Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 180 });
-	//FontAsset(U"TitleFont")(U"Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 230 });
 
 	// ボタン描画
 	{
