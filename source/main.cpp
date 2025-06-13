@@ -41,6 +41,7 @@ void AssetsRegistration()
 
 	// Stage
 	TextureAsset::Register({ U"Stage 1 Background", { U"Stage" } }, U"../assets/images/stage/stage1/forest.png");
+	TextureAsset::Register({ U"Stage Background", { U"Stage" } }, U"../assets/images/stage/stage1/Background.png");
 
 	// Enemy
 	TextureAsset::Register({ U"Scarerun Idle Old", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");//旧画像
@@ -108,6 +109,7 @@ void AssetsRegistration()
 	AudioAsset::Register(U"Battle_BGM", Audio::Stream, U"../assets/sounds/BGM/battle_BGM.wav");//戦闘
 	AudioAsset::Register(U"Boss_Battle_BGM", Audio::Stream, U"../assets/sounds/BGM/boss_battle_BGM.wav");//ボス戦闘
 	AudioAsset::Register(U"GameOver_BGM", Audio::Stream, U"../assets/sounds/BGM/GameOver_BGM2.wav");//ゲームオーバー
+	AudioAsset::Register(U"Credit_BGM", Audio::Stream, U"../assets/sounds/BGM/GameOver_BGM3.wav");
 
 	//playerSE
 	AudioAsset::Register(U"player_attack1_SE", Audio::Stream, U"../assets/sounds/PlayerSE/attack.wav");

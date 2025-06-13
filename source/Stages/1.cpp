@@ -126,24 +126,6 @@ void Stage1::update()
 						aaaaa = true;
 					}
 				}
-				else if(player->getplayerstate() == ePlayerState::die)
-				{
-					static bool aaaaa = false;
-
-					if (!aaaaa)
-					{
-						std::thread([this]()
-						{
-							std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-
-							state = 2;
-
-							aaaaa = false;
-						}).detach();
-
-						aaaaa = true;
-					}
-				}
 			}
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
@@ -171,6 +153,25 @@ void Stage1::update()
 					wall->getBody().setPos(Vec2(camera.getCenter().x - Scene::Width() / 2, 500.0));
 					BossEreaflg = true;
 				}
+			}
+		}
+
+		if (player->getplayerstate() == ePlayerState::die)
+		{
+			static bool aaaaa = false;
+
+			if (!aaaaa)
+			{
+				std::thread([this]()
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+					state = 2;
+
+					aaaaa = false;
+				}).detach();
+
+				aaaaa = true;
 			}
 		}
 
