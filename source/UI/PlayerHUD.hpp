@@ -53,7 +53,7 @@ private:
 	int buff_amount;
 
 	float player_hp;
-	float player_state;
+	int player_state;
 	Vec2 player_vel;
 	float player_avoid;
 
