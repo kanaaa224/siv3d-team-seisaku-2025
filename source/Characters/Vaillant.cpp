@@ -224,7 +224,13 @@ void Vaillant::onHit(ObjectBase& object)
 {
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{
-		player->applyDamage(10);
+		if (player->getplayerstate() != ePlayerState::attack &&
+			player->getplayerstate() != ePlayerState::avoidance &&
+			player->getplayerstate() != ePlayerState::jump_attack &&
+			player->getplayerstate() != ePlayerState::jump_avoidance)
+		{
+			player->applyDamage(10);
+		}
 	}
 }
 
