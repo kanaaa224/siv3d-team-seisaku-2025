@@ -1,5 +1,6 @@
 ﻿# include "Title.hpp"
 #include "../UI/PlayerHUD.hpp"
+# include "../Utils/CustomImageLoader.hpp"
 
 Title::Title(const InitData& init) : IScene{ init }
 {
@@ -14,6 +15,10 @@ Title::Title(const InitData& init) : IScene{ init }
 	AudioAsset(U"Title_BGM").play();
 
 	AudioAsset(U"kettei_SE").setVolume(1.0);
+
+	m_runAnimation = LoadDivGraph(U"Scarerun Idle", Size(150, 45));
+	m_runAnimationFrame = 0;
+	m_runAnimationTime = 0.0;
 }
 
 Title::~Title()
@@ -78,6 +83,14 @@ void Title::update()
 		changeScene(SceneState::Credit, 0.5s);
 		//System::Exit();
 	}
+
+	//アニメーション更新
+	m_runAnimationTime += Scene::DeltaTime();
+	if (m_runAnimationTime >= 0.1)
+	{
+		m_runAnimationFrame = (m_runAnimationFrame + 1) % m_runAnimation.size();
+		m_runAnimationTime = 0.0;
+	}
 }
 
 void Title::draw() const
@@ -113,5 +126,11 @@ void Title::draw() const
 		const Font& boldFont = FontAsset(U"Bold");
 		boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
 		boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+	}
+
+	//左下にプレイヤー表示
+	if (!m_runAnimation.isEmpty())
+	{
+		m_runAnimation[m_runAnimationFrame].scaled(2.0).draw(520, Scene::Height() - 120);
 	}
 }
