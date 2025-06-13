@@ -205,7 +205,7 @@ void Vaillant::draw() const
 			margin.x += (marginR + cutoutSize.x) * currentFrame;
 		}
 
-		RectF(position + Vec2{ (mirrored ? -size.x / 2 - 200 : size.x / 2), 0 }, SizeF{ 200, 100 }).draw({ 1.0, 0.0, 0.0, 0.1 });
+		RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw({ 1.0, 0.0, 0.0, 0.1 });
 
 		break;
 	}
@@ -294,7 +294,7 @@ void Vaillant::onHit(ObjectBase& object)
 			player->getplayerstate() != ePlayerState::jump_attack &&
 			player->getplayerstate() != ePlayerState::jump_avoidance)
 		{
-			player->applyDamage(10);
+			player->applyDamage(20);
 		}
 	}
 }

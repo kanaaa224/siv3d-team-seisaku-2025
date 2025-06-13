@@ -32,7 +32,7 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(this->owner))
 	{
-		size = { 200, 100 };
+		size = { 400, 100 };
 
 		body = world.createRectSensor(
 			P2Kinematic,
@@ -76,7 +76,7 @@ void HitBox::onHit(ObjectBase& object)
 
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(&object))
 	{
-		vaillant->applyDamage(10);
+		vaillant->applyDamage(5);
 
 		destroy();
 	}

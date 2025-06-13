@@ -33,6 +33,7 @@ public:
 	void onDamaged(float amount) override;
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
+	void setAttackStarted(bool b = false) { attack_started = b; }
 
 	VaillantState getState() { return state; }
 
