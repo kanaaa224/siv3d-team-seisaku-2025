@@ -197,24 +197,22 @@ void Vaillant::draw() const
 	{
 		margin = { 86, 81 };
 
-		const int marginR = 195;
+		int marginR = 195;
+
 		frameDuration = 0.15;
-		frameCount = 16;
+		frameCount    = 16;
 
 		double elapsed = frameTime - attack_frame;
 
 		int frameIndex = static_cast<int>(elapsed / frameDuration);
-		if (frameIndex >= frameCount) {
-			frameIndex = frameCount - 1;
-		}
+
+		if (frameIndex >= frameCount) frameIndex = frameCount - 1;
 
 		currentFrame = frameIndex;
 
-		if (currentFrame > 0) {
-			margin.x += (marginR + cutoutSize.x) * currentFrame;
-		}
+		if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
-		RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw({ 1.0, 0.0, 0.0, 0.1 });
+		RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
 
 		break;
 	}
