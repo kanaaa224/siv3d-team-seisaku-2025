@@ -7,7 +7,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	CharacterBase(world, position),
 	start_position(position),
 	frameTime(0.0),
-	attack_frame(0.0f),
+	attack_frame(0.0),
 	state(VaillantState::Idle),
 	jumped(false),
 	roaming_flipped(false),
@@ -301,7 +301,7 @@ void Vaillant::onHit(ObjectBase& object)
 			player->getplayerstate() != ePlayerState::jump_attack &&
 			player->getplayerstate() != ePlayerState::jump_avoidance)
 		{
-			player->applyDamage(20);
+			if (state <= VaillantState::Attack) player->applyDamage(jumped ? 5 : 20);
 		}
 	}
 }
