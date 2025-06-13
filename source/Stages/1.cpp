@@ -88,7 +88,9 @@ void Stage1::update()
 			camera.setTargetCenter(Vec2{ x, y });
 		}
 
-		for (const auto& object : objects)
+		auto _objects_ = objects;
+
+		for (const auto& object : _objects_)
 		{
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
 			{
@@ -198,6 +200,8 @@ void Stage1::update()
 	}
 	else
 	{
+#ifdef _DEBUG
+
 		if (!respawnTimer.isRunning()) respawnTimer.restart();
 
 		if (respawnTimer.sF() >= 1.0)
@@ -206,6 +210,7 @@ void Stage1::update()
 
 			respawnTimer.reset();
 		}
+#endif
 	}
 
 	camera.update();
