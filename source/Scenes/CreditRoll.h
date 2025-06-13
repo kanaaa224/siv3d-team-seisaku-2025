@@ -22,5 +22,6 @@ private:
 	double m_runAnimationTime = 0.0;
 
 	double m_scrollX;
+ 
 };
 

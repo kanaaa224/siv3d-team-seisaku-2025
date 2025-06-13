@@ -5,7 +5,7 @@ End::End(const InitData& init) : IScene{ init }
 {
 	end_background = TextureAsset(U"End_Background1");
 
-	AudioAsset(U"End_BGM").setVolume(0.7);
+	AudioAsset(U"End_BGM").setVolume(0.3);
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
@@ -73,7 +73,7 @@ void End::update()
 	else
 	{
 		m_inactiveTime += Scene::DeltaTime();
-		if (m_inactiveTime > 6.0)
+		if (m_inactiveTime > 10.0)
 		{
 			changeScene(SceneState::Credit, 1.0s);
 		}
@@ -87,7 +87,7 @@ void End::draw() const
 	Scene::SetBackground(ColorF{ 0.5 });
 
 	// end描画
-	FontAsset(U"TitleFont")(U"GameClear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 50, Vec2{ 640, 200 });
+	FontAsset(U"TitleFont")(U"GameClear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 200 });
 
 	// ボタン描画
 	{

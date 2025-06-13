@@ -102,11 +102,11 @@ void EnemyBase::onHit(ObjectBase& object)
 			//プレイヤーのノックバック
 			if (object.getBody().getPos().x < body.getPos().x)
 			{
-				object.getBody().applyLinearImpulse(Vec2{ -10, -10 });
+				object.getBody().applyLinearImpulse(Vec2{ -1, -1 });
 			}
 			else
 			{
-				object.getBody().applyLinearImpulse(Vec2{ 10, -10 });
+				object.getBody().applyLinearImpulse(Vec2{ 1, -1 });
 			}
 		}
 	}
