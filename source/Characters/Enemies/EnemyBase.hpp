@@ -6,7 +6,7 @@
 //hpBar
 #include "../../UI/HPBar.hpp"
 
-#define MOVE_SPEED      20.0f  //移動速度
+#define MOVE_SPEED 20.0f      //移動速度
 
 #define HP_X_MAXSIZE 50       //HPバーX軸の最大サイズ
 #define HP_Y_SIZE 10          //HPバーY軸の大きさ
