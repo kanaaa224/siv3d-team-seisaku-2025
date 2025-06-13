@@ -68,6 +68,7 @@ void AssetsRegistration()
 		AudioAsset::Register(U"Vaillant Attack", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");
 		AudioAsset::Register(U"Vaillant Death",  Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
 		AudioAsset::Register(U"Vaillant Damage", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");
+		AudioAsset::Register(U"Vaillant Jump",   Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
 	}
 
 	{ // エフェクト
@@ -128,9 +129,7 @@ void AssetsRegistration()
 	//EnemySE
 	AudioAsset::Register(U"Enemy_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDies.wav");//敵が死ぬ音
 	AudioAsset::Register(U"Enemy_damage_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");//Enemyがダメージをうける音
-	//Boss
-	AudioAsset::Register(U"Boss_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");//ボスが死ぬ音
-	AudioAsset::Register(U"Boss_run_SE", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");//歩く音（仮）小さくしたら使えるかも？
+
 	//SE
 	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
 }

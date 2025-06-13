@@ -121,6 +121,8 @@ void Vaillant::update()
 
 				return;
 			}
+			
+			AudioAsset(U"Vaillant Jump").playOneShot();
 
 			body.applyLinearImpulse(Vec2{ 0, -VAILLANT_JUMP_POWER });
 
