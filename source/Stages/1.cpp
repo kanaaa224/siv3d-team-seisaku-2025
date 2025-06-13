@@ -88,7 +88,9 @@ void Stage1::update()
 			camera.setTargetCenter(Vec2{ x, y });
 		}
 
-		for (const auto& object : objects)
+		auto _objects_ = objects;
+
+		for (const auto& object : _objects_)
 		{
 			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
 			{
