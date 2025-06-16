@@ -589,6 +589,7 @@ void Player::onDamaged(float amount)
 	if (isHitStop == false)
 	{
 		addHP(-amount);
+		AudioAsset(U"player_damage_SE").play();
 		isHitStop = true;
 		animation_number = 0;
 		playerState = ePlayerState::damage;
