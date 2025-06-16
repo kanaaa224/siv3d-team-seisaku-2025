@@ -49,6 +49,7 @@ public:
 	void onDamaged(float amount) override;
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
+	void setForbidJump(bool b = false) { forbid_jump = b; }
 	void setAttackStarted(bool b = false) { hostiled = b; }
 
 	VaillantState getState() { return state; }
@@ -70,6 +71,7 @@ private:
 	bool direction;
 	bool die_executed;
 	bool destroy_executed;
+	bool forbid_jump;
 	
 	VaillantState state;
 	VaillantAttackType attack_type;

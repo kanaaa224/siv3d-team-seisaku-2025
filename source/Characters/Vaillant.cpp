@@ -24,6 +24,8 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	die_executed    (false),
 	destroy_executed(false),
 
+	forbid_jump(false),
+
 	state       (VaillantState::Idle),
 	attack_type (VaillantAttackType::Earthquake),
 	attack_state(VaillantAttackState::Preparation),
@@ -120,7 +122,7 @@ void Vaillant::update()
 
 		distance = Abs(distance);
 
-		if (!jumped && distance <= 300)
+		if (!jumped && distance <= 300 && !forbid_jump)
 		{
 			if (Random(0, 1))
 			{
@@ -199,7 +201,7 @@ void Vaillant::draw() const
 
 		currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
-		if (not InRange(body.getVelocity().y, -1.0, 1.0) || position.y < (start_position.y)) currentFrame = 12;
+		if (not InRange(body.getVelocity().y, -1.0, 1.0) || position.y < start_position.y) currentFrame = 12;
 
 		if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
