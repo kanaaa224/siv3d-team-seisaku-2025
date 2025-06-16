@@ -6,8 +6,8 @@
 #define IMG_SIZE_Y 23
 
 //バフの上昇値
-#define ATTACKPOWER_BUFF_PARAMETER 100//攻撃力
-#define MOVESPEED_BUFF_PARAMETER   100//移動速度
+#define ATTACKPOWER_BUFF_PARAMETER 2//攻撃力
+#define MOVESPEED_BUFF_PARAMETER   5//移動速度
 
 class BuffBase : public ObjectBase
 {

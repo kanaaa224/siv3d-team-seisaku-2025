@@ -7,6 +7,8 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 {
 	SizeF size;
 
+	HitBox::owner = &owner;
+
 	if (Player* player = dynamic_cast<Player*>(this->owner))
 	{
 		if (player->getplayerstate() == ePlayerState::avoidance ||
@@ -69,8 +71,7 @@ void HitBox::onHit(ObjectBase& object)
 
 	if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(&object))
 	{
-		if (Player* player = dynamic_cast<Player*>(&object))
-		{
+		if (Player *player = dynamic_cast<Player*>(owner)) {
 			enemy->applyDamage(player->GetPlayerAttackDamage());
 
 			destroy();
@@ -79,8 +80,7 @@ void HitBox::onHit(ObjectBase& object)
 
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(&object))
 	{
-		if (Player* player = dynamic_cast<Player*>(&object))
-		{
+		if (Player* player = dynamic_cast<Player*>(owner)) {
 			vaillant->applyDamage(player->GetPlayerAttackDamage());
 
 			destroy();
