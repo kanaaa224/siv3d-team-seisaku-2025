@@ -93,6 +93,8 @@ protected:
 
 	Vec2 pos;
 
+	bool doOnceDieSE;
+
 public:
 	EnemyBase(P2World& world, const Vec2& position);
 	~EnemyBase();

@@ -49,6 +49,12 @@ void EnemyBase::update()
 		pos = body.getPos();
 	}
 
+	//死亡時にSEを再生
+	if (nowState == DIE && !doOnceDieSE) {
+		AudioAsset(U"Enemy_dies_SE").playOneShot();
+		doOnceDieSE = true;
+	}
+
 	//Buffの生成
 	if (nowState == DIE && nowImageNum == die_img.size()) {
 		spawnBuff();
@@ -288,6 +294,7 @@ void EnemyBase::getDamage(float damage)
 	//設定した時間経過後またダメージを受ける
 	if (damageStopFlg == false) {
 		hp -= damage;
+		AudioAsset(U"Enemy_damage_SE").playOneShot();
 		getDamageFlg = true;
 		damageStopFlg = true;
 
