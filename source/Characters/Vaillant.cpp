@@ -63,7 +63,7 @@ void Vaillant::attack()
 			spriteAnimator.setAnimationName(AnimationName::Spark2);
 			spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
 			spriteAnimator.setSize({ 400, 150 });
-			spriteAnimator.setPosition(position + Vec2{ (mirrored ? -(size.x / 2) - 200 : (size.x / 2) + 200), size.y / 4});
+			spriteAnimator.setPosition(position + Vec2{ (mirrored ? -(size.x / 2) - 200 : (size.x / 2) + 200), size.y / 4 });
 			spriteAnimator.stop();
 			spriteAnimator.show();
 			spriteAnimator.play();
@@ -126,14 +126,15 @@ void Vaillant::update()
 		{
 			if (Random(0, 1))
 			{
-				state       = VaillantState::Attack;
-				attack_type = VaillantAttackType::Earthquake;
+				state = VaillantState::Attack;
+
+				attack_type = static_cast<VaillantAttackType>(Random(0, 0));
 
 				mirrored = player_position.x <= position.x ? true : false;
 
 				return;
 			}
-			
+
 			AudioAsset(U"Vaillant Jump").playOneShot();
 
 			body.applyLinearImpulse(Vec2{ 0, -VAILLANT_JUMP_POWER });
@@ -155,7 +156,7 @@ void Vaillant::update()
 	if (!hostiled)
 	{
 		distance = position.x - start_position.x;
-		
+
 		direction = (distance > 100) ? true : (distance < -100) ? false : direction;
 
 		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
@@ -166,7 +167,7 @@ void Vaillant::update()
 	if (not InRange(body.getVelocity().x, -1.0, 1.0))
 	{
 		state = VaillantState::Move;
-		
+
 		mirrored = body.getVelocity().x > 0.0;
 	}
 
@@ -177,14 +178,14 @@ void Vaillant::draw() const
 {
 	Vec2 margin;
 
-	SizeF cutoutSize { 255, 233 };
+	SizeF cutoutSize{ 255, 233 };
 
 	double frameDuration = 0.0;
 	int    frameCount    = 0;
 
-	ColorF mask { 1.0, 1.0, 1.0, 1.0 };
-	
-	Vec2 shiftAmount { 0, -16 };
+	ColorF mask{ 1.0, 1.0, 1.0, 1.0 };
+
+	Vec2 shiftAmount{ 0, -16 };
 
 	switch (state)
 	{
@@ -209,7 +210,7 @@ void Vaillant::draw() const
 
 	case VaillantState::Attack:
 	{
-		switch(attack_type)
+		switch (attack_type)
 		{
 		case VaillantAttackType::Earthquake:
 		{
@@ -231,8 +232,11 @@ void Vaillant::draw() const
 			if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
 			RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
+
+			break;
 		}
 		}
+
 		break;
 	}
 
@@ -245,11 +249,11 @@ void Vaillant::draw() const
 
 		frameDuration = 0.15;
 		frameCount    = 16;
-		
+
 		if (!draw_initialized)
 		{
 			currentFrame = 0;
-			
+
 			draw_initialized = true;
 		}
 
@@ -272,6 +276,8 @@ void Vaillant::draw() const
 		double alpha = Max(0.0, 1.0 - (frameTime / fadeDuration));
 
 		mask = ColorF{ 1.0, 1.0, 1.0, alpha };
+
+		break;
 	}
 	}
 
@@ -288,12 +294,13 @@ void Vaillant::draw() const
 		break;
 
 	case VaillantState::Attack:
-		switch(attack_type)
+		switch (attack_type)
 		{
 		case VaillantAttackType::Earthquake:
 			assetName = U"Vaillant Attack";
 			break;
 		}
+
 		break;
 
 	case VaillantState::Death:
@@ -302,7 +309,7 @@ void Vaillant::draw() const
 		break;
 	}
 
-	TextureAsset(assetName)(margin, cutoutSize).mirrored(mirrored).drawAt(position + shiftAmount, mask);
+	if (assetName) TextureAsset(assetName)(margin, cutoutSize).mirrored(mirrored).drawAt(position + shiftAmount, mask);
 
 	spriteAnimator.draw();
 

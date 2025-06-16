@@ -20,9 +20,9 @@ enum class VaillantState
 enum class VaillantAttackType
 {
 	Earthquake, // 地団駄
-	Teleport,   // 瞬間移動
 	Tentacles,  // 触手
-	Rush        // 突進
+	Rush,       // 突進
+	Teleport    // 瞬間移動
 };
 
 enum class VaillantAttackState
