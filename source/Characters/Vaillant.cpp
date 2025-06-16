@@ -93,12 +93,13 @@ void Vaillant::update()
 	}
 
 #ifdef _DEBUG
-	if (KeyJ.pressed()) body.applyLinearImpulse({ -10,     0 });
-	if (KeyI.down())    body.applyLinearImpulse({   0, -2500 });
-	if (KeyL.pressed()) body.applyLinearImpulse({  10,     0 });
-
-	if (KeyH.down()) heal(10);
-	if (KeyP.down()) applyDamage(10);
+	if (KeyV.pressed())
+	{
+		if (Key1.down()) heal(10.0f);
+		if (Key2.down()) applyDamage(10.0f);
+		if (Key3.down()) applyDamage(100.0f);
+		if (Key4.down()) hp = 10.0f;
+	}
 #endif
 
 	spriteAnimator.update();
@@ -366,6 +367,8 @@ void Vaillant::die()
 	if (!die_executed)
 	{
 		AudioAsset(U"Vaillant Death").playOneShot();
+
+		body.setVelocity({ 0, 0 });
 
 		SetTimeout([this] { CharacterBase::die(); }, 2000ms);
 
