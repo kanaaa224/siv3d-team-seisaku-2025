@@ -4,6 +4,7 @@
 # include "../Objects/HitBox.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Objects/Ground.hpp"
+# include "../Objects/Wall.hpp"
 
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度
@@ -107,6 +108,7 @@ void Player::initialize()
 
 	movement_speed = 0.0;
 	attack_power = 30.f;
+	wall_hit = true;
 }
 
 void Player::update()
@@ -140,7 +142,7 @@ void Player::update()
 		avoidanceCooldown -= Scene::DeltaTime();
 	}
 
-	spriteAnimator.update();
+	//spriteAnimator.update();
 
 	switch (playerState)
 	{
@@ -175,15 +177,16 @@ void Player::update()
 
 		
 
-		spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
-		spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
-		spriteAnimator.setSize({ 200, 150 });
-		spriteAnimator.setPosition({ pos.x, (pos.y + (effect_size.y / 2)) });
-		spriteAnimator.setLooping(true);
-		spriteAnimator.setAnimationSpeed(0.1);
-		spriteAnimator.stop();
-		spriteAnimator.show();
-		spriteAnimator.play();
+		//spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
+		//spriteAnimator.setMask({ 1.0, 1.0, 1.0, 1.0 });
+		//spriteAnimator.setSize({ 120, 120 });
+		//spriteAnimator.setPosition({ Scene::Width() / 2, Scene::Height() / 2 });
+		//spriteAnimator.setLooping(true);
+		//spriteAnimator.setAnimationSpeed(0.1);
+		////spriteAnimator.stop();
+		//spriteAnimator.show();
+		//spriteAnimator.play();
+
 
 		//idle状態からボタンを押したごとの処理
 		if (//move
@@ -558,15 +561,16 @@ void Player::draw() const
 	}
 
 	//spriteAnimator.draw();
-
+	
 #ifdef _DEBUG
 
 	Print << U"Player HP : " << hp;
 	Print << U"Player 座標 : " << body.getPos();
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
+	Print << U"Player 壁 : " << wall_hit;
 	//Print << U"hitStopTimer : " << hitStopTimer;
-	Print << U"isHitStop : " << isHitStop;
+	//Print << U"isHitStop : " << isHitStop;
 	//Print << U"CoolDown : " << avoidanceCooldown;
 
 #endif // DEBUG
@@ -581,6 +585,15 @@ void Player::onHit(ObjectBase& object)
 	else
 	{
 		is_on_ground = false;
+	}
+
+	if (Wall* wall = dynamic_cast<Wall*>(&object))
+	{
+		wall_hit = true;
+	}
+	else
+	{
+		wall_hit = false;
 	}
 }
 
@@ -692,8 +705,10 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		KeyLeft.pressed() == true
 		)
 	{
-
-		body.setVelocity(Vec2(-VELOCITY + movement_speed, body.getVelocity().y));
+		if (wall_hit == false)
+		{
+			body.setVelocity(Vec2(-VELOCITY - movement_speed, body.getVelocity().y));
+		}
 
 		flip_flg = true;
 
@@ -702,6 +717,11 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else if(controller.buttonRight.pressed() == true || KeyD.pressed() == true || KeyRight.pressed() == true)
 	{
+
+		if (wall_hit == false)
+		{
+			body.setVelocity(Vec2(VELOCITY + movement_speed, body.getVelocity().y));
+		}
 
 		body.setVelocity(Vec2(VELOCITY + movement_speed, body.getVelocity().y));
 

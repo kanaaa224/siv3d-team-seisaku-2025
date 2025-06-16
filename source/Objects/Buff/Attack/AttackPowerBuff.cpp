@@ -1,4 +1,6 @@
 ﻿#include "AttackPowerBuff.h"
+//Player
+#include "../../../Characters/Player.hpp"
 
 
 AttackPowerBuff::AttackPowerBuff(P2World& world, const Vec2& position)
@@ -22,5 +24,12 @@ void AttackPowerBuff::draw() const
 
 void AttackPowerBuff::onHit(ObjectBase& object)
 {
+	if (Player* player = dynamic_cast<Player*>(&object)) {
+		if (!doOncePara) {
+			player->SetPlayerDamageUp(ATTACKPOWER_BUFF_PARAMETER);
+			doOncePara = true;
+		}
+	}
+
 	BuffBase::onHit(object);//親クラスのメゾットを呼び出す
 }
