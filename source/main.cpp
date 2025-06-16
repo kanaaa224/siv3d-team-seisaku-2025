@@ -133,6 +133,7 @@ void AssetsRegistration()
 	//EnemySE
 	AudioAsset::Register(U"Enemy_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDies.wav");//敵が死ぬ音
 	AudioAsset::Register(U"Enemy_damage_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");//Enemyがダメージをうける音
+	AudioAsset::Register(U"Enemy_attack_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyAttack.wav");//空飛ぶ敵の攻撃音
 
 	//SE
 	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
