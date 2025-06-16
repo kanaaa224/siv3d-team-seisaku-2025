@@ -23,9 +23,11 @@ void BuffBase::update()
 
 void BuffBase::draw() const
 {
+	TextureAsset(assetName).resized(Vec2{ IMG_SIZE_X * 1.5,IMG_SIZE_Y * 1.5 }).drawAt(body.getPos());
+
 #ifdef _DEBUG
 	//仮表示
-	RectF{ Arg::center(body.getPos().x,body.getPos().y),size.x,size.y}.draw();
+	//RectF{ Arg::center(body.getPos().x,body.getPos().y),size.x,size.y}.draw();
 #endif // DEBUG
 }
 
