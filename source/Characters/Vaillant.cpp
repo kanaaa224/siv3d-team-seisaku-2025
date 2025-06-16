@@ -21,7 +21,9 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	destroy_executed(false),
 	damaged(false),
 	attacking(false),
-	attack(false)
+	attack(false),
+	currentFrame(0),
+	draw_initialized(false)
 {
 	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
 
@@ -154,8 +156,6 @@ void Vaillant::draw() const
 	double frameDuration = 0.0;
 	int    frameCount    = 0;
 
-	static int currentFrame = 0;
-
 	ColorF mask { 1.0, 1.0, 1.0, 1.0 };
 	
 	Vec2 shiftAmount { 0, -16 };
@@ -215,13 +215,11 @@ void Vaillant::draw() const
 		frameDuration = 0.15;
 		frameCount    = 16;
 		
-		static bool initialized = false;
-		
-		if (!initialized)
+		if (!draw_initialized)
 		{
 			currentFrame = 0;
 			
-			initialized = true;
+			draw_initialized = true;
 		}
 
 		if (currentFrame < (frameCount - 1)) currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
