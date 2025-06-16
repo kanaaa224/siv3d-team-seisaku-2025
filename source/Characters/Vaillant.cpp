@@ -1,7 +1,7 @@
 ﻿# include "Vaillant.hpp"
 # include "Player.hpp"
 # include "../Stage.hpp"
-# include "../TimerUtils.hpp"
+# include "../Utils/Timer.hpp"
 # include "../Objects/HitBox.hpp"
 
 using namespace TimerUtils;

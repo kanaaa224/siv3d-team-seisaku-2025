@@ -376,11 +376,11 @@
     <ClInclude Include="source\Stage.hpp" />
     <ClInclude Include="source\Stages\1.hpp" />
     <ClInclude Include="source\Stages\DebugBoss.hpp" />
-    <ClInclude Include="source\TimerUtils.hpp" />
     <ClInclude Include="source\UI\EnemyBoss.hpp" />
     <ClInclude Include="source\UI\HPBar.hpp" />
     <ClInclude Include="source\UI\PlayerHUD.hpp" />
     <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
+    <ClInclude Include="source\Utils\Timer.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
