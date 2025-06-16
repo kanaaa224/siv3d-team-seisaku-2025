@@ -20,7 +20,8 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	die_executed(false),
 	destroy_executed(false),
 	damaged(false),
-	attacking(false)
+	attacking(false),
+	attack(false)
 {
 	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
 
@@ -76,11 +77,13 @@ void Vaillant::update()
 				attack_frame = frameTime;
 
 				setTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 1000ms);
-				setTimeout([this] { Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 200 : size.x / 2), 0 }, *this); }, 1500ms);
-				setTimeout([this] { state = VaillantState::Idle; attacking = false; }, 2000ms);
+				setTimeout([this] { attack = true; }, 1500ms);
+				setTimeout([this] { state = VaillantState::Idle; attacking = false; attack = false; }, 2000ms);
 
 				attacking = true;
 			}
+
+			if (attack) Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, *this);
 
 			return;
 		}

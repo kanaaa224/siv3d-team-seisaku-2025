@@ -58,6 +58,7 @@ private:
 	bool destroy_executed;
 	bool damaged;
 	bool attacking;
+	bool attack;
 
 	SpriteAnimator spriteAnimator;
 
