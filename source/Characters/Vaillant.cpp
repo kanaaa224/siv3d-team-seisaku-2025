@@ -79,7 +79,19 @@ void Vaillant::update()
 				attack_frame = frameTime;
 
 				setTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 1000ms);
-				setTimeout([this] { attack = true; }, 1500ms);
+
+				setTimeout([this] {
+					attack = true;
+
+					spriteAnimator.setAnimationName(AnimationName::Spark2);
+					spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
+					spriteAnimator.setSize({ 400, 150 });
+					spriteAnimator.setPosition(position + Vec2{ (mirrored ? -(size.x / 2) - 200 : (size.x / 2) + 200), size.y / 4});
+					spriteAnimator.stop();
+					spriteAnimator.show();
+					spriteAnimator.play();
+				}, 1500ms);
+
 				setTimeout([this] { state = VaillantState::Idle; attacking = false; attack = false; }, 2000ms);
 
 				attacking = true;
@@ -119,7 +131,7 @@ void Vaillant::update()
 			spriteAnimator.setAnimationName(AnimationName::Smoke1);
 			spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
 			spriteAnimator.setSize({ 200, 150 });
-			spriteAnimator.setPosition({ position.x, (position.y + (size.y / 2)) });
+			spriteAnimator.setPosition({ position.x, (position.y + (size.y / 4)) });
 			spriteAnimator.stop();
 			spriteAnimator.show();
 			spriteAnimator.play();
