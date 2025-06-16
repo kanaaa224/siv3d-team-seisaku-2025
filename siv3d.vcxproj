@@ -125,7 +125,7 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Objects\Ammo.cpp" />
     <ClCompile Include="source\Objects\Base.cpp" />
-    <ClCompile Include="source\Objects\Buff\Attack\AttackBuff.cpp" />
+    <ClCompile Include="source\Objects\Buff\Attack\AttackPowerBuff.cpp" />
     <ClCompile Include="source\Objects\Buff\BuffBase.cpp" />
     <ClCompile Include="source\Objects\Ground.cpp" />
     <ClCompile Include="source\Objects\HitBox.cpp" />
@@ -362,7 +362,7 @@
     <ClInclude Include="source\Effects\SpriteAnimator.hpp" />
     <ClInclude Include="source\Objects\Ammo.hpp" />
     <ClInclude Include="source\Objects\Base.hpp" />
-    <ClInclude Include="source\Objects\Buff\Attack\AttackBuff.h" />
+    <ClInclude Include="source\Objects\Buff\Attack\AttackPowerBuff.h" />
     <ClInclude Include="source\Objects\Buff\BuffBase.hpp" />
     <ClInclude Include="source\Objects\Ground.hpp" />
     <ClInclude Include="source\Objects\HitBox.hpp" />

@@ -1,7 +1,7 @@
-﻿#include "AttackBuff.h"
+﻿#include "AttackPowerBuff.h"
 
 
-AttackBuff::AttackBuff(P2World& world, const Vec2& position)
+AttackPowerBuff::AttackPowerBuff(P2World& world, const Vec2& position)
 	: BuffBase(world, position)
 {
 	//物理エンジンでの物体設定（動くか、位置、大きさ）
@@ -9,16 +9,16 @@ AttackBuff::AttackBuff(P2World& world, const Vec2& position)
 	body.setFixedRotation(true);//当たり判定の回転を無くす
 }
 
-void AttackBuff::update()
+void AttackPowerBuff::update()
 {
 }
 
-void AttackBuff::draw() const
+void AttackPowerBuff::draw() const
 {
 	BuffBase::draw();
 }
 
-void AttackBuff::onHit(ObjectBase& object)
+void AttackPowerBuff::onHit(ObjectBase& object)
 {
 	BuffBase::onHit(object);//親クラスのメゾットを呼び出す
 }
