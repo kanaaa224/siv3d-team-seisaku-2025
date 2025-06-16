@@ -105,6 +105,8 @@ void Player::initialize()
 	hitStopTimer = ITIME;  //ヒットストップタイマー
 	isHitStop = false;   //ヒットストップしたかどうか
 
+	movement_speed = 0.0;
+	attack_power = 0.f;
 }
 
 void Player::update()
@@ -690,7 +692,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		)
 	{
 
-		body.setVelocity(Vec2(-VELOCITY, body.getVelocity().y));
+		body.setVelocity(Vec2(-VELOCITY + movement_speed, body.getVelocity().y));
 
 		flip_flg = true;
 
@@ -700,7 +702,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	else if(controller.buttonRight.pressed() == true || KeyD.pressed() == true || KeyRight.pressed() == true)
 	{
 
-		body.setVelocity(Vec2(VELOCITY, body.getVelocity().y));
+		body.setVelocity(Vec2(VELOCITY + movement_speed, body.getVelocity().y));
 
 		flip_flg = false;
 
@@ -709,7 +711,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	else if (std::abs(lx) > 0.2)  // デッドゾーン 0.2
 	{
 		// 移動速度をスティック傾きに応じて調整
-		body.setVelocity(Vec2(lx * VELOCITY, body.getVelocity().y));
+		body.setVelocity(Vec2(lx * VELOCITY + movement_speed, body.getVelocity().y));
 
 		// 左右の向き判定
 		flip_flg = (lx < 0);
@@ -728,7 +730,7 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 	if (controller.buttonA.pressed() == true && is_on_ground == true || KeySpace.pressed() == true && is_on_ground == true)
 	{
 		is_on_ground = false;
-		body.setVelocity(Vec2(body.getVelocity().x, -JUMPSPEED));
+		body.setVelocity(Vec2(body.getVelocity().x /*+ movement_speed*/, -JUMPSPEED));
 		AudioAsset(U"player_jump_SE").play();//ジャンプSE
 	}
 }
