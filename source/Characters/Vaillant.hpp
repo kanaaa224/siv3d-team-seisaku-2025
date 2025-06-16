@@ -62,5 +62,8 @@ private:
 
 	SpriteAnimator spriteAnimator;
 
+	mutable int currentFrame;
+	mutable bool draw_initialized;
+
 	void initialize();
 };
