@@ -219,6 +219,9 @@
     <ClCompile Include="source\Stage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Objects\Buff\MoveSpeed\MoveSpeedBuff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -966,6 +969,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Stage.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Objects\Buff\MoveSpeed\MoveSpeedBuff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
