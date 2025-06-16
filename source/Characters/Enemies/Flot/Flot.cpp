@@ -161,6 +161,7 @@ void Flot::fireAmmo()
 
 	if (fireFlg == true) {
 		spawnAmmo(AMMO_SPEED, true);
+		AudioAsset(U"Enemy_attack_SE").playOneShot();
 	}
 }
 
