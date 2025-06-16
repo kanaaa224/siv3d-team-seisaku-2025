@@ -11,7 +11,7 @@
 enum class VaillantState
 {
 	Idle,   // 待機中
-	Walk,   // 移動中
+	Move,   // 移動中
 	Attack, // 攻撃
 	Death,  // 死亡
 	Destroy // 破壊
@@ -49,10 +49,12 @@ public:
 	void onDamaged(float amount) override;
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
-	void setForbidJump(bool b = false) { forbid_jump = b; }
-	void setAttackStarted(bool b = false) { hostiled = b; }
+	void setForbidJump    (bool b = false)      { forbid_jump = b; }
+	void setAttackStarted (bool b = false)      { hostiled = b; }
 
-	VaillantState getState() { return state; }
+	VaillantState       getState()       const { return state; }
+	VaillantAttackType  getAttackType()  const { return attack_type; }
+	VaillantAttackState getAttackState() const { return attack_state; }
 
 private:
 	Vec2 position;

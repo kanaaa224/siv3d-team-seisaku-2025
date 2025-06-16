@@ -55,7 +55,7 @@ void Vaillant::attack()
 	{
 		attack_frame = frameTime;
 
-		SetTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 980ms);
+		SetTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 990ms);
 
 		SetTimeout([this] {
 			attack_state = VaillantAttackState::Attacking;
@@ -116,8 +116,7 @@ void Vaillant::update()
 
 		distance = position.x - player_position.x;
 
-		if (distance >  10) direction = true;
-		if (distance < -10) direction = false;
+		direction = (distance > 10) ? true : (distance < -10) ? false : direction;
 
 		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 
@@ -157,8 +156,7 @@ void Vaillant::update()
 	{
 		distance = position.x - start_position.x;
 		
-		if (distance >  100) direction = true;
-		if (distance < -100) direction = false;
+		direction = (distance > 100) ? true : (distance < -100) ? false : direction;
 
 		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 	}
@@ -167,7 +165,7 @@ void Vaillant::update()
 
 	if (not InRange(body.getVelocity().x, -1.0, 1.0))
 	{
-		state = VaillantState::Walk;
+		state = VaillantState::Move;
 		
 		mirrored = body.getVelocity().x > 0.0;
 	}
@@ -191,7 +189,7 @@ void Vaillant::draw() const
 	switch (state)
 	{
 	case VaillantState::Idle:
-	case VaillantState::Walk:
+	case VaillantState::Move:
 	{
 		margin = { 86, 81 };
 
@@ -285,7 +283,7 @@ void Vaillant::draw() const
 		assetName = U"Vaillant Idle";
 		break;
 
-	case VaillantState::Walk:
+	case VaillantState::Move:
 		assetName = U"Vaillant Walk";
 		break;
 

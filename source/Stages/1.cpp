@@ -225,8 +225,30 @@ void Stage1::draw() const
 	Print << U"オブジェクト数: " << objects.size();
 #endif
 
+	bool shouldShake = false;
+
+	Vec2 shakeOffset = Vec2{ 0, 0 };
+
+	for (const auto& object : objects)
+	{
+		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
+		{
+			if (vaillant->getState() == VaillantState::Attack &&
+				vaillant->getAttackType() == VaillantAttackType::Earthquake &&
+				vaillant->getAttackState() == VaillantAttackState::Attacking)
+			{
+				shouldShake = true;
+				break;
+			}
+		}
+	}
+
+	if (shouldShake) shakeOffset = RandomVec2(Circle{ 5.0 });
+
 	{
 		const auto t = camera.createTransformer();
+
+		const Transformer2D shakeTransform(Mat3x2::Translate(shakeOffset), TransformCursor::Yes);
 
 		Stage::draw();
 	}
