@@ -1,4 +1,6 @@
 ﻿#include "MoveSpeedBuff.h"
+//Player
+#include "../../../Characters/Player.hpp"
 
 MoveSpeedBuff::MoveSpeedBuff(P2World& world, const Vec2& position)
 	: BuffBase(world, position)
@@ -21,5 +23,9 @@ void MoveSpeedBuff::draw() const
 
 void MoveSpeedBuff::onHit(ObjectBase& object)
 {
+	if (Player* player = dynamic_cast<Player*>(&object)) {
+		player->SetPlayerSpeed(MOVESPEED_BUFF_PARAMETER);
+	}
+
 	BuffBase::onHit(object);//親クラスのメゾットを呼び出す
 }
