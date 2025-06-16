@@ -327,9 +327,11 @@ void EnemyBase::spawnBuff()
 		stage->createObject<AttackPowerBuff>(pos);
 		break;
 	case flot:
-		Vec2 spos = pos + Vec2{ 0.0,-15.0 };
-		stage->createObject<MoveSpeedBuff>(spos);
-		break;
+		{
+			Vec2 spos = pos + Vec2{ 0.0,-15.0 };
+			stage->createObject<MoveSpeedBuff>(spos);
+			break;
+		}
 	default:
 		break;
 	}
