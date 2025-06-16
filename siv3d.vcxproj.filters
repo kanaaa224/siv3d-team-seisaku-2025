@@ -159,7 +159,7 @@
     <ClCompile Include="source\Effects\SpriteAnimator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Objects\Buff\Attack\AttackBuff.cpp">
+    <ClCompile Include="source\Objects\Buff\Attack\AttackPowerBuff.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Objects\Buff\BuffBase.cpp">
@@ -908,7 +908,7 @@
     <ClInclude Include="source\Effects\SpriteAnimator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Objects\Buff\Attack\AttackBuff.h">
+    <ClInclude Include="source\Objects\Buff\Attack\AttackPowerBuff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Objects\Buff\BuffBase.hpp">

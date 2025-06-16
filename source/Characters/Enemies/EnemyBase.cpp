@@ -5,7 +5,7 @@
 //Stage
 #include "../../Stages/1.hpp"
 //Buff
-#include "../../Objects/Buff/Attack/AttackBuff.h"
+#include "../../Objects/Buff/Attack/AttackPowerBuff.h"
 #include "../../Objects/Buff/MoveSpeed/MoveSpeedBuff.h"
 //Ammo
 #include "../../Objects/Ammo.hpp"
@@ -317,7 +317,7 @@ void EnemyBase::spawnBuff()
 	switch (type)
 	{
 	case scarerun:
-		stage->createObject<AttackBuff>(pos);
+		stage->createObject<AttackPowerBuff>(pos);
 		break;
 	case flot:
 		Vec2 spos = pos + Vec2{ 0.0,-15.0 };

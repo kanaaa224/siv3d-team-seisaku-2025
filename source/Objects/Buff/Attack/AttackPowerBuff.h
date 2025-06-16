@@ -2,10 +2,10 @@
 
 #include "../BuffBase.hpp"
 
-class AttackBuff : public BuffBase
+class AttackPowerBuff : public BuffBase
 {
 public:
-	AttackBuff(P2World& world, const Vec2& position);
+	AttackPowerBuff(P2World& world, const Vec2& position);
 
 	void update() override;
 	void draw() const override;
