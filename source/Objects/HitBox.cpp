@@ -23,11 +23,11 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 		P2Kinematic,
 		position,
 		RectF { size },
-		P2Filter {
-			.categoryBits = CollisionCategory::HitBox, // 自分のカテゴリ
-			.maskBits     = CollisionCategory::Enemy   // Hitさせたいカテゴリ
-		}
-	);
+				P2Filter {
+					.categoryBits = CollisionCategory::HitBox, // 自分のカテゴリ
+					.maskBits     = CollisionCategory::Enemy   // Hitさせたいカテゴリ
+				}
+		);
 	}
 
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(this->owner))
@@ -62,7 +62,7 @@ void HitBox::onHit(ObjectBase& object)
 {
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{
-		player->applyDamage(30);
+		player->applyDamage(player->GetPlayerAttackDamage());
 
 		destroy();
 	}
