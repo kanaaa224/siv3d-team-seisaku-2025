@@ -72,7 +72,9 @@ void AssetsRegistration()
 	}
 
 	{ // バフ
-		TextureAsset::Register({ U"Buff",   { U"Buff" } }, U"../assets/images/buf/PotionAsset_20_25.png");
+		TextureAsset::Register({ U"Buff",              { U"Buff" } }, U"../assets/images/buf/PotionAsset_20_25.png");
+		TextureAsset::Register({ U"AttackPowerBuff",   { U"Buff" } }, U"../assets/images/buf/AttackPower.png");
+		TextureAsset::Register({ U"MoveSpeedBuff",     { U"Buff" } }, U"../assets/images/buf/MoveSpeed.png");
 	}
 
 	{ // エフェクト

@@ -2,11 +2,14 @@
 #include "../Base.hpp"//親クラス
 
 #define GRAVITY 10.0
+#define IMG_SIZE_X 19
+#define IMG_SIZE_Y 23
 
 class BuffBase : public ObjectBase
 {
 protected:
 	Vec2 size;
+	String assetName;
 
 public:
 	BuffBase(P2World& world, const Vec2& position);
