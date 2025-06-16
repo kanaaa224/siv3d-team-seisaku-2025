@@ -1,7 +1,11 @@
 ﻿# include "Vaillant.hpp"
 # include "Player.hpp"
 # include "../Stage.hpp"
+# include "../TimerUtils.hpp"
 # include "../Objects/HitBox.hpp"
+
+using namespace TimerUtils;
+using namespace std::chrono_literals;
 
 Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	CharacterBase(world, position),
@@ -71,28 +75,9 @@ void Vaillant::update()
 			{
 				attack_frame = frameTime;
 
-				std::thread([this]()
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-					AudioAsset(U"Vaillant Attack").playOneShot();
-				}).detach();
-
-				std::thread([this]()
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(1500));
-
-					Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 200 : size.x / 2), 0 }, *this);
-				}).detach();
-
-				std::thread([this]()
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-
-					state = VaillantState::Idle;
-
-					attacking = false;
-				}).detach();
+				setTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 1000ms);
+				setTimeout([this] { Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 200 : size.x / 2), 0 }, *this); }, 1500ms);
+				setTimeout([this] { state = VaillantState::Idle; attacking = false; }, 2000ms);
 
 				attacking = true;
 			}
@@ -316,12 +301,7 @@ void Vaillant::destroy()
 
 		body.release();
 
-		std::thread([this]()
-		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-
-			ObjectBase::destroy();
-		}).detach();
+		setTimeout([this] { ObjectBase::destroy(); }, 2000ms);
 
 		destroy_executed = true;
 	}
@@ -335,12 +315,7 @@ void Vaillant::die()
 	{
 		AudioAsset(U"Vaillant Death").playOneShot();
 
-		std::thread([this]()
-		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-
-			CharacterBase::die();
-		}).detach();
+		setTimeout([this] { CharacterBase::die(); }, 2000ms);
 
 		die_executed = true;
 	}
@@ -354,12 +329,7 @@ void Vaillant::onDamaged(float amount)
 
 		AudioAsset(U"Vaillant Damage").playOneShot();
 
-		std::thread([this]()
-		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(750));
-
-			damaged = false;
-		}).detach();
+		setTimeout([this] { damaged = false; }, 750ms);
 
 		damaged = true;
 	}
