@@ -106,7 +106,7 @@ void Player::initialize()
 	isHitStop = false;   //ヒットストップしたかどうか
 
 	movement_speed = 0.0;
-	attack_power = 0.f;
+	attack_power = 30.f;
 }
 
 void Player::update()

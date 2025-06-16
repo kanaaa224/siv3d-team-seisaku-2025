@@ -104,8 +104,8 @@ public:
 	bool getFlip()    const { return flip_flg; }
 
 	// バフステータス
-	void SetPlayerSpeed(double speed) { movement_speed = speed; };
-	void SetPlayerDamageUp(double damage_up) { attack_power = damage_up; };
+	void SetPlayerSpeed(double speed) { movement_speed += speed; };
+	void SetPlayerDamageUp(double damage_up) { attack_power += damage_up; };
 	float GetPlayerAttackDamage() { return attack_power; };
 
 	// 回避クールタイムの残り秒数を取得
