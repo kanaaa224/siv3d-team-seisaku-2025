@@ -10,11 +10,27 @@
 
 enum class VaillantState
 {
-	Idle,
-	Walk,
-	Attack,
-	Death,
-	Destroy
+	Idle,   // 待機中
+	Walk,   // 移動中
+	Attack, // 攻撃
+	Death,  // 死亡
+	Destroy // 破壊
+};
+
+enum class VaillantAttackType
+{
+	Earthquake, // 地団駄
+	Teleport,   // 瞬間移動
+	Tentacles,  // 触手
+	Rush        // 突進
+};
+
+enum class VaillantAttackState
+{
+	Preparation, // 攻撃準備中
+	Start,       // 攻撃開始
+	Attacking,   // 攻撃中
+	Ends         // 攻撃終了
 };
 
 class Vaillant : public CharacterBase
@@ -33,13 +49,12 @@ public:
 	void onDamaged(float amount) override;
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
-	void setAttackStarted(bool b = false) { attack_started = b; }
+	void setAttackStarted(bool b = false) { hostiled = b; }
 
 	VaillantState getState() { return state; }
 
 private:
 	Vec2 position;
-
 	Vec2 start_position;
 	Vec2 player_position;
 	
@@ -47,18 +62,18 @@ private:
 	
 	double frameTime;
 	double attack_frame;
-	
-	VaillantState state;
 
-	bool jumped;
-	bool roaming_flipped;
 	bool mirrored;
-	bool attack_started;
+	bool hostiled;
+	bool damaged;
+	bool jumped;
+	bool direction;
 	bool die_executed;
 	bool destroy_executed;
-	bool damaged;
-	bool attacking;
-	bool attack;
+	
+	VaillantState state;
+	VaillantAttackType attack_type;
+	VaillantAttackState attack_state;
 
 	SpriteAnimator spriteAnimator;
 
@@ -66,4 +81,5 @@ private:
 	mutable bool draw_initialized;
 
 	void initialize();
+	void attack();
 };

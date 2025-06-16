@@ -9,20 +9,26 @@ using namespace std::chrono_literals;
 
 Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	CharacterBase(world, position),
+
 	start_position(position),
-	frameTime(0.0),
+
+	frameTime   (0.0),
 	attack_frame(0.0),
-	state(VaillantState::Idle),
-	jumped(false),
-	roaming_flipped(false),
-	mirrored(false),
-	attack_started(false),
-	die_executed(false),
+
+	mirrored (false),
+	hostiled (false),
+	damaged  (false),
+	jumped   (false),
+	direction(false),
+
+	die_executed    (false),
 	destroy_executed(false),
-	damaged(false),
-	attacking(false),
-	attack(false),
-	currentFrame(0),
+
+	state       (VaillantState::Idle),
+	attack_type (VaillantAttackType::Earthquake),
+	attack_state(VaillantAttackState::Preparation),
+
+	currentFrame    (0),
 	draw_initialized(false)
 {
 	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
@@ -39,6 +45,37 @@ void Vaillant::initialize()
 	max_hp = VAILLANT_MAX_HP;
 
 	hp = max_hp;
+}
+
+void Vaillant::attack()
+{
+	if (attack_type == VaillantAttackType::Earthquake && attack_state == VaillantAttackState::Preparation)
+	{
+		attack_frame = frameTime;
+
+		setTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 980ms);
+
+		setTimeout([this] {
+			attack_state = VaillantAttackState::Attacking;
+
+			spriteAnimator.setAnimationName(AnimationName::Spark2);
+			spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
+			spriteAnimator.setSize({ 400, 150 });
+			spriteAnimator.setPosition(position + Vec2{ (mirrored ? -(size.x / 2) - 200 : (size.x / 2) + 200), size.y / 4});
+			spriteAnimator.stop();
+			spriteAnimator.show();
+			spriteAnimator.play();
+		}, 1500ms);
+
+		setTimeout([this] { state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 2000ms);
+
+		attack_state = VaillantAttackState::Start;
+	}
+
+	if (attack_type == VaillantAttackType::Earthquake && attack_state == VaillantAttackState::Attacking)
+	{
+		Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, *this);
+	}
 }
 
 void Vaillant::update()
@@ -68,48 +105,18 @@ void Vaillant::update()
 
 	double distance = position.distanceFrom(player_position);
 
-	if (distance <= 400) attack_started = true;
+	if (distance <= 400) hostiled = true;
 
-	if (attack_started)
+	if (hostiled)
 	{
-		if (state == VaillantState::Attack)
-		{
-			if (!attacking)
-			{
-				attack_frame = frameTime;
-
-				setTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 1000ms);
-
-				setTimeout([this] {
-					attack = true;
-
-					spriteAnimator.setAnimationName(AnimationName::Spark2);
-					spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
-					spriteAnimator.setSize({ 400, 150 });
-					spriteAnimator.setPosition(position + Vec2{ (mirrored ? -(size.x / 2) - 200 : (size.x / 2) + 200), size.y / 4});
-					spriteAnimator.stop();
-					spriteAnimator.show();
-					spriteAnimator.play();
-				}, 1500ms);
-
-				setTimeout([this] { state = VaillantState::Idle; attacking = false; attack = false; }, 2000ms);
-
-				attacking = true;
-			}
-
-			if (attack) Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, *this);
-
-			return;
-		}
-
-		bool walking_direction = false;
+		if (state == VaillantState::Attack) return attack();
 
 		distance = position.x - player_position.x;
 
-		if (distance >  10) walking_direction = true;
-		if (distance < -10) walking_direction = false;
+		if (distance >  10) direction = true;
+		if (distance < -10) direction = false;
 
-		body.applyLinearImpulse((walking_direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
+		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 
 		distance = Abs(distance);
 
@@ -117,7 +124,8 @@ void Vaillant::update()
 		{
 			if (Random(0, 1))
 			{
-				state = VaillantState::Attack;
+				state       = VaillantState::Attack;
+				attack_type = VaillantAttackType::Earthquake;
 
 				mirrored = player_position.x <= position.x ? true : false;
 
@@ -141,20 +149,25 @@ void Vaillant::update()
 
 		if (InRange(body.getVelocity().y, -1.0, 1.0) && position.y > start_position.y && !Random(0, 200)) jumped = false;
 	}
-	else
+
+	if (!hostiled)
 	{
 		distance = position.x - start_position.x;
+		
+		if (distance >  100) direction = true;
+		if (distance < -100) direction = false;
 
-		if (distance >  100) roaming_flipped = true;
-		if (distance < -100) roaming_flipped = false;
-
-		body.applyLinearImpulse((roaming_flipped ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
+		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 	}
 
 	state = VaillantState::Idle;
 
-	if (not InRange(body.getVelocity().x, -1.0, 1.0)) state = VaillantState::Walk;
-	if (not InRange(body.getVelocity().x, -1.0, 1.0)) mirrored = body.getVelocity().x > 0.0;
+	if (not InRange(body.getVelocity().x, -1.0, 1.0))
+	{
+		state = VaillantState::Walk;
+		
+		mirrored = body.getVelocity().x > 0.0;
+	}
 
 	mirrored = !mirrored;
 }
@@ -186,7 +199,7 @@ void Vaillant::draw() const
 
 		currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
-		if (not InRange(body.getVelocity().y, -1.0, 1.0)) currentFrame = 12;
+		if (not InRange(body.getVelocity().y, -1.0, 1.0) || position.y < (start_position.y)) currentFrame = 12;
 
 		if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
@@ -195,25 +208,30 @@ void Vaillant::draw() const
 
 	case VaillantState::Attack:
 	{
-		margin = { 86, 81 };
+		switch(attack_type)
+		{
+		case VaillantAttackType::Earthquake:
+		{
+			margin = { 86, 81 };
 
-		int marginR = 195;
+			int marginR = 195;
 
-		frameDuration = 0.15;
-		frameCount    = 16;
+			frameDuration = 0.15;
+			frameCount    = 16;
 
-		double elapsed = frameTime - attack_frame;
+			double elapsed = frameTime - attack_frame;
 
-		int frameIndex = static_cast<int>(elapsed / frameDuration);
+			int frameIndex = static_cast<int>(elapsed / frameDuration);
 
-		if (frameIndex >= frameCount) frameIndex = frameCount - 1;
+			if (frameIndex >= frameCount) frameIndex = frameCount - 1;
 
-		currentFrame = frameIndex;
+			currentFrame = frameIndex;
 
-		if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
+			if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
-		RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
-
+			RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
+		}
+		}
 		break;
 	}
 
@@ -269,7 +287,12 @@ void Vaillant::draw() const
 		break;
 
 	case VaillantState::Attack:
-		assetName = U"Vaillant Attack";
+		switch(attack_type)
+		{
+		case VaillantAttackType::Earthquake:
+			assetName = U"Vaillant Attack";
+			break;
+		}
 		break;
 
 	case VaillantState::Death:
@@ -304,6 +327,20 @@ void Vaillant::onHit(ObjectBase& object)
 	}
 }
 
+void Vaillant::onDamaged(float amount)
+{
+	if (!damaged)
+	{
+		CharacterBase::onDamaged(amount);
+
+		AudioAsset(U"Vaillant Damage").playOneShot();
+
+		setTimeout([this] { damaged = false; }, 750ms);
+
+		damaged = true;
+	}
+}
+
 void Vaillant::destroy()
 {
 	state = VaillantState::Destroy;
@@ -331,19 +368,5 @@ void Vaillant::die()
 		setTimeout([this] { CharacterBase::die(); }, 2000ms);
 
 		die_executed = true;
-	}
-}
-
-void Vaillant::onDamaged(float amount)
-{
-	if (!damaged)
-	{
-		CharacterBase::onDamaged(amount);
-
-		AudioAsset(U"Vaillant Damage").playOneShot();
-
-		setTimeout([this] { damaged = false; }, 750ms);
-
-		damaged = true;
 	}
 }
