@@ -69,21 +69,16 @@ void HitBox::onHit(ObjectBase& object)
 
 	if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(&object))
 	{
-		if (Player* player = dynamic_cast<Player*>(&object))
-		{
-			enemy->applyDamage(player->GetPlayerAttackDamage());
+		enemy->applyDamage(20.0);
 
-			destroy();
-		}
+		destroy();
 	}
 
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(&object))
 	{
-		if (Player* player = dynamic_cast<Player*>(&object))
-		{
-			vaillant->applyDamage(player->GetPlayerAttackDamage());
+		
+		vaillant->applyDamage(10.0);
 
-			destroy();
-		}
+		destroy();
 	}
 }
