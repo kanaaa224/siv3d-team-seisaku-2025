@@ -53,9 +53,9 @@ void Vaillant::attack()
 	{
 		attack_frame = frameTime;
 
-		setTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 980ms);
+		SetTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 980ms);
 
-		setTimeout([this] {
+		SetTimeout([this] {
 			attack_state = VaillantAttackState::Attacking;
 
 			spriteAnimator.setAnimationName(AnimationName::Spark2);
@@ -67,7 +67,7 @@ void Vaillant::attack()
 			spriteAnimator.play();
 		}, 1500ms);
 
-		setTimeout([this] { state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 2000ms);
+		SetTimeout([this] { state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 2000ms);
 
 		attack_state = VaillantAttackState::Start;
 	}
@@ -335,7 +335,7 @@ void Vaillant::onDamaged(float amount)
 
 		AudioAsset(U"Vaillant Damage").playOneShot();
 
-		setTimeout([this] { damaged = false; }, 750ms);
+		SetTimeout([this] { damaged = false; }, 750ms);
 
 		damaged = true;
 	}
@@ -351,7 +351,7 @@ void Vaillant::destroy()
 
 		body.release();
 
-		setTimeout([this] { ObjectBase::destroy(); }, 2000ms);
+		SetTimeout([this] { ObjectBase::destroy(); }, 2000ms);
 
 		destroy_executed = true;
 	}
@@ -365,7 +365,7 @@ void Vaillant::die()
 	{
 		AudioAsset(U"Vaillant Death").playOneShot();
 
-		setTimeout([this] { CharacterBase::die(); }, 2000ms);
+		SetTimeout([this] { CharacterBase::die(); }, 2000ms);
 
 		die_executed = true;
 	}
