@@ -3,6 +3,11 @@
 //親クラス
 #include "../../../Objects/Base.hpp"
 
+#define IMG_SIZE 32  //縦横32サイズの画像
+#define IMG_RESIZE 30//サイズ変更時の値
+
+#define IMG_CHANGE_TIME 0.6//画像切替時間
+
 class ExclamationMarkEffect : public ObjectBase
 {
 public:

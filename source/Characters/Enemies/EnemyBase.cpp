@@ -9,6 +9,8 @@
 #include "../../Objects/Buff/MoveSpeed/MoveSpeedBuff.h"
 //Ammo
 #include "../../Objects/Ammo.hpp"
+//effect
+#include "Effect/ExclamationMarkEffect.h"
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
@@ -78,11 +80,15 @@ void EnemyBase::update()
 	hpbar.update();//hpバーの更新処理
 
 #ifdef _DEBUG
-	if (KeyE.pressed() && Key0.pressed()) {//(E + 0)でhpを0にする
+	if (KeyE.pressed() && Key9.pressed()) {//(E + 9)でhpを0にする
 		hp = 0;
 	}
 	if (KeyE.pressed() && Key1.pressed()) {//(E + 1)でhpを10減らす
 		getDamage(10);
+	}
+	if (KeyE.pressed() && Key5.pressed()) {//(E + 5)でビックリマーク生成
+		Stage* stage = Stage::GetInstance();
+		stage->createObject<ExclamationMarkEffect>(pos, img_flipFlg);
 	}
 #endif // DEBUG
 }
