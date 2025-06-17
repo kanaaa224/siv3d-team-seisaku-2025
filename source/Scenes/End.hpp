@@ -14,7 +14,7 @@ public:
 
 
 private:
-	RoundRect m_startButton{ Arg::center(640, 400), 300, 60, 8 };
+	RoundRect m_startButton{ Arg::center(640, 600), 300, 60, 8 };
 	RoundRect m_exitButton{ Arg::center(640, 480), 300, 60, 8 };
 
 	Transition m_startTransition{ 0.2s, 0.2s };

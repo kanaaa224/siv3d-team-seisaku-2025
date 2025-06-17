@@ -39,7 +39,7 @@ namespace
 	}
 }
 
-Slime::Slime(P2World& world, const Vec2& position) : CharacterBase(world, position), centerRadius(25.0), outerRadius(15.0), mirrored(false), damaged(false)
+Slime::Slime(P2World& world, const Vec2& position) : CharacterBase(world, position), centerRadius(20.0), outerRadius(10.0), mirrored(false), damaged(false)
 {
 	P2Material material{ .friction = 0.5 };
 
@@ -105,8 +105,8 @@ void Slime::draw() const
 
 	Vec2 center = body.getPos();
 
-	Circle{ center + Vec2{ -15, -5 }, 3 }.draw(Palette::Red);
-	Circle{ center + Vec2{  15, -5 }, 3 }.draw(Palette::Red);
+	Circle{ center + Vec2{ -10, -5 }, 3 }.draw(Palette::Red);
+	Circle{ center + Vec2{  10, -5 }, 3 }.draw(Palette::Red);
 }
 
 void Slime::onDamaged(float amount)
