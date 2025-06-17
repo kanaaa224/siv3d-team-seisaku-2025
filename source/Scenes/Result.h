@@ -3,7 +3,7 @@
 # include "../Common.hpp"
 
 
-// エンドシーン
+// リザルトシーン
 class Result : public App::Scene
 {
 public:

@@ -86,7 +86,7 @@ void GameOver::draw() const
 	Scene::SetBackground(ColorF{ 0.1, 0.1, 0.1 });
 
 	// end描画
-	FontAsset(U"TitleFont")(U"Game Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 180 });
+	FontAsset(U"TitleFont")(U"Game Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 150 });
 
 	// ボタン描画
 	{
@@ -119,7 +119,7 @@ void GameOver::draw() const
 		//左下にプレイヤー表示
 		if (!p_dieanime.isEmpty())
 		{
-			p_dieanime[dieAnimationFrame].scaled(2.0).draw(380, Scene::Height()-120);
+			p_dieanime[dieAnimationFrame].scaled(2.0).draw(400, Scene::Height()-380);
 		}
 	}
 }
