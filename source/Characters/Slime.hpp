@@ -4,6 +4,9 @@
 
 # include "Base.hpp"
 
+# define SLIME_MAX_HP 100
+# define SLIME_WALK_POWER 5.0
+
 class Slime : public CharacterBase
 {
 public:
@@ -12,6 +15,8 @@ public:
 
 	void update() override;
 	void draw() const override;
+
+	void onDamaged(float amount) override;
 
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
 
@@ -23,6 +28,7 @@ private:
 	double outerRadius;
 
 	bool mirrored;
+	bool damaged;
 
 	Vec2 player_position;
 };

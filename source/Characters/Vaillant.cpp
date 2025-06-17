@@ -131,7 +131,7 @@ void Vaillant::update()
 
 		state = VaillantState::Idle;
 
-		if (position.x < player_position.x) mirrored = true;
+		if (position.x > player_position.x) mirrored = true;
 
 		return;
 	}
