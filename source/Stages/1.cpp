@@ -100,7 +100,7 @@ void Stage1::update()
 			if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 			{
 				vaillant->setPlayerPosition(player->getBody().getPos());
-				vaillant->setForbidJump(player->getplayerstate() == ePlayerState::jump || player->getplayerstate() == ePlayerState::move);
+				vaillant->setForbidJump(player->getplayerstate() <= ePlayerState::jump);
 
 				if (player_hp == 0.0f) vaillant->setAttackStarted(false);
 

@@ -56,9 +56,11 @@ void Vaillant::attack()
 	{
 		attack_frame = frameTime;
 
-		SetTimeout([this] { AudioAsset(U"Vaillant Attack").playOneShot(); }, 990ms);
+		SetTimeout([this] { if (state >= VaillantState::Death) return; AudioAsset(U"Vaillant Attack").playOneShot(); }, 990ms);
 
 		SetTimeout([this] {
+			if (state >= VaillantState::Death) return;
+
 			attack_state = VaillantAttackState::Attacking;
 
 			spriteAnimator.setAnimationName(AnimationName::Spark2);
@@ -70,7 +72,7 @@ void Vaillant::attack()
 			spriteAnimator.play();
 		}, 1500ms);
 
-		SetTimeout([this] { state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 2000ms);
+		SetTimeout([this] { if (state >= VaillantState::Death) return; state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 2000ms);
 
 		attack_state = VaillantAttackState::Start;
 	}
