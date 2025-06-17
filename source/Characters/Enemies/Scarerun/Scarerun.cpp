@@ -80,10 +80,14 @@ void Scarerun::update()
 
 void Scarerun::draw() const
 {
+	//画像の描画
 	now_texture.mirrored(img_flipFlg).resized(img_size).drawAt(pos);
+	//物理シュミレーション上の実態を描画
 	body.drawFrame();
-
+	//hpバーの描画
 	hpbar.draw({ Vec2{(pos.x - body_size.x / 2 - 10),(pos.y - body_size.y / 2 - 10)},hp_imgSize });
+
+	//デバック表示
 #ifdef _DEBUG
 	Print << U"Enemy_Scarerun_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Scarerun_SpawnPos : " << spawnPosition;
@@ -137,4 +141,9 @@ void Scarerun::stateControl()
 	default:
 		break;
 	}
+}
+
+void Scarerun::cloudOfDustEffect()
+{
+
 }

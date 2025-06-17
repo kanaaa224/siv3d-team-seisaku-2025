@@ -91,11 +91,14 @@ void Flot::update()
 
 void Flot::draw() const
 {
+	//画像の描画
 	now_texture.mirrored(img_flipFlg).resized(img_size).drawAt(pos + Vec2{-5,-15});
+	//物理シュミレーション上の実態を描画
 	body.drawFrame();
-
+	//hpバーの描画
 	hpbar.draw({ Vec2{(pos.x - body_size.x / 2),(pos.y - body_size.y / 2 - 10)},hp_imgSize });
 
+	//デバック表示
 #ifdef _DEBUG
 	Print << U"Enemy_Flot_Velocity : " << body.getVelocity();
 	Print << U"Enemy_Flot_SpawnPos : " << spawnPosition;
