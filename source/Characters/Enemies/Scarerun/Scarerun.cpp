@@ -135,16 +135,18 @@ void Scarerun::stateControl()
 		}
 
 		//エフェクト生成
-		if (nowImageNum % 4 == 0) {
+		/*if (nowImageNum % 4 == 0) {
 			if (!doOnceSpawnCloudOfDustFlg) {
 				Stage* stage = Stage::GetInstance();
-				stage->createObject<CloudOfDustEffect>(pos + Vec2{ 0.0,30.0 }, img_flipFlg);
+				stage->createObject<CloudOfDustEffect>(pos + Vec2{ 0.0,32.0 }, img_flipFlg);
 				doOnceSpawnCloudOfDustFlg = true;
 			}
 		}
 		else {
 			doOnceSpawnCloudOfDustFlg = false;
-		}
+		}*/
+
+
 		break;
 	case GET_ATTACK:
 		//ここにダメージを受けた時のエフェクト
