@@ -5,7 +5,7 @@
 # include "Base.hpp"
 
 # define SLIME_MAX_HP 100
-# define SLIME_WALK_POWER 5.0
+# define SLIME_WALK_POWER 2.5
 
 class Slime : public CharacterBase
 {

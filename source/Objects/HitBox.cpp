@@ -92,7 +92,7 @@ void HitBox::onHit(ObjectBase& object)
 	if (Slime* slime = dynamic_cast<Slime*>(&object))
 	{
 		if (Player* player = dynamic_cast<Player*>(owner)) {
-			slime->applyDamage(slime->getMaxHP() / 4);
+			slime->applyDamage(slime->getMaxHP() / 2);
 
 			destroy();
 		}
