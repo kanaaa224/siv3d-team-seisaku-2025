@@ -115,6 +115,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Scenes\Result.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\CloudOfDustEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\EnemyBase.cpp" />
@@ -150,6 +151,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="source\Scenes\Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\engine\texture\box-shadow\128.png" />
@@ -355,6 +357,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Scenes\Result.h" />
     <ClInclude Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.h" />
     <ClInclude Include="source\Characters\Base.hpp" />
     <ClInclude Include="source\Characters\Enemies\Effect\CloudOfDustEffect.h" />
@@ -390,6 +393,7 @@
     <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
     <ClInclude Include="source\Utils\Timer.hpp" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="source\Scenes\Tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App\example\obj\blacksmith.obj">

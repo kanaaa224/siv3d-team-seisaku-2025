@@ -8,6 +8,7 @@ enum class SceneState
 	Title,
 	Game,
 	End,
+	Result,
 	GameOver,
 	Credit
 };

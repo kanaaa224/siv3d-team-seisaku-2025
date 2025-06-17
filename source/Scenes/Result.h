@@ -2,10 +2,12 @@
 
 # include "../Common.hpp"
 
-class GameOver : public App::Scene
+
+// リザルトシーン
+class Result : public App::Scene
 {
 public:
-	GameOver(const InitData& init);
+	Result(const InitData& init);
 
 	void update() override;
 	void draw() const override;
@@ -23,9 +25,5 @@ private:
 
 	double m_inactiveTime = 0.0;
 
-
-	size_t dieAnimationFrame = 0;
-	double dieAnimationTime = 0.0;
-
-	Array<TextureRegion> p_dieanime;
+	Texture end_background;
 };

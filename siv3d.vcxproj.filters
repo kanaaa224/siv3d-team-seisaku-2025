@@ -234,6 +234,12 @@
     <ClCompile Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scenes\Tutorial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scenes\Result.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -999,6 +1005,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\Tutorial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\Result.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
