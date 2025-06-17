@@ -33,7 +33,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	currentFrame    (0),
 	draw_initialized(false)
 {
-	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
+	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0, .friction = 0.75 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
 
 	body.addRectSensor(RectF{ -(size / 2), size }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::Player });
 
@@ -330,7 +330,9 @@ void Vaillant::onHit(ObjectBase& object)
 			player->getplayerstate() != ePlayerState::jump_attack &&
 			player->getplayerstate() != ePlayerState::jump_avoidance)
 		{
-			if (state <= VaillantState::Attack) player->applyDamage(jumped ? 5 : 20);
+			if (state <= VaillantState::Attack && !damaged) player->applyDamage(jumped ? 5 : 10);
+
+			object.getBody().applyLinearImpulse(object.getBody().getPos().x < position.x ? Vec2{ -1, 0 } : Vec2{ 1, 0 });
 		}
 	}
 }

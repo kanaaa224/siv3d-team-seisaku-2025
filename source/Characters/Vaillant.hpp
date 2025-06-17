@@ -4,8 +4,8 @@
 # include "../Effects/SpriteAnimator.hpp"
 
 # define VAILLANT_SIZE { 150, 200 }
-# define VAILLANT_MAX_HP 1000
-# define VAILLANT_WALK_POWER 5.0
+# define VAILLANT_MAX_HP 500
+# define VAILLANT_WALK_POWER 7.5
 # define VAILLANT_JUMP_POWER 3000
 
 enum class VaillantState
