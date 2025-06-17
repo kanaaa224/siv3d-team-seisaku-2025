@@ -36,6 +36,7 @@ Flot::Flot(P2World& world, const Vec2& position):
 	die_img            = LoadDivGraph(U"Flot Death",     Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
 	img_size = Vec2{ 150 * 2, 45 * 2 };
+	drawExcMark_pos = Vec2{ 0,-65 };
 }
 
 Flot::~Flot()
@@ -123,6 +124,7 @@ void Flot::stateControl()
 	case ATTACK_POSITION:
 		//プレイヤーから距離を取る
 		MoveAwayFromPlayer(AWAY_PLAYER, APPROACDDISTANCE);
+		spawnExclamationMarkEffect(*this);
 		break;
 	case ATTACK:
 		if (playerPos.x - pos.x > 0) {//プレイヤーが左
