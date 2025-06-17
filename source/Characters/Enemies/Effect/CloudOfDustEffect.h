@@ -5,7 +5,7 @@
 #define IMG_SIZE 32  //縦横32サイズの画像
 #define IMG_RESIZE 30//サイズ変更時の値
 
-#define IMG_CHANGE_TIME 0.2//画像切替時間
+#define IMG_CHANGE_TIME 0.1//画像切替時間
 
 class CloudOfDustEffect : public ObjectBase
 {
