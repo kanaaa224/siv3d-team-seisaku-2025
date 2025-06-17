@@ -24,5 +24,5 @@ private:
 
 	Font font{ 30 };
 
-	HPBar hpBar{ 500 };
+	HPBar hpBar{ 750 };
 };

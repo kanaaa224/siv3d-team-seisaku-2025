@@ -34,6 +34,7 @@ Scarerun::Scarerun(P2World& world, const Vec2& position):
 	die_img            = LoadDivGraph(U"Scarerun Death", Size(150, 45));//die画像
 	now_texture = idle_img[0];//初期化用の画像
 	img_size = Vec2{ 150 * 2, 45 * 2 };
+	drawExcMark_pos = Vec2{ 0,-75 };
 }
 
 Scarerun::~Scarerun()
@@ -125,7 +126,7 @@ void Scarerun::stateControl()
 	case ATTACK_POSITION:
 		//body.setVelocity(Vec2{ 0.0,body.getVelocity().y});
 		doOncePosZero(Vec2{ 0.0,body.getVelocity().y });
-		//ここに攻撃準備のSE
+		spawnExclamationMarkEffect(*this);
 		break;
 	case ATTACK:
 		attackMove();

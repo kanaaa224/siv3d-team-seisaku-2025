@@ -1,6 +1,10 @@
 ﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-scroll" */
 
 # include "Slime.hpp"
+# include "../Utils/Timer.hpp"
+
+using namespace TimerUtils;
+using namespace std::chrono_literals;
 
 namespace
 {
@@ -35,7 +39,7 @@ namespace
 	}
 }
 
-Slime::Slime(P2World& world, const Vec2& position) : CharacterBase(world, position), centerRadius(25.0), outerRadius(15.0), mirrored(false)
+Slime::Slime(P2World& world, const Vec2& position) : CharacterBase(world, position), centerRadius(20.0), outerRadius(10.0), mirrored(false), damaged(false)
 {
 	P2Material material{ .friction = 0.5 };
 
@@ -69,6 +73,10 @@ Slime::Slime(P2World& world, const Vec2& position) : CharacterBase(world, positi
 
 		joints << world.createDistanceJoint(aroundBodies[i], posA, aroundBodies[(i + 1) % num], posB, (posB - posA).length()).setLinearStiffness(1.0, 0.5).setMinLength(0.0);
 	}
+
+	max_hp = SLIME_MAX_HP;
+
+	hp = max_hp;
 }
 
 void Slime::update()
@@ -77,7 +85,7 @@ void Slime::update()
 
 	mirrored = body.getPos().x < player_position.x;
 
-	body.applyLinearImpulse({ mirrored ? 1 : -1, 0 });
+	body.applyLinearImpulse({ mirrored ? SLIME_WALK_POWER : -SLIME_WALK_POWER, 0 });
 }
 
 void Slime::draw() const
@@ -89,10 +97,28 @@ void Slime::draw() const
 		vertices << b.getPos();
 	}
 
-	Polygon(ChaikinSmooth(vertices)).calculateBuffer(outerRadius).draw({ 0.1, 0.1, 0.1, 0.9 });
+	double alpha = 0.9;
+
+	if (damaged) alpha = 0.5;
+
+	Polygon(ChaikinSmooth(vertices)).calculateBuffer(outerRadius).draw({ 0.1, 0.1, 0.1, alpha });
 
 	Vec2 center = body.getPos();
 
-	Circle{ center + Vec2{ -15, -5 }, 3 }.draw(Palette::Red);
-	Circle{ center + Vec2{  15, -5 }, 3 }.draw(Palette::Red);
+	Circle{ center + Vec2{ -10, -5 }, 3 }.draw(Palette::Red);
+	Circle{ center + Vec2{  10, -5 }, 3 }.draw(Palette::Red);
+}
+
+void Slime::onDamaged(float amount)
+{
+	if (!damaged)
+	{
+		CharacterBase::onDamaged(amount);
+
+		AudioAsset(U"Vaillant Damage").playOneShot();
+
+		SetTimeout([this] { damaged = false; }, 750ms);
+
+		damaged = true;
+	}
 }

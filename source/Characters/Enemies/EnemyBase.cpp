@@ -88,7 +88,7 @@ void EnemyBase::update()
 	}
 	if (KeyE.pressed() && Key5.pressed()) {//(E + 5)でビックリマーク生成
 		Stage* stage = Stage::GetInstance();
-		stage->createObject<ExclamationMarkEffect>(pos, img_flipFlg);
+		stage->createObject<ExclamationMarkEffect>(pos, *this);
 	}
 #endif // DEBUG
 }
@@ -431,4 +431,20 @@ void EnemyBase::spawnAmmo(double speed, bool playerTargetFlg)
 	}
 
 	stage->createObject<Ammo>(spawnPos, speed, playerTargetFlg, playerPos);
+}
+
+void EnemyBase::spawnExclamationMarkEffect(ObjectBase& obj)
+{
+	Vec2 spawnPos = pos + drawExcMark_pos;
+
+	if (!doOnecSpawnExclamationMarkFlg) {
+		Stage* stage = Stage::GetInstance();
+		stage->createObject<ExclamationMarkEffect>(spawnPos, obj);
+		doOnecSpawnExclamationMarkFlg = true;
+	}
+	else {
+		if (nowState != ATTACK_POSITION) {
+			doOnecSpawnExclamationMarkFlg = false;
+		}
+	}
 }

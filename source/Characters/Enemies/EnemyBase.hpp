@@ -70,6 +70,7 @@ protected:
 	int nowImageNum;                        //画像配列の現在の要素数を格納する用
 	double imageChangeTime;                 //画像切替用変数
 	Vec2 img_size;                          //画像サイズ
+	Vec2 drawExcMark_pos;                   //ビックリエフェクトを出す場所
 
 	bool img_flipFlg;                       //画像を左右反転
 
@@ -177,7 +178,13 @@ protected:
 	// スポーン処理 //
 	//玉の生成
     void spawnAmmo(double speed,bool playerTargetFlg);
+	//ビックリマークの生成
+	void spawnExclamationMarkEffect(ObjectBase& obj);
+	bool doOnecSpawnExclamationMarkFlg;
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
+
+	Vec2 getDrawExcMarkPos() { return drawExcMark_pos; };
+	Vec2 getPosition() { return pos; };
 };
 

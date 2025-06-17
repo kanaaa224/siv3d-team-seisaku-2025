@@ -4,14 +4,14 @@
 #include "../../../Objects/Base.hpp"
 
 #define IMG_SIZE 32  //縦横32サイズの画像
-#define IMG_RESIZE 30//サイズ変更時の値
+#define IMG_RESIZE 50//サイズ変更時の値
 
-#define IMG_CHANGE_TIME 0.6//画像切替時間
+#define IMG_CHANGE_TIME 0.1//画像切替時間
 
 class ExclamationMarkEffect : public ObjectBase
 {
 public:
-	ExclamationMarkEffect(P2World& world, const Vec2& postion, bool flipFlg);
+	ExclamationMarkEffect(P2World& world, const Vec2& postion, ObjectBase& ownerClass);
 	~ExclamationMarkEffect();
 
 	void update();
@@ -29,5 +29,7 @@ private:
 	double imgChange_ct; //画像切替の計測用
 
 	bool animationEndFlg;//画像が最後の分割領域にきたか
+
+	ObjectBase* owner;
 };
 
