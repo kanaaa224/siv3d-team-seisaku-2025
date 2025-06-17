@@ -4,7 +4,7 @@
 
 //画像切替速度
 #define SCARERUN_IMG_CT_IDLE           0.13
-#define SCARERUN_IMG_CT_ATTACK_POSTION 0.1
+#define SCARERUN_IMG_CT_ATTACK_POSTION 0.2
 #define SCARERUN_IMG_CT_ATTACK         0.1
 #define SCARERUN_IMG_CT_GET_ATTACK     0.05
 #define SCARERUN_IMG_CT_DIE            0.2

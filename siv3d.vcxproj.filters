@@ -225,6 +225,15 @@
     <ClCompile Include="source\Characters\Enemies\Effect\CloudOfDustEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Characters\Slime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Characters\Tentacles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -981,6 +990,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Characters\Enemies\Effect\CloudOfDustEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Slime.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Tentacles.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
