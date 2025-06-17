@@ -48,7 +48,7 @@ enum eMovementDirection
 class EnemyBase : public CharacterBase
 {
 protected:
-	HPBar hpbar;
+	HPBar hpbar;                            //HPバー
 
 	eEnemyType type;                        //敵のタイプ
 	Vec2 body_size;                         //bodyの大きさ
@@ -80,6 +80,7 @@ protected:
 
 	Vec2 spawnPosition;                     //スポーン位置を格納
 
+	double damageStopTime;                  //ダメージストップ時間
 	double damageStop_ct;                   //ダメージを受けてから何秒経過しているか
 	bool damageStopFlg;                     //ダメージを受けるのを止めるか止めないか
 

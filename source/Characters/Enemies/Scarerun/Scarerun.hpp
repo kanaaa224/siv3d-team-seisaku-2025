@@ -22,5 +22,8 @@ public:
 
 private:
 	void stateControl() override;
+
+	//攻撃時の砂埃エフェクトを再生する
+	void cloudOfDustEffect();
 };
 
