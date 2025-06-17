@@ -115,6 +115,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Characters\Enemies\Effect\CloudOfDustEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\EnemyBase.cpp" />
     <ClCompile Include="source\Characters\Enemies\Flot\Flot.cpp" />
     <ClCompile Include="source\Characters\Enemies\Scarerun\Scarerun.cpp" />
@@ -351,6 +352,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Characters\Enemies\Effect\CloudOfDustEffect.h" />
     <ClInclude Include="source\Characters\Base.hpp" />
     <ClInclude Include="source\Characters\Enemies\EnemyBase.hpp" />
     <ClInclude Include="source\Characters\Enemies\Flot\Flot.hpp" />

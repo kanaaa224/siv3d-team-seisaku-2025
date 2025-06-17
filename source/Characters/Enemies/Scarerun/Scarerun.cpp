@@ -1,6 +1,10 @@
 ﻿#include "Scarerun.hpp"
 //画像の分割読み込み
 #include "../../../Utils/CustomImageLoader.hpp"
+//Stage
+#include "../../../Stages/1.hpp"
+//effect
+#include "../Effect/CloudOfDustEffect.h"
 
 Scarerun::Scarerun(P2World& world, const Vec2& position):
 	EnemyBase(world, position)//初期位置
@@ -76,6 +80,14 @@ void Scarerun::update()
 	else {
 		body.setGravityScale(GRAVITY);
 	}
+
+#ifdef _DEBUG
+	if (KeyE.pressed() && Key3.pressed()) {
+		Stage* stage = Stage::GetInstance();
+		stage->createObject<CloudOfDustEffect>(pos + Vec2{0.0,30.0}, img_flipFlg);
+	}
+#endif // _DEBUG
+
 }
 
 void Scarerun::draw() const
@@ -143,7 +155,7 @@ void Scarerun::stateControl()
 	}
 }
 
-void Scarerun::cloudOfDustEffect()
+void Scarerun::spawnCloudOfDustEffect()
 {
 
 }
