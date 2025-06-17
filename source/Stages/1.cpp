@@ -9,6 +9,7 @@
 # include "../UI/PlayerHUD.hpp"
 # include "../UI/EnemyBoss.hpp"
 # include "../Characters/Vaillant.hpp"
+# include "../Characters/Slime.hpp"
 
 int Stage1::state = 0;
 
@@ -131,6 +132,11 @@ void Stage1::update()
 						aaaaa = true;
 					}
 				}
+			}
+
+			if (Slime* slime = dynamic_cast<Slime*>(object))
+			{
+				slime->setPlayerPosition(player->getBody().getPos());
 			}
 
 			if (StageBackground* stagebackground = dynamic_cast<StageBackground*>(object))
