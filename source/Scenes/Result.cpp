@@ -6,7 +6,7 @@ Result::Result(const InitData& init) : IScene{ init }
 	end_background = TextureAsset(U"End_Background1");
 
 	AudioAsset(U"Result_BGM").setVolume(0.3);
-	AudioAsset(U"Gam_BGM").stop();
+	AudioAsset(U"End_BGM").stop();
 	AudioAsset(U"Result_BGM").play();
 	//AudioAsset(U"kettei_SE").setVolume(1.0);
 }
