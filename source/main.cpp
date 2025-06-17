@@ -86,7 +86,7 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"Effect 1 35",  { U"Effect" } }, U"../assets/images/effect/1/35.png");
 		TextureAsset::Register({ U"Effect 1 14",  { U"Effect" } }, U"../assets/images/effect/1/14.png");
 		TextureAsset::Register({ U"Effect 1 27",  { U"Effect" } }, U"../assets/images/effect/1/27.png");
-		TextureAsset::Register({ U"Effect 1 27",  { U"Effect" } }, U"../assets/images/effect/excalimation mark2.png");
+		TextureAsset::Register({ U"Excalimation Mark",  { U"Effect" } }, U"../assets/images/effect/excalimation mark2.png");
 	}
 
 	//GameUI
