@@ -135,7 +135,7 @@ void Scarerun::stateControl()
 		}
 
 		//エフェクト生成
-		/*if (nowImageNum % 4 == 0) {
+		if (nowImageNum % 4 == 0) {
 			if (!doOnceSpawnCloudOfDustFlg) {
 				Stage* stage = Stage::GetInstance();
 				stage->createObject<CloudOfDustEffect>(pos + Vec2{ 0.0,32.0 }, img_flipFlg);
@@ -144,7 +144,7 @@ void Scarerun::stateControl()
 		}
 		else {
 			doOnceSpawnCloudOfDustFlg = false;
-		}*/
+		}
 
 
 		break;
