@@ -456,7 +456,7 @@ void Vaillant::onHit(ObjectBase& object)
 			SetTimeout([this] { if (state >= VaillantState::Death) return; attack_state = VaillantAttackState::Ends; }, 1000ms);
 			SetTimeout([this] { if (state >= VaillantState::Death) return; state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 5000ms);
 
-			applyDamage(5.0f);
+			applyDamage(0.0f);
 
 			attack_state = VaillantAttackState::Attacked;
 		}
