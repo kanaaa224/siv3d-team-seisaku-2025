@@ -239,9 +239,17 @@ void Stage1::draw() const
 	{
 		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object))
 		{
-			if (vaillant->getState() == VaillantState::Attack &&
-				vaillant->getAttackType() == VaillantAttackType::Earthquake &&
+			if (vaillant->getState()       == VaillantState::Attack &&
+				vaillant->getAttackType()  == VaillantAttackType::Earthquake &&
 				vaillant->getAttackState() == VaillantAttackState::Attacking)
+			{
+				shouldShake = true;
+				break;
+			}
+
+			if (vaillant->getState()       == VaillantState::Attack &&
+				vaillant->getAttackType()  == VaillantAttackType::Rush &&
+				vaillant->getAttackState() == VaillantAttackState::Attacked)
 			{
 				shouldShake = true;
 				break;

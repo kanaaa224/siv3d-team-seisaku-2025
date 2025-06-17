@@ -4,9 +4,10 @@
 # include "../Effects/SpriteAnimator.hpp"
 
 # define VAILLANT_SIZE { 150, 200 }
-# define VAILLANT_MAX_HP 750
+# define VAILLANT_MAX_HP 1000
 # define VAILLANT_WALK_POWER 7.5
 # define VAILLANT_JUMP_POWER 3000
+# define VAILLANT_RUSH_POWER 500
 
 enum class VaillantState
 {
@@ -20,9 +21,9 @@ enum class VaillantState
 enum class VaillantAttackType
 {
 	Earthquake, // 地団駄
+	Rush,       // 突進
 	Slime,      // スライム
 	Tentacles,  // 触手
-	Rush,       // 突進
 	Teleport    // 瞬間移動
 };
 
@@ -31,7 +32,8 @@ enum class VaillantAttackState
 	Preparation, // 攻撃準備中
 	Start,       // 攻撃開始
 	Attacking,   // 攻撃中
-	Ends         // 攻撃終了
+	Attacked,    // 攻撃終了
+	Ends         // 攻撃後処理
 };
 
 class Vaillant : public CharacterBase
