@@ -15,11 +15,13 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	frameTime   (0.0),
 	attack_frame(0.0),
 
-	mirrored (false),
-	hostiled (false),
-	damaged  (false),
-	jumped   (false),
-	direction(false),
+	mirrored  (false),
+	discovered(false),
+	hostility (false),
+	hostiled  (false),
+	damaged   (false),
+	jumped    (false),
+	direction (false),
 
 	die_executed    (false),
 	destroy_executed(false),
@@ -111,9 +113,31 @@ void Vaillant::update()
 
 	double distance = position.distanceFrom(player_position);
 
-	if (distance <= 400) hostiled = true;
+	if (distance <= 400) discovered = true;
 
-	if (hostiled)
+	if (discovered && !hostiled)
+	{
+		if (!hostility) SetTimeout([this] { hostiled = true; }, 1000ms);
+
+		hostility = true;
+
+		state = VaillantState::Idle;
+
+		if (position.x < player_position.x) mirrored = true;
+
+		return;
+	}
+
+	if (!discovered && !hostiled)
+	{
+		distance = position.x - start_position.x;
+
+		direction = (distance > 100) ? true : (distance < -100) ? false : direction;
+
+		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
+	}
+
+	if (discovered && hostiled)
 	{
 		if (state == VaillantState::Attack) return attack();
 
@@ -154,15 +178,6 @@ void Vaillant::update()
 		}
 
 		if (InRange(body.getVelocity().y, -1.0, 1.0) && position.y > start_position.y && !Random(0, 200)) jumped = false;
-	}
-
-	if (!hostiled)
-	{
-		distance = position.x - start_position.x;
-
-		direction = (distance > 100) ? true : (distance < -100) ? false : direction;
-
-		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
 	}
 
 	state = VaillantState::Idle;
@@ -315,6 +330,21 @@ void Vaillant::draw() const
 	if (assetName) TextureAsset(assetName)(margin, cutoutSize).mirrored(mirrored).drawAt(position + shiftAmount, mask);
 
 	spriteAnimator.draw();
+
+	if (discovered && !hostiled && hostility)
+	{
+		Vec2 balloonSize{ 40, 40 };
+
+		Vec2 balloonPos = position - Vec2{ balloonSize.x / 2, (size.y / 2) + balloonSize.y + 20 };
+
+		RoundRect balloonRect{ balloonPos, balloonSize, 8 };
+
+		balloonRect.draw(Palette::White).drawFrame(1, 0, Palette::Black);
+
+		static const Font font{ 28 };
+
+		font(U"!").drawAt(balloonRect.center(), Palette::Black);
+	}
 
 #ifdef _DEBUG
 	body.drawFrame();

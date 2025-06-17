@@ -67,6 +67,8 @@ private:
 	double attack_frame;
 
 	bool mirrored;
+	bool discovered;
+	bool hostility;
 	bool hostiled;
 	bool damaged;
 	bool jumped;
