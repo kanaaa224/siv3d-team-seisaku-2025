@@ -74,6 +74,7 @@ private:
 	bool die_executed;
 	bool destroy_executed;
 	bool forbid_jump;
+	bool player_hit;
 	
 	VaillantState state;
 	VaillantAttackType attack_type;

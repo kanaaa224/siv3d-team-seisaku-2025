@@ -25,6 +25,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	destroy_executed(false),
 
 	forbid_jump(false),
+	player_hit (false),
 
 	state       (VaillantState::Idle),
 	attack_type (VaillantAttackType::Earthquake),
@@ -325,14 +326,24 @@ void Vaillant::onHit(ObjectBase& object)
 {
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{
-		if (player->getplayerstate() != ePlayerState::attack &&
-			player->getplayerstate() != ePlayerState::avoidance &&
-			player->getplayerstate() != ePlayerState::jump_attack &&
-			player->getplayerstate() != ePlayerState::jump_avoidance)
+		if (!player_hit)
 		{
-			if (state <= VaillantState::Attack && !damaged) player->applyDamage(jumped ? 5 : 10);
+			if (player->getplayerstate() != ePlayerState::attack &&
+				player->getplayerstate() != ePlayerState::avoidance &&
+				player->getplayerstate() != ePlayerState::jump_attack &&
+				player->getplayerstate() != ePlayerState::jump_avoidance)
+			{
+				if (state <= VaillantState::Attack)
+				{
+					if (!damaged) player->applyDamage(jumped ? 5 : 10);
 
-			object.getBody().applyLinearImpulse(object.getBody().getPos().x < position.x ? Vec2{ -1, 0 } : Vec2{ 1, 0 });
+					object.getBody().applyLinearImpulse(object.getBody().getPos().x < position.x ? Vec2{ -50, 0 } : Vec2{ 50, 0 });
+				}
+			}
+
+			SetTimeout([this] { player_hit = false; }, 2000ms);
+
+			player_hit = true;
 		}
 	}
 }

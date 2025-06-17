@@ -81,6 +81,9 @@ void HitBox::onHit(ObjectBase& object)
 	{
 		if (Player* player = dynamic_cast<Player*>(owner)) {
 			vaillant->applyDamage(player->GetPlayerAttackDamage());
+
+			//vaillant->getBody().applyLinearImpulse(vaillant->getBody().getPos().x < body.getPos().x ? Vec2{ -10, 0 } : Vec2{ 10, 0 });
+
 			destroy();
 		}
 	}
