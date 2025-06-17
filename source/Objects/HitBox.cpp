@@ -2,6 +2,7 @@
 # include "../Characters/Player.hpp"
 # include "../Characters/Enemies/EnemyBase.hpp"
 # include "../Characters/Vaillant.hpp"
+# include "../Characters/Slime.hpp"
 
 HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : ObjectBase(world, position), owner(&owner)
 {
@@ -83,6 +84,17 @@ void HitBox::onHit(ObjectBase& object)
 			vaillant->applyDamage(player->GetPlayerAttackDamage());
 
 			//vaillant->getBody().applyLinearImpulse(vaillant->getBody().getPos().x < body.getPos().x ? Vec2{ -10, 0 } : Vec2{ 10, 0 });
+
+			destroy();
+		}
+	}
+
+	if (Slime* slime = dynamic_cast<Slime*>(&object))
+	{
+		if (Player* player = dynamic_cast<Player*>(owner)) {
+			slime->applyDamage(slime->getMaxHP() / 2);
+
+			slime->getBody().applyLinearImpulse(slime->getBody().getPos().x < body.getPos().x ? Vec2{ -10, 0 } : Vec2{ 10, 0 });
 
 			destroy();
 		}

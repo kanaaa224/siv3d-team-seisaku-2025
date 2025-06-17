@@ -1,4 +1,5 @@
 ﻿# include "Vaillant.hpp"
+# include "Slime.hpp"
 # include "Player.hpp"
 # include "../Stage.hpp"
 # include "../Utils/Timer.hpp"
@@ -36,7 +37,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	currentFrame    (0),
 	draw_initialized(false)
 {
-	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0, .friction = 0.75 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player });
+	body = world.createRect(P2Dynamic, position, size = { VAILLANT_SIZE }, { .density = 0.0, .friction = 0.75 }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::All & ~CollisionCategory::Player & ~CollisionCategory::Enemy });
 
 	body.addRectSensor(RectF{ -(size / 2), size }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::Player });
 
@@ -82,6 +83,13 @@ void Vaillant::attack()
 	if (attack_type == VaillantAttackType::Earthquake && attack_state == VaillantAttackState::Attacking)
 	{
 		Stage::GetInstance()->createObject<HitBox>(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, *this);
+	}
+
+	if (attack_type == VaillantAttackType::Slime)
+	{
+		Stage::GetInstance()->createObject<Slime>(position - Vec2{ 0, size.y / 2 });
+
+		state = VaillantState::Idle;
 	}
 }
 
@@ -155,7 +163,7 @@ void Vaillant::update()
 			{
 				state = VaillantState::Attack;
 
-				attack_type = static_cast<VaillantAttackType>(Random(0, 0));
+				attack_type = static_cast<VaillantAttackType>(Random(0, 1));
 
 				mirrored = player_position.x <= position.x ? true : false;
 
@@ -351,6 +359,7 @@ void Vaillant::draw() const
 
 	Print << U"Vaillant HP: " << hp << U" / " << max_hp;
 	Print << U"Vaillant State: " << static_cast<int>(state);
+	Print << U"Vaillant Mass: " << body.getMass();
 #endif
 }
 
