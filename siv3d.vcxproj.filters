@@ -240,6 +240,9 @@
     <ClCompile Include="source\Scenes\Result.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Characters\Enemies\Effect\GetDamageEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -1011,6 +1014,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\Result.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Enemies\Effect\GetDamageEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
