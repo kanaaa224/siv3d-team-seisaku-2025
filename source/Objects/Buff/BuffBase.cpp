@@ -34,7 +34,8 @@ void BuffBase::draw() const
 void BuffBase::onHit(ObjectBase& object)
 {
 	if (Player* player = dynamic_cast<Player*>(&object)) {
-		deleteSelf();
+		AudioAsset(U"buff_get_SE").playOneShot();//SE再生
+		deleteSelf();//自分人身を削除
 	}
 }
 
