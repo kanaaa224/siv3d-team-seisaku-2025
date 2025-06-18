@@ -26,4 +26,5 @@ private:
 	double m_inactiveTime = 0.0;
 
 	Texture clear_background;
+	Texture score_fream;
 };

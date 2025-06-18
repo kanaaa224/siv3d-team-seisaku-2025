@@ -93,6 +93,7 @@ void AssetsRegistration()
 	//GameUI
 	TextureAsset::Register({ U"Character Frame", { U"UI" } }, U"../assets/images/ui/character_frame.png");
 	TextureAsset::Register({ U"Character Icon",  { U"UI" } }, U"../assets/images/ui/character_icon.png");
+	TextureAsset::Register({ U"Score Frame", { U"UI" } }, U"../assets/images/ui/Score.png");
 
 	TextureAsset::Register({ U"HP_frame",  { U"UI" } }, U"../assets/images/ui/hp_frame.png");
 	TextureAsset::Register({ U"HP_bar",  { U"UI" } }, U"../assets/images/ui/hp_bar_back.png");
