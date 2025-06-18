@@ -17,6 +17,8 @@
 
 #define SIGHT 200             //視力
 
+#define KNOCKBACK 90         //自分のノックバックの値
+
 enum eEnemyType
 {
 	scarerun,
