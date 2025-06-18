@@ -120,6 +120,8 @@ void PlayerHUD::draw() const
 		const Font& timeFont = FontAsset(U"TitleFont");
 		double elapsedTime = Scene::Time() - startTime; // 経過時間を計算
 
+		Print << U"Time : " << elapsedTime;
+
 		timeFont(U"{:.2f}"_fmt(elapsedTime)).drawAt(30, Vec2{ 195, 70 }, ColorF{ 0.1, 0.1, 0.1 });
 		FontAsset(U"TitleFont")(U"{:.2f}"_fmt(elapsedTime)).drawAt(TextStyle::
 			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
@@ -214,6 +216,22 @@ PlayerHUD* PlayerHUD::GetInstance()
 	return instance;
 }
 
+void PlayerHUD::FileSave(String ClearTime)
+{
+	// 書き込み用のテキストファイルをオープンする
+	TextWriter wirter{ U"../assets/text/ClearTime.txt" };
+
+	//例外スロー確認
+	if (!wirter)
+	{
+		throw Error{ U"Failed to open `ClearTime.txt`" };
+	}
+
+	// 1行書き込み(改行なし)
+	wirter.write(ClearTime);
+
+	wirter.close();
+}
 
 void PlayerHUD::resetTime()
 {

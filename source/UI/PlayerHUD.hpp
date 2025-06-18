@@ -65,8 +65,6 @@ private:
 	double displayed_hp;
 	double hp_decrease_speed;
 
-
-
 	// タイマー関連の変数
 	bool timerStarted = false;
 	double startTime = 0.0;
@@ -76,6 +74,7 @@ private:
 
 	bool GO = false;//フラグ
 
+	void FileSave(String ClearTime);
 
 public:
 
