@@ -438,6 +438,7 @@ void EnemyBase::spawnExclamationMarkEffect(ObjectBase& obj)
 	Vec2 spawnPos = pos + drawExcMark_pos;
 
 	if (!doOnecSpawnExclamationMarkFlg) {
+		AudioAsset(U"Enemy_find_SE").playOneShot();//SE再生
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<ExclamationMarkEffect>(spawnPos, obj);
 		doOnecSpawnExclamationMarkFlg = true;
