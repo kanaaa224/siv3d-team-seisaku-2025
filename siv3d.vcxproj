@@ -115,8 +115,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Scenes\GameClear.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\GetDamageEffect.cpp" />
-    <ClCompile Include="source\Scenes\Result.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\CloudOfDustEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\EnemyBase.cpp" />
@@ -138,7 +138,6 @@
     <ClCompile Include="source\Objects\StageBackground.cpp" />
     <ClCompile Include="source\Objects\Wall.cpp" />
     <ClCompile Include="source\Scenes\CreditRoll.cpp" />
-    <ClCompile Include="source\Scenes\End.cpp" />
     <ClCompile Include="source\Scenes\Game.cpp" />
     <ClCompile Include="source\Scenes\GameOver.cpp" />
     <ClCompile Include="source\Scenes\Title.cpp" />
@@ -358,8 +357,8 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Scenes\GameClear.hpp" />
     <ClInclude Include="source\Characters\Enemies\Effect\GetDamageEffect.h" />
-    <ClInclude Include="source\Scenes\Result.h" />
     <ClInclude Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.h" />
     <ClInclude Include="source\Characters\Base.hpp" />
     <ClInclude Include="source\Characters\Enemies\Effect\CloudOfDustEffect.h" />
@@ -382,7 +381,6 @@
     <ClInclude Include="source\Objects\StageBackground.hpp" />
     <ClInclude Include="source\Objects\Wall.hpp" />
     <ClInclude Include="source\Scenes\CreditRoll.h" />
-    <ClInclude Include="source\Scenes\End.hpp" />
     <ClInclude Include="source\Scenes\Game.hpp" />
     <ClInclude Include="source\Scenes\GameOver.h" />
     <ClInclude Include="source\Scenes\Title.hpp" />

@@ -1,17 +1,17 @@
-﻿# include "Result.h"
+﻿# include "GameClear.hpp"
 #include "../UI/PlayerHUD.hpp"
 
-Result::Result(const InitData& init) : IScene{ init }
+GameClear::GameClear(const InitData& init) : IScene{ init }
 {
-	end_background = TextureAsset(U"End_Background1");
+	clear_background = TextureAsset(U"End_Background1");
 
-	AudioAsset(U"Result_BGM").setVolume(0.3);
+	AudioAsset(U"End_BGM").setVolume(0.3);
 	AudioAsset(U"End_BGM").stop();
-	AudioAsset(U"Result_BGM").play();
-	//AudioAsset(U"kettei_SE").setVolume(1.0);
+	AudioAsset(U"End_BGM").play();
+	AudioAsset(U"kettei_SE").setVolume(1.0);
 }
 
-void Result::update()
+void GameClear::update()
 {
 	auto controller = XInput(0); //コントローラーを取得
 
@@ -66,14 +66,16 @@ void Result::update()
 
 }
 
-void Result::draw() const
+void GameClear::draw() const
 {
-	//end_background.resized(Scene::Size()).draw(0, 0);
+	clear_background.resized(Scene::Size()).draw(0, 0);
 
 	Scene::SetBackground(ColorF{ 0.5 });
 
-	// end描画
-	FontAsset(U"TitleFont")(U"Result").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 150 });
+	// クリア描画
+	FontAsset(U"TitleFont")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 100 });
+	Rect{ Arg::center(Scene::Center()), 550, 350 }.draw(Palette::White);
+	FontAsset(U"TitleFont")(U"あなたのスコアは・・・").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 230 }, Palette::Orange);
 
 	// ボタン描画
 	{

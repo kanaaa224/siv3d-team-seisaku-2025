@@ -1,8 +1,7 @@
 ﻿# include "Common.hpp"
 # include "Scenes/Title.hpp"
 # include "Scenes/Game.hpp"
-# include "Scenes/End.hpp"
-# include "Scenes/Result.h"
+# include "Scenes/GameClear.hpp"
 # include "Scenes/GameOver.h"
 # include "Scenes/CreditRoll.h"
 
@@ -165,8 +164,7 @@ void Main()
 
 	manager.add<Title>(SceneState::Title);
 	manager.add<Game>(SceneState::Game);
-	manager.add<End>(SceneState::End);
-	manager.add<Result>(SceneState::Result);
+	manager.add<GameClear>(SceneState::Clear);
 	manager.add<GameOver>(SceneState::GameOver);
 	manager.add<CreditRoll>(SceneState::Credit);
 
