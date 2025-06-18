@@ -306,11 +306,17 @@ void EnemyBase::getDamage(float damage)
 
 		//ダメージを受けた時のノックバック処理
 		if (playerPos.x > body.getPos().x) {
-			body.applyLinearImpulse(Vec2{ -13,0 });
+			
+			body.setVelocity(Vec2{ 0,0 });
+			body.applyLinearImpulse(Vec2{ -KNOCKBACK,0 });
+			
 			img_flipFlg = false;
 		}
 		else {
-			body.applyLinearImpulse(Vec2{ 13,0 });
+
+			body.setVelocity(Vec2{ 0,0 });
+			body.applyLinearImpulse(Vec2{ KNOCKBACK,0 });
+			
 			img_flipFlg = true;
 		}
 	}

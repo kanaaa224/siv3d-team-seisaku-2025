@@ -13,7 +13,7 @@ PlayerHUD::PlayerHUD() :flame_location(0.0, 0.0), hp_location(0.0, 0.0), fontBit
 void PlayerHUD::initialize()
 {
 
-	flame_location = { 20.0, 125.0 };
+	flame_location = { 30.0, 125.0 };
 
 	hp_location = { 195.0,22.0 };
 
