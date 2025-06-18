@@ -7,7 +7,7 @@ enum class SceneState
 {
 	Title,
 	Game,
-	End,
+	Clear,
 	Result,
 	GameOver,
 	Credit

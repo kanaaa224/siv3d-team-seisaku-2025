@@ -186,9 +186,6 @@
     <ClCompile Include="source\Scenes\CreditRoll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scenes\End.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Scenes\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -237,10 +234,10 @@
     <ClCompile Include="source\Scenes\Tutorial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scenes\Result.cpp">
+    <ClCompile Include="source\Characters\Enemies\Effect\GetDamageEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Characters\Enemies\Effect\GetDamageEffect.cpp">
+    <ClCompile Include="source\Scenes\GameClear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -956,9 +953,6 @@
     <ClInclude Include="source\Scenes\CreditRoll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scenes\End.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Scenes\Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1013,10 +1007,10 @@
     <ClInclude Include="source\Scenes\Tutorial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scenes\Result.h">
+    <ClInclude Include="source\Characters\Enemies\Effect\GetDamageEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Characters\Enemies\Effect\GetDamageEffect.h">
+    <ClInclude Include="source\Scenes\GameClear.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

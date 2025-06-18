@@ -3,19 +3,19 @@
 # include "../Common.hpp"
 
 
-// エンドシーン
-class End : public App::Scene
+// リザルトシーン
+class GameClear : public App::Scene
 {
 public:
-	End(const InitData& init);
+	GameClear(const InitData& init);
 
 	void update() override;
 	void draw() const override;
 
 
 private:
-	RoundRect m_startButton{ Arg::center(640, 600), 300, 60, 8 };
-	RoundRect m_exitButton{ Arg::center(640, 480), 300, 60, 8 };
+	RoundRect m_startButton{ Arg::center(450, 600), 300, 60, 8 };
+	RoundRect m_exitButton{ Arg::center(850, 600), 300, 60, 8 };
 
 	Transition m_startTransition{ 0.2s, 0.2s };
 	Transition m_exitTransition{ 0.2s, 0.2s };
@@ -25,5 +25,5 @@ private:
 
 	double m_inactiveTime = 0.0;
 
-	Texture end_background;
+	Texture clear_background;
 };
