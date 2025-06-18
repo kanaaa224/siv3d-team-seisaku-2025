@@ -53,11 +53,13 @@ void GameOver::update()
 
 
 	// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
-	if (controller.buttonDown.down() || KeyDown.down())
+	if (controller.buttonRight.down()
+		 || KeyRight.down())
 	{
 		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
 	}
-	else if (controller.buttonUp.down() || KeyUp.down())
+	else if (controller.buttonLeft.down()
+		|| KeyLeft.down())
 	{
 		m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
 	}

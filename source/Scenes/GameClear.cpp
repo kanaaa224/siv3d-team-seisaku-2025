@@ -4,6 +4,7 @@
 GameClear::GameClear(const InitData& init) : IScene{ init }
 {
 	clear_background = TextureAsset(U"End_Background1");
+	score_fream = TextureAsset(U"Score Frame");
 
 	AudioAsset(U"End_BGM").setVolume(0.3);
 	AudioAsset(U"End_BGM").stop();
@@ -39,14 +40,17 @@ void GameClear::update()
 
 
 	// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
-	if (controller.buttonDown.down() || KeyDown.down())
+	if ( controller.buttonRight.down()
+		 || KeyRight.down())
 	{
 		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
 	}
-	else if (controller.buttonUp.down() || KeyUp.down())
+	else if (controller.buttonLeft.down()
+		|| KeyLeft.down())
 	{
 		m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
 	}
+
 
 	// ボタンのクリック処理
 	// マウス左クリックまたはコントローラーのAボタンで決定
@@ -75,7 +79,9 @@ void GameClear::draw() const
 	// クリア描画
 	FontAsset(U"TitleFont")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 100 });
 	Rect{ Arg::center(Scene::Center()), 550, 350 }.draw(Palette::White);
-	FontAsset(U"TitleFont")(U"あなたのスコアは・・・").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 230 }, Palette::Orange);
+	score_fream.resized(450, 100).draw(415, 190);
+	FontAsset(U"TitleFont")(U"score").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 220 }, Palette::Orange);
+	//スコア描画//
 
 	// ボタン描画
 	{
