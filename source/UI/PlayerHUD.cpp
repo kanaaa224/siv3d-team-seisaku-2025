@@ -19,17 +19,17 @@ void PlayerHUD::initialize()
 
 	frameNames = {
 		U"Attack_Frame",
-		U"Defense_Frame",
-		U"Hpup_Frame",
-		U"Recovery_Frame",
+		//U"Defense_Frame",
+		//U"Hpup_Frame",
+		//U"Recovery_Frame",
 		U"Movement_Frame"
 	};
 
 	iconNames = {
 		U"Buf_Attack",
-		U"Buf_defense",
-		U"Buf_Hpup",
-		U"Buf_recovery",
+		//U"Buf_defense",
+		//U"Buf_Hpup",
+		//U"Buf_recovery",
 		U"Buf_Movement"
 	};
 
@@ -139,20 +139,20 @@ void PlayerHUD::draw() const
 
 
 	//バフのアイコンとフレーム表示
-	//Vec2 start = flame_location; //描画の開始位置　左側
-	//int spacing = 100;            //横間隔
+	Vec2 start = flame_location; //描画の開始位置　左側
+	int spacing = 150;            //横間隔
 
-	//for (size_t i = 0; i < frameNames.size(); ++i)
-	//{
-	//	Vec2 pos = start + Vec2{ spacing * i, 0 };//X方向にずらしたい
+	for (size_t i = 0; i < frameNames.size(); ++i)
+	{
+		Vec2 pos = start + Vec2{ spacing * i, 0 };//X方向にずらしたい
 
-	//	int a = 30;
+		int a = 40;
 
-	//	TextureAsset(frameNames[i]).resized(a, a).drawAt(pos);
-	//	TextureAsset(iconNames[i]).resized(a, a).drawAt(pos);
-	//}
+		TextureAsset(frameNames[i]).resized(a, a).drawAt(pos);
+		TextureAsset(iconNames[i]).resized(a, a).drawAt(pos);
+	}
 
-	//fontBitmap(U"×" + Format(buff_amount)).draw(25, Vec2{ 10, 50 });
+	fontBitmap(U"×" + Format(buff_amount)).draw(25, Vec2{ 10, 50 });
 
 
 
