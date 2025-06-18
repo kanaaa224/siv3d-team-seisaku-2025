@@ -145,6 +145,7 @@ void AssetsRegistration()
 
 	//SE
 	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
+	AudioAsset::Register(U"buff_get_SE", Audio::Stream, U"../assets/sounds/SE/BuffGet.wav");//バフ獲得時SE
 }
 
 void Initialize()
