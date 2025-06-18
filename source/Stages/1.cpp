@@ -113,10 +113,12 @@ void Stage1::update()
 
 				playerHUD->setBossState(vaillant->getState());
 
-				// GameClear or Over 遷移条件
+				// GameClear 遷移条件
 				if (vaillant->getState() == VaillantState::Death)
 				{
 					static bool aaaaa = false;
+
+					//ここでクリアタイムのファイル書き込み
 
 					if (!aaaaa)
 					{
@@ -167,6 +169,7 @@ void Stage1::update()
 			}
 		}
 
+		// GameOver 遷移条件
 		if (player->getplayerstate() == ePlayerState::die)
 		{
 			static bool aaaaa = false;
