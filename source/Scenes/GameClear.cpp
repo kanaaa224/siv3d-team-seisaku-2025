@@ -7,7 +7,7 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	score_fream = TextureAsset(U"Score Frame");
 
 	AudioAsset(U"End_BGM").setVolume(0.3);
-	AudioAsset(U"End_BGM").stop();
+	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
 }

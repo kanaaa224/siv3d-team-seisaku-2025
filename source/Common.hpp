@@ -10,7 +10,8 @@ enum class SceneState
 	Clear,
 	Result,
 	GameOver,
-	Credit
+	Credit,
+	Tutorial
 };
 
 // シーン間で共有するデータ

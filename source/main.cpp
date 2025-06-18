@@ -4,6 +4,7 @@
 # include "Scenes/GameClear.hpp"
 # include "Scenes/GameOver.h"
 # include "Scenes/CreditRoll.h"
+# include "Scenes/Tutorial.h"
 
 
 void AssetsRegistration()
@@ -170,6 +171,7 @@ void Main()
 	manager.add<GameClear>(SceneState::Clear);
 	manager.add<GameOver>(SceneState::GameOver);
 	manager.add<CreditRoll>(SceneState::Credit);
+	manager.add<Tutorial>(SceneState::Tutorial);
 
 	manager.init(SceneState::Title, 0.5s);
 
