@@ -142,10 +142,12 @@ void AssetsRegistration()
 	AudioAsset::Register(U"Enemy_dies_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDies.wav");//敵が死ぬ音
 	AudioAsset::Register(U"Enemy_damage_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");//Enemyがダメージをうける音
 	AudioAsset::Register(U"Enemy_attack_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyAttack.wav");//空飛ぶ敵の攻撃音
+	AudioAsset::Register(U"Enemy_find_SE", Audio::Stream, U"../assets/sounds/EnemySE/hakkenn2.wav");//敵orプレイヤー発見時SE(hakkenn2.wavの1or2で音変更）
 
 	//SE
 	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
 	AudioAsset::Register(U"buff_get_SE", Audio::Stream, U"../assets/sounds/SE/BuffGet.wav");//バフ獲得時SE
+	
 }
 
 void Initialize()
