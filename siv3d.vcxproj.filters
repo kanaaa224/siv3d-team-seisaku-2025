@@ -234,7 +234,7 @@
     <ClCompile Include="source\Scenes\Tutorial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Characters\Enemies\Effect\GetDamageEffect.cpp">
+    <ClCompile Include="source\Characters\Enemies\Effect\BuffSpawnEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Scenes\GameClear.cpp">
@@ -1007,7 +1007,7 @@
     <ClInclude Include="source\Scenes\Tutorial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Characters\Enemies\Effect\GetDamageEffect.h">
+    <ClInclude Include="source\Characters\Enemies\Effect\BuffSpawnEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\GameClear.hpp">

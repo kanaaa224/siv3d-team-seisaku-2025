@@ -8,11 +8,11 @@
 
 #define IMG_CHANGE_TIME 0.1//画像切替時間
 
-class GetDamageEffect
+class BuffSpawnEffect
 {
 public:
-	GetDamageEffect(P2World& world, const Vec2& postion, ObjectBase& ownerClass);
-	~GetDamageEffect();
+	BuffSpawnEffect(P2World& world, const Vec2& postion, ObjectBase& ownerClass);
+	~BuffSpawnEffect();
 
 	void update();
 	void draw() const;
