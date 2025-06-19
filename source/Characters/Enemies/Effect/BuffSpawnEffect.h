@@ -8,7 +8,7 @@
 
 #define IMG_CHANGE_TIME 0.1//画像切替時間
 
-class BuffSpawnEffect
+class BuffSpawnEffect : public ObjectBase
 {
 public:
 	BuffSpawnEffect(P2World& world, const Vec2& postion, ObjectBase& ownerClass);
@@ -29,5 +29,7 @@ private:
 	double imgChange_ct;//画像切替の計測用
 
 	bool animationEndFlg;//画像が最後の分割領域にきたか
+
+	ObjectBase* owner;
 };
 

@@ -88,6 +88,7 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"Effect 1 27",  { U"Effect" } }, U"../assets/images/effect/1/27.png");
 		TextureAsset::Register({ U"Excalimation Mark",  { U"Effect" } }, U"../assets/images/effect/excalimation mark2.png");
 		TextureAsset::Register({ U"SmallHit",  { U"Effect" } }, U"../assets/images/effect/Hit/Effect_SmallHit_1_532x528.png");
+		TextureAsset::Register({ U"BuffSpawn",  { U"Effect" } }, U"../assets/images/effect/2/673.png");
 	}
 
 	//GameUI
