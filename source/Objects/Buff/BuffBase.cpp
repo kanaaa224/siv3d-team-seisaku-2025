@@ -1,11 +1,19 @@
 ﻿#include "BuffBase.hpp"
 //Player
 #include "../../Characters/Player.hpp"
+//Stage
+#include "../../Stages/1.hpp"
+//effect
+#include "../../Characters/Enemies/Effect/BuffSpawnEffect.h"
 
 BuffBase::BuffBase(P2World& world, const Vec2& position) :
 	ObjectBase(world, position)//リスポーン位置
 {
 	size = Vec2{ 25.0,25.0 };
+
+	//エフェクト
+	Stage* stage = Stage::GetInstance();
+	stage->createObject<BuffSpawnEffect>(position, *this, U"");
 }
 
 BuffBase::~BuffBase()

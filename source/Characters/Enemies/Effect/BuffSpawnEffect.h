@@ -4,7 +4,7 @@
 #include "../../../Objects/Base.hpp"
 
 #define IMG_SIZE 64  //縦横64サイズの画像
-#define IMG_RESIZE 50//サイズ変更時の値
+#define IMG_RESIZE 80//サイズ変更時の値
 
 #define IMG_CHANGE_TIME 0.1//画像切替時間
 
