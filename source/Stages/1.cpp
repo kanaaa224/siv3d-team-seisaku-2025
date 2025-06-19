@@ -64,6 +64,12 @@ void Stage1::update()
 
 	PlayerHUD* playerHUD = PlayerHUD::GetInstance();
 
+	// PlayerHUDの進行度UIの開始X座標と終了X座標を設定
+	// プレイヤーの開始X座標
+	playerHUD->player_game_world_start_x = 100.0;
+	// ボスの生成X座標（進捗度UIのゴール地点）
+	playerHUD->player_game_world_end_x = (Scene::Width() / 2) + 4900.0; // Vaillantの生成位置と合わせる
+
 	for (const auto& object : objects)
 	{
 		if ((player = dynamic_cast<Player*>(object))) break;
@@ -113,10 +119,12 @@ void Stage1::update()
 
 				playerHUD->setBossState(vaillant->getState());
 
-				// GameClear or Over 遷移条件
+				// GameClear 遷移条件
 				if (vaillant->getState() == VaillantState::Death)
 				{
 					static bool aaaaa = false;
+
+					//ここでクリアタイムのファイル書き込み
 
 					if (!aaaaa)
 					{
@@ -167,6 +175,7 @@ void Stage1::update()
 			}
 		}
 
+		// GameOver 遷移条件
 		if (player->getplayerstate() == ePlayerState::die)
 		{
 			static bool aaaaa = false;
@@ -204,6 +213,7 @@ void Stage1::update()
 		playerHUD->setPlayerVel(player->getBody().getVelocity());
 		playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 		playerHUD->setBossEreaFlg(BossEreaflg);
+		playerHUD->setPlayerPosition(player->getBody().getPos());
 	}
 	else
 	{

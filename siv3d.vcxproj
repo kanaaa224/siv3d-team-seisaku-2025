@@ -116,7 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Scenes\GameClear.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Effect\GetDamageEffect.cpp" />
+    <ClCompile Include="source\Characters\Enemies\Effect\BuffSpawnEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\CloudOfDustEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\EnemyBase.cpp" />
@@ -358,7 +358,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scenes\GameClear.hpp" />
-    <ClInclude Include="source\Characters\Enemies\Effect\GetDamageEffect.h" />
+    <ClInclude Include="source\Characters\Enemies\Effect\BuffSpawnEffect.h" />
     <ClInclude Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.h" />
     <ClInclude Include="source\Characters\Base.hpp" />
     <ClInclude Include="source\Characters\Enemies\Effect\CloudOfDustEffect.h" />

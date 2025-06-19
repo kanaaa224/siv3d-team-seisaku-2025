@@ -11,6 +11,7 @@
 #include "../../Objects/Ammo.hpp"
 //effect
 #include "Effect/ExclamationMarkEffect.h"
+#include "Effect/BuffSpawnEffect.h"
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
@@ -89,6 +90,10 @@ void EnemyBase::update()
 	if (KeyE.pressed() && Key5.pressed()) {//(E + 5)でビックリマーク生成
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<ExclamationMarkEffect>(pos, *this);
+	}
+	if (KeyE.pressed() && Key6.pressed()) {//(E + 6)でバフスポーンエフェクト生成
+		Stage* stage = Stage::GetInstance();
+		stage->createObject<BuffSpawnEffect>(pos, *this, U"green");
 	}
 #endif // DEBUG
 }
@@ -306,11 +311,17 @@ void EnemyBase::getDamage(float damage)
 
 		//ダメージを受けた時のノックバック処理
 		if (playerPos.x > body.getPos().x) {
-			body.applyLinearImpulse(Vec2{ -130,0 });
+			
+			body.setVelocity(Vec2{ 0,0 });
+			body.applyLinearImpulse(Vec2{ -KNOCKBACK,0 });
+			
 			img_flipFlg = false;
 		}
 		else {
-			body.applyLinearImpulse(Vec2{ 130,0 });
+
+			body.setVelocity(Vec2{ 0,0 });
+			body.applyLinearImpulse(Vec2{ KNOCKBACK,0 });
+			
 			img_flipFlg = true;
 		}
 	}
