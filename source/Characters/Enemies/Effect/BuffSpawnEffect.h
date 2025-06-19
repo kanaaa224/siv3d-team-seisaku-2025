@@ -3,15 +3,23 @@
 //親クラス
 #include "../../../Objects/Base.hpp"
 
-#define IMG_SIZE 32  //縦横32サイズの画像
+#define IMG_SIZE 64  //縦横64サイズの画像
 #define IMG_RESIZE 50//サイズ変更時の値
 
 #define IMG_CHANGE_TIME 0.1//画像切替時間
 
+//色ごとのmargin位置
+#define BUFF_EFFECT_COLOR_WHITE  320 //白
+#define BUFF_EFFECT_COLOR_RED    0   //赤
+#define BUFF_EFFECT_COLOR_PURPLE 64  //紫
+#define BUFF_EFFECT_COLOR_BLUE   128 //青
+#define BUFF_EFFECT_COLOR_GREEN  192 //緑
+#define BUFF_EFFECT_COLOR_ORANGE 256 //オレンジ
+
 class BuffSpawnEffect : public ObjectBase
 {
 public:
-	BuffSpawnEffect(P2World& world, const Vec2& postion, ObjectBase& ownerClass);
+	BuffSpawnEffect(P2World& world, const Vec2& postion, ObjectBase& ownerClass, String color);
 	~BuffSpawnEffect();
 
 	void update();
@@ -31,5 +39,9 @@ private:
 	bool animationEndFlg;//画像が最後の分割領域にきたか
 
 	ObjectBase* owner;
+
+private:
+	//エフェクトの色設定
+	Vec2 setEffectColor(String color);
 };
 
