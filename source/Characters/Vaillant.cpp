@@ -437,7 +437,7 @@ void Vaillant::onHit(ObjectBase& object)
 			{
 				if (state <= VaillantState::Attack)
 				{
-					if (!damaged) player->applyDamage(jumped ? 5 : 10);
+					if (!damaged) player->applyDamage(jumped ? 5.0f : 10.0f);
 
 					object.getBody().applyLinearImpulse(object.getBody().getPos().x < position.x ? Vec2{ -50, 0 } : Vec2{ 50, 0 });
 				}
@@ -447,6 +447,8 @@ void Vaillant::onHit(ObjectBase& object)
 
 			player_hit = true;
 		}
+
+		if (state == VaillantState::Attack && attack_type == VaillantAttackType::Rush) player->applyDamage(20.0f);
 	}
 
 	if (Wall* wall = dynamic_cast<Wall*>(&object))
