@@ -1,6 +1,6 @@
 ﻿# include <Siv3D.hpp>
 # include "PlayerHUD.hpp"
-# include "../Utils/CustomImageLoader.hpp" // カスタム画像ローダー（もし必要であれば）
+# include "../Utils/CustomImageLoader.hpp"
 
 
 PlayerHUD* PlayerHUD::instance = nullptr;
@@ -47,16 +47,16 @@ void PlayerHUD::initialize()
 	Abutton = button[5];
 	Bbutton = button[15];
 
-	// タイマー関連の変数を初期化
+	//タイマー関連の変数を初期化
 	timerStarted = false;
 	startTime = 0.0;
 	GO = false;
 	m_elapsedTime = 0.0;
 
-	// P_player_UIの画像をアニメーション用にロード (288x45のフレームサイズで分割)
+	//アニメーション用にロード 
 	run_animation = LoadDivGraph(U"P_player_UI", Size(288, 45));
 
-	// アニメーションの初期状態を設定
+	//アニメーションの初期状態を設定
 	animation_number = 0;
 	animation_time = 0.0;
 }
@@ -64,13 +64,13 @@ void PlayerHUD::initialize()
 
 void PlayerHUD::update()
 {
-	// バフの処理
+	//バフの処理
 	if (KeyP.down())
 	{
 		buff_amount++;
 	}
 
-	// タイマーの開始処理
+	//タイマーの開始処理
 	if (!GO && player_state != 0)
 	{
 		GO = true;
@@ -78,7 +78,7 @@ void PlayerHUD::update()
 	if (GO && !timerStarted)
 	{
 		timerStarted = true;
-		startTime = Scene::Time(); // タイマーの開始時間を記録
+		startTime = Scene::Time(); //タイマーの開始時間を記録
 	}
 
 	// タイマーが開始されていた場合の経過時間更新とUIアニメーションフレームの更新
@@ -86,9 +86,9 @@ void PlayerHUD::update()
 	{
 		m_elapsedTime = Scene::Time() - startTime;
 
-		// 進捗度UIのアニメーションフレームを更新
+		//進捗度UIのアニメーションフレームを更新
 		animation_time += Scene::DeltaTime();
-		const double frame_duration = 0.1; // 各フレームを表示する時間（秒）
+		const double frame_duration = 0.1; //各フレームを表示する時間（秒）
 
 		if (animation_time >= frame_duration)
 		{
@@ -98,14 +98,14 @@ void PlayerHUD::update()
 			}
 			else
 			{
-				animation_number = 0; // アニメーションフレームがない場合は0にリセット
+				animation_number = 0; //アニメーションフレームがない場合は0にリセット
 			}
-			animation_time = 0.0; // フレーム時間が経過したらリセット
+			animation_time = 0.0; //フレーム時間が経過したらリセット
 		}
 	}
 	else
 	{
-		// タイマーが開始されていない場合はアニメーションを停止し、最初のフレームに戻す
+		//タイマーが開始されていない場合はアニメーションを停止し、最初のフレームに戻す
 		animation_number = 0;
 		animation_time = 0.0;
 	}
@@ -113,12 +113,12 @@ void PlayerHUD::update()
 
 void PlayerHUD::draw() const
 {
-	// 進捗度UIの描画
-	// ボス地点のUI
+	//進捗度UIの描画
+	//ボス地点のUI
 	TextureAsset(U"P_base_UI").resized(90, 92).drawAt(950, 100);
 	TextureAsset(U"P_boss_UI").resized(90, 92).drawAt(950, 65);
 
-	// スタート地点のUI
+	//スタート地点のUI
 	TextureAsset(U"P_base_UI").resized(90, 92).drawAt(420, 100);
 
 	//P_player_UIのアニメーション描画
@@ -141,10 +141,10 @@ void PlayerHUD::draw() const
 
 	if (!run_animation.isEmpty())
 	{
-		run_animation[animation_number].resized(318, 75).drawAt(player_current_pos);
+		run_animation[animation_number].resized(400, 75).drawAt(player_current_pos);
 	}
 
-	// その他のUI要素の描画
+	//その他のUI要素の描画
 	Vec2 position{ 40, 40 };
 	Vec2 size{ 110, 110 };
 	Vec2 HP_size{ 200, 35 };
@@ -156,17 +156,17 @@ void PlayerHUD::draw() const
 	double PlayerHP = player_hp;
 	double gaugeWidth = static_cast<double>(PlayerHP) / PlayerMaxHP * 180;
 
-	// キャラクターフレームとアイコン
+	//キャラクターフレームとアイコン
 	TextureAsset(U"Character Frame").resized(size).drawAt(position);
 	TextureAsset(U"Character Icon").resized(size.x - 10, size.y - 10).drawAt(position);
 
-	// HPフレームとHPバー
+	//HPフレームとHPバー
 	TextureAsset(U"HP_frame").resized(HP_size).drawAt(hp_location);
 	Vec2 bar_size{ full_width, HP_size.y - 25 };
 	Vec2 bar_top_left = hp_location - Vec2{ bar_size.x / 2.0, bar_size.y / 2.0 };
 	TextureAsset(U"HP_bar").resized(gaugeWidth, bar_size.y).draw(bar_top_left);
 
-	// タイムフレームと表示
+	//タイムフレームと表示
 	TextureAsset(U"time_frame").resized(200, 50).drawAt(195, 70);
 	if (timerStarted)
 	{
@@ -182,7 +182,7 @@ void PlayerHUD::draw() const
 			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
 	}
 
-	// バフのアイコンとフレーム表示
+	//バフのアイコンとフレーム表示
 	Vec2 start = flame_location;
 	int spacing = 150;
 	for (size_t i = 0; i < frameNames.size(); ++i)
@@ -194,8 +194,8 @@ void PlayerHUD::draw() const
 	}
 	fontBitmap(U"×" + Format(buff_amount)).draw(25, Vec2{ 10, 50 });
 
-	// プレイヤーの操作説明UI
-	if (player_vel.y == 0.0) // 地面にいる場合
+	//プレイヤーの操作説明UI
+	if (player_vel.y == 0.0) //地面にいる場合
 	{
 		FontAsset(U"TitleFont")(U"攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1110, 40 });
 		xbutton.resized(35, 35).drawAt(1205, 45);
@@ -204,26 +204,26 @@ void PlayerHUD::draw() const
 		FontAsset(U"TitleFont")(U"ジャンプ：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1130, 120 });
 		Abutton.resized(35, 35).drawAt(1206, 125);
 	}
-	else // 空中にいる場合
+	else //空中にいる場合
 	{
 		FontAsset(U"TitleFont")(U"ジャンプ攻撃：").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 1110, 40 });
 		xbutton.resized(35, 35).drawAt(1210, 45);
 		Bbutton.resized(35, 35).drawAt(1245, 45);
 	}
 
-	// 回避ボタンのクールタイム表示
+	//回避ボタンのクールタイム表示
 	if (player_avoid > 0.0)
 	{
 		Avoid_button_frame.resized(50, 50).drawAt(340, 75);
-		Avoid_button_image.resized(55, 55).drawAt(340, 75, ColorF{ 0.5, 0.5, 0.5 }); // クールタイム中→暗く表示
+		Avoid_button_image.resized(55, 55).drawAt(340, 75, ColorF{ 0.5, 0.5, 0.5 }); //クールタイム中→暗く表示
 	}
 	else
 	{
 		Avoid_button_frame.resized(50, 50).drawAt(340, 70);
-		Avoid_button_image.resized(55, 55).drawAt(340, 70); // クールタイム中ではない→通常表示
+		Avoid_button_image.resized(55, 55).drawAt(340, 70); //クールタイム中ではない→通常表示
 	}
 
-	// ゲームクリアまたはゲームオーバーの表示
+	//ゲームクリアまたはゲームオーバーの表示
 	if (boss_erea_flg == true && boss_state == VaillantState::Death)
 	{
 		FontAsset(U"TitleFont")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 200, Vec2{ 640, 200 });
@@ -245,16 +245,16 @@ PlayerHUD* PlayerHUD::GetInstance()
 
 void PlayerHUD::FileSave(String ClearTime)
 {
-	// 書き込み用のテキストファイルをオープンする
+	//書き込み用のテキストファイルをオープンする
 	TextWriter wirter{ U"../assets/text/ClearTime.txt" };
 
-	// 例外スロー確認
+	//例外スロー確認
 	if (!wirter)
 	{
 		throw Error{ U"Failed to open `ClearTime.txt`" };
 	}
 
-	// 1行書き込み(改行なし)
+	//1行書き込み(改行なし)
 	wirter.write(ClearTime);
 	wirter.close();
 }
@@ -263,12 +263,12 @@ void PlayerHUD::resetTime()
 {
 	m_elapsedTime = 0.0;
 
-	// タイマー関連の変数を初期化
+	//タイマー関連の変数を初期化
 	timerStarted = false;
 	startTime = 0.0;
 	GO = false;
 	m_elapsedTime = 0.0;
-	animation_number = 0; // アニメーションを最初のフレームにリセット
-	animation_time = 0.0; // アニメーション時間をリセット
-	player_pos = Vec2(0.0, 0.0); // プレイヤー位置もリセット (必要であれば)
+	animation_number = 0; //アニメーションを最初のフレームにリセット
+	animation_time = 0.0; //アニメーション時間をリセット
+	player_pos = Vec2(0.0, 0.0); //プレイヤー位置もリセット (必要であれば)
 }

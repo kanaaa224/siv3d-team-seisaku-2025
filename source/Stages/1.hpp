@@ -28,7 +28,7 @@ private:
 
 	static int state;
 
-	//追加: ステージの進捗度計算に必要なワールド座標
+	//ステージの進捗度計算に必要なワールド座標
 	double m_stageStartX;
 	double m_stageEndX;//Bossの生成位置と同じにする
 };
