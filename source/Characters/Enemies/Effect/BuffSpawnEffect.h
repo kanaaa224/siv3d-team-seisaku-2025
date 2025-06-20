@@ -4,9 +4,9 @@
 #include "../../../Objects/Base.hpp"
 
 #define IMG_SIZE 64  //縦横64サイズの画像
-#define IMG_RESIZE 80//サイズ変更時の値
+#define IMG_RESIZE 90//サイズ変更時の値
 
-#define IMG_CHANGE_TIME 0.1//画像切替時間
+#define IMG_CHANGE_TIME 0.05//画像切替時間
 
 //色ごとのmargin位置
 #define BUFF_EFFECT_COLOR_WHITE  320 //白
