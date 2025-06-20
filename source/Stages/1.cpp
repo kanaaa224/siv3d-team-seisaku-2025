@@ -66,9 +66,9 @@ void Stage1::update()
 
 	// PlayerHUDの進行度UIの開始X座標と終了X座標を設定
 	// プレイヤーの開始X座標
-	playerHUD->player_game_world_start_x = 100.0;
+	//playerHUD->player_game_world_start_x = 100.0;
 	// ボスの生成X座標（進捗度UIのゴール地点）
-	playerHUD->player_game_world_end_x = (Scene::Width() / 2) + 4900.0; // Vaillantの生成位置と合わせる
+	//playerHUD->player_game_world_end_x = (Scene::Width() / 2) + 4900.0; // Vaillantの生成位置と合わせる
 
 	for (const auto& object : objects)
 	{
