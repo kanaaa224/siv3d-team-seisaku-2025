@@ -4,6 +4,7 @@
 # include "Scenes/GameClear.hpp"
 # include "Scenes/GameOver.h"
 # include "Scenes/CreditRoll.h"
+# include "Scenes/Tutorial.h"
 
 
 void AssetsRegistration()
@@ -58,7 +59,7 @@ void AssetsRegistration()
 
 	TextureAsset::Register({ U"Ammo",       { U"Enemy" } }, U"../assets/images/enemy/flotte/Energy ball/EnergyBall.png");
 	TextureAsset::Register({ U"Ammo Impact",{ U"Enemy" } }, U"../assets/images/enemy/flotte/Energy ball/energyBallImpact.png");
-	
+
 	{ // ボス 1
 		TextureAsset::Register({ U"Vaillant Idle",   { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/idle.png");
 		TextureAsset::Register({ U"Vaillant Walk",   { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/walk.png");
@@ -68,9 +69,9 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"Vaillant Tentacles 1", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/attack-2-a.png");
 
 		AudioAsset::Register(U"Vaillant Attack", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");
-		AudioAsset::Register(U"Vaillant Death",  Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
+		AudioAsset::Register(U"Vaillant Death", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
 		AudioAsset::Register(U"Vaillant Damage", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");
-		AudioAsset::Register(U"Vaillant Jump",   Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
+		AudioAsset::Register(U"Vaillant Jump", Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
 	}
 
 	{ // バフ
@@ -105,7 +106,7 @@ void AssetsRegistration()
 
 	TextureAsset::Register({ U"Buf_Attack",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_attack_power_up.png");
 	TextureAsset::Register({ U"Attack_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_attack_power.png");
-	
+
 	TextureAsset::Register({ U"Buf_defense",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_Defense_power_up.png");
 	TextureAsset::Register({ U"Defense_Frame",  { U"UI" } }, U"../assets/images/ui/buf_frames/frame_Defense_power.png");
 
@@ -148,6 +149,11 @@ void AssetsRegistration()
 	//SE
 	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
 	AudioAsset::Register(U"buff_get_SE", Audio::Stream, U"../assets/sounds/SE/BuffGet.wav");//バフ獲得時SE
+
+	//進捗度UI
+	TextureAsset::Register({ U"P_boss_UI",  { U"UI" } }, U"../assets/images/ui/progress/Vaillant_idle_1.png");//ボスステージ
+	TextureAsset::Register({ U"P_base_UI",  { U"UI" } }, U"../assets/images/ui/progress/boss_base.png");//ボスの土台
+	TextureAsset::Register({ U"P_player_UI",  { U"UI" } }, U"../assets/images/ui/progress/run_288_45_8.png");//player
 	
 }
 
@@ -171,8 +177,9 @@ void Main()
 	manager.add<GameClear>(SceneState::Clear);
 	manager.add<GameOver>(SceneState::GameOver);
 	manager.add<CreditRoll>(SceneState::Credit);
+	manager.add<Tutorial>(SceneState::Tutorial);
 
-	manager.init(SceneState::Title, 0.5s);
+	manager.init(SceneState::Game, 0.5s);
 
 	while (System::Update())
 	{
