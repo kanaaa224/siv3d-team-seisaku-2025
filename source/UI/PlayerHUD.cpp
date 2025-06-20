@@ -11,13 +11,12 @@ PlayerHUD::PlayerHUD()
 	, fontBitmap{ 48 }
 	, player_hp(100)
 	, GO(false)
-	, animation_number(0) // 進捗度UIアニメーションの現在のフレーム番号を初期化
-	, animation_time(0.0) // 進捗度UIアニメーションの経過時間を初期化
-	, max_animation_time(30.0) // 進捗度UIのアニメーションの最大時間（秒）。これは時間ベースの移動ではなく、アニメーションの速度制御に使用されます。
-	// ゲーム内のプレイヤーのX座標の範囲を設定 (ゲームの実際のレベルの長さに合わせて調整してください)
+	, animation_number(0)
+	, animation_time(0.0)
+	, max_animation_time(30.0)
 	, player_game_world_start_x(0.0)
-	, player_game_world_end_x(2000.0)
-	, player_pos(0.0, 0.0) // player_pos を初期化
+	, player_game_world_end_x(0.0)
+	, player_pos(0.0, 0.0)
 {
 	initialize();
 }
@@ -115,30 +114,29 @@ void PlayerHUD::update()
 void PlayerHUD::draw() const
 {
 	// 進捗度UIの描画
-	// ボス地点のUI (中心座標 950, 100)
+	// ボス地点のUI
 	TextureAsset(U"P_base_UI").resized(90, 92).drawAt(950, 100);
 	TextureAsset(U"P_boss_UI").resized(90, 92).drawAt(950, 65);
 
-	// スタート地点のUI (中心座標 420, 100)
+	// スタート地点のUI
 	TextureAsset(U"P_base_UI").resized(90, 92).drawAt(420, 100);
 
-	// P_player_UIのアニメーション描画
+	//P_player_UIのアニメーション描画
 	double progress_rate = 0.0;
-	// プレイヤーの現在のX座標を player_pos から取得
+	//プレイヤーの現在のX座標を player_pos から取得
 	const double player_current_x = player_pos.x;
 
-	// プレイヤーのX座標をゲームの世界の範囲にマッピングして進行度を計算
+	//進捗度を計算
 	if (player_game_world_end_x > player_game_world_start_x)
 	{
 		progress_rate = Clamp((player_current_x - player_game_world_start_x) / (player_game_world_end_x - player_game_world_start_x), 0.0, 1.0);
 	}
 
 	// プレイヤーUIの開始位置と終了位置を定義 (進捗度UI上の表示位置)
-	Vec2 player_ui_start_pos = { 420.0, 100.0 }; // P_base_UI の中心X座標に対応
-	Vec2 player_ui_end_pos = { 950.0, 65.0 };   // P_boss_UI の中心X座標に対応
+	Vec2 player_ui_start_pos = { 420.0, 100.0 };//P_base_UI の中心X座標に対応
+	Vec2 player_ui_end_pos = { 950.0, 65.0 };//P_boss_UI の中心X座標に対応
 
 	// 線形補間により、現在の進行度に応じたプレイヤーUIの位置を計算
-	// X座標はプレイヤーの位置に基づいて、Y座標はUIの開始・終了位置を考慮して線形補間
 	Vec2 player_current_pos = player_ui_start_pos.lerp(player_ui_end_pos, progress_rate);
 
 	if (!run_animation.isEmpty())

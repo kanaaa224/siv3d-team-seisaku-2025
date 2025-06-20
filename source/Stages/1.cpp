@@ -27,6 +27,12 @@ void Stage1::initialize()
 	AudioAsset(U"Battle_BGM").setVolume(0.7);
 	AudioAsset(U"Battle_BGM").play();
 
+	// ステージの開始・終了ワールド座標を設定
+	//プレイヤーの初期位を回質店
+	m_stageStartX = 100.0;
+	//Bossの生成位置を終了点
+	m_stageEndX = (Scene::Width() / 2) + 4900.0;
+
 	//ステージオブジェクト
 	createObject<StageBackground>();
 	createObject<Ground>(Vec2{ STAGE1_WIDTH, (Scene::Height() + 5) });
@@ -50,6 +56,7 @@ void Stage1::initialize()
 	BossEreaflg = false;
 	excuted = false;
 	boss_spawn = false;
+
 }
 
 void Stage1::update()
@@ -64,11 +71,8 @@ void Stage1::update()
 
 	PlayerHUD* playerHUD = PlayerHUD::GetInstance();
 
-	// PlayerHUDの進行度UIの開始X座標と終了X座標を設定
-	// プレイヤーの開始X座標
-	//playerHUD->player_game_world_start_x = 100.0;
-	// ボスの生成X座標（進捗度UIのゴール地点）
-	//playerHUD->player_game_world_end_x = (Scene::Width() / 2) + 4900.0; // Vaillantの生成位置と合わせる
+	playerHUD->player_game_world_start_x = m_stageStartX;
+	playerHUD->player_game_world_end_x = m_stageEndX;
 
 	for (const auto& object : objects)
 	{
