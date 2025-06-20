@@ -448,7 +448,7 @@ void Vaillant::onHit(ObjectBase& object)
 			player_hit = true;
 		}
 
-		if (state == VaillantState::Attack && attack_type == VaillantAttackType::Rush) player->applyDamage(20.0f);
+		if (state == VaillantState::Attack && attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Attacking) player->applyDamage(20.0f);
 	}
 
 	if (Wall* wall = dynamic_cast<Wall*>(&object))
