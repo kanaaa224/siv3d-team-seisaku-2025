@@ -398,12 +398,12 @@ void Player::update()
 
 		if (flip_flg == true)  ///攻撃当たり判定
 		{
-			//body.setVelocity(Vec2(-ATTACK_RANGE, 0.0));
+			body.setVelocity(Vec2(0.0, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
 		}
 		else
 		{
-			//body.setVelocity(Vec2(ATTACK_RANGE, 0.0));
+			body.setVelocity(Vec2(0.0, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this);
 		}
 		
@@ -590,11 +590,23 @@ void Player::onHit(ObjectBase& object)
 	if (Wall* wall = dynamic_cast<Wall*>(&object))
 	{
 		wall_hit = true;
+		//body.applyLinearImpulse(Vec2(-100.0, 0.0));
+		/*if (!flip_flg)
+		{
+			body.applyLinearImpulse(Vec2(1.0, 0.0));
+		}
+		else if(flip_flg)
+		{
+			body.applyLinearImpulse(Vec2(-100.0, 0.0));
+		}*/
+		
 	}
 	else
 	{
 		wall_hit = false;
 	}
+
+
 }
 
 void Player::onDamaged(float amount)
@@ -731,15 +743,21 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else if (std::abs(lx) > 0.2)  // デッドゾーン 0.2
 	{
-		// 移動速度をスティック傾きに応じて調整
-		body.setVelocity(Vec2(lx * VELOCITY + movement_speed, body.getVelocity().y));
+		if (wall_hit == false)
+		{
+			// 移動速度をスティック傾きに応じて調整
+			body.setVelocity(Vec2(lx * VELOCITY + movement_speed, body.getVelocity().y));
+		}
 
 		// 左右の向き判定
 		flip_flg = (lx < 0);
 	}
 	else
 	{
-		body.setVelocity(Vec2(0.0,body.getVelocity().y));
+		if (wall_hit == true)
+		{
+			body.setVelocity(Vec2(0.0, body.getVelocity().y));
+		}
 
 		playerState = ePlayerState::idle;
 	}
