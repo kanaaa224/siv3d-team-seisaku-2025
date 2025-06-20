@@ -408,11 +408,11 @@ void Vaillant::draw() const
 
 		RoundRect balloonRect{ balloonPos, balloonSize, 8 };
 
-		balloonRect.draw(Palette::White).drawFrame(1, 0, Palette::Black);
+		balloonRect.draw({ 0.0, 0.0, 0.0, 0.5 });
 
 		static const Font font{ 28 };
 
-		font(U"!").drawAt(balloonRect.center(), Palette::Black);
+		font(U"!").drawAt(balloonRect.center(), Palette::Red);
 	}
 
 #ifdef _DEBUG
