@@ -80,6 +80,11 @@ void EnemyBase::update()
 	hpbar.damage(hpbar.getHP() - hp);//HPの差分処理
 	hpbar.update();//hpバーの更新処理
 
+	//ビックリマークのFlgを攻撃準備以外は下げる
+	if (nowState != ATTACK_POSITION) {
+		doOnecSpawnExclamationMarkFlg = false;
+	}
+
 #ifdef _DEBUG
 	if (KeyE.pressed() && Key9.pressed()) {//(E + 9)でhpを0にする
 		hp = 0;
@@ -453,10 +458,5 @@ void EnemyBase::spawnExclamationMarkEffect(ObjectBase& obj)
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<ExclamationMarkEffect>(spawnPos, obj);
 		doOnecSpawnExclamationMarkFlg = true;
-	}
-	else {
-		if (nowState != ATTACK_POSITION) {
-			doOnecSpawnExclamationMarkFlg = false;
-		}
 	}
 }
