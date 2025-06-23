@@ -10,11 +10,19 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
+
+	ClearTime = 0.0;
 }
 
 void GameClear::update()
 {
 	auto controller = XInput(0); //コントローラーを取得
+
+	static bool Oneflg = true;
+	if (Oneflg)
+	{
+		FileOpenByTimer();
+	}
 
 	// ボタンの更新
 	{
@@ -82,7 +90,7 @@ void GameClear::draw() const
 	score_fream.resized(450, 100).draw(415, 190);
 	FontAsset(U"TitleFont")(U"score").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 220 }, Palette::Orange);
 	//スコア描画//
-
+	Print << U"クリアスコア描画" << ClearTime;
 	// ボタン描画
 	{
 		// PLAYボタン
@@ -105,4 +113,22 @@ void GameClear::draw() const
 		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
 		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
+}
+
+void GameClear::FileOpenByTimer()
+{
+	//ファイルをオープンする
+	TextReader reader{ U"../assets/text/ClearTime.txt" };
+
+	//例外スロー確認
+	if (!reader)
+	{
+		throw Error{ U"Failed to open `ClearTime.txt`" };
+	}
+
+	//テキストファイルの内容を全て読み込む
+	const String text = reader.readAll();
+
+	//String型をdouble型に変換
+	ClearTime = Parse<double>(text);
 }

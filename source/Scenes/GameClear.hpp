@@ -12,7 +12,6 @@ public:
 	void update() override;
 	void draw() const override;
 
-
 private:
 	RoundRect m_startButton{ Arg::center(450, 600), 300, 60, 8 };
 	RoundRect m_exitButton{ Arg::center(850, 600), 300, 60, 8 };
@@ -27,4 +26,10 @@ private:
 
 	Texture clear_background;
 	Texture score_fream;
+
+	double ClearTime;
+
+private:
+
+	void FileOpenByTimer();
 };

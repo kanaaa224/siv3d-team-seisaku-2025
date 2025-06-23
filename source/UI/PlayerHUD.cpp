@@ -52,6 +52,7 @@ void PlayerHUD::initialize()
 	startTime = 0.0;
 	GO = false;
 	m_elapsedTime = 0.0;
+	elapsedTime = 0.0;
 
 	//アニメーション用にロード 
 	run_animation = LoadDivGraph(U"P_player_UI", Size(288, 45));
@@ -102,12 +103,19 @@ void PlayerHUD::update()
 			}
 			animation_time = 0.0; //フレーム時間が経過したらリセット
 		}
+
+		elapsedTime = Scene::Time() - startTime;
 	}
 	else
 	{
 		//タイマーが開始されていない場合はアニメーションを停止し、最初のフレームに戻す
 		animation_number = 0;
 		animation_time = 0.0;
+	}
+
+	if (boss_state == VaillantState::Death)
+	{
+		FileSave(elapsedTime);
 	}
 }
 
@@ -171,7 +179,7 @@ void PlayerHUD::draw() const
 	if (timerStarted)
 	{
 		const Font& timeFont = FontAsset(U"TitleFont");
-		double elapsedTime = Scene::Time() - startTime;
+		//double elapsedTime = Scene::Time() - startTime;
 		timeFont(U"{:.2f}"_fmt(elapsedTime)).drawAt(30, Vec2{ 195, 70 }, ColorF{ 0.1, 0.1, 0.1 });
 		FontAsset(U"TitleFont")(U"{:.2f}"_fmt(elapsedTime)).drawAt(TextStyle::
 			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
@@ -243,7 +251,7 @@ PlayerHUD* PlayerHUD::GetInstance()
 	return instance;
 }
 
-void PlayerHUD::FileSave(String ClearTime)
+void PlayerHUD::FileSave(double ClearTime)
 {
 	//書き込み用のテキストファイルをオープンする
 	TextWriter wirter{ U"../assets/text/ClearTime.txt" };
@@ -255,7 +263,7 @@ void PlayerHUD::FileSave(String ClearTime)
 	}
 
 	//1行書き込み(改行なし)
-	wirter.write(ClearTime);
+	wirter.write(Format(ClearTime));
 	wirter.close();
 }
 
@@ -271,4 +279,5 @@ void PlayerHUD::resetTime()
 	animation_number = 0; //アニメーションを最初のフレームにリセット
 	animation_time = 0.0; //アニメーション時間をリセット
 	player_pos = Vec2(0.0, 0.0); //プレイヤー位置もリセット (必要であれば)
+	elapsedTime = 0.0;
 }

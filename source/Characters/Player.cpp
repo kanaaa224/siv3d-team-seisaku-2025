@@ -735,8 +735,6 @@ void Player::movement(s3d::detail::XInput_impl controller)
 			body.setVelocity(Vec2(VELOCITY + movement_speed, body.getVelocity().y));
 		}
 
-		body.setVelocity(Vec2(VELOCITY + movement_speed, body.getVelocity().y));
-
 		flip_flg = false;
 
 		//移動状態のときボタンを押されたら
@@ -754,10 +752,7 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	}
 	else
 	{
-		if (wall_hit == true)
-		{
-			body.setVelocity(Vec2(0.0, body.getVelocity().y));
-		}
+		body.setVelocity(Vec2(0.0, body.getVelocity().y));
 
 		playerState = ePlayerState::idle;
 	}

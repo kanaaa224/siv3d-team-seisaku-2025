@@ -65,7 +65,7 @@ private:
 
 	Player* m_player;
 
-	
+	double elapsedTime;
 	double displayed_hp;
 	double hp_decrease_speed;
 
@@ -77,7 +77,7 @@ private:
 
 	bool GO = false;//タイマースタートフラグ
 
-	void FileSave(String ClearTime);//クリアタイム保存関数
+	void FileSave(double ClearTime);//クリアタイム保存関数
 
 	//進捗度UIプレイヤーアニメーション関連
 	Array <TextureRegion> run_animation; //アニメーションフレーム
