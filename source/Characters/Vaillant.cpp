@@ -218,7 +218,7 @@ void Vaillant::update()
 			);
 		}
 
-		if (!jumped && distance <= 150 && not InRange(body.getVelocity().x, -50.0, 50.0) && !forbid_jump || !distance)
+		if (!jumped && distance <= 150 && not InRange(body.getVelocity().x, -50.0, 50.0) && !forbid_jump || InRange(distance, -1.0, 1.0))
 		{
 			AudioAsset(U"Vaillant Jump").playOneShot();
 
@@ -244,10 +244,8 @@ void Vaillant::update()
 	{
 		state = VaillantState::Move;
 
-		mirrored = body.getVelocity().x > 0.0;
+		mirrored = !(body.getVelocity().x > 0.0);
 	}
-
-	mirrored = !mirrored;
 }
 
 void Vaillant::draw() const
