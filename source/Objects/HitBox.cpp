@@ -74,6 +74,7 @@ void HitBox::onHit(ObjectBase& object)
 	{
 		if (Player *player = dynamic_cast<Player*>(owner)) {
 			enemy->applyDamage(player->GetPlayerAttackDamage());
+			player->SetHitEnemy(true);
 			destroy();
 		}
 	}
@@ -82,7 +83,7 @@ void HitBox::onHit(ObjectBase& object)
 	{
 		if (Player* player = dynamic_cast<Player*>(owner)) {
 			vaillant->applyDamage(player->GetPlayerAttackDamage());
-
+			player->SetHitEnemy(true);
 			//vaillant->getBody().applyLinearImpulse(vaillant->getBody().getPos().x < body.getPos().x ? Vec2{ -10, 0 } : Vec2{ 10, 0 });
 
 			destroy();
@@ -93,7 +94,7 @@ void HitBox::onHit(ObjectBase& object)
 	{
 		if (Player* player = dynamic_cast<Player*>(owner)) {
 			slime->applyDamage(slime->getMaxHP() / 2);
-
+			player->SetHitEnemy(true);
 			destroy();
 		}
 	}

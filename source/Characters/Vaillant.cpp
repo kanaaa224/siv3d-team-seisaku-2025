@@ -213,7 +213,7 @@ void Vaillant::update()
 			);
 		}
 
-		if (!jumped && distance <= 150 && not InRange(body.getVelocity().x, -50.0, 50.0) && !forbid_jump)
+		if (!jumped && distance <= 150 && not InRange(body.getVelocity().x, -50.0, 50.0) && !forbid_jump || !distance)
 		{
 			AudioAsset(U"Vaillant Jump").playOneShot();
 

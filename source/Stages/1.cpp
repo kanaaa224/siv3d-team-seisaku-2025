@@ -173,7 +173,7 @@ void Stage1::update()
 			{
 				if (Wall* wall = dynamic_cast<Wall*>(object))
 				{
-					wall->getBody().setPos(Vec2((camera.getCenter().x - Scene::Width() / 2) + 40.0, 500.0));
+					wall->getBody().setPos(Vec2((camera.getCenter().x - Scene::Width() / 2) + 55.0, 500.0));
 					BossEreaflg = true;
 				}
 			}
@@ -202,7 +202,7 @@ void Stage1::update()
 		// 右壁
 		if (!excuted && BossEreaflg)
 		{
-			createObject<Wall>(Vec2(STAGE1_WIDTH + 20.0, 500.0));
+			createObject<Wall>(Vec2(STAGE1_WIDTH + 15.0, 500.0));
 			excuted = true;
 		}
 
