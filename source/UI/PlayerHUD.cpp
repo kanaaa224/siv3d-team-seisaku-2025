@@ -121,13 +121,28 @@ void PlayerHUD::update()
 
 void PlayerHUD::draw() const
 {
+	// 画像を滑らかに補完
+	const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
+
 	//進捗度UIの描画
 	//ボス地点のUI
-	TextureAsset(U"P_base_UI").resized(90, 92).drawAt(950, 100);
+	TextureAsset(U"P_ishi_silver_UI").resized(80, 40).drawAt(950, 110);
 	TextureAsset(U"P_boss_UI").resized(90, 92).drawAt(950, 65);
 
 	//スタート地点のUI
-	TextureAsset(U"P_base_UI").resized(90, 92).drawAt(420, 100);
+	TextureAsset(U"P_ishi_UI").resized(70, 40).drawAt(420, 100);
+
+	//間の丸いやつ
+	{
+		Vec2 start = Vec2(445.0, 85.0);
+		int space = 20;
+
+		for (int i = 1; i < 23; i++)
+		{
+			Vec2 pos = start + Vec2{ space * i, 0 };
+			TextureAsset(U"P_sphere_black_UI").resized(10, 10).drawAt(pos);
+		}
+	}
 
 	//P_player_UIのアニメーション描画
 	double progress_rate = 0.0;
@@ -141,7 +156,7 @@ void PlayerHUD::draw() const
 	}
 
 	// プレイヤーUIの開始位置と終了位置を定義 (進捗度UI上の表示位置)
-	Vec2 player_ui_start_pos = { 420.0, 100.0 };//P_base_UI の中心X座標に対応
+	Vec2 player_ui_start_pos = { 420.0, 70.0 };//P_base_UI の中心X座標に対応
 	Vec2 player_ui_end_pos = { 950.0, 65.0 };//P_boss_UI の中心X座標に対応
 
 	// 線形補間により、現在の進行度に応じたプレイヤーUIの位置を計算
@@ -149,7 +164,7 @@ void PlayerHUD::draw() const
 
 	if (!run_animation.isEmpty())
 	{
-		run_animation[animation_number].resized(400, 75).drawAt(player_current_pos);
+		run_animation[animation_number].resized(576, 90).drawAt(player_current_pos);
 	}
 
 	//その他のUI要素の描画

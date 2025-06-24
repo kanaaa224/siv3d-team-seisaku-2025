@@ -154,7 +154,10 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"P_boss_UI",  { U"UI" } }, U"../assets/images/ui/progress/Vaillant_idle_1.png");//ボスステージ
 	TextureAsset::Register({ U"P_base_UI",  { U"UI" } }, U"../assets/images/ui/progress/boss_base.png");//ボスの土台
 	TextureAsset::Register({ U"P_player_UI",  { U"UI" } }, U"../assets/images/ui/progress/run_288_45_8.png");//player
-	
+	TextureAsset::Register({ U"P_sphere_black_UI",  { U"UI" } }, U"../assets/images/ui/progress/crystal_sphere_black.png");//player
+	TextureAsset::Register({ U"P_sphere_white_UI",  { U"UI" } }, U"../assets/images/ui/progress/crystal_sphere_white.png");//player
+	TextureAsset::Register({ U"P_ishi_UI",  { U"UI" } }, U"../assets/images/ui/progress/ishi.png");//player
+	TextureAsset::Register({ U"P_ishi_silver_UI",  { U"UI" } }, U"../assets/images/ui/progress/ishi_silver.png");//player
 }
 
 void Initialize()
