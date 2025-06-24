@@ -130,7 +130,11 @@ void Title::draw() const
 
 
 	// タイトル描画
-	FontAsset(U"TitleFont")(U"Mori no kage").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 200 });
+	FontAsset(U"TitleFont")(U"森ノ影").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, Vec2{3, 3}, ColorF{0.0, 0.5}), 100, Vec2{640, 200},Palette::Lightgreen);
+
+	static const Font font{ 16 };
+
+	font(U"Copyright © さんぴん茶 2025. All rights reserved.").drawAt(Scene::Center() + Vec2{ 0, (Scene::Height() / 2) - 16 });
 
 	// ボタン描画
 	{

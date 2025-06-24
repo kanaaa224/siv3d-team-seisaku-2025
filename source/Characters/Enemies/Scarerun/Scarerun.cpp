@@ -95,8 +95,7 @@ void Scarerun::draw() const
 {
 	//画像の描画
 	now_texture.mirrored(img_flipFlg).resized(img_size).drawAt(pos);
-	//物理シュミレーション上の実態を描画
-	body.drawFrame();
+	
 	//hpバーの描画
 	hpbar.draw({ Vec2{(pos.x - body_size.x / 2 - 10),(pos.y - body_size.y / 2 - 10)},hp_imgSize });
 
@@ -111,6 +110,9 @@ void Scarerun::draw() const
 	Print << U"Enemy_Scarerun_HP : " << hp;
 	Print << U"Enemy_Scarerun_FlipFlg : " << img_flipFlg;
 	Print << U"Enemy_Scarerun_HP_Rate : " << hp_rate;
+
+	//物理シュミレーション上の実態を描画
+	body.drawFrame();
 #endif // DEBUG
 }
 
