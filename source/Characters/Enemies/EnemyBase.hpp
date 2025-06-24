@@ -99,6 +99,10 @@ protected:
 
 	bool doOnceDieSE;
 
+	//waitMovement関数で使う変数
+	double waitMoveTimer;
+	bool waitMoveFlg;
+
 public:
 	EnemyBase(P2World& world, const Vec2& position);
 	~EnemyBase();
@@ -156,9 +160,6 @@ protected:
 	//状態遷移
 	virtual void stateControl() {};
 
-	//バフをスポーンさせる
-	void spawnBuff();
-
 	//プレイヤーまでの距離
 	Vec2 calcPlayerDist() { return playerPos - body.getPos(); };
 
@@ -183,6 +184,11 @@ protected:
 	//ビックリマークの生成
 	void spawnExclamationMarkEffect(ObjectBase& obj);
 	bool doOnecSpawnExclamationMarkFlg;
+	//バフをスポーンさせる
+	void spawnBuff();
+
+	//足を止める処理
+	void waitMovement(double waitTime);
 public:
 	void setPlayerPos(Vec2 pos) { playerPos = pos; };
 
