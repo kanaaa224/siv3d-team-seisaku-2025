@@ -60,6 +60,7 @@ void PlayerHUD::initialize()
 	//アニメーションの初期状態を設定
 	animation_number = 0;
 	animation_time = 0.0;
+
 }
 
 
@@ -82,26 +83,36 @@ void PlayerHUD::update()
 		startTime = Scene::Time(); //タイマーの開始時間を記録
 	}
 
-	// タイマーが開始されていた場合の経過時間更新とUIアニメーションフレームの更新
+	//タイマーが開始されていた場合の経過時間更新とUIアニメーションフレームの更新
 	if (timerStarted)
 	{
 		m_elapsedTime = Scene::Time() - startTime;
 
-		//進捗度UIのアニメーションフレームを更新
-		animation_time += Scene::DeltaTime();
-		const double frame_duration = 0.1; //各フレームを表示する時間（秒）
-
-		if (animation_time >= frame_duration)
+		//boss_erea_flg が false の場合にのみアニメーションを更新
+		if (!boss_erea_flg)
 		{
-			if (!run_animation.isEmpty())
+			//進捗度UIのアニメーションフレームを更新
+			animation_time += Scene::DeltaTime();
+			const double frame_duration = 0.1; //各フレームを表示する時間（秒）
+
+			if (animation_time >= frame_duration)
 			{
-				animation_number = (animation_number + 1) % run_animation.size();
+				if (!run_animation.isEmpty())
+				{
+					animation_number = (animation_number + 1) % run_animation.size();
+				}
+				else
+				{
+					animation_number = 0; //アニメーションフレームがない場合は0にリセット
+				}
+				animation_time = 0.0; //フレーム時間が経過したらリセット
 			}
-			else
-			{
-				animation_number = 0; //アニメーションフレームがない場合は0にリセット
-			}
-			animation_time = 0.0; //フレーム時間が経過したらリセット
+		}
+		else
+		{
+			//ボスエリアに到達したらアニメーションを最初のフレームに固定
+			animation_number = 0;
+			animation_time = 0.0;
 		}
 
 		elapsedTime = Scene::Time() - startTime;
@@ -127,7 +138,7 @@ void PlayerHUD::draw() const
 	//進捗度UIの描画
 	//ボス地点のUI
 	TextureAsset(U"P_ishi_silver_UI").resized(80, 40).drawAt(950, 110);
-	TextureAsset(U"P_boss_UI").resized(90, 92).drawAt(950, 65);
+	TextureAsset(U"P_boss_UI").resized(90, 92).drawAt(940, 65);
 	TextureAsset(U"P_BOSS_UI").resized(45, 20).drawAt(946, 80);
 
 	//スタート地点のUI
@@ -157,11 +168,23 @@ void PlayerHUD::draw() const
 	}
 
 	// プレイヤーUIの開始位置と終了位置を定義 (進捗度UI上の表示位置)
-	Vec2 player_ui_start_pos = { 420.0, 70.0 };//P_base_UI の中心X座標に対応
-	Vec2 player_ui_end_pos = { 950.0, 65.0 };//P_boss_UI の中心X座標に対応
+	Vec2 player_ui_start_pos = { 420.0, 70.0 };//P_base_UI の中心X座標
+	Vec2 player_ui_end_pos = { 940, 65.0 };//P_boss_UI の中心X座標
 
+	
 	// 線形補間により、現在の進行度に応じたプレイヤーUIの位置を計算
 	Vec2 player_current_pos = player_ui_start_pos.lerp(player_ui_end_pos, progress_rate);
+
+	if (boss_erea_flg)
+	{
+		// ボスエリアに到達したら、プレイヤーUIの位置をボスUIの位置に固定
+		player_current_pos = player_ui_end_pos;
+	}
+	else
+	{
+		// それ以外の場合は、進捗度に応じて位置を計算
+		player_current_pos = player_ui_start_pos.lerp(player_ui_end_pos, progress_rate);
+	}
 
 	if (!run_animation.isEmpty())
 	{
