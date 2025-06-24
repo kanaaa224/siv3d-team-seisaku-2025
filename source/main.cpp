@@ -168,7 +168,7 @@ void Initialize()
 {
 	Window::Resize(1280, 720);
 
-	Window::SetTitle(U"Temple（仮）"); // TODO
+	Window::SetTitle(U"森ノ影");
 }
 
 void Main()
