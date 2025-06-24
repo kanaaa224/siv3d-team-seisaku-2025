@@ -137,9 +137,9 @@ void PlayerHUD::draw() const
 
 	//進捗度UIの描画
 	//ボス地点のUI
-	TextureAsset(U"P_ishi_silver_UI").resized(80, 40).drawAt(950, 110);
+	TextureAsset(U"P_ishi_silver_UI").resized(85, 40).drawAt(940, 110);
 	TextureAsset(U"P_boss_UI").resized(90, 92).drawAt(940, 65);
-	TextureAsset(U"P_BOSS_UI").resized(45, 20).drawAt(946, 80);
+	TextureAsset(U"P_BOSS_UI").resized(45, 20).drawAt(937, 80);
 
 	//スタート地点のUI
 	TextureAsset(U"P_ishi_UI").resized(70, 40).drawAt(420, 100);
