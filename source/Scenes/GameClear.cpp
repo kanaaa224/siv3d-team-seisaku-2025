@@ -90,6 +90,10 @@ void GameClear::draw() const
 	score_fream.resized(450, 100).draw(415, 190);
 	FontAsset(U"TitleFont")(U"score").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 220 }, Palette::Orange);
 	//スコア描画//
+	FontAsset(U"TitleFont")(U"Time: {:.2f} 秒"_fmt(ClearTime))
+		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
+				36, Vec2{ 640, 380 }, Palette::Black);
+
 	Print << U"クリアスコア描画" << ClearTime;
 	// ボタン描画
 	{
