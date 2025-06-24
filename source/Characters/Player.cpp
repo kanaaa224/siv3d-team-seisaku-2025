@@ -10,7 +10,7 @@
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度
 #define DISTANCE 150.0			// 回避距離
-#define AVOIDANCE_COOLTIME 1.0 	// 回避クールタイム
+#define AVOIDANCE_COOLTIME 5.0 	// 回避クールタイム
 #define ITIME	2.0				// 無敵時間
 #define ATTACK_RANGE 200.0		// 攻撃距離
 
