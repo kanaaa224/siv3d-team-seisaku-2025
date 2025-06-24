@@ -185,7 +185,7 @@ void Main()
 	manager.add<CreditRoll>(SceneState::Credit);
 	manager.add<Tutorial>(SceneState::Tutorial);
 
-	manager.init(SceneState::Game, 0.5s);
+	manager.init(SceneState::Title, 0.5s);
 
 	while (System::Update())
 	{
