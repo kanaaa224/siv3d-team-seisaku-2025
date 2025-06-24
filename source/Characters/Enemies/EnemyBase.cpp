@@ -85,6 +85,8 @@ void EnemyBase::update()
 		doOnecSpawnExclamationMarkFlg = false;
 	}
 
+	//足を止める処理(waitMoveFlgが立っている時のみ処理する)
+	waitMovement(0.1);
 #ifdef _DEBUG
 	if (KeyE.pressed() && Key9.pressed()) {//(E + 9)でhpを0にする
 		hp = 0;
@@ -98,7 +100,10 @@ void EnemyBase::update()
 	}
 	if (KeyE.pressed() && Key6.pressed()) {//(E + 6)でバフスポーンエフェクト生成
 		Stage* stage = Stage::GetInstance();
-		stage->createObject<BuffSpawnEffect>(pos, *this, U"green");
+		stage->createObject<BuffSpawnEffect>(pos, *this, U"red");
+	}
+	if (KeyE.pressed() && Key8.pressed()) {//(E + 8)でhpをmaxまでHealする
+		heal(max_hp);
 	}
 #endif // DEBUG
 }
@@ -331,6 +336,12 @@ void EnemyBase::getDamage(float damage)
 		}
 	}
 
+	//ここに１秒間足を止める処理を書く
+	if (body.getVelocity().x != 0) {
+		waitMoveFlg = true;
+	}
+	
+
 	//HPが０以下なら０にする
 	if (hp <= 0) {
 		hp = 0;
@@ -453,10 +464,43 @@ void EnemyBase::spawnExclamationMarkEffect(ObjectBase& obj)
 {
 	Vec2 spawnPos = pos + drawExcMark_pos;
 
-	if (!doOnecSpawnExclamationMarkFlg) {
+	if (!doOnecSpawnExclamationMarkFlg && oldState == IDLE) {
 		AudioAsset(U"Enemy_find_SE").playOneShot();//SE再生
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<ExclamationMarkEffect>(spawnPos, obj);
 		doOnecSpawnExclamationMarkFlg = true;
 	}
+}
+
+void EnemyBase::waitMovement(double waitTime)
+{
+	if (img_flipFlg) {
+		if (waitMoveFlg && body.getVelocity().x <= 0.01) {
+			waitMoveTimer += Scene::DeltaTime();
+
+			body.setVelocity(Vec2{ 0,0 });
+
+			//指定した時間になったらFlgを下げる
+			if (waitMoveTimer >= waitTime) {
+				waitMoveFlg = false;
+				waitMoveTimer = 0.0;
+			}
+		}
+	}
+	else {
+		if (waitMoveFlg && body.getVelocity().x >= 0.01) {
+			waitMoveTimer += Scene::DeltaTime();
+
+			body.setVelocity(Vec2{ 0,0 });
+
+			//指定した時間になったらFlgを下げる
+			if (waitMoveTimer >= waitTime) {
+				waitMoveFlg = false;
+				waitMoveTimer = 0.0;
+			}
+		}
+	}
+
+	
+	
 }
