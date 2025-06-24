@@ -68,10 +68,11 @@ void AssetsRegistration()
 
 		TextureAsset::Register({ U"Vaillant Tentacles 1", { U"Enemy Boss" } }, U"../assets/images/enemy_boss/vaillant/attack-2-a.png");
 
-		AudioAsset::Register(U"Vaillant Attack", Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");
-		AudioAsset::Register(U"Vaillant Death", Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
-		AudioAsset::Register(U"Vaillant Damage", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");
-		AudioAsset::Register(U"Vaillant Jump", Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
+		AudioAsset::Register(U"Vaillant Attack",    Audio::Stream, U"../assets/sounds/EnemySE/BossRun.wav");
+		AudioAsset::Register(U"Vaillant Death",     Audio::Stream, U"../assets/sounds/EnemySE/BossDies.wav");
+		AudioAsset::Register(U"Vaillant Damage",    Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");
+		AudioAsset::Register(U"Vaillant Jump",      Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
+		AudioAsset::Register(U"Vaillant Discovery", Audio::Stream, U"../assets/sounds/EnemySE/hakkenn2.wav");
 	}
 
 	{ // バフ
@@ -167,7 +168,7 @@ void Initialize()
 {
 	Window::Resize(1280, 720);
 
-	Window::SetTitle(U"Temple（仮）"); // TODO
+	Window::SetTitle(U"森ノ影");
 }
 
 void Main()

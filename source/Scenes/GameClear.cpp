@@ -80,6 +80,8 @@ void GameClear::update()
 
 void GameClear::draw() const
 {
+	ClearPrint(); // 過去のPrint出力を消す
+
 	clear_background.resized(Scene::Size()).draw(0, 0);
 
 	Scene::SetBackground(ColorF{ 0.5 });
@@ -93,8 +95,6 @@ void GameClear::draw() const
 	FontAsset(U"TitleFont")(U"Time: {:.2f} 秒"_fmt(ClearTime))
 		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
 				60, Vec2{ 640, 380 }, Palette::Black);
-
-	Print << U"クリアスコア描画" << ClearTime;
 	// ボタン描画
 	{
 		// PLAYボタン
@@ -117,6 +117,13 @@ void GameClear::draw() const
 		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
 		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
+
+#ifdef _DEBUG
+
+	Print << U"クリアスコア描画" << ClearTime;
+
+#endif // DEBUG
+
 }
 
 void GameClear::FileOpenByTimer()

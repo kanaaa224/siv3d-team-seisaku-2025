@@ -171,7 +171,12 @@ void Vaillant::update()
 
 	if (discovered && !hostiled)
 	{
-		if (!hostility) SetTimeout([this] { hostiled = true; }, 1000ms);
+		if (!hostility)
+		{
+			AudioAsset(U"Vaillant Discovery").playOneShot();
+
+			SetTimeout([this] { hostiled = true; }, 1000ms);
+		}
 
 		hostility = true;
 
