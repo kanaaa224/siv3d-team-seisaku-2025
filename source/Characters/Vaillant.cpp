@@ -54,8 +54,14 @@ void Vaillant::initialize()
 	hp = max_hp;
 }
 
-void Vaillant::attack()
+void Vaillant::attack(VaillantAttackType type)
 {
+	attack_type = type;
+
+	state = VaillantState::Attack;
+
+	if (attack_state == VaillantAttackState::Preparation) mirrored = player_position.x <= position.x;
+
 	if (attack_type == VaillantAttackType::Earthquake && attack_state == VaillantAttackState::Preparation)
 	{
 		attack_frame = frameTime;
@@ -109,7 +115,7 @@ void Vaillant::attack()
 		attack_state = VaillantAttackState::Start;
 	}
 
-	if (attack_type == VaillantAttackType::Rush && attack_state != VaillantAttackState::Attacking)
+	if (attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Preparation || attack_state == VaillantAttackState::Ends)
 	{
 		mirrored = direction = position.x > player_position.x;
 	}
@@ -156,7 +162,8 @@ void Vaillant::update()
 
 	spriteAnimator.update();
 
-	if (state >= VaillantState::Death) return;
+	if (state >= VaillantState::Death)  return;
+	if (state == VaillantState::Attack) return attack(attack_type);
 
 	double distance = position.distanceFrom(player_position);
 
@@ -186,32 +193,31 @@ void Vaillant::update()
 
 	if (discovered && hostiled)
 	{
-		if (state == VaillantState::Attack) return attack();
-
 		distance = position.x - player_position.x;
 
-		direction = (distance > 10) ? true : (distance < -10) ? false : direction;
+		if (!jumped)
+		{
+			direction = (distance > 100) ? true : (distance < -100) ? false : direction;
 
-		body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
+			body.applyLinearImpulse((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) * (240 / Profiler::FPS()));
+		}
 
 		distance = Abs(distance);
 
-		if (!jumped && distance <= 300 && !forbid_jump)
+		if (!jumped && distance > 150 && distance <= 600)
 		{
-			if (Random(0, 1))
-			{
-				state = VaillantState::Attack;
+			return attack(
+				distance <= 400 && distance > 150 ? VaillantAttackType::Earthquake :
+				distance <= 500 && distance > 400 ? static_cast<VaillantAttackType>(Random(0, 1)) :
+				distance <= 600 && distance > 500 ? VaillantAttackType::Rush : attack_type
+			);
+		}
 
-				attack_type = static_cast<VaillantAttackType>(Random(0, 2));
-
-				mirrored = player_position.x <= position.x ? true : false;
-
-				return;
-			}
-
+		if (!jumped && distance <= 150 && not InRange(body.getVelocity().x, -50.0, 50.0) && !forbid_jump)
+		{
 			AudioAsset(U"Vaillant Jump").playOneShot();
 
-			body.applyLinearImpulse(Vec2{ 0, -VAILLANT_JUMP_POWER });
+			body.applyLinearImpulse(Vec2{ (direction ? -VAILLANT_WALK_POWER : VAILLANT_WALK_POWER) * 100, -VAILLANT_JUMP_POWER });
 
 			spriteAnimator.setAnimationName(AnimationName::Smoke1);
 			spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
@@ -224,7 +230,7 @@ void Vaillant::update()
 			jumped = true;
 		}
 
-		if (InRange(body.getVelocity().y, -1.0, 1.0) && position.y > start_position.y && !Random(0, 200)) jumped = false;
+		if (InRange(body.getVelocity().y, -1.0, 1.0) && position.y > start_position.y) jumped = false;
 	}
 
 	state = VaillantState::Idle;
@@ -315,6 +321,8 @@ void Vaillant::draw() const
 			if (not InRange(body.getVelocity().y, -1.0, 1.0) || position.y < start_position.y) currentFrame = 12;
 
 			if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
+
+			if (attack_state == VaillantAttackState::Start) RectF(position + Vec2{ (mirrored ? -size.x / 2 - Scene::Width() : size.x / 2), 0 }, SizeF{ Scene::Width(), 100}).draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
 
 			break;
 		}
@@ -421,6 +429,7 @@ void Vaillant::draw() const
 	Print << U"Vaillant HP: " << hp << U" / " << max_hp;
 	Print << U"Vaillant State: " << static_cast<int>(state);
 	Print << U"Vaillant Mass: " << body.getMass();
+	Print << U"Vaillant Distance" << Abs(position.x - player_position.x);
 #endif
 }
 

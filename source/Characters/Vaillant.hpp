@@ -91,5 +91,5 @@ private:
 	mutable bool draw_initialized;
 
 	void initialize();
-	void attack();
+	void attack(VaillantAttackType type);
 };
