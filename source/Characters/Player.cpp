@@ -589,9 +589,8 @@ void Player::draw() const
 
 	// 画像を滑らかに補完
 	const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
-
-	body.drawFrame(1.0, ColorF(Palette::Blue));
-	image.mirrored(flip_flg).resized(size).drawAt(pos, ColorF{ 1.0, 1.0, 1.0, alpha});
+	
+	image.mirrored(flip_flg).resized(size).drawAt(pos, ColorF{ 1.0, 1.0, 1.0, alpha });
 
 	//無敵中は点滅
 	if ((Damageflg == true && Fmod(Scene::Time(), 0.1) < 0.05)) {
@@ -601,6 +600,9 @@ void Player::draw() const
 	//spriteAnimator.draw();
 	
 #ifdef _DEBUG
+
+	body.drawFrame(1.0, ColorF(Palette::Blue));
+	image.mirrored(flip_flg).resized(size).drawAt(pos, ColorF{ 1.0, 1.0, 1.0, alpha});
 
 	Print << U"Player HP : " << hp;
 	Print << U"Player 座標 : " << body.getPos();
