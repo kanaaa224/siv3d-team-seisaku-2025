@@ -10,7 +10,7 @@
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度
 #define DISTANCE 150.0			// 回避距離
-#define AVOIDANCE_COOLTIME 5.0 	// 回避クールタイム
+#define AVOIDANCE_COOLTIME 1.0 	// 回避クールタイム
 #define ITIME	2.0				// 無敵時間
 #define ATTACK_RANGE 200.0		// 攻撃距離
 
@@ -110,6 +110,7 @@ void Player::initialize()
 	movement_speed = 0.0;
 	attack_power = 30.f;
 	wall_hit = true;
+	enemyHit = false;
 }
 
 void Player::update()
@@ -117,13 +118,17 @@ void Player::update()
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
-// デバッグ用 //////////////////////////////////////////////////////
+#ifdef _DEBUG
+
+	// デバッグ用 //////////////////////////////////////////////////////
 
 	if (KeyS.down()) hp -= 90;
 
-	if (KeyL.down()) body.setPos(Vec2( 5000.0, body.getPos().y));
+	if (KeyL.down()) body.setPos(Vec2(5000.0, body.getPos().y));
 
-//////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////
+
+#endif //
 
 	if (body)
 	{
@@ -173,6 +178,8 @@ void Player::update()
 
 		//ジャンプ攻撃有効化
 		jump_attack_flg = false;
+
+		enemyHit = false;
 
 		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
 
@@ -229,7 +236,7 @@ void Player::update()
 
 		break;
 	case move: //移動処理
-
+		enemyHit = false;
 		movement(controller);
 		animation(run_animation, MOVE_ANIM_SPEED,8,idle);
 		/////////se追加する場合
@@ -261,7 +268,7 @@ void Player::update()
 		}
 		break;
 	case jump: //ジャンプ処理
-
+		enemyHit = false;
 		//ジャンプ処理
 		jumpmovement(controller);
 		////////se追加する場合
@@ -328,6 +335,10 @@ void Player::update()
 		{
 			body.setVelocity(Vec2(-DISTANCE, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 168, body.getPos().y - 45 }, *this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 130, body.getPos().y - 1 }, *this);
+			}
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -361,6 +372,10 @@ void Player::update()
 		{
 			body.setVelocity(Vec2(DISTANCE, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 16, body.getPos().y - 45 }, *this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 120, body.getPos().y - 1 }, *this);
+			}
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
@@ -399,13 +414,19 @@ void Player::update()
 		{
 			body.setVelocity(Vec2(0.0, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
-			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 100, body.getPos().y }, *this);
+			}
 		}
 		else
 		{
 			body.setVelocity(Vec2(0.0, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this);
-			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 90, body.getPos().y }, *this);
+			}
 		}
 		
 		
@@ -424,14 +445,20 @@ void Player::update()
 			//body.setVelocity(Vec2(-15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
-			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 100, body.getPos().y }, * this);
+			}
 		}
 		else
 		{
 			//body.setVelocity(Vec2(15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this);
-			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, * this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 90, body.getPos().y }, * this);
+			}
 		}
 
 		if (animation(jump_attack_2_animation, 0.09)) {
@@ -447,6 +474,10 @@ void Player::update()
 		{
 			body.setVelocity(Vec2(-DISTANCE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 168, body.getPos().y - 45 }, *this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 130, body.getPos().y - 1 }, * this);
+			}
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y)); //
@@ -471,6 +502,10 @@ void Player::update()
 		{
 			body.setVelocity(Vec2(DISTANCE, 0.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 16, body.getPos().y - 45 }, *this);
+			if (enemyHit)
+			{
+				Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 120, body.getPos().y - 1 }, * this);
+			}
 			if (animation(jump_attack_animation, JUMPATTAK_ANIM_SPEED) == true)
 			{
 				body.setVelocity(Vec2(0.0, body.getVelocity().y));
@@ -495,7 +530,7 @@ void Player::update()
 		break;
 
 	case damage:
-
+		enemyHit = false;
 		////////se
 		Damageflg = true;
 		//アニメーション
@@ -516,7 +551,7 @@ void Player::update()
 		break;
 
 	case ePlayerState::die: //死亡処理
-
+		enemyHit = false;
 		////////se
 		AudioAsset(U"player_dies_SE").play();
 		die();
@@ -608,8 +643,6 @@ void Player::onHit(ObjectBase& object)
 	{
 		wall_hit = false;
 	}
-
-
 }
 
 void Player::onDamaged(float amount)

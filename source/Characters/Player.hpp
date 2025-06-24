@@ -75,6 +75,8 @@ private:
 	double movement_speed;
 	double attack_power;
 
+	bool enemyHit;
+
 	SpriteAnimator spriteAnimator;
 
 	Size effect_size;
@@ -111,6 +113,9 @@ public:
 
 	// 回避クールタイムの残り秒数を取得
 	double getAvoidanceCooldown() const { return avoidanceCooldown; }
+
+	//
+	void SetHitEnemy(bool _flg) { enemyHit = _flg; };
 
 	//eItemState getItemstate() const;   //itemのステータスを返す
 	//setItemstate(eItemState item);  //itemの設定
