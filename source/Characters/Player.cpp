@@ -5,6 +5,7 @@
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
+# include "../Characters/Enemies/Effect/SmallHitEffect.h"
 
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度
@@ -174,8 +175,6 @@ void Player::update()
 		jump_attack_flg = false;
 
 		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
-
-		
 
 		//spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
 		//spriteAnimator.setMask({ 1.0, 1.0, 1.0, 1.0 });
@@ -400,11 +399,13 @@ void Player::update()
 		{
 			body.setVelocity(Vec2(0.0, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
+			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
 		}
 		else
 		{
 			body.setVelocity(Vec2(0.0, body.getVelocity().y));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this);
+			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this);
 		}
 		
 		
@@ -423,12 +424,14 @@ void Player::update()
 			//body.setVelocity(Vec2(-15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
+			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x - 111, body.getPos().y - 45 }, *this);
 		}
 		else
 		{
 			//body.setVelocity(Vec2(15.0, 0.0));
 			body.setVelocity(Vec2(0.0, 600.0));
 			Stage::GetInstance()->createObject<HitBox>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, *this);
+			Stage::GetInstance()->createObject<SmallHitEffect>(Vec2{ body.getPos().x + 15, body.getPos().y - 45 }, * this);
 		}
 
 		if (animation(jump_attack_2_animation, 0.09)) {
