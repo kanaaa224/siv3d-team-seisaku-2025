@@ -76,6 +76,8 @@ void Tutorial::update()
 
 void Tutorial::draw() const
 {
+	ClearPrint(); // 過去のPrint出力を消す
+
 	tutorial_background.resized(Scene::Size()).draw(0, 0);
 
 	Scene::SetBackground(ColorF{ 0.1, 0.1, 0.1 });
