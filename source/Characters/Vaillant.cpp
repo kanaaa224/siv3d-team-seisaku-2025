@@ -204,12 +204,12 @@ void Vaillant::update()
 
 		distance = Abs(distance);
 
-		if (!jumped && distance > 150 && distance <= 600)
+		if (!jumped && distance > 150 && distance <= 700)
 		{
 			return attack(
 				distance <= 400 && distance > 150 ? VaillantAttackType::Earthquake :
-				distance <= 500 && distance > 400 ? static_cast<VaillantAttackType>(Random(0, 1)) :
-				distance <= 600 && distance > 500 ? VaillantAttackType::Rush : attack_type
+				distance <= 600 && distance > 500 ? static_cast<VaillantAttackType>(Random(0, 2)) :
+				distance <= 700 && distance > 600 ? VaillantAttackType::Rush : attack_type
 			);
 		}
 
@@ -457,7 +457,10 @@ void Vaillant::onHit(ObjectBase& object)
 			player_hit = true;
 		}
 
-		if (state == VaillantState::Attack && attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Attacking) player->applyDamage(20.0f);
+		if (player->getplayerstate() != ePlayerState::jump_avoidance)
+		{
+			if (state == VaillantState::Attack && attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Attacking) player->applyDamage(20.0f);
+		}
 	}
 
 	if (Wall* wall = dynamic_cast<Wall*>(&object))
