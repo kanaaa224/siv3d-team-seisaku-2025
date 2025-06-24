@@ -7,7 +7,7 @@
 #define IMG_SIZE_Y 528 //縦528サイズの画像
 #define IMG_RESIZE 90//サイズ変更時の値
 
-#define IMG_CHANGE_TIME 0.005//画像切替時間
+#define IMG_CHANGE_TIME 0.01//画像切替時間
 
 class SmallHitEffect : public ObjectBase
 {

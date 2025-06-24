@@ -6,7 +6,7 @@ SmallHitEffect::SmallHitEffect(P2World& world, const Vec2& postion, ObjectBase& 
 {
 	SmallHitEffect::owner = &ownerClass;
 
-	assetName = U"SmallHit";
+	assetName = U"SmallHit_fix";
 	margin = Vec2{ 0,0 };
 	reSize = Vec2{ IMG_RESIZE,IMG_RESIZE };
 	pos = postion;

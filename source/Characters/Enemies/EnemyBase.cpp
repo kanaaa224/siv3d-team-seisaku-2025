@@ -12,7 +12,8 @@
 //effect
 #include "Effect/ExclamationMarkEffect.h"
 #include "Effect/BuffSpawnEffect.h"
-#include "Effect//SmallHitEffect.h"
+#include "Effect/SmallHitEffect.h"
+#include "Effect/BloodImpactEffect.h"
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
@@ -103,7 +104,7 @@ void EnemyBase::update()
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<BuffSpawnEffect>(pos, *this, U"red");
 	}
-	if (KeyE.pressed() && Key7.pressed()) {//(E + 6)でバフスポーンエフェクト生成
+	if (KeyE.pressed() && Key7.pressed()) {//(E + 7)でエフェクト生成
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<SmallHitEffect>(pos, *this);
 	}
