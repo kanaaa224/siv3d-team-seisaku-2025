@@ -102,6 +102,9 @@ void EnemyBase::update()
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<BuffSpawnEffect>(pos, *this, U"red");
 	}
+	if (KeyE.pressed() && Key8.pressed()) {//(E + 8)でhpをmaxまでHealする
+		heal(max_hp);
+	}
 #endif // DEBUG
 }
 
@@ -334,7 +337,10 @@ void EnemyBase::getDamage(float damage)
 	}
 
 	//ここに１秒間足を止める処理を書く
-	waitMoveFlg = true;
+	if (body.getVelocity().x != 0) {
+		waitMoveFlg = true;
+	}
+	
 
 	//HPが０以下なら０にする
 	if (hp <= 0) {
@@ -468,16 +474,33 @@ void EnemyBase::spawnExclamationMarkEffect(ObjectBase& obj)
 
 void EnemyBase::waitMovement(double waitTime)
 {
-	if (waitMoveFlg && body.getVelocity().x <= 0.01) {
-		waitMoveTimer += Scene::DeltaTime();
+	if (img_flipFlg) {
+		if (waitMoveFlg && body.getVelocity().x <= 0.01) {
+			waitMoveTimer += Scene::DeltaTime();
 
-		body.setVelocity(Vec2{ 0,0 });
+			body.setVelocity(Vec2{ 0,0 });
 
-		//指定した時間になったらFlgを下げる
-		if (waitMoveTimer >= waitTime) {
-			waitMoveFlg = false;
-			waitMoveTimer = 0.0;
+			//指定した時間になったらFlgを下げる
+			if (waitMoveTimer >= waitTime) {
+				waitMoveFlg = false;
+				waitMoveTimer = 0.0;
+			}
 		}
 	}
+	else {
+		if (waitMoveFlg && body.getVelocity().x >= 0.01) {
+			waitMoveTimer += Scene::DeltaTime();
+
+			body.setVelocity(Vec2{ 0,0 });
+
+			//指定した時間になったらFlgを下げる
+			if (waitMoveTimer >= waitTime) {
+				waitMoveFlg = false;
+				waitMoveTimer = 0.0;
+			}
+		}
+	}
+
+	
 	
 }
