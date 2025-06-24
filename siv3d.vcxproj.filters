@@ -240,6 +240,12 @@
     <ClCompile Include="source\Scenes\GameClear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Characters\Enemies\Effect\SmallHitEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Characters\Enemies\Effect\BloodImpactEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -1011,6 +1017,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\GameClear.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Enemies\Effect\SmallHitEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Enemies\Effect\BloodImpactEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

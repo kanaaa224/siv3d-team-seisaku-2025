@@ -12,6 +12,7 @@
 //effect
 #include "Effect/ExclamationMarkEffect.h"
 #include "Effect/BuffSpawnEffect.h"
+#include "Effect//SmallHitEffect.h"
 
 EnemyBase::EnemyBase(P2World& world, const Vec2& position) :
 	CharacterBase(world, position)//初期位置
@@ -101,6 +102,10 @@ void EnemyBase::update()
 	if (KeyE.pressed() && Key6.pressed()) {//(E + 6)でバフスポーンエフェクト生成
 		Stage* stage = Stage::GetInstance();
 		stage->createObject<BuffSpawnEffect>(pos, *this, U"red");
+	}
+	if (KeyE.pressed() && Key7.pressed()) {//(E + 6)でバフスポーンエフェクト生成
+		Stage* stage = Stage::GetInstance();
+		stage->createObject<SmallHitEffect>(pos, *this);
 	}
 	if (KeyE.pressed() && Key8.pressed()) {//(E + 8)でhpをmaxまでHealする
 		heal(max_hp);
