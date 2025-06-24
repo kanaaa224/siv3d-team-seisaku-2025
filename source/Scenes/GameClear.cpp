@@ -92,7 +92,7 @@ void GameClear::draw() const
 	//スコア描画//
 	FontAsset(U"TitleFont")(U"Time: {:.2f} 秒"_fmt(ClearTime))
 		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
-				36, Vec2{ 640, 380 }, Palette::Black);
+				60, Vec2{ 640, 380 }, Palette::Black);
 
 	Print << U"クリアスコア描画" << ClearTime;
 	// ボタン描画

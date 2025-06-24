@@ -1,7 +1,7 @@
 ﻿#include "Tutorial.h"
 #include "../Characters/Player.hpp"
 #include "../Stage.hpp"
-#include"../Objects/Ground.hpp"
+#include "../Objects/Ground.hpp"
 
 Player* player = nullptr;
 
@@ -15,11 +15,11 @@ Tutorial::Tutorial(const InitData& init)
 	m_messages =
 	{
 		U"ようこそ！これはチュートリアルです。",
-		U"左スティックで移動します。",
-		U"Xボタンで攻撃。",
-		U"Bボタンで回避攻撃。",
-		U"Aボタンでジャンプします。",
-		U"ジャンプ中にBまたはXでジャンプ攻撃",
+		U"移動:左スティックまたは A/Dキー。",
+		U"攻撃:XボタンまたはEキー。",
+		U"回避攻撃:BボタンまたはQキー。",
+		U"ジャンプ:Aボタンまたはスペースキー。",
+		U"ジャンプ攻撃:ジャンプ中にXボタンまたはEキー。",
 		U"準備ができたら、ゲームを始めましょう！"
 	};
 	m_currentIndex = 0;
@@ -31,15 +31,17 @@ void Tutorial::initialize()
 	AudioAsset(U"Tutorial_BGM").setVolume(0.6);
 	AudioAsset(U"Tutorial_BGM").play();
 
-	// プレイヤーを画面下方に生成
-	player = new Player(m_world, Vec2{ 200, Scene::Height() - 120 });
+	// プレイヤーを地面の少し上に配置
+	player = new Player(m_world, Vec2{ 640, 500 });
 
-	// カメラ固定（プレイヤー追従なし）
+	// カメラは固定
 	camera = Camera2D(Vec2{ Scene::Width() / 2, Scene::Height() / 2 }, 1.0, CameraControl::None_);
 
-	m_world.setGravity(Vec2{ 0, 980 }); // 下方向に重力を設定（px/s^2）
+	// 重力設定
+	m_world.setGravity(Vec2{ 0, 980 });
 
-	Stage::GetInstance()->createObject<Ground>(Vec2{ 640, 960 }); // 画面中央下あたりに地面
+	// 地面（Y=600に幅1500で設置）
+	Stage::GetInstance()->createObject<Ground>(Vec2{ 640, 400 });
 }
 
 void Tutorial::update()
@@ -50,18 +52,11 @@ void Tutorial::update()
 	{
 		player->update();
 
-		// プレイヤーが画面外に出ないように制限
 		Vec2 pos = player->getBody().getPos();
-		const double left = 0.0;
-		const double right = Scene::Width();
-		const double bottom = Scene::Height();
 
-		// X方向制限
-		if (pos.x < left) pos.x = left;
-		else if (pos.x > right) pos.x = right;
-
-		// Y方向制限
-		if (pos.y > bottom) pos.y = bottom;
+		// プレイヤーが画面外に出ないよう制限
+		pos.x = Clamp(pos.x, 0.0, static_cast<double>(Scene::Width()));
+		pos.y = Clamp(pos.y, 0.0, static_cast<double>(Scene::Height()));
 
 		player->getBody().setPos(pos);
 	}
@@ -76,7 +71,7 @@ void Tutorial::update()
 		}
 	}
 
-	camera.update(); // カメラ自体は固定
+	camera.update(); // カメラは固定
 }
 
 void Tutorial::draw() const
@@ -86,9 +81,7 @@ void Tutorial::draw() const
 	Scene::SetBackground(ColorF{ 0.1, 0.1, 0.1 });
 
 	const Font& font = FontAsset(U"TitleFont");
-	//font(U"チュートリアル").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 80, Vec2{ 640, 100 });
 
-	// カメラ変換開始（ただし固定）
 	const auto t = camera.createTransformer();
 
 	if (player)
@@ -101,7 +94,8 @@ void Tutorial::draw() const
 		font(m_messages[m_currentIndex]).drawAt(Scene::Center(), Palette::White);
 	}
 
-	FontAsset(U"Small")(U"[ENTER]キー または Aボタンで次へ").drawAt(Scene::Width() / 2, Scene::Height() - 60);
+	//FontAsset(U"TitleFont")(U"[ENTER]キー または Aボタンで次へ").drawAt(Scene::Width() / 2, Scene::Height() - 60);
+	FontAsset(U"TitleFont")(U"[ENTER] or Aボタンで次へ").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 30, Vec2{ 640, 700 });
 }
 
 Tutorial::~Tutorial()
