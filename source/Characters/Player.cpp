@@ -220,7 +220,7 @@ void Player::update()
 			playerState = ePlayerState::attack;
 			AudioAsset(U"player_run1_SE").stop();//走るSE停止
 		}//avoidance
-		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
+		else if (controller.buttonB.down() == true && avoidanceCooldown <= 0.0 || KeyQ.down() == true && avoidanceCooldown <= 0.0)
 		{
 			AudioAsset(U"player_attack3_SE").play();//回避攻撃SE
 			animation_number = 0;
@@ -260,7 +260,7 @@ void Player::update()
 			animation_number = 0;
 			playerState = ePlayerState::attack;
 		}
-		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
+		else if (controller.buttonB.down() == true && avoidanceCooldown <= 0.0 || KeyQ.down() == true && avoidanceCooldown <= 0.0)
 		{
 			AudioAsset(U"player_attack3_SE").playOneShot();//回避攻撃
 			animation_number = 0;
@@ -299,7 +299,7 @@ void Player::update()
 			playerState = ePlayerState::jump_attack;
 		}
 		//空中回避
-		else if (controller.buttonB.down() == true || KeyQ.down() == true && avoidanceCooldown <= 0.0)
+		else if (controller.buttonB.down() == true && avoidanceCooldown <= 0.0 || KeyQ.down() == true && avoidanceCooldown <= 0.0)
 		{
 			AudioAsset(U"player_attack3_SE").play();//回避攻撃SE
 			animation_number = 0;
