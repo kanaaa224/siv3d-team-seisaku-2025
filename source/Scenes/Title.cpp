@@ -138,7 +138,7 @@ void Title::draw() const
 
 	//Copyright
 	static const Font font{ 16 };
-	font(U"Copyright © さんぴん茶 2025. All rights reserved.").drawAt(Scene::Center() + Vec2{ 0, (Scene::Height() / 2) - 16 });
+	font(U"© さんぴん茶 2025. All rights reserved.").drawAt(Scene::Center() + Vec2{ 0, (Scene::Height() / 2) - 16 });
 
 	// ボタン描画
 	// PLAYボタン
