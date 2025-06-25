@@ -61,6 +61,8 @@ void PlayerHUD::initialize()
 	animation_number = 0;
 	animation_time = 0.0;
 
+	timerLocked = false;
+
 }
 
 
@@ -77,7 +79,7 @@ void PlayerHUD::update()
 	{
 		GO = true;
 	}
-	if (GO && !timerStarted)
+	if (!timerLocked && GO && !timerStarted)
 	{
 		timerStarted = true;
 		startTime = Scene::Time(); //タイマーの開始時間を記録
@@ -126,6 +128,10 @@ void PlayerHUD::update()
 
 	if (boss_state == VaillantState::Death)
 	{
+		if (timerStarted) {
+			timerStarted = false;
+			timerLocked = true;
+		}
 		FileSave(elapsedTime);
 	}
 }
@@ -171,7 +177,7 @@ void PlayerHUD::draw() const
 	Vec2 player_ui_start_pos = { 420.0, 70.0 };//P_base_UI の中心X座標
 	Vec2 player_ui_end_pos = { 940, 65.0 };//P_boss_UI の中心X座標
 
-	
+
 	// 線形補間により、現在の進行度に応じたプレイヤーUIの位置を計算
 	Vec2 player_current_pos = player_ui_start_pos.lerp(player_ui_end_pos, progress_rate);
 
@@ -215,19 +221,12 @@ void PlayerHUD::draw() const
 
 	//タイムフレームと表示
 	TextureAsset(U"time_frame").resized(200, 50).drawAt(195, 70);
-	if (timerStarted)
-	{
-		const Font& timeFont = FontAsset(U"TitleFont");
-		//double elapsedTime = Scene::Time() - startTime;
-		timeFont(U"{:.2f}"_fmt(elapsedTime)).drawAt(30, Vec2{ 195, 70 }, ColorF{ 0.1, 0.1, 0.1 });
-		FontAsset(U"TitleFont")(U"{:.2f}"_fmt(elapsedTime)).drawAt(TextStyle::
-			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
-	}
-	else
-	{
-		FontAsset(U"TitleFont")(U"--:--").drawAt(TextStyle::
-			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
-	}
+
+	const Font& timeFont = FontAsset(U"TitleFont");
+	//double elapsedTime = Scene::Time() - startTime;
+	timeFont(U"{:.2f}"_fmt(elapsedTime)).drawAt(30, Vec2{ 195, 70 }, ColorF{ 0.1, 0.1, 0.1 });
+	FontAsset(U"TitleFont")(U"{:.2f}"_fmt(elapsedTime)).drawAt(TextStyle::
+		OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 200, 70 });
 
 	//バフのアイコンとフレーム表示
 	Vec2 start = flame_location;
@@ -293,7 +292,7 @@ PlayerHUD* PlayerHUD::GetInstance()
 void PlayerHUD::FileSave(double ClearTime)
 {
 	//書き込み用のテキストファイルをオープンする
-	TextWriter wirter{ U"../saves/ClearTime.txt" };
+	TextWriter wirter{ U"../assets/text/ClearTime.txt" };
 
 	//例外スロー確認
 	if (!wirter)
@@ -319,4 +318,5 @@ void PlayerHUD::resetTime()
 	animation_time = 0.0; //アニメーション時間をリセット
 	player_pos = Vec2(0.0, 0.0); //プレイヤー位置もリセット (必要であれば)
 	elapsedTime = 0.0;
+	timerLocked = false;
 }
