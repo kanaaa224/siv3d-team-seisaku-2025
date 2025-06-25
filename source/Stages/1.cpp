@@ -57,6 +57,7 @@ void Stage1::initialize()
 	excuted = false;
 	boss_spawn = false;
 
+	PlayerHUD::GetInstance()->resetTime();
 }
 
 void Stage1::update()
