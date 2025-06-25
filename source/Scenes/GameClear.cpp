@@ -129,7 +129,7 @@ void GameClear::draw() const
 void GameClear::FileOpenByTimer()
 {
 	//ファイルをオープンする
-	TextReader reader{ U"../assets/text/ClearTime.txt" };
+	TextReader reader{ U"../saves/ClearTime.txt" };
 
 	//例外スロー確認
 	if (!reader)

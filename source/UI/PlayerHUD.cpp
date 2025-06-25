@@ -293,7 +293,7 @@ PlayerHUD* PlayerHUD::GetInstance()
 void PlayerHUD::FileSave(double ClearTime)
 {
 	//書き込み用のテキストファイルをオープンする
-	TextWriter wirter{ U"../assets/text/ClearTime.txt" };
+	TextWriter wirter{ U"../saves/ClearTime.txt" };
 
 	//例外スロー確認
 	if (!wirter)
