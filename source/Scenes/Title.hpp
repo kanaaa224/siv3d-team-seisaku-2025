@@ -2,6 +2,8 @@
 
 # include "../Common.hpp"
 
+#define TITLE_TEXT_ALPHA_CHANGE_TIME 0.1
+
 // タイトルシーン
 class Title : public App::Scene
 {
@@ -21,6 +23,24 @@ private:
 
 	// 0: PLAY (スタート), 1: EXIT (終了)
 	int m_selectedButtonIndex = 0;
+
+	
+
+	void textAlphaCalc();
+	double textAlpha_ct;
+	float titleText_first_alpha; //「森」のアルファ値
+	float titleText_second_alpha;//「ノ」のアルファ値
+	float titleText_third_alpha; //「影」のアルファ値
+	bool textAlphaAnimEndFlg;
+
+	void textShadowCalc();
+	double textShadow_ct;
+	Vec2 shadowPos;
+	bool shadowAnimEndFlg;
+
+	void subTitleAlphaCalc();
+	double subTitleAlpha_ct;
+	float subTitleAlpha;
 
 	//****IMG****//
 	//backGround

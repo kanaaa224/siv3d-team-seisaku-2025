@@ -24,7 +24,19 @@ Title::Title(const InitData& init) : IScene{ init }
 
 	//m_runnerAnimation = LoadDivGraph(U"Flot Idle", Size(150, 45));
 	//m_runnerAnimationTime = 0.0;
-	
+
+	titleText_first_alpha  = 0.0f;
+	titleText_second_alpha = 0.0f;
+	titleText_third_alpha  = 0.0f;
+	textAlpha_ct = 0.0;
+	textAlphaAnimEndFlg = false;
+
+	textShadow_ct = 0.0;
+	shadowPos = Vec2{ 0.0,0.0 };
+	shadowAnimEndFlg = false;
+
+	subTitleAlpha = 0.0;
+	subTitleAlpha_ct = 0.0;
 }
 
 Title::~Title()
@@ -35,6 +47,17 @@ Title::~Title()
 
 void Title::update()
 {
+	if (!textAlphaAnimEndFlg) {
+		textAlphaCalc();
+	}
+	if (!shadowAnimEndFlg) {
+		textShadowCalc();
+	}
+	if (textAlphaAnimEndFlg && shadowAnimEndFlg) {
+		subTitleAlphaCalc();
+	}
+	
+
 	//タイマー初期化
 	PlayerHUD::GetInstance()->resetTime();
 
@@ -132,7 +155,12 @@ void Title::draw() const
 
 
 	// タイトル描画
-	FontAsset(U"TitleFont")(U"森ノ影").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, Vec2{3, 3}, ColorF{0.0, 0.5}), 100, Vec2{640, 200},Palette::Lightgreen);
+	FontAsset(U"Dot_16")(U"森").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, shadowPos, ColorF{ 0.0, 0.5 }), 100, Vec2{ 550, 200 }, ColorF{Palette::Palegreen,titleText_first_alpha});
+	FontAsset(U"Dot_16")(U"ノ").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, shadowPos, ColorF{0.0, 0.5}), 100, Vec2{640, 200}, ColorF{ Palette::Palegreen,titleText_first_alpha });
+	FontAsset(U"Dot_16")(U"影").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, shadowPos, ColorF{0.0, 0.5}), 100, Vec2{730, 200}, ColorF{ Palette::Palegreen,titleText_first_alpha });
+	if (textAlphaAnimEndFlg && shadowAnimEndFlg) {
+		FontAsset(U"Dot_16")(U"mori no kage").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 640, 270 }, ColorF{ Palette::Yellow,subTitleAlpha });
+	}
 
 	//Copyright
 	static const Font font{ 16 };
@@ -172,4 +200,57 @@ void Title::draw() const
 	//	m_runnerAnimation[m_runAnimationFrame].scaled(2.0).draw(x,y);
 	//}
 
+}
+
+void Title::textAlphaCalc()
+{
+	//経過時間の更新
+	textAlpha_ct += Scene::DeltaTime();
+
+	if (textAlpha_ct >= TITLE_TEXT_ALPHA_CHANGE_TIME) {
+		titleText_first_alpha  += 0.1f;
+		titleText_second_alpha += 0.1f;
+		titleText_third_alpha  += 0.1f;
+
+		if (titleText_first_alpha >= 1.0f) {
+			titleText_first_alpha = 1.0f;
+		}
+		if (titleText_second_alpha >= 1.0f) {
+			titleText_second_alpha = 1.0f;
+		}
+		if (titleText_third_alpha >= 1.0f) {
+			titleText_third_alpha = 1.0f;
+			textAlphaAnimEndFlg = true;
+		}
+
+		textAlpha_ct = 0.0;
+	}
+}
+
+void Title::textShadowCalc()
+{
+	textShadow_ct += Scene::DeltaTime();
+
+	if (textShadow_ct >= 0.1) {
+		shadowPos += Vec2{ 0.5,0.5 };
+
+		if (shadowPos.x >= 3) {
+			shadowPos = Vec2{ 3,3 };
+			shadowAnimEndFlg = true;
+		}
+		textShadow_ct = 0.0;
+	}
+}
+
+void Title::subTitleAlphaCalc()
+{
+	subTitleAlpha_ct += Scene::DeltaTime();
+
+	if (subTitleAlpha_ct >= 0.05) {
+		subTitleAlpha += 0.1;
+		if (subTitleAlpha >= 1.0) {
+			subTitleAlpha = 1.0;
+		}
+		subTitleAlpha_ct = 0.0;
+	}
 }
