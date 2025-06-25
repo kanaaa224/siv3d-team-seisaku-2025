@@ -6,6 +6,7 @@
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
 # include "../Characters/Enemies/Effect/SmallHitEffect.h"
+# include "../Objects/Buff/BuffBase.hpp"
 
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度

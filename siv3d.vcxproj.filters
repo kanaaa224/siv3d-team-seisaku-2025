@@ -231,9 +231,6 @@
     <ClCompile Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scenes\Tutorial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Characters\Enemies\Effect\BuffSpawnEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -244,6 +241,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Characters\Enemies\Effect\BloodImpactEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Stages\TutorialStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1010,9 +1010,6 @@
     <ClInclude Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scenes\Tutorial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Characters\Enemies\Effect\BuffSpawnEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1023,6 +1020,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Characters\Enemies\Effect\BloodImpactEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Stages\TutorialStage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
