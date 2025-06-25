@@ -96,7 +96,6 @@ public:
 	void finalize();
 
 	ePlayerState getplayerstate() const;
-	//void setplayerstate(ePlayerState state);	//デバッグの時に使うかも
 
 	void onHit(ObjectBase& object) override;
 	void onDamaged(float amount) override;	//ダメージを受けた時の処理
@@ -116,9 +115,6 @@ public:
 
 	//
 	void SetHitEnemy(bool _flg) { enemyHit = _flg; };
-
-	//eItemState getItemstate() const;   //itemのステータスを返す
-	//setItemstate(eItemState item);  //itemの設定
 
 	s3d::Audio run_se;
 

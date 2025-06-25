@@ -583,9 +583,6 @@ void Player::update()
 
 void Player::draw() const
 {
-	//.drawAtを使って中心座標を元に描画
-	//TextureAsset(U"Player_idle").mirrored(flip_flg).resized(size).drawAt(position);
-
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
 
 	// 画像を滑らかに補完
@@ -610,9 +607,6 @@ void Player::draw() const
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
 	Print << U"Player 壁 : " << wall_hit;
-	//Print << U"hitStopTimer : " << hitStopTimer;
-	//Print << U"isHitStop : " << isHitStop;
-	//Print << U"CoolDown : " << avoidanceCooldown;
 
 #endif // DEBUG
 }
@@ -640,7 +634,6 @@ void Player::onHit(ObjectBase& object)
 		{
 			body.applyLinearImpulse(Vec2(-100.0, 0.0));
 		}*/
-		
 	}
 	else
 	{
@@ -692,11 +685,6 @@ ePlayerState Player::getplayerstate() const
 {
 	return playerState;
 }
-
-//void Player::setplayerstate(ePlayerState state)
-//{
-//	playerState = state;
-//}
 
 void Player::animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state)
 {
@@ -783,7 +771,9 @@ void Player::movement(s3d::detail::XInput_impl controller)
 		if (wall_hit == false)
 		{
 			// 移動速度をスティック傾きに応じて調整
-			body.setVelocity(Vec2(lx * VELOCITY + movement_speed, body.getVelocity().y));
+			//body.setVelocity(Vec2(lx * VELOCITY + movement_speed, body.getVelocity().y));
+			double speedBoost = movement_speed * (lx >= 0 ? 1.0 : -1.0);
+			body.setVelocity(Vec2(lx * VELOCITY + speedBoost, body.getVelocity().y));
 		}
 
 		// 左右の向き判定

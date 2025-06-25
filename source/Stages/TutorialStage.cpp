@@ -54,12 +54,16 @@ void TutorialStage::draw() const
 	ClearPrint(); // 過去のPrint出力を消す
 
 #ifdef _DEBUG
+
 	Print << U"オブジェクト数: " << objects.size();
+
 #endif
 
 	{
 		Stage::draw();
 	}
+
+	FontAsset(U"TitleFont")(U"Enterキーでスキップ可能").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ Scene::Width() / 2, Scene::Height() / 2 });
 }
 
 void TutorialStage::NewInstance()
