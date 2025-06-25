@@ -36,7 +36,7 @@ void Game::update()
 	{
 	case 0:
 		//
-		if (KeyEnter.down() || Gamepad(0).buttons[7].down())
+		if (KeyEnter.down() /*|| Gamepad(0).buttons[7].down()*/)
 		{
 			changeScene(SceneState::Game, 0.5s);
 

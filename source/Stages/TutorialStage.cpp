@@ -31,7 +31,7 @@ void TutorialStage::initialize()
 	//}
 
 	//プレイヤー
-	createObject<Player>(Vec2{ (100), 650 });
+	createObject<Player>(Vec2{ 100, 650 });
 }
 
 void TutorialStage::update()
