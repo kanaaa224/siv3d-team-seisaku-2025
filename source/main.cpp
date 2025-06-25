@@ -36,6 +36,7 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Title_Background2", { U"Title" } }, U"../assets/images/title/j2.png");
 	TextureAsset::Register({ U"Title_Background3", { U"Title" } }, U"../assets/images/title/j3.png");
 	TextureAsset::Register({ U"Title_Background4", { U"Title" } }, U"../assets/images/title/j4.png");
+	TextureAsset::Register({ U"Title_Logo",        { U"Title" } }, U"../assets/images/title/TItleLogo.png");
 
 	//End
 	TextureAsset::Register({ U"End_Background1", { U"End" } }, U"../assets/images/end/End4.png");

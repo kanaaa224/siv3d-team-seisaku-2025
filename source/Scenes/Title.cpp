@@ -4,16 +4,18 @@
 
 Title::Title(const InitData& init) : IScene{ init }
 {
+	//Texture読み込み
 	m_backgroundTexture1 = TextureAsset(U"Title_Background1");
 	m_backgroundTexture2 = TextureAsset(U"Title_Background2");
 	m_backgroundTexture3 = TextureAsset(U"Title_Background3");
 	m_backgroundTexture4 = TextureAsset(U"Title_Background4");
+	title_Logo           = TextureAsset(U"Title_Logo");
 
+	//Sound読み込み
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").stop();
 	AudioAsset(U"Title_BGM").setVolume(0.7);
 	AudioAsset(U"Title_BGM").play();
-
 	AudioAsset(U"kettei_SE").setVolume(1.0);
 
 	//m_runAnimation = LoadDivGraph(U"Scarerun Idle", Size(150, 45));
@@ -128,36 +130,36 @@ void Title::draw() const
 	m_backgroundTexture2.resized(Scene::Size()).draw(0, 0);
 	m_backgroundTexture1.resized(Scene::Size()).draw(0, 0);
 
+	//title_Logo.resized(Vec2{ 200,200 }).draw(0, 0);
+
 
 	// タイトル描画
 	FontAsset(U"TitleFont")(U"森ノ影").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, Vec2{3, 3}, ColorF{0.0, 0.5}), 100, Vec2{640, 200},Palette::Lightgreen);
 
+	//Copyright
 	static const Font font{ 16 };
-
 	font(U"Copyright © さんぴん茶 2025. All rights reserved.").drawAt(Scene::Center() + Vec2{ 0, (Scene::Height() / 2) - 16 });
 
 	// ボタン描画
+	// PLAYボタン
+	m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(1);
+	// 選択されている場合は枠の色を変える
+	if (m_selectedButtonIndex == 0)
 	{
-		// PLAYボタン
-		m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(1);
-		// 選択されている場合は枠の色を変える
-		if (m_selectedButtonIndex == 0)
-		{
-			m_startButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
-		}
-
-		// EXITボタン
-		m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(1);
-		// 選択されている場合は枠の色を変える
-		if (m_selectedButtonIndex == 1)
-		{
-			m_exitButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
-		}
-
-		const Font& boldFont = FontAsset(U"Bold");
-		boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
-		boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+		m_startButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
 	}
+
+	// EXITボタン
+	m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(1);
+	// 選択されている場合は枠の色を変える
+	if (m_selectedButtonIndex == 1)
+	{
+		m_exitButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
+	}
+
+	const Font& boldFont = FontAsset(U"Bold");
+	boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
+	boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 
 	////左下にプレイヤー表示
 	//if (!m_runAnimation.isEmpty())

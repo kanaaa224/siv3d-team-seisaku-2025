@@ -22,10 +22,14 @@ private:
 	// 0: PLAY (スタート), 1: EXIT (終了)
 	int m_selectedButtonIndex = 0;
 
+	//****IMG****//
+	//backGround
 	Texture m_backgroundTexture1;
 	Texture m_backgroundTexture2;
 	Texture m_backgroundTexture3;
 	Texture m_backgroundTexture4;
+	//タイトルロゴ
+	Texture title_Logo;
 
 	//アニメーション用1
 	Array<TextureRegion> m_runAnimation;
