@@ -130,8 +130,6 @@ void Title::draw() const
 	m_backgroundTexture2.resized(Scene::Size()).draw(0, 0);
 	m_backgroundTexture1.resized(Scene::Size()).draw(0, 0);
 
-	//title_Logo.resized(Vec2{ 200,200 }).draw(0, 0);
-
 
 	// タイトル描画
 	FontAsset(U"TitleFont")(U"森ノ影").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, Vec2{3, 3}, ColorF{0.0, 0.5}), 100, Vec2{640, 200},Palette::Lightgreen);
