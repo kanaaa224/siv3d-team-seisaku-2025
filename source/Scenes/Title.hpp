@@ -43,6 +43,7 @@ private:
 	float subTitleAlpha;
 
 	void createLeaf();
+	double createLeaf_ct;
 
 	//****IMG****//
 	//backGround

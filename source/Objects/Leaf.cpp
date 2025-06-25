@@ -4,7 +4,7 @@ Leaf::Leaf(P2World& world, const Vec2& position, int imgNum, eDropPostion dropPo
 	: ObjectBase(world, position)
 {
 	//画像の左上座標の設定
-	if (imgNum <= 0 || imgNum >= 4) {
+	if (imgNum >= 0 || imgNum <= 4) {
 		margin = Vec2{ LEAF_IMG_SIZE * imgNum,0.0 };
 	}
 	else {
@@ -29,6 +29,8 @@ Leaf::Leaf(P2World& world, const Vec2& position, int imgNum, eDropPostion dropPo
 	default:
 		break;
 	}
+
+	body.setVelocity(windDirection);
 }
 
 Leaf::~Leaf()

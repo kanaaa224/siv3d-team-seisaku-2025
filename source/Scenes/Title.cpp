@@ -2,6 +2,11 @@
 #include "../UI/PlayerHUD.hpp"
 # include "../Utils/CustomImageLoader.hpp"
 
+//Stage
+#include "../Stages/1.hpp"
+//Leaf
+#include "../Objects/Leaf.h"
+
 Title::Title(const InitData& init) : IScene{ init }
 {
 	//Texture読み込み
@@ -37,6 +42,8 @@ Title::Title(const InitData& init) : IScene{ init }
 
 	subTitleAlpha = 0.0;
 	subTitleAlpha_ct = 0.0;
+
+	createLeaf_ct = 0.0;
 }
 
 Title::~Title()
@@ -57,6 +64,7 @@ void Title::update()
 		subTitleAlphaCalc();
 	}
 	
+	createLeaf();
 
 	//タイマー初期化
 	PlayerHUD::GetInstance()->resetTime();
@@ -252,5 +260,18 @@ void Title::subTitleAlphaCalc()
 			subTitleAlpha = 1.0;
 		}
 		subTitleAlpha_ct = 0.0;
+	}
+}
+
+void Title::createLeaf()
+{
+	createLeaf_ct += Scene::DeltaTime();
+
+	if (createLeaf_ct >= 0.5) {//指定した時間が経過したら生成する
+		Vec2 createPos = Vec2{ Random(0,Scene::Size().x),0.0 };//生成位置
+		Stage* stage = Stage::GetInstance();
+		stage->createObject<Leaf>(createPos, Random(0, 4), eDropPostion::eRight, 10);
+
+		createLeaf_ct = 0.0;
 	}
 }
