@@ -27,6 +27,9 @@ public:
 		sceneChange = changeSceneFunc;
 		sceneData   = getDataFunc;
 	}
+	
+	std::function<void(SceneState, Duration)> sceneChange; // シーン遷移する関数
+	std::function<SceneData&()>               sceneData;   // シーン間の同期データを返す関数
 
 protected:
 	Array<ObjectBase*> objects;         // ステージ上に存在するオブジェクト
@@ -39,7 +42,4 @@ protected:
 	double accumulatedTime; // 物理演算用
 
 	static Stage* instance;
-	
-	std::function<void(SceneState, Duration)> sceneChange; // シーン遷移する関数
-	std::function<SceneData&()>               sceneData;   // シーン間の同期データを返す関数
 };

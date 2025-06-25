@@ -1,6 +1,19 @@
 ﻿# include "SpriteAnimator.hpp"
 
-SpriteAnimator::SpriteAnimator(AnimationName name) : frameTime(0.0), animationName(name), animationSpeed(0.0), looping(false), mirrored(false), visible(false), state(0), mask(ColorF{ 1.0, 1.0, 1.0, 1.0 }) {}
+SpriteAnimator::SpriteAnimator(AnimationName name) :
+	frameTime     (0.0),
+	animationSpeed(0.0),
+
+	animationName(name),
+
+	looping (false),
+	mirrored(false),
+	visible (false),
+
+	state(0),
+
+	mask(ColorF{ 1.0, 1.0, 1.0, 1.0 })
+{}
 
 void SpriteAnimator::update()
 {
@@ -40,6 +53,7 @@ void SpriteAnimator::draw() const
 		margin.y +=            textureSize.y  * frameY;
 
 		cutoutSize = textureSize;
+
 		break;
 	}
 
@@ -92,7 +106,7 @@ SizeF SpriteAnimator::getTextureSize(AnimationName name) const
 {
 	if (name == AnimationName::None) name = animationName;
 
-	switch (name)
+	switch (name) // アニメーション スプライトごとのテクスチャサイズ
 	{
 	case AnimationName::Spark1:
 	case AnimationName::Spark2:

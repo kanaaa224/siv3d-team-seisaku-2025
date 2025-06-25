@@ -21,13 +21,13 @@ public:
 	void update();
 	void draw() const;
 
-	void setAnimationName(AnimationName name) { animationName = name; } // アニメーション名を設定
-	void setAnimationSpeed(double speed) { animationSpeed = speed; }    // アニメーションの速度を設定
-	void setLooping(bool b) { looping = b; }                            // ループ再生するかどうかを設定
-	void setMirrored(bool b) { mirrored = b; }                          // 反転するかどうかを設定
-	void setPosition(Vec2 p) { position = p; }                          // 位置を設定
-	void setSize(SizeF s) { size = s; }                                 // 大きさを設定
-	void setMask(ColorF c) { mask = c; }                                // マスクカラーを設定
+	void setAnimationName(AnimationName n) { animationName = n; } // アニメーション名を設定
+	void setAnimationSpeed(double s) { animationSpeed = s; }      // アニメーションの速度を設定
+	void setLooping(bool b) { looping = b; }                      // ループ再生するかどうかを設定
+	void setMirrored(bool b) { mirrored = b; }                    // 反転するかどうかを設定
+	void setPosition(Vec2 p) { position = p; }                    // 位置を設定
+	void setSize(SizeF s) { size = s; }                           // 大きさを設定
+	void setMask(ColorF c) { mask = c; }                          // マスクカラーを設定
 
 	int   getState() const { return state; }
 	SizeF getTextureSize(AnimationName name = AnimationName::None) const;
@@ -41,14 +41,11 @@ public:
 	void hide() { visible = false; }; // 隠す
 
 private:
-	double frameTime;
-	double animationSpeed;
+	double frameTime, animationSpeed;
 
 	AnimationName animationName;
 
-	bool looping;
-	bool mirrored;
-	bool visible;
+	bool looping, mirrored, visible;
 
 	int state;
 

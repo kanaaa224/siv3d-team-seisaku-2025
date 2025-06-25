@@ -49,9 +49,7 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 
 void Vaillant::initialize()
 {
-	max_hp = VAILLANT_MAX_HP;
-
-	hp = max_hp;
+	hp = max_hp = VAILLANT_MAX_HP;
 }
 
 void Vaillant::attack(VaillantAttackType type)
