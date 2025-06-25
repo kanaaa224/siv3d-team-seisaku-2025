@@ -9,9 +9,17 @@
 #define ATTACKPOWER_BUFF_PARAMETER 2  //攻撃力
 #define MOVESPEED_BUFF_PARAMETER   30 //移動速度
 
+enum eBuffType
+{
+	eAttackPower,
+	eMoveSpeed
+};
+
 class BuffBase : public ObjectBase
 {
 protected:
+	eBuffType type;
+
 	Vec2 size;
 	String assetName;
 
@@ -25,6 +33,8 @@ public:
 	virtual void draw() const override;
 
 	virtual void onHit(ObjectBase& object) override;
+
+	eBuffType getBuffType() { return type; };
 
 protected:
 	//ドロップ時の動き
