@@ -1,5 +1,6 @@
 ﻿# include "Game.hpp"
 # include "../Stages/1.hpp"
+# include "../Stages/TutorialStage.hpp"
 # include "../Stages/DebugBoss.hpp"
 
 Game::Game(const InitData& init) : IScene{ init }
@@ -13,7 +14,7 @@ Game::Game(const InitData& init) : IScene{ init }
 	switch (getData().current_stage)
 	{
 	case 0:
-		Stage::NewInstance();
+		TutorialStage::NewInstance();
 		break;
 
 	case 1:
@@ -33,6 +34,17 @@ void Game::update()
 
 	switch (getData().current_stage)
 	{
+	case 0:
+		//
+		if (KeyEnter.down() || Gamepad(0).buttons[7].down())
+		{
+			changeScene(SceneState::Game, 0.5s);
+
+			getData().current_stage = 1;
+		}
+
+		break;
+
 	case 1:
 		switch (Stage1::GetState())
 		{
@@ -43,6 +55,8 @@ void Game::update()
 			changeScene(SceneState::GameOver, 0.5s);
 			break;
 		}
+
+		if (Stage1::GetState()) getData().current_stage = 0;
 		break;
 	}
 

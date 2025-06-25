@@ -143,6 +143,7 @@
     <ClCompile Include="source\Scenes\Game.cpp" />
     <ClCompile Include="source\Scenes\GameOver.cpp" />
     <ClCompile Include="source\Scenes\Title.cpp" />
+    <ClCompile Include="source\Stages\TutorialStage.cpp" />
     <ClCompile Include="source\Stage.cpp" />
     <ClCompile Include="source\Stages\1.cpp" />
     <ClCompile Include="source\Stages\DebugBoss.cpp" />
@@ -153,7 +154,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="source\Scenes\Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\engine\texture\box-shadow\128.png" />
@@ -388,6 +388,7 @@
     <ClInclude Include="source\Scenes\Game.hpp" />
     <ClInclude Include="source\Scenes\GameOver.h" />
     <ClInclude Include="source\Scenes\Title.hpp" />
+    <ClInclude Include="source\Stages\TutorialStage.hpp" />
     <ClInclude Include="source\Stage.hpp" />
     <ClInclude Include="source\Stages\1.hpp" />
     <ClInclude Include="source\Stages\DebugBoss.hpp" />
@@ -397,7 +398,6 @@
     <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
     <ClInclude Include="source\Utils\Timer.hpp" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="source\Scenes\Tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App\example\obj\blacksmith.obj">
