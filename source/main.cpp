@@ -10,6 +10,8 @@ void AssetsRegistration()
 	// アセットの登録
 	FontAsset::Register(U"TitleFont", FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf");
 	FontAsset::Register(U"Bold", FontMethod::MSDF, 48, Typeface::Bold);
+	FontAsset::Register(U"Dot_16", FontMethod::MSDF, 48, U"../assets/fonts/DotGothic16-Regular.ttf");
+	FontAsset::Register(U"Dot_Variable", FontMethod::MSDF, 48, U"../assets/fonts/Doto-VariableFont_ROND,wght.ttf");
 
 	// Font
 	FontAsset(U"TitleFont").setBufferThickness(4);
