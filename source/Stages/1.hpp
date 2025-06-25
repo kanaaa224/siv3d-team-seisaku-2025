@@ -1,8 +1,8 @@
-﻿# pragma once
+# pragma once
 
 # include "../Stage.hpp"
 
-#define STAGE1_WIDTH 5740
+# define STAGE1_WIDTH 5740
 
 class Stage1 : public Stage
 {
@@ -15,8 +15,6 @@ public:
 
 	static void NewInstance();
 
-	static int GetState() { return state; }
-
 private:
 	Camera2D camera;
 
@@ -25,8 +23,6 @@ private:
 	bool boss_spawn;
 
 	void initialize();
-
-	static int state;
 
 	//ステージの進捗度計算に必要なワールド座標
 	double m_stageStartX;

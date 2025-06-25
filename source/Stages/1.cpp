@@ -1,4 +1,4 @@
-﻿# include "1.hpp"
+# include "1.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
@@ -10,12 +10,14 @@
 # include "../UI/EnemyBoss.hpp"
 # include "../Characters/Vaillant.hpp"
 # include "../Characters/Slime.hpp"
+# include "../Utils/Timer.hpp"
 
-int Stage1::state = 0;
+using namespace TimerUtils;
+using namespace std::chrono_literals;
 
 Stage1::Stage1()
 {
-	state = 0;
+	TimerUtils::ClearTasks();
 
 	initialize();
 }
@@ -129,7 +131,7 @@ void Stage1::update()
 				{
 					static bool aaaaa = false;
 
-					//ここでクリアタイムのファイル書き込み
+					sceneData().clearTime = playerHUD->getClearTime();
 
 					if (!aaaaa)
 					{
@@ -137,7 +139,7 @@ void Stage1::update()
 						{
 							std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
-							state = 1;
+							sceneChange(SceneState::Clear, 0.5s);
 
 							aaaaa = false;
 						}).detach();
@@ -191,7 +193,7 @@ void Stage1::update()
 				{
 					std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
-					state = 2;
+					sceneChange(SceneState::GameOver, 0.5s);
 
 					aaaaa = false;
 				}).detach();
@@ -222,10 +224,9 @@ void Stage1::update()
 		playerHUD->setBossEreaFlg(BossEreaflg);
 		playerHUD->setPlayerPosition(player->getBody().getPos());
 	}
+#ifdef _DEBUG
 	else
 	{
-#ifdef _DEBUG
-
 		if (!respawnTimer.isRunning()) respawnTimer.restart();
 
 		if (respawnTimer.sF() >= 1.0)
@@ -234,10 +235,14 @@ void Stage1::update()
 
 			respawnTimer.reset();
 		}
-#endif
 	}
+	
+	if (Key0.down()) sceneChange(SceneState::Title, 0.5s);
+#endif
 
 	camera.update();
+	
+	TimerUtils::Update();
 }
 
 void Stage1::draw() const
@@ -294,7 +299,7 @@ void Stage1::draw() const
 
 void Stage1::NewInstance()
 {
-	if (instance != nullptr) delete instance;
+	DeleteInstance();
 
 	instance = new Stage1();
 }

@@ -1,4 +1,4 @@
-﻿# include "Common.hpp"
+# include "Common.hpp"
 # include "Scenes/Title.hpp"
 # include "Scenes/Game.hpp"
 # include "Scenes/GameClear.hpp"
@@ -175,22 +175,22 @@ void Initialize()
 
 void Main()
 {
+#ifdef _DEBUG
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
 	AssetsRegistration();
 
 	Initialize();
 
-	App manager;
+	SM sceneManager;
 
-	manager.add<Title>(SceneState::Title);
-	manager.add<Game>(SceneState::Game);
-	manager.add<GameClear>(SceneState::Clear);
-	manager.add<GameOver>(SceneState::GameOver);
-	manager.add<CreditRoll>(SceneState::Credit);
+	sceneManager.add<Title>     (SceneState::Title);
+	sceneManager.add<Game>      (SceneState::Game);
+	sceneManager.add<GameClear> (SceneState::Clear);
+	sceneManager.add<GameOver>  (SceneState::GameOver);
+	sceneManager.add<CreditRoll>(SceneState::Credit);
+	sceneManager.init           (SceneState::Tutorial, 0.5s);
 
-	manager.init(SceneState::Tutorial, 0.5s);
-
-	while (System::Update())
-	{
-		if (not manager.update()) break;
-	}
+	while (System::Update()) if (not sceneManager.update()) break;
 }

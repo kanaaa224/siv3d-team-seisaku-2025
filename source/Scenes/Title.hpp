@@ -1,11 +1,10 @@
-﻿# pragma once
+# pragma once
 
 # include "../Common.hpp"
 
-#define TITLE_TEXT_ALPHA_CHANGE_TIME 0.1
+# define TITLE_TEXT_ALPHA_CHANGE_TIME 0.1
 
-// タイトルシーン
-class Title : public App::Scene
+class Title : public SM::Scene
 {
 public:
 	Title(const InitData& init);
