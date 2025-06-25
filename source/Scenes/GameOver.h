@@ -1,15 +1,14 @@
-﻿# pragma once
+# pragma once
 
 # include "../Common.hpp"
 
-class GameOver : public App::Scene
+class GameOver : public SM::Scene
 {
 public:
 	GameOver(const InitData& init);
 
 	void update() override;
 	void draw() const override;
-
 
 private:
 	RoundRect m_startButton{ Arg::center(450, 600), 300, 60, 8 };

@@ -1,4 +1,4 @@
-﻿# include "TutorialStage.hpp"
+# include "TutorialStage.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
@@ -46,6 +46,13 @@ void TutorialStage::update()
 		{
 			hitBox->destroy();
 		}
+	}
+	
+	if (KeyEnter.down() || Gamepad(0).isConnected() && Gamepad(0).buttons[7].down())
+	{
+		sceneData().current_stage = 1;
+
+		sceneChange(SceneState::Game, 0.5s);
 	}
 }
 

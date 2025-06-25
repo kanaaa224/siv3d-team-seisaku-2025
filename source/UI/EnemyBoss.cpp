@@ -1,8 +1,11 @@
-﻿# include "EnemyBoss.hpp"
+# include "EnemyBoss.hpp"
 
-EnemyBossUI* EnemyBossUI::instance = nullptr;
+EnemyBossUI* EnemyBossUI::GetInstance()
+{
+	static EnemyBossUI instance;
 
-EnemyBossUI::EnemyBossUI() : hp(0.0f) {}
+	return &instance;
+}
 
 void EnemyBossUI::update()
 {
@@ -16,11 +19,4 @@ void EnemyBossUI::draw() const
 	font(name).drawAt(Scene::Center() - Vec2{ 0, 200 });
 
 	hpBar.draw({ (Scene::Center() - Vec2{ 200, 175 }), SizeF{ 400, 16 } });
-}
-
-EnemyBossUI* EnemyBossUI::GetInstance()
-{
-	if (instance == nullptr) instance = new EnemyBossUI();
-
-	return instance;
 }

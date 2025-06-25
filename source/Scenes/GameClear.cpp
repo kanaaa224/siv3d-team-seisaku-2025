@@ -1,4 +1,4 @@
-﻿# include "GameClear.hpp"
+# include "GameClear.hpp"
 #include "../UI/PlayerHUD.hpp"
 
 GameClear::GameClear(const InitData& init) : IScene{ init }
@@ -11,18 +11,12 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
 
-	ClearTime = 0.0;
+	ClearTime = getData().clearTime;
 }
 
 void GameClear::update()
 {
 	auto controller = XInput(0); //コントローラーを取得
-
-	static bool Oneflg = true;
-	if (Oneflg)
-	{
-		FileOpenByTimer();
-	}
 
 	// ボタンの更新
 	{
@@ -126,7 +120,7 @@ void GameClear::draw() const
 
 }
 
-void GameClear::FileOpenByTimer()
+/*void GameClear::FileOpenByTimer()
 {
 	//ファイルをオープンする
 	TextReader reader{ U"../saves/ClearTime.txt" };
@@ -142,4 +136,4 @@ void GameClear::FileOpenByTimer()
 
 	//String型をdouble型に変換
 	ClearTime = Parse<double>(text);
-}
+}*/

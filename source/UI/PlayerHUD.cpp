@@ -1,9 +1,6 @@
-﻿# include <Siv3D.hpp>
+# include <Siv3D.hpp>
 # include "PlayerHUD.hpp"
 # include "../Utils/CustomImageLoader.hpp"
-
-
-PlayerHUD* PlayerHUD::instance = nullptr;
 
 PlayerHUD::PlayerHUD()
 	: flame_location(0.0, 0.0)
@@ -132,7 +129,7 @@ void PlayerHUD::update()
 			timerStarted = false;
 			timerLocked = true;
 		}
-		FileSave(elapsedTime);
+		//FileSave(elapsedTime);
 	}
 }
 
@@ -285,14 +282,15 @@ void PlayerHUD::draw() const
 
 PlayerHUD* PlayerHUD::GetInstance()
 {
-	if (instance == nullptr) instance = new PlayerHUD();
-	return instance;
+	static PlayerHUD instance;
+
+	return &instance;
 }
 
-void PlayerHUD::FileSave(double ClearTime)
+/*void PlayerHUD::FileSave(double ClearTime)
 {
 	//書き込み用のテキストファイルをオープンする
-	TextWriter wirter{ U"../assets/text/ClearTime.txt" };
+	TextWriter wirter{ U"../saves/ClearTime.txt" };
 
 	//例外スロー確認
 	if (!wirter)
@@ -303,7 +301,7 @@ void PlayerHUD::FileSave(double ClearTime)
 	//1行書き込み(改行なし)
 	wirter.write(Format(ClearTime));
 	wirter.close();
-}
+}*/
 
 void PlayerHUD::resetTime()
 {

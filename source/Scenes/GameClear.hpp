@@ -1,10 +1,8 @@
-﻿# pragma once
+# pragma once
 
 # include "../Common.hpp"
 
-
-// リザルトシーン
-class GameClear : public App::Scene
+class GameClear : public SM::Scene
 {
 public:
 	GameClear(const InitData& init);
@@ -28,8 +26,4 @@ private:
 	Texture score_fream;
 
 	double ClearTime;
-
-private:
-
-	void FileOpenByTimer();
 };

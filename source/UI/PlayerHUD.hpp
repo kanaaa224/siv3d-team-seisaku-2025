@@ -1,4 +1,4 @@
-﻿# pragma once
+# pragma once
 # include "../Common.hpp"
 # include "../Characters/Player.hpp"
 # include "../Characters/Vaillant.hpp"
@@ -25,6 +25,8 @@ public:
 
 	// Playerインスタンスを設定する関数 (必要に応じて残しておく)
 	void setPlayer(Player* player) { m_player = player; }
+	
+	double getClearTime() { return elapsedTime; }
 
 	// UIボタンのテクスチャ領域
 	Array <TextureRegion> button;
@@ -37,8 +39,6 @@ public:
 	TextureRegion Avoid_button_frame;
 
 private:
-	static PlayerHUD* instance; //シングルトンインスタンス
-
 	void initialize(); //初期化関数
 
 	//HUD要素の位置
@@ -77,15 +77,11 @@ private:
 
 	bool GO = false;//タイマースタートフラグ
 
-	void FileSave(double ClearTime);//クリアタイム保存関数
-
 	//進捗度UIプレイヤーアニメーション関連
 	Array <TextureRegion> run_animation; //アニメーションフレーム
 	int8 animation_number;				//現在のアニメーションフレーム番号
 	double animation_time;				//現在のアニメーションフレームの経過時間
 	double max_animation_time;          //進捗度UIのアニメーションの最大時間（フレームアニメーション速度制御用）
-
-
 
 public:
 	void resetTime(); // 時間リセット関数

@@ -1,11 +1,10 @@
-﻿# pragma once
+# pragma once
 # include "HPBar.hpp"
 
 class EnemyBossUI
 {
 public:
-	EnemyBossUI();
-	~EnemyBossUI() = default;
+	static EnemyBossUI* GetInstance();
 
 	void update();
 	void draw() const;
@@ -13,12 +12,10 @@ public:
 	void setHP(float num = 0.0f) { hp = num; }
 	void setName(String str = U"") { name = str; }
 
-	static EnemyBossUI* GetInstance();
-
 private:
-	static EnemyBossUI* instance;
+	EnemyBossUI() = default;
 
-	float hp;
+	float hp = 0.0f;
 
 	String name;
 
