@@ -3,7 +3,7 @@
 #include "Base.hpp"
 
 #define LEAF_IMG_SIZE 16
-#define RESIZE 32
+#define RESIZE 40
 
 enum eDropPostion
 {

@@ -46,14 +46,12 @@ Title::Title(const InitData& init) : IScene{ init }
 	createLeaf_ct = 0.0;
 }
 
-Title::~Title()
-{
-
-}
-	
+Title::~Title() {}
 
 void Title::update()
 {
+	Stage::GetInstance()->update();
+
 	if (!textAlphaAnimEndFlg) {
 		textAlphaCalc();
 	}
@@ -155,28 +153,30 @@ void Title::update()
 
 void Title::draw() const
 {
-		
 	m_backgroundTexture4.resized(Scene::Size()).draw(0, 0);
 	m_backgroundTexture3.resized(Scene::Size()).draw(0, 0);
 	m_backgroundTexture2.resized(Scene::Size()).draw(0, 0);
 	m_backgroundTexture1.resized(Scene::Size()).draw(0, 0);
 
+	Stage::GetInstance()->draw();
 
 	// タイトル描画
 	FontAsset(U"Dot_16")(U"森").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, shadowPos, ColorF{ 0.0, 0.5 }), 100, Vec2{ 550, 200 }, ColorF{Palette::Palegreen,titleText_first_alpha});
 	FontAsset(U"Dot_16")(U"ノ").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, shadowPos, ColorF{0.0, 0.5}), 100, Vec2{640, 200}, ColorF{ Palette::Palegreen,titleText_first_alpha });
 	FontAsset(U"Dot_16")(U"影").drawAt(TextStyle::OutlineShadow(0.2, ColorF{0.1, 0.1, 0.1}, shadowPos, ColorF{0.0, 0.5}), 100, Vec2{730, 200}, ColorF{ Palette::Palegreen,titleText_first_alpha });
+
 	if (textAlphaAnimEndFlg && shadowAnimEndFlg) {
 		FontAsset(U"Dot_16")(U"mori no kage").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 25, Vec2{ 640, 270 }, ColorF{ Palette::Yellow,subTitleAlpha });
 	}
 
 	//Copyright
 	static const Font font{ 16 };
+
 	font(U"© さんぴん茶 2025. All rights reserved.").drawAt(Scene::Center() + Vec2{ 0, (Scene::Height() / 2) - 16 });
 
 	// ボタン描画
 	// PLAYボタン
-	m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(1);
+	m_startButton.draw(ColorF{ 1.0, m_startTransition.value() + 0.45 }).drawFrame(1);
 	// 選択されている場合は枠の色を変える
 	if (m_selectedButtonIndex == 0)
 	{
@@ -184,14 +184,14 @@ void Title::draw() const
 	}
 
 	// EXITボタン
-	m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(1);
+	m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() + 0.45 }).drawFrame(1);
 	// 選択されている場合は枠の色を変える
 	if (m_selectedButtonIndex == 1)
 	{
 		m_exitButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
 	}
 
-	const Font& boldFont = FontAsset(U"Bold");
+	const Font& boldFont = FontAsset(U"Dot_16");
 	boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
 	boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 

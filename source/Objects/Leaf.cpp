@@ -3,6 +3,8 @@
 Leaf::Leaf(P2World& world, const Vec2& position, int imgNum, eDropPostion dropPos, double windStrength)
 	: ObjectBase(world, position)
 {
+	body = world.createCircle(P2Dynamic, position,0.1);
+
 	//画像の左上座標の設定
 	if (imgNum >= 0 || imgNum <= 4) {
 		margin = Vec2{ LEAF_IMG_SIZE * imgNum,0.0 };
