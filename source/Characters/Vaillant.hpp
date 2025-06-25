@@ -23,8 +23,8 @@ enum class VaillantAttackType
 	Earthquake, // 地団駄
 	Rush,       // 突進
 	Slime,      // スライム
-	Tentacles,  // 触手
-	Teleport    // 瞬間移動
+	Teleport,   // 瞬間移動
+	Tentacles   // 触手
 };
 
 enum class VaillantAttackState
