@@ -17,15 +17,18 @@ enum ePlayerState
 	null,			//何もなし(初期化用)
 };
 
-enum eItemState
+enum eHitBuffType
 {
-	//バフアイテムの追加
+	DamageUp,
+	SpeedUp,
+	None
 };
 
 class Player : public CharacterBase
 {
 private:
 	ePlayerState playerState;	//状態管理
+	eHitBuffType isHitBufftype;
 	
 	bool is_on_ground;			//地面についているか？
 
@@ -76,12 +79,15 @@ private:
 	double attack_power;
 
 	bool enemyHit;
+	bool isbuffHit;
 
 	SpriteAnimator spriteAnimator;
 
 	Size effect_size;
 
 	Vec2 pos;
+	Vec2 DamageUp_pos;
+	Vec2 SpeedUo_pos;
 
 	s3d::Audio m_runLoopSE; // 走行ループSE用
 
@@ -123,4 +129,5 @@ private:
 	bool animation(Array<TextureRegion> image_container, double frame);	//攻撃アニメーション用関数
 	void movement(s3d::detail::XInput_impl controller);	//左右移動
 	void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理
+	void BuffAnimation(int bufftype);	//バフのDamageUpなどを表示する
 };

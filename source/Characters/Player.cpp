@@ -64,6 +64,9 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 
 	//run_se.setSpeed(2.0);
 
+	isbuffHit = false;
+	isHitBufftype = eHitBuffType::None;
+
 	this->initialize();
 }
 
@@ -607,6 +610,8 @@ void Player::draw() const
 	Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
 	Print << U"Player 壁 : " << wall_hit;
+	Print << U"バフ : " << isHitBufftype;
+	
 
 #endif // DEBUG
 }
@@ -638,6 +643,12 @@ void Player::onHit(ObjectBase& object)
 	else
 	{
 		wall_hit = false;
+	}
+
+	// 何のバフを獲得したか取得
+	if (BuffBase* buff = dynamic_cast<BuffBase*>(&object))
+	{
+		BuffAnimation(buff->getBuffType());
 	}
 }
 
@@ -795,5 +806,17 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 		is_on_ground = false;
 		body.setVelocity(Vec2(body.getVelocity().x /*+ movement_speed*/, -JUMPSPEED));
 		AudioAsset(U"player_jump_SE").play();//ジャンプSE
+	}
+}
+
+void Player::BuffAnimation(int bufftype)
+{
+	if (bufftype == eBuffType::eAttackPower)
+	{
+		isHitBufftype = eHitBuffType::DamageUp;
+	}
+	else if (bufftype == eBuffType::eMoveSpeed)
+	{
+		isHitBufftype = eHitBuffType::SpeedUp;
 	}
 }
