@@ -42,6 +42,8 @@ private:
 	double subTitleAlpha_ct;
 	float subTitleAlpha;
 
+	void createLeaf();
+
 	//****IMG****//
 	//backGround
 	Texture m_backgroundTexture1;
