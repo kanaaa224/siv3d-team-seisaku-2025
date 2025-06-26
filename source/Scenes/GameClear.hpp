@@ -11,6 +11,8 @@ public:
 	void draw() const override;
 
 private:
+	double sceneTime;
+
 	RoundRect m_startButton{ Arg::center(450, 600), 300, 60, 8 };
 	RoundRect m_exitButton{ Arg::center(850, 600), 300, 60, 8 };
 
@@ -25,5 +27,10 @@ private:
 	Texture clear_background;
 	Texture score_fream;
 
+	bool skipDrawClearTime;
 	double ClearTime;
+	double drawClearTime;
+	double drawClearTime_ct;
+	void clearTimeUpdate();
+	bool endClearTimeUpdateFlg;
 };

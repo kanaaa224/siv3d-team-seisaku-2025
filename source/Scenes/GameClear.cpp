@@ -12,10 +12,17 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	AudioAsset(U"kettei_SE").setVolume(1.0);
 
 	ClearTime = getData().clearTime;
+
+	drawClearTime_ct = 0.0;
+	drawClearTime = 0.0;
+	endClearTimeUpdateFlg = false;
+	skipDrawClearTime = false;
 }
 
 void GameClear::update()
 {
+	sceneTime += Scene::DeltaTime();
+
 	auto controller = XInput(0); //コントローラーを取得
 
 	// ボタンの更新
@@ -70,6 +77,19 @@ void GameClear::update()
 		changeScene(SceneState::Title, 0.5s);
 	}
 
+	if (MouseL.down() && !endClearTimeUpdateFlg) {
+		skipDrawClearTime = true;
+	}
+
+	if (skipDrawClearTime && !endClearTimeUpdateFlg) {
+		drawClearTime = ClearTime;
+		endClearTimeUpdateFlg = true;
+	}
+
+	//クリアタイムのアニメーション
+	if (!endClearTimeUpdateFlg && !skipDrawClearTime) {
+		clearTimeUpdate();
+	}
 }
 
 void GameClear::draw() const
@@ -81,12 +101,12 @@ void GameClear::draw() const
 	Scene::SetBackground(ColorF{ 0.5 });
 
 	// クリア描画
-	FontAsset(U"TitleFont")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 100 });
-	Rect{ Arg::center(Scene::Center()), 550, 350 }.draw(Palette::White);
-	score_fream.resized(450, 100).draw(415, 190);
-	FontAsset(U"TitleFont")(U"score").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 220 }, Palette::Orange);
+	//FontAsset(U"Dot_16")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 100 });
+	Rect{ Arg::center(Scene::Center()), Scene::Size().x, 350}.draw(ColorF(Palette::White, 0.9));
+	//score_fream.resized(450, 100).draw(415, 190);
+	//FontAsset(U"Dot_16")(U"score").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 220 }, Palette::Orange);
 	//スコア描画//
-	FontAsset(U"TitleFont")(U"Time: {:.2f} 秒"_fmt(ClearTime))
+	FontAsset(U"Dot_16")(U"Time: {:.2f} 秒"_fmt(drawClearTime))
 		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
 				60, Vec2{ 640, 380 }, Palette::Black);
 	// ボタン描画
@@ -107,7 +127,7 @@ void GameClear::draw() const
 			m_exitButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
 		}
 
-		const Font& boldFont = FontAsset(U"Bold");
+		const Font& boldFont = FontAsset(U"Dot_16");
 		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
 		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
@@ -118,6 +138,19 @@ void GameClear::draw() const
 
 #endif // DEBUG
 
+}
+
+void GameClear::clearTimeUpdate()
+{
+	drawClearTime_ct += Scene::DeltaTime();
+
+	double t = Clamp(drawClearTime_ct / 1, 0.0, 1.0);
+	drawClearTime = ClearTime * t;
+
+	if (drawClearTime == ClearTime) {
+		endClearTimeUpdateFlg = true;
+		skipDrawClearTime = true;
+	}
 }
 
 /*void GameClear::FileOpenByTimer()
