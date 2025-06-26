@@ -8,6 +8,8 @@
 # include "../Objects/Wall.hpp"
 # include "../Objects/Ground.hpp"
 
+#define _DEBUG
+
 using namespace TimerUtils;
 using namespace std::chrono_literals;
 
@@ -211,9 +213,10 @@ void Vaillant::update()
 		if (Key1.down()) heal(10.0f);
 		if (Key2.down()) applyDamage(10.0f);
 		if (Key3.down()) applyDamage(100.0f);
-		if (Key4.down()) hp = 10.0f;
+		if (Key4.down()) applyDamage(max_hp - 10.0f);
 		if (Key5.down()) applyDamage(max_hp);
 		if (Key6.down()) attack(VaillantAttackType::Slime);
+		if (Key7.down()) attack(VaillantAttackType::Tentacles);
 	}
 #endif
 
@@ -271,7 +274,7 @@ void Vaillant::update()
 			return attack(
 				InRange(distance, 100.0, 150.0) ? Random(0, 3) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
 				InRange(distance, 150.0, 400.0) ? Random(0, 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
-				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 3)) :
+				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 2)) :
 				InRange(distance, 600.0, 700.0) ? VaillantAttackType::Rush : attack_type
 			);
 		}
