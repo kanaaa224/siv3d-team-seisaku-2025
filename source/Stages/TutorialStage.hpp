@@ -28,6 +28,8 @@ private:
 	size_t currentTextIndex = 0;   //現在のテキスト
 	Stopwatch autoSkipTimer;       //自動スキップタイマー
 
+	bool isLoading = true; // 初期状態はローディング中
+
 private:
 	void initialize();
 };
