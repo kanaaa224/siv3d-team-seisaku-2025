@@ -23,18 +23,22 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	if (ClearTime <= 30.0) {
 		rank = U"S";
 		rankColor = ColorF{ Palette::Gold };
+		rankSize = RANK_SIZE + 2000;
 	}
 	else if (ClearTime >= 31.0 && ClearTime <= 60.0) {
 		rank = U"A";
 		rankColor = ColorF{ Palette::Red };
+		rankSize = RANK_SIZE + 2000;
 	}
 	else if (ClearTime >= 61.0 && ClearTime <= 80.0) {
 		rank = U"B";
 		rankColor = ColorF{ Palette::Blue };
+		rankSize = RANK_SIZE + 2000;
 	}
 	else {
 		rank = U"C";
 		rankColor = ColorF{ Palette::Yellow };
+		rankSize = RANK_SIZE;
 	}
 
 	drawClearTime_ct = 0.0;
@@ -49,9 +53,11 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 
 	rankDraw_ct = 0.0;
 	rankDrawFlg = false;
-	rankSize = RANK_SIZE;
 
 	createStar_ct = 0;
+
+	sizeMove_ct = 0;
+	endSizeMoveFlg = false;
 }
 
 void GameClear::update()
@@ -277,20 +283,39 @@ void GameClear::rankAnime()
 
 void GameClear::rankS_Anim(double ct)
 {
-	createRankStarEffect();
+	rankSizeMove();
+	if (endSizeMoveFlg) {
+		createRankStarEffect();
+	}
 }
 
 void GameClear::rankA_Anim(double ct)
 {
-	createRankStarEffect();
+	rankSizeMove();
+	if (endSizeMoveFlg) {
+		createRankStarEffect();
+	}
 }
 
 void GameClear::rankB_Anim(double ct)
 {
+	rankSizeMove();
 }
 
 void GameClear::rankC_Anim(double ct)
 {
+}
+
+void GameClear::rankSizeMove()
+{
+	sizeMove_ct += Scene::DeltaTime();
+
+	rankSize -= 300 * sizeMove_ct;
+
+	if (rankSize <= RANK_SIZE) {
+		rankSize = RANK_SIZE;
+		endSizeMoveFlg = true;
+	}
 }
 
 void GameClear::createRankStarEffect()

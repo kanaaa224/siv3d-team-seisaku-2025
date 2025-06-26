@@ -10,7 +10,7 @@ class GameClear : public SM::Scene
 #define TIME_INIT_POS Vec2{ 640, 380 }
 
 #define RANK_DRAW 0.5
-#define RANK_SIZE 180
+#define RANK_SIZE 280
 #define RANK_POS_X 640
 #define RANK_POS_Y 380
 
@@ -68,6 +68,10 @@ private:
 	void rankA_Anim(double ct);
 	void rankB_Anim(double ct);
 	void rankC_Anim(double ct);
+
+	void rankSizeMove();
+	double sizeMove_ct;
+	bool endSizeMoveFlg;
 
 	//エフェクト
 	//星
