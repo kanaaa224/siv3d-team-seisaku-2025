@@ -117,7 +117,7 @@ void PlayerHUD::update()
 		animation_time = 0.0;
 	}
 
-	if (boss_state == VaillantState::Death)
+	if (boss_state == VaillantState::Death || player_state == ePlayerState::die)
 	{
 		if (timerStarted) {
 			timerStarted = false;
