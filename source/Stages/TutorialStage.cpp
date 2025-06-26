@@ -25,6 +25,11 @@ TutorialStage::TutorialStage()
 
 void TutorialStage::initialize()
 {
+	// --- ロード画面表示 ---
+	Scene::SetBackground(ColorF{ 0.0 }); // 背景を黒に設定
+	FontAsset(U"TitleFont")(U"Loading...").drawAt(Scene::Center(), Palette::White);
+	System::Update(); // 1フレーム強制描画
+
 	//BGM
 	/*AudioAsset(U"Title_BGM").stop();
 	AudioAsset(U"Battle_BGM").setVolume(0.7);
@@ -56,6 +61,13 @@ void TutorialStage::initialize()
 		
 
 	};
+
+	for (const auto& section : helpTexts)
+	{
+		FontAsset(U"TitleFont")(section).draw(-9999, -9999); // ウォームアップ
+	}
+
+	isLoading = false; // 読み込み完了
 	autoSkipTimer.start();
 }
 
@@ -121,8 +133,14 @@ void TutorialStage::update()
 
 void TutorialStage::draw() const
 {
-	ClearPrint(); // 過去のPrint出力を消す
+	if (isLoading)
+	{
+		Scene::SetBackground(ColorF{ 0.0 });
+		FontAsset(U"TitleFont")(U"Loading...").drawAt(Scene::Center(), Palette::White);
+		return;
+	}
 
+	ClearPrint(); // 過去のPrint出力を消す
 #ifdef _DEBUG
 
 	Print << U"オブジェクト数: " << objects.size();
