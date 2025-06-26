@@ -77,4 +77,7 @@ private:
 	//星
 	void createRankStarEffect();
 	double createStar_ct;
+	//煙
+	void createSmokeEffect();
+	bool createSmokeFlg;
 };

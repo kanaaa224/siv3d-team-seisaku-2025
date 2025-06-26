@@ -4,7 +4,7 @@ Smoke::Smoke(P2World& world, const Vec2& pos)
 	: ObjectBase(world, pos)
 {
 	position = pos;
-	reSize = IMG_SIZE;
+	reSize = IMG_RESIZE;
 	margin = Vec2{ 0,0 };
 }
 
@@ -28,6 +28,8 @@ void Smoke::update()
 
 void Smoke::draw() const
 {
+	// 画像を滑らかに補完
+	const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
 	//画像の描画
 	TextureAsset(U"Smoke")(margin, IMG_SIZE, IMG_SIZE).resized(reSize).drawAt(position);
 }

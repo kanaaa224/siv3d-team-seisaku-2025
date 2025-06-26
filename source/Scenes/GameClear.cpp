@@ -60,6 +60,8 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 
 	sizeMove_ct = 0;
 	endSizeMoveFlg = false;
+
+	createSmokeFlg = false;
 }
 
 void GameClear::update()
@@ -287,6 +289,7 @@ void GameClear::rankS_Anim(double ct)
 {
 	rankSizeMove();
 	if (endSizeMoveFlg) {
+		createSmokeEffect();
 		createRankStarEffect();
 	}
 }
@@ -295,6 +298,7 @@ void GameClear::rankA_Anim(double ct)
 {
 	rankSizeMove();
 	if (endSizeMoveFlg) {
+		createSmokeEffect();
 		createRankStarEffect();
 	}
 }
@@ -302,6 +306,9 @@ void GameClear::rankA_Anim(double ct)
 void GameClear::rankB_Anim(double ct)
 {
 	rankSizeMove();
+	if (endSizeMoveFlg) {
+		createSmokeEffect();
+	}
 }
 
 void GameClear::rankC_Anim(double ct)
@@ -332,6 +339,14 @@ void GameClear::createRankStarEffect()
 		}
 
 		createStar_ct = 0.0;
+	}
+}
+
+void GameClear::createSmokeEffect()
+{
+	if (!createSmokeFlg) {
+		Stage::GetInstance()->createObject<Smoke>(Vec2{ RANK_POS_X,RANK_POS_Y });
+		createSmokeFlg = true;
 	}
 }
 

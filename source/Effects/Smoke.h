@@ -5,6 +5,7 @@
 class Smoke : public ObjectBase
 {
 #define IMG_SIZE 64
+#define IMG_RESIZE 400
 #define IMG_NUM 11
 #define CHANGE_IMG 0.1
 
