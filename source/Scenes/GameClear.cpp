@@ -172,7 +172,7 @@ void GameClear::draw() const
 	// ボタン描画
 	{
 		// PLAYボタン
-		m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(1);
+		m_startButton.draw(ColorF{ 1.0, m_startTransition.value() + 0.45 }).drawFrame(1);
 		// 選択されている場合は枠の色を変える
 		if (m_selectedButtonIndex == 0)
 		{
@@ -180,7 +180,7 @@ void GameClear::draw() const
 		}
 
 		// EXITボタン
-		m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(1);
+		m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() + 0.45 }).drawFrame(1);
 		// 選択されている場合は枠の色を変える
 		if (m_selectedButtonIndex == 1)
 		{
@@ -188,7 +188,7 @@ void GameClear::draw() const
 		}
 
 		const Font& boldFont = FontAsset(U"Dot_16");
-		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 1.0 });
+		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
 		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
 
