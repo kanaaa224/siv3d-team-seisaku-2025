@@ -242,8 +242,8 @@ void PlayerHUD::draw() const
 		//バフの個数をアイコンの隣に表示
 		FontAsset(U"TitleFont")(U"x{}"_fmt(currentBuffCount)).drawAt(TextStyle::
 			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 1, 1 }, ColorF{ 0.0, 0.5 }),
-			20,
-			pos + Vec2{ a / 2.0 + 15, 0 }
+			30,
+			pos + Vec2{ a / 2.0 + 25, 0 }
 		);
 	}
 	//fontBitmap(U"×" + Format(buff_amount)).draw(25, Vec2{ 10, 50 });
