@@ -1,4 +1,4 @@
-# include "GameClear.hpp"
+﻿# include "GameClear.hpp"
 #include "../UI/PlayerHUD.hpp"
 
 GameClear::GameClear(const InitData& init) : IScene{ init }

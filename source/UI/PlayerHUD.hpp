@@ -1,4 +1,4 @@
-# pragma once
+﻿# pragma once
 # include "../Common.hpp"
 # include "../Characters/Player.hpp"
 # include "../Characters/Vaillant.hpp"
