@@ -24,6 +24,10 @@ private:
 
 	Camera2D camera;
 
+	Array<String> helpTexts;       //説明文リスト
+	size_t currentTextIndex = 0;   //現在のテキスト
+	Stopwatch autoSkipTimer;       //自動スキップタイマー
+
 private:
 	void initialize();
 };
