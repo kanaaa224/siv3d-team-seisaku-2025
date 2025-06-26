@@ -5,6 +5,8 @@
 #include "../Stages/1.hpp"
 //Star
 #include "../Effects/Star.h"
+//Smoke
+#include "../Effects/Smoke.h"
 
 GameClear::GameClear(const InitData& init) : IScene{ init }
 {
@@ -156,7 +158,7 @@ void GameClear::update()
 
 #ifdef _DEBUG
 	if (KeyR.pressed() && Key1.pressed()) {
-		Stage::GetInstance()->createObject<Star>(Vec2{ 100,100 });
+		Stage::GetInstance()->createObject<Smoke>(Vec2{ 100,100 });
 	}
 #endif // _DEBUG
 
