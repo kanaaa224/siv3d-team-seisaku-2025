@@ -178,6 +178,9 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"P_ishi_UI",  { U"UI" } }, U"../assets/images/ui/progress/ishi.png");//player
 	TextureAsset::Register({ U"P_ishi_silver_UI",  { U"UI" } }, U"../assets/images/ui/progress/ishi_silver.png");//player
 	TextureAsset::Register({ U"P_BOSS_UI",  { U"UI" } }, U"../assets/images/ui/progress/BOSS_ui.png");//player
+
+	//ロード用
+	TextureAsset::Register({ U"Loading_image",  { U"Load" } }, U"../assets/images/ui/Loading....png");
 }
 
 void Initialize()

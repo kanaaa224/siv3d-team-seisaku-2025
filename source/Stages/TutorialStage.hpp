@@ -40,5 +40,12 @@ private:
 	void initialize();
 
 	Vec2 getGaugePosition(double startX, double endX, double duration, double startTime);
+
+	size_t runAnimationFrame = 0;
+	double runAnimationTime = 0.0;
+
+	Array<TextureRegion> run_animation;
+
+	Texture Loding_image;
 };
 
