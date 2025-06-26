@@ -41,6 +41,9 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	timeSize = TIME_FONT_MAX_SIZE;
 	timePos = TIME_INIT_POS;
 	endMovementTimeFlg = false;
+
+	rankDraw_ct = 0.0;
+	rankDrawFlg = false;
 }
 
 void GameClear::update()
@@ -131,6 +134,9 @@ void GameClear::update()
 	}
 
 	//Rankの表示
+	if (endMovementTimeFlg) {
+		rankAnime();
+	}
 }
 
 void GameClear::draw() const
@@ -151,13 +157,16 @@ void GameClear::draw() const
 		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
 				timeSize, timePos, Palette::Black);
 
+	//rank表示
 	if (endMovementTimeFlg) {
 		FontAsset(U"Dot_16")(U"Rank: ")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
 					100, Vec2{450,380}, Palette::Black);
-		FontAsset(U"Dot_16")(rank)
-			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
-					180, Vec2{ 640,380 }, rankColor);
+		if (rankDrawFlg) {
+			FontAsset(U"Dot_16")(rank)
+				.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
+						180, Vec2{ 640,380 }, rankColor);
+		}
 	}
 
 	// ボタン描画
@@ -179,7 +188,7 @@ void GameClear::draw() const
 		}
 
 		const Font& boldFont = FontAsset(U"Dot_16");
-		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
+		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 1.0 });
 		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
 	}
 
@@ -200,7 +209,7 @@ void GameClear::clearTimeUpdate()
 
 	if (drawClearTime == ClearTime) {
 
-		if (drawClearTime_ct >= TIME_COUNTUP + TIME_DRAW_WAIT) {
+		if (drawClearTime_ct >= TIME_COUNTUP + TIME_ENDDRAW_WAIT) {
 			endClearTimeUpdateFlg = true;
 			skipDrawClearTimeFlg = true;
 		}
@@ -224,6 +233,44 @@ void GameClear::movementTimeUpdate()
 		endMovementTimeFlg = true;
 		skipMovementTiemFlg = true;
 	}
+}
+
+void GameClear::rankAnime()
+{
+	rankDraw_ct += Scene::DeltaTime();
+
+	if (rankDraw_ct >= RANK_DRAW) {
+		rankDrawFlg = true;
+
+		if (rank == U"S") {
+			rankS_Anim(rankDraw_ct);
+		}
+		if (rank == U"A") {
+			rankA_Anim(rankDraw_ct);
+		}
+		if (rank == U"B") {
+			rankB_Anim(rankDraw_ct);
+		}
+		if (rank == U"C") {
+			rankC_Anim(rankDraw_ct);
+		}
+	}
+}
+
+void GameClear::rankS_Anim(double ct)
+{
+}
+
+void GameClear::rankA_Anim(double ct)
+{
+}
+
+void GameClear::rankB_Anim(double ct)
+{
+}
+
+void GameClear::rankC_Anim(double ct)
+{
 }
 
 /*void GameClear::FileOpenByTimer()
