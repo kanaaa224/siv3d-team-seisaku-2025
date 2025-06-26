@@ -76,7 +76,7 @@ Slime::Slime(P2World& world, const Vec2& position) : CharacterBase(world, positi
 
 	hp = max_hp = SLIME_MAX_HP;
 
-	body.applyLinearImpulse({ 0, -SLIME_JUMP_POWER });
+	body.applyLinearImpulse({ 0, -SLIME_JUMP_POWER * 2 });
 }
 
 void Slime::update()
