@@ -95,6 +95,8 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"SmallHit_fix",  { U"Effect" } }, U"../assets/images/effect/Hit/Effect_SmallHit.png");
 		TextureAsset::Register({ U"BloodImpact",  { U"Effect" } }, U"../assets/images/effect/Hit/Effect_BloodImpact_1_69x60.png");
 		TextureAsset::Register({ U"BuffSpawn",  { U"Effect" } }, U"../assets/images/effect/2/673.png");
+		TextureAsset::Register({ U"DamageUp",  { U"Effect" } }, U"../assets/images/effect/buf/P_DamageUp_UI.png");
+		TextureAsset::Register({ U"SpeedUp",  { U"Effect" } }, U"../assets/images/effect/buf/P_SpeedUp_UI.png");
 	}
 
 	//GameUI

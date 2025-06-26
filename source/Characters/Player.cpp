@@ -661,14 +661,14 @@ void Player::onHit(ObjectBase& object)
 	{
 		wall_hit = true;
 		//body.applyLinearImpulse(Vec2(-100.0, 0.0));
-		/*if (!flip_flg)
+		if (!flip_flg)
 		{
 			body.applyLinearImpulse(Vec2(1.0, 0.0));
 		}
 		else if(flip_flg)
 		{
-			body.applyLinearImpulse(Vec2(-100.0, 0.0));
-		}*/
+			body.applyLinearImpulse(Vec2(-1.0, 0.0));
+		}
 	}
 	else
 	{
