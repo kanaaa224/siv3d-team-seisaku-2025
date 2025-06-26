@@ -27,10 +27,21 @@ private:
 	Texture clear_background;
 	Texture score_fream;
 
-	bool skipDrawClearTime;
+	String rank;
+	ColorF rankColor;
+
+	//タイム加算アニメーション
+	bool skipDrawClearTimeFlg;
 	double ClearTime;
 	double drawClearTime;
 	double drawClearTime_ct;
 	void clearTimeUpdate();
 	bool endClearTimeUpdateFlg;
+
+	//タイムが動くアニメーション
+	bool skipMovementTiemFlg;
+	double timeSize;
+	Vec2 timePos;
+	void movementTimeUpdate();
+	bool endMovementTimeFlg;
 };
