@@ -176,7 +176,7 @@ void Stage1::update()
 			{
 				if (Wall* wall = dynamic_cast<Wall*>(object))
 				{
-					wall->getBody().setPos(Vec2((camera.getCenter().x - (Scene::Width() / 2 - 55.0) ), 500.0));
+					wall->getBody().setPos(Vec2(STAGE1_WIDTH - Scene::Width(), 500.0));
 					BossEreaflg = true;
 				}
 			}
@@ -223,8 +223,6 @@ void Stage1::update()
 		playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 		playerHUD->setBossEreaFlg(BossEreaflg);
 		playerHUD->setPlayerPosition(player->getBody().getPos());
-		/*player->GetPlayerBuffDamageUpCount();
-		player->GetPlayerBuffSpeedUpCount();*/
 
 		//バフの数を取得、HUDに設定
 		playerHUD->setBuffDamageUpCount(player->GetPlayerBuffDamageUpCount());
@@ -295,12 +293,12 @@ void Stage1::draw() const
 		Stage::draw();
 	}
 
-	PlayerHUD::GetInstance()->draw();
-
 	for (const auto& object : objects)
 	{
 		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(object)) EnemyBossUI::GetInstance()->draw();
 	}
+
+	PlayerHUD::GetInstance()->draw();
 }
 
 void Stage1::NewInstance()
