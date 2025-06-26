@@ -11,6 +11,13 @@ class GameClear : public SM::Scene
 
 #define RANK_DRAW 0.5
 #define RANK_SIZE 180
+#define RANK_POS_X 640
+#define RANK_POS_Y 380
+
+#define CREATE_STAR_TIME 0.2
+#define STAR_OFFSET_X 60
+#define STAR_OFFSET_Y 80
+#define CREATE_NUM 3
 
 public:
 	GameClear(const InitData& init);
@@ -61,4 +68,9 @@ private:
 	void rankA_Anim(double ct);
 	void rankB_Anim(double ct);
 	void rankC_Anim(double ct);
+
+	//エフェクト
+	//星
+	void createRankStarEffect();
+	double createStar_ct;
 };

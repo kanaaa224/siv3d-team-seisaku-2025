@@ -50,6 +50,8 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	rankDraw_ct = 0.0;
 	rankDrawFlg = false;
 	rankSize = RANK_SIZE;
+
+	createStar_ct = 0;
 }
 
 void GameClear::update()
@@ -181,7 +183,7 @@ void GameClear::draw() const
 		if (rankDrawFlg) {
 			FontAsset(U"Dot_16")(rank)
 				.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
-						rankSize, Vec2{ 640,380 }, rankColor);
+						rankSize, Vec2{ RANK_POS_X,RANK_POS_Y }, rankColor);
 		}
 	}
 
@@ -275,10 +277,12 @@ void GameClear::rankAnime()
 
 void GameClear::rankS_Anim(double ct)
 {
+	createRankStarEffect();
 }
 
 void GameClear::rankA_Anim(double ct)
 {
+	createRankStarEffect();
 }
 
 void GameClear::rankB_Anim(double ct)
@@ -287,6 +291,21 @@ void GameClear::rankB_Anim(double ct)
 
 void GameClear::rankC_Anim(double ct)
 {
+}
+
+void GameClear::createRankStarEffect()
+{
+	createStar_ct += Scene::DeltaTime();
+
+	if (createStar_ct >= CREATE_STAR_TIME) {
+
+		for (int i = 0; i < CREATE_NUM; i++) {
+			Vec2 createPos = Vec2{ Random(0,Scene::Size().x),Random((Scene::Size().y / 2) - 350,(Scene::Size().y / 2) + 350) };
+			Stage::GetInstance()->createObject<Star>(createPos);
+		}
+
+		createStar_ct = 0.0;
+	}
 }
 
 /*void GameClear::FileOpenByTimer()
