@@ -268,9 +268,9 @@ void Title::createLeaf()
 	createLeaf_ct += Scene::DeltaTime();
 
 	if (createLeaf_ct >= 0.5) {//指定した時間が経過したら生成する
-		Vec2 createPos = Vec2{ Random(0,Scene::Size().x),0.0 };//生成位置
+		Vec2 createPos = Vec2{ (Random(-10,Scene::Size().x) + 10),0.0};//生成位置
 		Stage* stage = Stage::GetInstance();
-		stage->createObject<Leaf>(createPos, Random(0, 4), eDropPostion::eRight, 10);
+		stage->createObject<Leaf>(createPos, Random(0, 4), eDropPostion::eRight, Random(10, 30));
 
 		createLeaf_ct = 0.0;
 	}
