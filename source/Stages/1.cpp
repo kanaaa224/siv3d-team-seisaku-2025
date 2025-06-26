@@ -223,6 +223,8 @@ void Stage1::update()
 		playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 		playerHUD->setBossEreaFlg(BossEreaflg);
 		playerHUD->setPlayerPosition(player->getBody().getPos());
+		/*player->GetPlayerBuffDamageUpCount();
+		player->GetPlayerBuffSpeedUpCount();*/
 	}
 #ifdef _DEBUG
 	else

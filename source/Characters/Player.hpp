@@ -79,15 +79,18 @@ private:
 	double attack_power;
 
 	bool enemyHit;
-	bool isbuffHit;
+
+	bool showMessage;		//バフメッセージ1秒描画
+	Stopwatch damageUpTimer{ StartImmediately::No };
+
+	int Buff_DamageUpCount;
+	int Buff_SpeedUpCount;
 
 	SpriteAnimator spriteAnimator;
 
 	Size effect_size;
 
 	Vec2 pos;
-	Vec2 DamageUp_pos;
-	Vec2 SpeedUo_pos;
 
 	s3d::Audio m_runLoopSE; // 走行ループSE用
 
@@ -115,6 +118,9 @@ public:
 	void SetPlayerSpeed(double speed) { movement_speed += speed; };
 	void SetPlayerDamageUp(double damage_up) { attack_power += damage_up; };
 	double GetPlayerAttackDamage() { return attack_power; };
+
+	int GetPlayerBuffDamageUpCount();
+	int GetPlayerBuffSpeedUpCount();
 
 	// 回避クールタイムの残り秒数を取得
 	double getAvoidanceCooldown() const { return avoidanceCooldown; }
