@@ -72,6 +72,46 @@ void Title::update()
 	// ボタンの更新
 	{
 		// マウスオーバーとコントローラーのAボタン、Bボタンに対応
+		m_startTransition.update( controller.buttonA.pressed() || m_selectedButtonIndex == 0);
+		m_exitTransition.update( controller.buttonB.pressed() || m_selectedButtonIndex == 1);
+
+		if (controller.isConnected())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+	}
+
+	 // D-Padの上下で切り替え
+	if (controller.buttonDown.down())
+	{
+		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
+	}
+	else if (controller.buttonUp.down())
+	{
+		m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
+	}
+
+	// ボタンのクリック処理
+	// コントローラーのAボタンで決定
+	if ( (controller.buttonA.down() && m_selectedButtonIndex == 0))
+	{
+		AudioAsset(U"kettei_SE").play();
+		AudioAsset(U"Title_BGM").stop();
+		changeScene(SceneState::Game, 0.5s);
+	}
+	// コントローラーのAボタンで決定
+	else if( (controller.buttonA.down() && m_selectedButtonIndex == 1))
+	{
+		AudioAsset(U"kettei_SE").play();
+		AudioAsset(U"Title_BGM").stop();
+		changeScene(SceneState::Credit, 0.5s);
+		//System::Exit();
+	}
+
+#ifdef _DEBUG
+	// ボタンの更新
+	{
+		// マウスオーバーとコントローラーのAボタン、Bボタンに対応
 		m_startTransition.update(m_startButton.mouseOver() || controller.buttonA.pressed() || m_selectedButtonIndex == 0);
 		m_exitTransition.update(m_exitButton.mouseOver() || controller.buttonB.pressed() || m_selectedButtonIndex == 1);
 
@@ -92,7 +132,7 @@ void Title::update()
 	}
 
 
-	 // D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
+	// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
 	if (controller.buttonDown.down() || KeyDown.down())
 	{
 		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
@@ -111,13 +151,15 @@ void Title::update()
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
-	else if(m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1))
+	else if (m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1))
 	{
 		AudioAsset(U"kettei_SE").play();
 		AudioAsset(U"Title_BGM").stop();
 		changeScene(SceneState::Credit, 0.5s);
 		//System::Exit();
 	}
+#endif // _DEBUG
+
 
 	////アニメーション更新
 	//m_runAnimationTime += Scene::DeltaTime();
@@ -268,9 +310,9 @@ void Title::createLeaf()
 	createLeaf_ct += Scene::DeltaTime();
 
 	if (createLeaf_ct >= 0.5) {//指定した時間が経過したら生成する
-		Vec2 createPos = Vec2{ Random(0,Scene::Size().x),0.0 };//生成位置
+		Vec2 createPos = Vec2{ (Random(-10,Scene::Size().x) + 10),0.0};//生成位置
 		Stage* stage = Stage::GetInstance();
-		stage->createObject<Leaf>(createPos, Random(0, 4), eDropPostion::eRight, 10);
+		stage->createObject<Leaf>(createPos, Random(0, 4), eDropPostion::eRight, Random(10, 30));
 
 		createLeaf_ct = 0.0;
 	}
