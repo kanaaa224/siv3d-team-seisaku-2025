@@ -115,6 +115,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Effects\Smoke.cpp" />
     <ClCompile Include="source\Objects\Leaf.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\BloodImpactEffect.cpp" />
     <ClCompile Include="source\Characters\Enemies\Effect\SmallHitEffect.cpp" />
@@ -361,6 +362,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Effects\Smoke.h" />
     <ClInclude Include="source\Objects\Leaf.h" />
     <ClInclude Include="source\Characters\Enemies\Effect\BloodImpactEffect.h" />
     <ClInclude Include="source\Characters\Enemies\Effect\SmallHitEffect.h" />

@@ -98,6 +98,7 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"DamageUp",  { U"Effect" } }, U"../assets/images/effect/buf/P_DamageUp_UI.png");
 		TextureAsset::Register({ U"SpeedUp",  { U"Effect" } }, U"../assets/images/effect/buf/P_SpeedUp_UI.png");
 		TextureAsset::Register({ U"Star",  { U"Effect" } }, U"../assets/images/effect/Star.png");
+		TextureAsset::Register({ U"Smoke",  { U"Effect" } }, U"../assets/images/effect/Smoke/Smoke VFX 2.png");
 	}
 
 	//GameUI
