@@ -3,7 +3,7 @@
 Leaf::Leaf(P2World& world, const Vec2& position, int imgNum, eDropPostion dropPos, double windStrength)
 	: ObjectBase(world, position)
 {
-	body = world.createCircle(P2Dynamic, position,0.1);
+	body = world.createCircleSensor(P2Dynamic, position,0.1);
 
 	body.setGravityScale(10);
 
