@@ -265,7 +265,7 @@ void Stage1::draw() const
 	Print << U"オブジェクト数: " << objects.size();
 #endif
 
-	bool shouldShake = false;
+	double shouldShake = 0.0;
 
 	Vec2 shakeOffset = Vec2{ 0, 0 };
 
@@ -277,7 +277,7 @@ void Stage1::draw() const
 				vaillant->getAttackType()  == VaillantAttackType::Earthquake &&
 				vaillant->getAttackState() == VaillantAttackState::Attacking)
 			{
-				shouldShake = true;
+				shouldShake = 5.0;
 				break;
 			}
 
@@ -285,13 +285,13 @@ void Stage1::draw() const
 				vaillant->getAttackType()  == VaillantAttackType::Rush &&
 				vaillant->getAttackState() == VaillantAttackState::Attacked)
 			{
-				shouldShake = true;
+				shouldShake = 10.0;
 				break;
 			}
 		}
 	}
 
-	if (shouldShake) shakeOffset = RandomVec2(Circle{ 5.0 });
+	if (shouldShake) shakeOffset = RandomVec2(Circle{ shouldShake });
 
 	{
 		const auto t = camera.createTransformer();

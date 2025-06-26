@@ -75,6 +75,13 @@ void AssetsRegistration()
 		AudioAsset::Register(U"Vaillant Damage",    Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");
 		AudioAsset::Register(U"Vaillant Jump",      Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
 		AudioAsset::Register(U"Vaillant Discovery", Audio::Stream, U"../assets/sounds/EnemySE/hakkenn2.wav");
+		AudioAsset::Register(U"Vaillant Charge",    Audio::Stream, U"../assets/sounds/EnemySE/tya-zi.wav");
+		AudioAsset::Register(U"Vaillant Clash",     Audio::Stream, U"../assets/sounds/EnemySE/bakuhatu1.wav");
+		AudioAsset::Register(U"Vaillant Fire",      Audio::Stream, U"../assets/sounds/EnemySE/bakuhatu2.wav");
+		AudioAsset::Register(U"Vaillant Teleport1", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou1.wav");
+		AudioAsset::Register(U"Vaillant Teleport2", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou2.wav");
+		AudioAsset::Register(U"Vaillant Teleport3", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou3.wav");
+		AudioAsset::Register(U"Vaillant Slime",     Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou4.wav");
 	}
 
 	{ // バフ
@@ -155,18 +162,6 @@ void AssetsRegistration()
 	AudioAsset::Register(U"Enemy_damage_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");//Enemyがダメージをうける音
 	AudioAsset::Register(U"Enemy_attack_SE", Audio::Stream, U"../assets/sounds/EnemySE/EnemyAttack.wav");//空飛ぶ敵の攻撃音
 	AudioAsset::Register(U"Enemy_find_SE", Audio::Stream, U"../assets/sounds/EnemySE/hakkenn2.wav");//敵orプレイヤー発見時SE(hakkenn2.wavの1or2で音変更）
-
-	/**頼まれていたやつ**/
-	AudioAsset::Register(U"Enemy_ explosion1_SE", Audio::Stream, U"../assets/sounds/EnemySE/bakuhatu1.wav");
-	AudioAsset::Register(U"Enemy_ explosion2_SE", Audio::Stream, U"../assets/sounds/EnemySE/bakuhatu2.wav");
-
-	AudioAsset::Register(U"Enemy_teleportation1_SE", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou1.wav");
-	AudioAsset::Register(U"Enemy_teleportation2_SE", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou2.wav");
-	AudioAsset::Register(U"Enemy_teleportation3_SE", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou3.wav");
-	AudioAsset::Register(U"Enemy_teleportation4_SE", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou4.wav");
-
-	AudioAsset::Register(U"Enemy_charge _SE", Audio::Stream, U"../assets/sounds/EnemySE/tya-zi.wav");
-	/**---------------**/
 
 	//SE
 	AudioAsset::Register(U"kettei_SE", Audio::Stream, U"../assets/sounds/SE/kettei.wav");
