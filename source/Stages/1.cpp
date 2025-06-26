@@ -176,7 +176,7 @@ void Stage1::update()
 			{
 				if (Wall* wall = dynamic_cast<Wall*>(object))
 				{
-					wall->getBody().setPos(Vec2((camera.getCenter().x - Scene::Width() / 2) + 55.0, 500.0));
+					wall->getBody().setPos(Vec2((camera.getCenter().x - (Scene::Width() / 2 - 55.0) ), 500.0));
 					BossEreaflg = true;
 				}
 			}
@@ -205,7 +205,7 @@ void Stage1::update()
 		// 右壁
 		if (!excuted && BossEreaflg)
 		{
-			createObject<Wall>(Vec2(STAGE1_WIDTH + 15.0, 500.0));
+			createObject<Wall>(Vec2(STAGE1_WIDTH, 500.0));
 			excuted = true;
 		}
 
@@ -223,6 +223,12 @@ void Stage1::update()
 		playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 		playerHUD->setBossEreaFlg(BossEreaflg);
 		playerHUD->setPlayerPosition(player->getBody().getPos());
+		/*player->GetPlayerBuffDamageUpCount();
+		player->GetPlayerBuffSpeedUpCount();*/
+
+		//バフの数を取得、HUDに設定
+		playerHUD->setBuffDamageUpCount(player->GetPlayerBuffDamageUpCount());
+		playerHUD->setBuffSpeedUpCount(player->GetPlayerBuffSpeedUpCount());
 	}
 #ifdef _DEBUG
 	else

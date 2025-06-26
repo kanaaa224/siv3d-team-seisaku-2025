@@ -79,15 +79,18 @@ private:
 	double attack_power;
 
 	bool enemyHit;
-	bool isbuffHit;
+
+	bool showMessage;		//バフメッセージ1秒描画
+	Stopwatch damageUpTimer{ StartImmediately::No };
+
+	int Buff_DamageUpCount;
+	int Buff_SpeedUpCount;
 
 	SpriteAnimator spriteAnimator;
 
 	Size effect_size;
 
 	Vec2 pos;
-	Vec2 DamageUp_pos;
-	Vec2 SpeedUo_pos;
 
 	s3d::Audio m_runLoopSE; // 走行ループSE用
 
@@ -116,6 +119,9 @@ public:
 	void SetPlayerDamageUp(double damage_up) { attack_power += damage_up; };
 	double GetPlayerAttackDamage() { return attack_power; };
 
+	int GetPlayerBuffDamageUpCount();
+	int GetPlayerBuffSpeedUpCount();
+
 	// 回避クールタイムの残り秒数を取得
 	double getAvoidanceCooldown() const { return avoidanceCooldown; }
 
@@ -125,7 +131,7 @@ public:
 	s3d::Audio run_se;
 
 private:
-	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
+	void animation(Array<TextureRegion> image_container, double frame, ePlayerState state);	//アニメーション
 	bool animation(Array<TextureRegion> image_container, double frame);	//攻撃アニメーション用関数
 	void movement(s3d::detail::XInput_impl controller);	//左右移動
 	void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理

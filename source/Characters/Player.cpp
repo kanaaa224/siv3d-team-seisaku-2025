@@ -64,8 +64,10 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 
 	//run_se.setSpeed(2.0);
 
-	isbuffHit = false;
+	Buff_DamageUpCount = 0;
+	Buff_SpeedUpCount = 0;
 	isHitBufftype = eHitBuffType::None;
+	showMessage = false;
 
 	this->initialize();
 }
@@ -185,7 +187,7 @@ void Player::update()
 
 		enemyHit = false;
 
-		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
+		animation(idle_animation, IDLE_ANIM_SPEED,idle);
 
 		//spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
 		//spriteAnimator.setMask({ 1.0, 1.0, 1.0, 1.0 });
@@ -242,7 +244,7 @@ void Player::update()
 	case move: //移動処理
 		enemyHit = false;
 		movement(controller);
-		animation(run_animation, MOVE_ANIM_SPEED,8,idle);
+		animation(run_animation, MOVE_ANIM_SPEED,idle);
 		/////////se追加する場合
 		// 
 		//地面にいたら走るSE
@@ -578,6 +580,12 @@ void Player::update()
 		}
 	}
 
+	if (showMessage && damageUpTimer.sF() > 1.0)
+	{
+		showMessage = false;
+		damageUpTimer.pause(); // もう使わないなら止める
+	}
+
 	// （仮） 落ちたら戻ってくる
 	if (body.getPos().y >= 1000) CharacterBase::die();
 	// 移動量計算
@@ -587,11 +595,26 @@ void Player::update()
 void Player::draw() const
 {
 	Vec2 size = Vec2(288.0 * 2, 45.0 * 2);
+	Vec2 d_size = Vec2(120.0, 120.0);
 
 	// 画像を滑らかに補完
 	const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
 	
 	image.mirrored(flip_flg).resized(size).drawAt(pos, ColorF{ 1.0, 1.0, 1.0, alpha });
+
+	if (showMessage)
+	{
+		if (isHitBufftype == eBuffType::eAttackPower)
+		{
+			TextureAsset(U"DamageUp").resized(d_size).drawAt(Vec2(pos.x, pos.y - 50.0));
+
+		}
+		else if (isHitBufftype == eBuffType::eMoveSpeed)
+		{
+			TextureAsset(U"SpeedUp").resized(d_size).drawAt(Vec2(pos.x, pos.y - 50.0));
+		}
+	}
+	
 
 	//無敵中は点滅
 	if ((Damageflg == true && Fmod(Scene::Time(), 0.1) < 0.05)) {
@@ -611,6 +634,8 @@ void Player::draw() const
 	Print << U"Player State : " << playerState;
 	Print << U"Player 壁 : " << wall_hit;
 	Print << U"バフ : " << isHitBufftype;
+	Print << U"赤バフ : " << Buff_DamageUpCount;
+	Print << U"青バフ : " << Buff_SpeedUpCount;
 	
 
 #endif // DEBUG
@@ -630,15 +655,14 @@ void Player::onHit(ObjectBase& object)
 	if (Wall* wall = dynamic_cast<Wall*>(&object))
 	{
 		wall_hit = true;
-		//body.applyLinearImpulse(Vec2(-100.0, 0.0));
-		/*if (!flip_flg)
+		if (!flip_flg)
 		{
 			body.applyLinearImpulse(Vec2(1.0, 0.0));
 		}
 		else if(flip_flg)
 		{
-			body.applyLinearImpulse(Vec2(-100.0, 0.0));
-		}*/
+			body.applyLinearImpulse(Vec2(-1.0, 0.0));
+		}
 	}
 	else
 	{
@@ -687,6 +711,16 @@ void Player::die()
 	}
 }
 
+int Player::GetPlayerBuffDamageUpCount()
+{
+	return Buff_DamageUpCount;
+}
+
+int Player::GetPlayerBuffSpeedUpCount()
+{
+	return Buff_SpeedUpCount;
+}
+
 void Player::finalize()
 {
 
@@ -697,7 +731,7 @@ ePlayerState Player::getplayerstate() const
 	return playerState;
 }
 
-void Player::animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state)
+void Player::animation(Array<TextureRegion> image_container, double frame, ePlayerState state)
 {
 	animation_time += Scene::DeltaTime();
 
@@ -811,12 +845,17 @@ void Player::jumpmovement(s3d::detail::XInput_impl controller)
 
 void Player::BuffAnimation(int bufftype)
 {
+	showMessage = true;
+	damageUpTimer.restart();
+
 	if (bufftype == eBuffType::eAttackPower)
 	{
+		Buff_DamageUpCount++;
 		isHitBufftype = eHitBuffType::DamageUp;
 	}
 	else if (bufftype == eBuffType::eMoveSpeed)
 	{
+		Buff_SpeedUpCount++;
 		isHitBufftype = eHitBuffType::SpeedUp;
 	}
 }
