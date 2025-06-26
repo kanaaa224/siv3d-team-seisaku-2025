@@ -10,6 +10,7 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 
 	HitBox::owner = &owner;
 
+	// プレイヤーが出したヒットボックスだったとき
 	if (Player* player = dynamic_cast<Player*>(this->owner))
 	{
 		if (player->getplayerstate() == ePlayerState::avoidance ||
@@ -23,16 +24,17 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 		}
 
 		body = world.createRectSensor(
-		P2Kinematic,
-		position,
-		RectF { size },
-				P2Filter {
-					.categoryBits = CollisionCategory::HitBox, // 自分のカテゴリ
-					.maskBits     = CollisionCategory::Enemy   // Hitさせたいカテゴリ
-				}
+			P2Kinematic,
+			position,
+			RectF { size },
+			P2Filter {
+				.categoryBits = CollisionCategory::HitBox, // 自分のカテゴリ
+				.maskBits     = CollisionCategory::Enemy   // Hitさせたいカテゴリ
+			}
 		);
 	}
 
+	// ボス1が出したヒットボックスだったとき
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(this->owner))
 	{
 		size = { 400, 100 };
@@ -49,10 +51,7 @@ HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : Object
 	}
 }
 
-void HitBox::update()
-{
-
-}
+void HitBox::update() {}
 
 void HitBox::draw() const
 {
@@ -63,39 +62,66 @@ void HitBox::draw() const
 
 void HitBox::onHit(ObjectBase& object)
 {
+	// プレイヤーに当たったとき
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{
-		player->applyDamage(20.f);
+		// ボス1が出したヒットボックスだったとき
+		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(owner))
+		{
+			if (player->getplayerstate() != ePlayerState::avoidance &&
+				player->getplayerstate() != ePlayerState::jump_attack &&
+				player->getplayerstate() != ePlayerState::jump_avoidance)
+			{
+				player->applyDamage(20.0f);
+			}
+		}
+
+		else
+		{
+			player->applyDamage(10.0f);
+		}
 
 		destroy();
 	}
 
+	// 敵に当たったとき
 	if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(&object))
 	{
+		// プレイヤーが出したヒットボックスだったとき
 		if (Player *player = dynamic_cast<Player*>(owner)) {
 			enemy->applyDamage(player->GetPlayerAttackDamage());
+
 			player->SetHitEnemy(true);
-			destroy();
 		}
+
+		destroy();
 	}
 
+	// ボス1に当たったとき
 	if (Vaillant* vaillant = dynamic_cast<Vaillant*>(&object))
 	{
-		if (Player* player = dynamic_cast<Player*>(owner)) {
+		// プレイヤーが出したヒットボックスだったとき
+		if (Player* player = dynamic_cast<Player*>(owner))
+		{
 			vaillant->applyDamage(player->GetPlayerAttackDamage());
-			player->SetHitEnemy(true);
-			//vaillant->getBody().applyLinearImpulse(vaillant->getBody().getPos().x < body.getPos().x ? Vec2{ -10, 0 } : Vec2{ 10, 0 });
 
-			destroy();
+			player->SetHitEnemy(true);
 		}
+
+		destroy();
 	}
 
+	// スライムに当たったとき
 	if (Slime* slime = dynamic_cast<Slime*>(&object))
 	{
-		if (Player* player = dynamic_cast<Player*>(owner)) {
+		// プレイヤーが出したヒットボックスだったとき
+		if (Player* player = dynamic_cast<Player*>(owner))
+		{
 			slime->applyDamage(slime->getMaxHP() / 2);
+
 			player->SetHitEnemy(true);
-			destroy();
 		}
+
+		destroy();
 	}
 }
