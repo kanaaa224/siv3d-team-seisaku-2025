@@ -225,6 +225,10 @@ void Stage1::update()
 		playerHUD->setPlayerPosition(player->getBody().getPos());
 		/*player->GetPlayerBuffDamageUpCount();
 		player->GetPlayerBuffSpeedUpCount();*/
+
+		//バフの数を取得、HUDに設定
+		playerHUD->setBuffDamageUpCount(player->GetPlayerBuffDamageUpCount());
+		playerHUD->setBuffSpeedUpCount(player->GetPlayerBuffSpeedUpCount());
 	}
 #ifdef _DEBUG
 	else
