@@ -530,19 +530,20 @@ void Vaillant::onHit(ObjectBase& object)
 {
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{
-		if (!player_hit)
+		if (!player_hit &&
+
+			state <= VaillantState::Attack &&
+
+			!(attack_type == VaillantAttackType::Teleport && attack_state != VaillantAttackState::Ends))
 		{
 			if (player->getplayerstate() != ePlayerState::attack &&
 				player->getplayerstate() != ePlayerState::avoidance &&
 				player->getplayerstate() != ePlayerState::jump_attack &&
 				player->getplayerstate() != ePlayerState::jump_avoidance)
 			{
-				if (state <= VaillantState::Attack)
-				{
-					if (!damaged) player->applyDamage(jumped ? 5.0f : 10.0f);
+				if (!damaged) player->applyDamage(jumped ? 5.0f : 10.0f);
 
-					object.getBody().applyLinearImpulse(object.getBody().getPos().x < position.x ? Vec2{ -50, 0 } : Vec2{ 50, 0 });
-				}
+				object.getBody().applyLinearImpulse(object.getBody().getPos().x < position.x ? Vec2{ -50, 0 } : Vec2{ 50, 0 });
 			}
 
 			SetTimeout([this] { player_hit = false; }, 2000ms);
