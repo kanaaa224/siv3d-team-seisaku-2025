@@ -40,6 +40,23 @@ void TutorialStage::initialize()
 	createObject<Player>(Vec2{ 100, 650 });
 
 	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
+
+	////text
+	helpTexts =
+	{
+		U"ようこそ『森の影』へ。\n敵を倒して強化し、森のボスを目指すアクションゲームです。",
+		U"ボスを倒すことでステージクリアとなります。\nクリアタイムに応じてランクが表示されます。",
+		U"左スティックを左右に倒すと、プレイヤーが移動します。\n実際に動いてみましょう。",
+		U"Aボタンでジャンプできます。\n敵を飛び越えたり、攻撃を避けたりできます。",
+		U"Xボタンで攻撃します。\n敵に接近して攻撃してみましょう。",
+		U"Bボタンで回避攻撃ができます。\n移動しながら攻撃でき、敵をすり抜けることも可能です。\n使用後、再度使えるまで時間がかかります。",
+		U"ジャンプ中にXボタンを押すと、空中攻撃ができます。\n空中の敵や高い位置にも攻撃が届きます。",
+		U"敵を倒すと、バフアイテムが出現します。\n・赤いアイテム：攻撃力が上昇（DamageUp）\n・青いアイテム：移動速度が上昇（SpeedUp）\n近づくと自動で取得されます。",
+		U"画面左上：現在のHP \n画面右上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。"
+		
+
+	};
+	autoSkipTimer.start();
 }
 
 void TutorialStage::update()
@@ -76,6 +93,22 @@ void TutorialStage::update()
 	playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 	playerHUD->setPlayerPosition(player->getBody().getPos());
 
+	// 自動でテキストを切り替え
+	if (autoSkipTimer.sF() > 7.0)
+	{
+		// 最後のテキストだった場合はゲームシーンへ遷移
+		if (currentTextIndex == helpTexts.size() - 1)
+		{
+			sceneData().current_stage = 1;
+			sceneChange(SceneState::Game, 0.5s);
+		}
+		else
+		{
+			currentTextIndex = (currentTextIndex + 1);
+			autoSkipTimer.restart();
+		}
+	}
+	//スキップ
 	if (KeyEnter.down() || Gamepad(0).isConnected() && Gamepad(0).buttons[7].down())
 	{
 		sceneData().current_stage = 1;
@@ -100,6 +133,10 @@ void TutorialStage::draw() const
 		Stage::draw();
 		PlayerHUD::GetInstance()->draw();
 	}
+
+	//説明文描画
+	FontAsset(U"TitleFont")(helpTexts[currentTextIndex]).drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),30, Vec2{ 640, 340 });
+
 }
 
 void TutorialStage::NewInstance()
