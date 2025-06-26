@@ -38,8 +38,8 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	skipDrawClearTimeFlg = false;
 
 	skipMovementTiemFlg = false;
-	timeSize = 60;
-	timePos = Vec2{ 640, 380 };
+	timeSize = TIME_FONT_MAX_SIZE;
+	timePos = TIME_INIT_POS;
 	endMovementTimeFlg = false;
 }
 
@@ -195,12 +195,12 @@ void GameClear::clearTimeUpdate()
 {
 	drawClearTime_ct += Scene::DeltaTime();
 
-	double t = Clamp(drawClearTime_ct / 1, 0.0, 1.0);
+	double t = Clamp(drawClearTime_ct / TIME_COUNTUP, 0.0, TIME_COUNTUP);
 	drawClearTime = ClearTime * t;
 
 	if (drawClearTime == ClearTime) {
 
-		if (drawClearTime_ct >= 1.5) {
+		if (drawClearTime_ct >= TIME_COUNTUP + TIME_DRAW_WAIT) {
 			endClearTimeUpdateFlg = true;
 			skipDrawClearTimeFlg = true;
 		}

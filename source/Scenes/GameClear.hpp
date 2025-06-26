@@ -4,6 +4,11 @@
 
 class GameClear : public SM::Scene
 {
+#define TIME_COUNTUP 1.0
+#define TIME_DRAW_WAIT 1.0
+#define TIME_FONT_MAX_SIZE 60
+#define TIME_INIT_POS Vec2{ 640, 380 }
+
 public:
 	GameClear(const InitData& init);
 
@@ -27,8 +32,10 @@ private:
 	Texture clear_background;
 	Texture score_fream;
 
+	//ランク
 	String rank;
-	ColorF rankColor;
+	ColorF rankColor;//ランクの色
+	double rankSize;
 
 	//タイム加算アニメーション
 	bool skipDrawClearTimeFlg;
