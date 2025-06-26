@@ -14,6 +14,8 @@ public:
 	void draw() const override;
 
 private:
+	bool debugFlg;
+
 	RoundRect m_startButton{ Arg::center(640, 400), 300, 60, 8 };
 	RoundRect m_exitButton{ Arg::center(640, 480), 300, 60, 8 };
 

@@ -44,6 +44,13 @@ Title::Title(const InitData& init) : IScene{ init }
 	subTitleAlpha_ct = 0.0;
 
 	createLeaf_ct = 0.0;
+
+
+	debugFlg = false;
+#ifdef _DEBUG
+	debugFlg = true;
+#endif // _DEBUG
+
 }
 
 Title::~Title() {}
@@ -69,43 +76,45 @@ void Title::update()
 
 	auto controller = XInput(0); //コントローラーを取得
 
-	// ボタンの更新
-	{
-		// マウスオーバーとコントローラーのAボタン、Bボタンに対応
-		m_startTransition.update( controller.buttonA.pressed() || m_selectedButtonIndex == 0);
-		m_exitTransition.update( controller.buttonB.pressed() || m_selectedButtonIndex == 1);
-
-		if (controller.isConnected())
+	if (!debugFlg) {
+		// ボタンの更新
 		{
-			Cursor::RequestStyle(CursorStyle::Hand);
+			// マウスオーバーとコントローラーのAボタン、Bボタンに対応
+			m_startTransition.update(controller.buttonA.pressed() || m_selectedButtonIndex == 0);
+			m_exitTransition.update(controller.buttonB.pressed() || m_selectedButtonIndex == 1);
+
+			if (controller.isConnected())
+			{
+				Cursor::RequestStyle(CursorStyle::Hand);
+			}
 		}
-	}
 
-	 // D-Padの上下で切り替え
-	if (controller.buttonDown.down())
-	{
-		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
-	}
-	else if (controller.buttonUp.down())
-	{
-		m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
-	}
+		// D-Padの上下で切り替え
+		if (controller.buttonDown.down())
+		{
+			m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
+		}
+		else if (controller.buttonUp.down())
+		{
+			m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
+		}
 
-	// ボタンのクリック処理
-	// コントローラーのAボタンで決定
-	if ( (controller.buttonA.down() && m_selectedButtonIndex == 0))
-	{
-		AudioAsset(U"kettei_SE").play();
-		AudioAsset(U"Title_BGM").stop();
-		changeScene(SceneState::Game, 0.5s);
-	}
-	// コントローラーのAボタンで決定
-	else if( (controller.buttonA.down() && m_selectedButtonIndex == 1))
-	{
-		AudioAsset(U"kettei_SE").play();
-		AudioAsset(U"Title_BGM").stop();
-		changeScene(SceneState::Credit, 0.5s);
-		//System::Exit();
+		// ボタンのクリック処理
+		// コントローラーのAボタンで決定
+		if ((controller.buttonA.down() && m_selectedButtonIndex == 0))
+		{
+			AudioAsset(U"kettei_SE").play();
+			AudioAsset(U"Title_BGM").stop();
+			changeScene(SceneState::Game, 0.5s);
+		}
+		// コントローラーのAボタンで決定
+		else if ((controller.buttonA.down() && m_selectedButtonIndex == 1))
+		{
+			AudioAsset(U"kettei_SE").play();
+			AudioAsset(U"Title_BGM").stop();
+			changeScene(SceneState::Credit, 0.5s);
+			//System::Exit();
+		}
 	}
 
 #ifdef _DEBUG
