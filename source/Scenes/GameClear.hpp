@@ -10,6 +10,7 @@ class GameClear : public SM::Scene
 #define TIME_INIT_POS Vec2{ 640, 380 }
 
 #define RANK_DRAW 0.5
+#define RANK_SIZE 180
 
 public:
 	GameClear(const InitData& init);
