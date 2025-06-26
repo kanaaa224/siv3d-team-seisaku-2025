@@ -172,6 +172,7 @@ void Stage1::update()
 				hitBox->destroy();
 			}
 
+			//敵を削除
 			if (BossEreaflg)
 			{
 				if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
@@ -180,6 +181,7 @@ void Stage1::update()
 				}
 			}
 
+			//左壁移動
 			if (BossEreaflg == false && player->getBody().getPos().x >= STAGE1_WIDTH - (Scene::Width() / 2))
 			{
 				if (Wall* wall = dynamic_cast<Wall*>(object))

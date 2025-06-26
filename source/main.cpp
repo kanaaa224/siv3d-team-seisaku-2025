@@ -23,6 +23,8 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"Player Jump Attack2", { U"Player"} }, U"../assets/images/player/jump_attack/jump_attack.png");
 	TextureAsset::Register({ U"Player Roll", { U"Player" } }, U"../assets/images/player/roll/roll_288_45_7.png");
 
+	TextureAsset::Register({ U"Player Idle2", { U"Player" } }, U"../assets/images/player/idle/01_idle_1.png");
+
 	TextureAsset::Register({ U"Player Jump up", { U"Player" } }, U"../assets/images/player/jump_up/jump_up2_2.png");
 	TextureAsset::Register({ U"Player Jump full", { U"Player" } }, U"../assets/images/player/jump_full/jump_between_1.png");
 	TextureAsset::Register({ U"Player Jump down", { U"Player" } }, U"../assets/images/player/jump_down/03_jump_down_1.png");
