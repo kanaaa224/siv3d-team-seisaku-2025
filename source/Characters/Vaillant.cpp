@@ -550,7 +550,9 @@ void Vaillant::onHit(ObjectBase& object)
 			player_hit = true;
 		}
 
-		if (player->getplayerstate() != ePlayerState::jump_avoidance)
+		if (player->getplayerstate() != ePlayerState::avoidance &&
+			player->getplayerstate() != ePlayerState::jump_attack &&
+			player->getplayerstate() != ePlayerState::jump_avoidance)
 		{
 			if (state == VaillantState::Attack && attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Attacking) player->applyDamage(20.0f);
 		}
