@@ -6,7 +6,7 @@ class Star : public ObjectBase
 {
 #define IMG_NUM 4
 #define IMG_SIZE 32
-#define CHANGE_IMG 0.2
+#define CHANGE_IMG 0.1
 
 public:
 	Star(P2World& world, const Vec2& pos);

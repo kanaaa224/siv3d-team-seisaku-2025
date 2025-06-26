@@ -1,6 +1,11 @@
 ﻿# include "GameClear.hpp"
 #include "../UI/PlayerHUD.hpp"
 
+//Stage
+#include "../Stages/1.hpp"
+//Star
+#include "../Effects/Star.h"
+
 GameClear::GameClear(const InitData& init) : IScene{ init }
 {
 	clear_background = TextureAsset(U"End_Background1");
@@ -50,6 +55,8 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 void GameClear::update()
 {
 	sceneTime += Scene::DeltaTime();
+
+	Stage::GetInstance()->update();
 
 	auto controller = XInput(0); //コントローラーを取得
 
@@ -138,6 +145,13 @@ void GameClear::update()
 	if (endMovementTimeFlg) {
 		rankAnime();
 	}
+
+#ifdef _DEBUG
+	if (KeyR.pressed() && Key1.pressed()) {
+		Stage::GetInstance()->createObject<Star>(Vec2{ 100,100 });
+	}
+#endif // _DEBUG
+
 }
 
 void GameClear::draw() const
@@ -150,9 +164,10 @@ void GameClear::draw() const
 
 	// クリア描画
 	//FontAsset(U"Dot_16")(U"Game Clear").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 640, 100 });
+	//白い幕
 	Rect{ Arg::center(Scene::Center()), Scene::Size().x, 350}.draw(ColorF(Palette::White, 0.9));
-	//score_fream.resized(450, 100).draw(415, 190);
-	//FontAsset(U"Dot_16")(U"score").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 40, Vec2{ 640, 220 }, Palette::Orange);
+	//エフェクト
+	Stage::GetInstance()->draw();
 	//スコア描画//
 	FontAsset(U"Dot_16")(U"Time: {:.2f} 秒"_fmt(drawClearTime))
 		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
