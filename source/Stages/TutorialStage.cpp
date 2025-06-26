@@ -20,6 +20,9 @@ TutorialStage::TutorialStage()
 	//Bossの生成位置を終了点
 	m_stageEndX = (Scene::Width() / 2) + 4900.0;
 
+	starting_point = Vec2(Scene::Width() / 2 - 445.0, Scene::Height() / 2 - 50.0);
+	last_point = Vec2(Scene::Width() / 2 - 445.0, Scene::Height() / 2 - 50.0);
+
 	initialize();
 }
 
@@ -148,12 +151,17 @@ void TutorialStage::draw() const
 	Stage::draw();
 
 	//四角形描画
-	RoundRect{ Arg::center(Scene::Width() / 2, Scene::Height() / 2 - 130.0), 900, 175, 10 }.draw(ColorF{ Palette::Black, 0.6});
+	RoundRect{ Arg::center(Scene::Width() / 2, Scene::Height() / 2 - 135.0), 900, 170, 10 }.draw(ColorF{ Palette::Black, 0.6});
+
+	//進行ゲージ 黒い枠
+	RoundRect{ Arg::center(Scene::Width() / 2, Scene::Height() / 2 - 50.0), 900, 10, 10 }.draw(ColorF{Palette::Black});
+	//進行ゲージ 赤い部分
+	Line{ starting_point, last_point }.draw(LineStyle::RoundCap, 5.0,  ColorF{ Palette::Red });
 
 	PlayerHUD::GetInstance()->draw();
 
 	//説明文描画
-	FontAsset(U"TitleFont")(helpTexts[currentTextIndex]).drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),29, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 135.0));
+	FontAsset(U"TitleFont")(helpTexts[currentTextIndex]).drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),28, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 135.0));
 
 }
 
