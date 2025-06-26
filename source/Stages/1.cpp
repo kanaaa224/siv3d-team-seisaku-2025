@@ -153,7 +153,7 @@ void Stage1::update()
 					vaillant->getAttackType()  == VaillantAttackType::Rush &&
 					vaillant->getAttackState() == VaillantAttackState::Attacked)
 				{
-					createObject<Leaf>(Vec2{ STAGE1_WIDTH - Random(0, Scene::Width()), 0 }, Random(0, 4), eDropPostion::eCenter, Random(10, 30));
+					createObject<Leaf>(Vec2{ STAGE1_WIDTH - Random(0, Scene::Width()), Random(-(Scene::Height() / 1.5), 0.0) }, Random(0, 4), eDropPostion::eCenter, Random(10, 30));
 				}
 			}
 
