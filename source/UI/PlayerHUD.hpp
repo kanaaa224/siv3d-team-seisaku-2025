@@ -83,10 +83,18 @@ private:
 	double animation_time;				//現在のアニメーションフレームの経過時間
 	double max_animation_time;          //進捗度UIのアニメーションの最大時間（フレームアニメーション速度制御用）
 
+	//各バフのカウントを保持するメンバー変数
+	int32 m_buffDamageUpCount = 0;
+	int32 m_buffSpeedUpCount = 0;
+
 public:
 	void resetTime(); // 時間リセット関数
 	bool timerLocked;
 	//ゲーム内のプレイヤーのX座標の範囲を定義する変数
 	double player_game_world_start_x;
 	double player_game_world_end_x;
+
+	// バフの数を設定する関数
+	void setBuffDamageUpCount(int32 count);
+	void setBuffSpeedUpCount(int32 count);
 };

@@ -65,12 +65,6 @@ void PlayerHUD::initialize()
 
 void PlayerHUD::update()
 {
-	//バフの処理
-	if (KeyP.down())
-	{
-		buff_amount++;
-	}
-
 	//タイマーの開始処理
 	if (!GO && player_state != 0)
 	{
@@ -231,11 +225,28 @@ void PlayerHUD::draw() const
 	for (size_t i = 0; i < frameNames.size(); ++i)
 	{
 		Vec2 pos = start + Vec2{ spacing * i, 0 };
-		int a = 40;
+		int a = 40; //アイコンのサイズ
 		TextureAsset(frameNames[i]).resized(a, a).drawAt(pos);
 		TextureAsset(iconNames[i]).resized(a, a).drawAt(pos);
+
+		int32 currentBuffCount = 0;
+		if (i == 0)//フレーム
+		{
+			currentBuffCount = m_buffDamageUpCount;
+		}
+		else if (i == 1)//あいこん
+		{
+			currentBuffCount = m_buffSpeedUpCount;
+		}
+
+		//バフの個数をアイコンの隣に表示
+		FontAsset(U"TitleFont")(U"x{}"_fmt(currentBuffCount)).drawAt(TextStyle::
+			OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 1, 1 }, ColorF{ 0.0, 0.5 }),
+			30,
+			pos + Vec2{ a / 2.0 + 25, 0 }
+		);
 	}
-	fontBitmap(U"×" + Format(buff_amount)).draw(25, Vec2{ 10, 50 });
+	//fontBitmap(U"×" + Format(buff_amount)).draw(25, Vec2{ 10, 50 });
 
 	//プレイヤーの操作説明UI
 	if (player_vel.y == 0.0) //地面にいる場合
@@ -317,4 +328,14 @@ void PlayerHUD::resetTime()
 	player_pos = Vec2(0.0, 0.0); //プレイヤー位置もリセット (必要であれば)
 	elapsedTime = 0.0;
 	timerLocked = false;
+}
+
+void PlayerHUD::setBuffDamageUpCount(int32 count)
+{
+	m_buffDamageUpCount = count;
+}
+
+void PlayerHUD::setBuffSpeedUpCount(int32 count)
+{
+	m_buffSpeedUpCount = count;
 }

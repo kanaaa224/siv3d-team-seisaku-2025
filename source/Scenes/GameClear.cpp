@@ -11,12 +11,36 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
 
+	//クリアタイム取得
 	ClearTime = getData().clearTime;
+
+	//ランク付け
+	if (ClearTime <= 30.0) {
+		rank = U"S";
+		rankColor = ColorF{ Palette::Gold };
+	}
+	else if (ClearTime >= 31.0 && ClearTime <= 60.0) {
+		rank = U"A";
+		rankColor = ColorF{ Palette::Red };
+	}
+	else if (ClearTime >= 61.0 && ClearTime <= 80.0) {
+		rank = U"B";
+		rankColor = ColorF{ Palette::Blue };
+	}
+	else {
+		rank = U"C";
+		rankColor = ColorF{ Palette::Yellow };
+	}
 
 	drawClearTime_ct = 0.0;
 	drawClearTime = 0.0;
 	endClearTimeUpdateFlg = false;
-	skipDrawClearTime = false;
+	skipDrawClearTimeFlg = false;
+
+	skipMovementTiemFlg = false;
+	timeSize = 60;
+	timePos = Vec2{ 640, 380 };
+	endMovementTimeFlg = false;
 }
 
 void GameClear::update()
@@ -77,19 +101,36 @@ void GameClear::update()
 		changeScene(SceneState::Title, 0.5s);
 	}
 
+	//クリアタイムのアニメーション
 	if (MouseL.down() && !endClearTimeUpdateFlg) {
-		skipDrawClearTime = true;
+		skipDrawClearTimeFlg = true;
 	}
-
-	if (skipDrawClearTime && !endClearTimeUpdateFlg) {
+	if (skipDrawClearTimeFlg && !endClearTimeUpdateFlg) {
 		drawClearTime = ClearTime;
 		endClearTimeUpdateFlg = true;
 	}
-
-	//クリアタイムのアニメーション
-	if (!endClearTimeUpdateFlg && !skipDrawClearTime) {
+	if (!endClearTimeUpdateFlg && !skipDrawClearTimeFlg) {
 		clearTimeUpdate();
 	}
+
+	//タイムの移動
+	if (endClearTimeUpdateFlg) {
+		if (MouseL.down() && !endMovementTimeFlg) {
+			skipMovementTiemFlg = true;
+		}
+
+		if (skipMovementTiemFlg) {
+			timePos.y = 240;
+			timeSize = 30;
+			endMovementTimeFlg = true;
+		}
+
+		if (!endMovementTimeFlg && !skipMovementTiemFlg) {
+			movementTimeUpdate();
+		}
+	}
+
+	//Rankの表示
 }
 
 void GameClear::draw() const
@@ -108,7 +149,17 @@ void GameClear::draw() const
 	//スコア描画//
 	FontAsset(U"Dot_16")(U"Time: {:.2f} 秒"_fmt(drawClearTime))
 		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
-				60, Vec2{ 640, 380 }, Palette::Black);
+				timeSize, timePos, Palette::Black);
+
+	if (endMovementTimeFlg) {
+		FontAsset(U"Dot_16")(U"Rank: ")
+			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
+					100, Vec2{450,380}, Palette::Black);
+		FontAsset(U"Dot_16")(rank)
+			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
+					180, Vec2{ 640,380 }, rankColor);
+	}
+
 	// ボタン描画
 	{
 		// PLAYボタン
@@ -148,8 +199,30 @@ void GameClear::clearTimeUpdate()
 	drawClearTime = ClearTime * t;
 
 	if (drawClearTime == ClearTime) {
-		endClearTimeUpdateFlg = true;
-		skipDrawClearTime = true;
+
+		if (drawClearTime_ct >= 1.5) {
+			endClearTimeUpdateFlg = true;
+			skipDrawClearTimeFlg = true;
+		}
+		
+	}
+}
+
+void GameClear::movementTimeUpdate()
+{
+	timePos.y += -1.5;
+	timeSize += -0.5;
+
+	if (timePos.y <= 240) {
+		timePos.y = 240;
+	}
+	if (timeSize <= 30) {
+		timeSize = 30;
+	}
+
+	if (timePos.y == 240 && timeSize == 30) {
+		endMovementTimeFlg = true;
+		skipMovementTiemFlg = true;
 	}
 }
 

@@ -187,7 +187,7 @@ void Player::update()
 
 		enemyHit = false;
 
-		animation(idle_animation, IDLE_ANIM_SPEED,8,idle);
+		animation(idle_animation, IDLE_ANIM_SPEED,idle);
 
 		//spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
 		//spriteAnimator.setMask({ 1.0, 1.0, 1.0, 1.0 });
@@ -244,7 +244,7 @@ void Player::update()
 	case move: //移動処理
 		enemyHit = false;
 		movement(controller);
-		animation(run_animation, MOVE_ANIM_SPEED,8,idle);
+		animation(run_animation, MOVE_ANIM_SPEED,idle);
 		/////////se追加する場合
 		// 
 		//地面にいたら走るSE
@@ -602,11 +602,6 @@ void Player::draw() const
 	
 	image.mirrored(flip_flg).resized(size).drawAt(pos, ColorF{ 1.0, 1.0, 1.0, alpha });
 
-	/*if ((isbuffHit == true && Fmod(Scene::Time(), 0.1) < 0.05))
-	{
-		TextureAsset(U"DamageUp").resized(d_size).drawAt(Vec2(pos.x, pos.y - 50.0));
-	}*/
-
 	if (showMessage)
 	{
 		if (isHitBufftype == eBuffType::eAttackPower)
@@ -660,7 +655,6 @@ void Player::onHit(ObjectBase& object)
 	if (Wall* wall = dynamic_cast<Wall*>(&object))
 	{
 		wall_hit = true;
-		//body.applyLinearImpulse(Vec2(-100.0, 0.0));
 		if (!flip_flg)
 		{
 			body.applyLinearImpulse(Vec2(1.0, 0.0));
@@ -737,7 +731,7 @@ ePlayerState Player::getplayerstate() const
 	return playerState;
 }
 
-void Player::animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state)
+void Player::animation(Array<TextureRegion> image_container, double frame, ePlayerState state)
 {
 	animation_time += Scene::DeltaTime();
 

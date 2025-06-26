@@ -131,7 +131,7 @@ public:
 	s3d::Audio run_se;
 
 private:
-	void animation(Array<TextureRegion> image_container, double frame,int image_count, ePlayerState state);	//アニメーション
+	void animation(Array<TextureRegion> image_container, double frame, ePlayerState state);	//アニメーション
 	bool animation(Array<TextureRegion> image_container, double frame);	//攻撃アニメーション用関数
 	void movement(s3d::detail::XInput_impl controller);	//左右移動
 	void jumpmovement(s3d::detail::XInput_impl controller);//ジャンプ処理
