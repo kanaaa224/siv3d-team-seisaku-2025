@@ -260,8 +260,8 @@ void Vaillant::update()
 		if (!jumped && InRange(distance, 100.0, 700.0))
 		{
 			return attack(
-				InRange(distance, 100.0, 150.0) ? VaillantAttackType::Teleport :
-				InRange(distance, 150.0, 400.0) ? VaillantAttackType::Earthquake :
+				InRange(distance, 100.0, 150.0) ? Random(0, 3) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
+				InRange(distance, 150.0, 400.0) ? Random(0, 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
 				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 2)) :
 				InRange(distance, 600.0, 700.0) ? VaillantAttackType::Rush : attack_type
 			);

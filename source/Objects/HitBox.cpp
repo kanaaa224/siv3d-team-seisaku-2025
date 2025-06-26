@@ -103,9 +103,13 @@ void HitBox::onHit(ObjectBase& object)
 		// プレイヤーが出したヒットボックスだったとき
 		if (Player* player = dynamic_cast<Player*>(owner))
 		{
-			vaillant->applyDamage(player->GetPlayerAttackDamage());
+			if (!(vaillant->getState()       == VaillantState::Attack &&
+				  vaillant->getAttackType()  == VaillantAttackType::Teleport))
+			{
+				vaillant->applyDamage(player->GetPlayerAttackDamage());
 
-			player->SetHitEnemy(true);
+				player->SetHitEnemy(true);
+			}
 		}
 
 		destroy();
