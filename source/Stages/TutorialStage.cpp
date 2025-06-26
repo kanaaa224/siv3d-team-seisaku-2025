@@ -25,6 +25,7 @@ TutorialStage::TutorialStage()
 	last_point = Vec2(Scene::Width() / 2 - 445.0/*1085.0*/, Scene::Height() / 2 - 50.0);
 	gaugeStarted = false;
 	gaugeStartTime = 0.0;
+	
 
 	initialize();
 }
@@ -34,6 +35,7 @@ void TutorialStage::initialize()
 	// --- ロード画面表示 ---
 	Scene::SetBackground(ColorF{ 0.0 }); // 背景を黒に設定
 	FontAsset(U"TitleFont")(U"Loading...").drawAt(Scene::Center(), Palette::White);
+	TextureAsset(U"Player Idle2").resized(300.0, 300.0).drawAt(Vec2(Scene::Width() / 2, Scene::Height() / 2));
 	System::Update(); // 1フレーム強制描画
 
 	//BGM
@@ -62,8 +64,10 @@ void TutorialStage::initialize()
 		U"Xボタンで攻撃します。\n敵に接近して攻撃してみましょう。",
 		U"Bボタンで回避攻撃ができます。\n移動しながら攻撃でき、敵をすり抜けることも可能です。\n使用後、再度使えるまで時間がかかります。",
 		U"ジャンプ中にXボタンを押すと、空中攻撃ができます。\n空中の敵や高い位置にも攻撃が届きます。",
+		U"ジャンプ中にBボタンを押すと、空中回避ができます。\n移動しながら攻撃でき、敵をすり抜けることも可能です。\n使用後、再度使えるまで時間がかかります。",
 		U"敵を倒すと、バフアイテムが出現します。\n・赤いアイテム：攻撃力が上昇（DamageUp）\n・青いアイテム：移動速度が上昇（SpeedUp）\n近づくと獲得できます。",
-		U"画面左上：現在のHP \n画面左上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。"
+		U"画面左上：現在のHP(オレンジ色のゲージ) \n画面左上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。"
+		U""
 	};
 
 	for (const auto& section : helpTexts)
@@ -81,6 +85,8 @@ void TutorialStage::update()
 
 	Stage::update();
 
+	bool enemySpawn = false;
+
 	Player* player = nullptr;
 	PlayerHUD* playerHUD = PlayerHUD::GetInstance();
 
@@ -96,12 +102,33 @@ void TutorialStage::update()
 
 	for (const auto& object : _objects_)
 	{
+		if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
+		{
+			enemy->setPlayerPos(player->getBody().getPos());
+		}
+
+		if (dynamic_cast<Scarerun*>(object))
+		{
+			enemySpawn = true;
+			break;
+		}
+	}
+
+	for (const auto& object : _objects_)
+	{
 		if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
 		{
 			hitBox->destroy();
 		}
 	}
 
+	// 敵召喚
+	if (!enemySpawn && currentTextIndex >= 3)
+	{
+		createObject<Scarerun>(Vec2{ 1000, Scene::Height() - 45 });
+	}
+
+	// Playerが動くとゲージスタート
 	if (!gaugeStarted && player->getplayerstate() != ePlayerState::idle)
 	{
 		gaugeStarted = true;
@@ -115,6 +142,11 @@ void TutorialStage::update()
 	playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 	playerHUD->setPlayerPosition(player->getBody().getPos());
 
+	//バフの数を取得、HUDに設定
+	playerHUD->setBuffDamageUpCount(player->GetPlayerBuffDamageUpCount());
+	playerHUD->setBuffSpeedUpCount(player->GetPlayerBuffSpeedUpCount());
+
+	// ゲージ更新
 	if (gaugeStarted && sceneData().current_stage != 1)
 	{
 		last_point.x = getGaugePosition(195, 1085, HELP_TIMER, gaugeStartTime).x;
