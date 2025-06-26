@@ -3,6 +3,7 @@
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"
 # include "../Objects/HitBox.hpp"
+# include "../Objects/Leaf.h"
 # include "../Characters/Player.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Characters/Enemies/Flot/Flot.hpp"
@@ -146,6 +147,13 @@ void Stage1::update()
 
 						aaaaa = true;
 					}
+				}
+
+				if (vaillant->getState()       == VaillantState::Attack &&
+					vaillant->getAttackType()  == VaillantAttackType::Rush &&
+					vaillant->getAttackState() == VaillantAttackState::Attacked)
+				{
+					createObject<Leaf>(Vec2{ STAGE1_WIDTH - Random(0, Scene::Width()), 0 }, Random(0, 4), eDropPostion::eCenter, Random(10, 30));
 				}
 			}
 
