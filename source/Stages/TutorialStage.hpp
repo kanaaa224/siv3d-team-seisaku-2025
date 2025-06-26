@@ -33,7 +33,12 @@ private:
 	Vec2 starting_point;
 	Vec2 last_point;
 
+	bool gaugeStarted;     // ゲージ開始フラグ
+	double gaugeStartTime;
+
 private:
 	void initialize();
+
+	Vec2 getGaugePosition(double startX, double endX, double duration, double startTime);
 };
 

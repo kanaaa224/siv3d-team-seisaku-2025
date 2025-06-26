@@ -8,7 +8,8 @@
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 
 #define SIZE 20	//文字のサイズ
-#define DRAW_POSITION Vec2{Scene::Width() / 2, Scene::Height() / 2 - 100.0} //座標
+#define DRAW_POSITION Vec2{Scene::Width() / 2 - 445.0, Scene::Height() / 2 - 50.0} //座標
+#define HELP_TIMER 7.0
 
 TutorialStage::TutorialStage()
 {
@@ -21,7 +22,9 @@ TutorialStage::TutorialStage()
 	m_stageEndX = (Scene::Width() / 2) + 4900.0;
 
 	starting_point = Vec2(Scene::Width() / 2 - 445.0, Scene::Height() / 2 - 50.0);
-	last_point = Vec2(Scene::Width() / 2 - 445.0, Scene::Height() / 2 - 50.0);
+	last_point = Vec2(Scene::Width() / 2 - 445.0/*1085.0*/, Scene::Height() / 2 - 50.0);
+	gaugeStarted = false;
+	gaugeStartTime = 0.0;
 
 	initialize();
 }
@@ -59,8 +62,8 @@ void TutorialStage::initialize()
 		U"Xボタンで攻撃します。\n敵に接近して攻撃してみましょう。",
 		U"Bボタンで回避攻撃ができます。\n移動しながら攻撃でき、敵をすり抜けることも可能です。\n使用後、再度使えるまで時間がかかります。",
 		U"ジャンプ中にXボタンを押すと、空中攻撃ができます。\n空中の敵や高い位置にも攻撃が届きます。",
-		U"敵を倒すと、バフアイテムが出現します。\n・赤いアイテム：攻撃力が上昇（DamageUp）\n・青いアイテム：移動速度が上昇（SpeedUp）\n近づくと自動で取得されます。",
-		U"画面左上：現在のHP \n画面右上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。"
+		U"敵を倒すと、バフアイテムが出現します。\n・赤いアイテム：攻撃力が上昇（DamageUp）\n・青いアイテム：移動速度が上昇（SpeedUp）\n近づくと獲得できます。",
+		U"画面左上：現在のHP \n画面左上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。"
 	};
 
 	for (const auto& section : helpTexts)
@@ -99,6 +102,12 @@ void TutorialStage::update()
 		}
 	}
 
+	if (!gaugeStarted && player->getplayerstate() != ePlayerState::idle)
+	{
+		gaugeStarted = true;
+		gaugeStartTime = Scene::Time();
+	}
+
 	playerHUD->setPlayerHP(player->getHP());
 	playerHUD->update();
 	playerHUD->setPlayerState(player->getplayerstate());
@@ -106,13 +115,19 @@ void TutorialStage::update()
 	playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
 	playerHUD->setPlayerPosition(player->getBody().getPos());
 
+	if (gaugeStarted && sceneData().current_stage != 1)
+	{
+		last_point.x = getGaugePosition(195, 1085, HELP_TIMER, gaugeStartTime).x;
+	}
+
 	// 自動でテキストを切り替え
-	if (autoSkipTimer.sF() > 1.0)
+	if (last_point.x >= 1084)
 	{
 		// 最後のテキストだった場合はゲームシーンへ遷移
 		if (currentTextIndex == helpTexts.size() - 1.0)
 		{
 			sceneData().current_stage = 1;
+			last_point.x = 1085.0;
 			sceneChange(SceneState::Game, 1.0s);
 		}
 		else
@@ -145,6 +160,7 @@ void TutorialStage::draw() const
 #ifdef _DEBUG
 
 	Print << U"オブジェクト数: " << objects.size();
+	Print << U"last_point : " << last_point;
 
 #endif
 
@@ -172,4 +188,12 @@ void TutorialStage::NewInstance()
 	instance = new TutorialStage();
 }
 
+Vec2 TutorialStage::getGaugePosition(double startX, double endX, double duration, double startTime)
+{
+	double elapsed = Scene::Time() - startTime;
+	double loopTime = Fmod(elapsed, duration);
+	double rate = loopTime / duration;
+	double x = Math::Lerp(startX, endX, rate);
+	return Vec2{ x, 50.0 };
+}
 
