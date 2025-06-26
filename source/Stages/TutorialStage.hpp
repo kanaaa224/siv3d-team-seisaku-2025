@@ -30,6 +30,9 @@ private:
 
 	bool isLoading = true; // 初期状態はローディング中
 
+	Vec2 starting_point;
+	Vec2 last_point;
+
 private:
 	void initialize();
 };
