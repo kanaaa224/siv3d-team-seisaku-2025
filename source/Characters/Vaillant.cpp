@@ -204,7 +204,8 @@ void Vaillant::update()
 		if (Key2.down()) applyDamage(10.0f);
 		if (Key3.down()) applyDamage(100.0f);
 		if (Key4.down()) hp = 10.0f;
-		if (Key5.down()) attack(VaillantAttackType::Slime);
+		if (Key5.down()) applyDamage(max_hp);
+		if (Key6.down()) attack(VaillantAttackType::Slime);
 	}
 #endif
 
