@@ -151,6 +151,7 @@
     <ClCompile Include="source\UI\EnemyBoss.cpp" />
     <ClCompile Include="source\UI\PlayerHUD.cpp" />
     <ClCompile Include="source\Utils\CustomImageLoader.cpp" />
+    <ClCompile Include="source\Effects\Star.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -399,6 +400,7 @@
     <ClInclude Include="source\UI\PlayerHUD.hpp" />
     <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
     <ClInclude Include="source\Utils\Timer.hpp" />
+    <ClInclude Include="source\Effects\Star.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
