@@ -130,6 +130,7 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"avoidance_button",  { U"UI" } }, U"../assets/images/ui/button/short_button_animation1.png");
 
 	TextureAsset::Register({ U"Button",  { U"UI" } }, U"../assets/images/ui/x_box_botton/xbox_bigbotton_16_16.png");
+	TextureAsset::Register({ U"Buf_SpeedUp",  { U"UI" } }, U"../assets/images/ui/buf_icons/buf_movement_speed_up_skyblue.png");
 
 	//BGM
 	AudioAsset::Register(U"Title_BGM", Audio::Stream, U"../assets/sounds/BGM/title_BGM.wav");//タイトル

@@ -25,12 +25,12 @@ void PlayerHUD::initialize()
 
 	frameNames = {
 		U"Attack_Frame",
-		U"Movement_Frame"
+		U"Defense_Frame"
 	};
 
 	iconNames = {
 		U"Buf_Attack",
-		U"Buf_Movement"
+		U"Buf_SpeedUp"
 	};
 
 	buff_amount = 0;

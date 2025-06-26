@@ -58,8 +58,6 @@ void TutorialStage::initialize()
 		U"ジャンプ中にXボタンを押すと、空中攻撃ができます。\n空中の敵や高い位置にも攻撃が届きます。",
 		U"敵を倒すと、バフアイテムが出現します。\n・赤いアイテム：攻撃力が上昇（DamageUp）\n・青いアイテム：移動速度が上昇（SpeedUp）\n近づくと自動で取得されます。",
 		U"画面左上：現在のHP \n画面右上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。"
-		
-
 	};
 
 	for (const auto& section : helpTexts)
@@ -106,13 +104,13 @@ void TutorialStage::update()
 	playerHUD->setPlayerPosition(player->getBody().getPos());
 
 	// 自動でテキストを切り替え
-	if (autoSkipTimer.sF() > 7.0)
+	if (autoSkipTimer.sF() > 1.0)
 	{
 		// 最後のテキストだった場合はゲームシーンへ遷移
-		if (currentTextIndex == helpTexts.size() - 1)
+		if (currentTextIndex == helpTexts.size() - 1.0)
 		{
 			sceneData().current_stage = 1;
-			sceneChange(SceneState::Game, 0.5s);
+			sceneChange(SceneState::Game, 1.0s);
 		}
 		else
 		{
@@ -147,13 +145,15 @@ void TutorialStage::draw() const
 
 #endif
 
-	{
-		Stage::draw();
-		PlayerHUD::GetInstance()->draw();
-	}
+	Stage::draw();
+
+	//四角形描画
+	RoundRect{ Arg::center(Scene::Width() / 2, Scene::Height() / 2 - 130.0), 900, 175, 10 }.draw(ColorF{ Palette::Black, 0.6});
+
+	PlayerHUD::GetInstance()->draw();
 
 	//説明文描画
-	FontAsset(U"TitleFont")(helpTexts[currentTextIndex]).drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),30, Vec2{ 640, 340 });
+	FontAsset(U"TitleFont")(helpTexts[currentTextIndex]).drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),29, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 135.0));
 
 }
 
