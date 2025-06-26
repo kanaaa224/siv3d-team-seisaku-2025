@@ -3,6 +3,7 @@
 # include "../Characters/Enemies/EnemyBase.hpp"
 # include "../Characters/Vaillant.hpp"
 # include "../Characters/Slime.hpp"
+# include "../Characters/Tentacles.hpp"
 
 HitBox::HitBox(P2World& world, const Vec2& position, ObjectBase& owner) : ObjectBase(world, position), owner(&owner)
 {
@@ -122,6 +123,20 @@ void HitBox::onHit(ObjectBase& object)
 		if (Player* player = dynamic_cast<Player*>(owner))
 		{
 			slime->applyDamage(slime->getMaxHP() / 2);
+
+			player->SetHitEnemy(true);
+		}
+
+		destroy();
+	}
+	
+	// 触手に当たったとき
+	if (Tentacles* tentacles = dynamic_cast<Tentacles*>(&object))
+	{
+		// プレイヤーが出したヒットボックスだったとき
+		if (Player* player = dynamic_cast<Player*>(owner))
+		{
+			tentacles->applyDamage(25.0f);
 
 			player->SetHitEnemy(true);
 		}

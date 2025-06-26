@@ -1,5 +1,6 @@
 ﻿# include "Vaillant.hpp"
 # include "Slime.hpp"
+# include "Tentacles.hpp"
 # include "Player.hpp"
 # include "../Stage.hpp"
 # include "../Utils/Timer.hpp"
@@ -183,6 +184,13 @@ void Vaillant::attack(VaillantAttackType type)
 		
 		mirrored = player_position.x <= position.x;
 	}
+	
+	if (attack_type == VaillantAttackType::Tentacles)
+	{
+		Stage::GetInstance()->createObject<Tentacles>(position - Vec2{ 0, size.y / 2 });
+
+		state = VaillantState::Idle;
+	}
 }
 
 void Vaillant::update()
@@ -263,7 +271,7 @@ void Vaillant::update()
 			return attack(
 				InRange(distance, 100.0, 150.0) ? Random(0, 3) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
 				InRange(distance, 150.0, 400.0) ? Random(0, 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
-				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 2)) :
+				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 3)) :
 				InRange(distance, 600.0, 700.0) ? VaillantAttackType::Rush : attack_type
 			);
 		}
