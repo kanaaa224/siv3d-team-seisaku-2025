@@ -552,10 +552,10 @@ void Vaillant::onHit(ObjectBase& object)
 		}
 
 		if (player->getplayerstate() != ePlayerState::avoidance &&
-			player->getplayerstate() != ePlayerState::jump_attack &&
 			player->getplayerstate() != ePlayerState::jump_avoidance)
 		{
-			if (state == VaillantState::Attack && attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Attacking) player->applyDamage(20.0f);
+			if ((state == VaillantState::Attack && attack_type == VaillantAttackType::Rush     && attack_state == VaillantAttackState::Attacking) ||
+				(state == VaillantState::Attack && attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Ends)) player->applyDamage(20.0f);
 		}
 	}
 
