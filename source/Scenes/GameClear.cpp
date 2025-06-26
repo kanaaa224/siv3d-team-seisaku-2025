@@ -62,6 +62,8 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	endSizeMoveFlg = false;
 
 	createSmokeFlg = false;
+
+	doOnesConfettiFlg = false;
 }
 
 void GameClear::update()
@@ -69,6 +71,10 @@ void GameClear::update()
 	sceneTime += Scene::DeltaTime();
 
 	Stage::GetInstance()->update();
+	if (rank == U"S") {
+		confetti_Right.update();//紙吹雪
+		confetti_Left.update();
+	}
 
 	auto controller = XInput(0); //コントローラーを取得
 
@@ -180,6 +186,10 @@ void GameClear::draw() const
 	Rect{ Arg::center(Scene::Center()), Scene::Size().x, 350}.draw(ColorF(Palette::White, 0.9));
 	//エフェクト
 	Stage::GetInstance()->draw();
+	if (rank == U"S") {
+		confetti_Right.draw();//紙吹雪
+		confetti_Left.draw();
+	}
 	//スコア描画//
 	FontAsset(U"Dot_16")(U"Time: {:.2f} 秒"_fmt(drawClearTime))
 		.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
@@ -291,6 +301,12 @@ void GameClear::rankS_Anim(double ct)
 	if (endSizeMoveFlg) {
 		createSmokeEffect();
 		createRankStarEffect();
+
+		if (!doOnesConfettiFlg) {
+			confetti_Right.launch();
+			confetti_Left.launch();
+			doOnesConfettiFlg = true;
+		}
 	}
 }
 
