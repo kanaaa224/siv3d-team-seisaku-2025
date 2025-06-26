@@ -2,7 +2,7 @@
 
 # include "Base.hpp"
 
-# define TENTACLES_SIZE { 150, 150 }
+# define TENTACLES_SIZE { 100, 100 }
 # define TENTACLES_MAX_HP 100
 
 class Tentacles : public CharacterBase
@@ -28,6 +28,8 @@ private:
 	Vec2 player_position;
 	
 	SizeF size;
+	
+	double frameTime;
 	
 	bool damaged;
 	bool die_executed;

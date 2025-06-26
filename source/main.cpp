@@ -75,6 +75,13 @@ void AssetsRegistration()
 		AudioAsset::Register(U"Vaillant Damage",    Audio::Stream, U"../assets/sounds/EnemySE/EnemyDamage.wav");
 		AudioAsset::Register(U"Vaillant Jump",      Audio::Stream, U"../assets/sounds/PlayerSE/jump.wav");
 		AudioAsset::Register(U"Vaillant Discovery", Audio::Stream, U"../assets/sounds/EnemySE/hakkenn2.wav");
+		AudioAsset::Register(U"Vaillant Charge",    Audio::Stream, U"../assets/sounds/EnemySE/tya-zi.wav");
+		AudioAsset::Register(U"Vaillant Clash",     Audio::Stream, U"../assets/sounds/EnemySE/bakuhatu1.wav");
+		AudioAsset::Register(U"Vaillant Fire",      Audio::Stream, U"../assets/sounds/EnemySE/bakuhatu2.wav");
+		AudioAsset::Register(U"Vaillant Teleport1", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou1.wav");
+		AudioAsset::Register(U"Vaillant Teleport2", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou2.wav");
+		AudioAsset::Register(U"Vaillant Teleport3", Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou3.wav");
+		AudioAsset::Register(U"Vaillant Slime",     Audio::Stream, U"../assets/sounds/EnemySE/syunnkannidou4.wav");
 	}
 
 	{ // バフ

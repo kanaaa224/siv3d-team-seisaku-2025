@@ -8,6 +8,8 @@
 # include "../Objects/Wall.hpp"
 # include "../Objects/Ground.hpp"
 
+#define _DEBUG
+
 using namespace TimerUtils;
 using namespace std::chrono_literals;
 
@@ -97,7 +99,9 @@ void Vaillant::attack(VaillantAttackType type)
 
 	if (attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Preparation)
 	{
-		SetTimeout([this] { if (state >= VaillantState::Death) return; AudioAsset(U"Vaillant Attack").playOneShot(); }, 1400ms);
+		AudioAsset(U"Vaillant Charge").playOneShot();
+
+		SetTimeout([this] { if (state >= VaillantState::Death) return; AudioAsset(U"Vaillant Fire").playOneShot(); }, 2400ms);
 
 		SetTimeout([this] {
 			if (state >= VaillantState::Death) return;
@@ -111,7 +115,7 @@ void Vaillant::attack(VaillantAttackType type)
 			spriteAnimator.stop();
 			spriteAnimator.show();
 			spriteAnimator.play();
-		}, 1500ms);
+		}, 2500ms);
 
 		attack_state = VaillantAttackState::Start;
 	}
@@ -133,6 +137,8 @@ void Vaillant::attack(VaillantAttackType type)
 
 	if (attack_type == VaillantAttackType::Slime)
 	{
+		AudioAsset(U"Vaillant Slime").playOneShot();
+
 		Stage::GetInstance()->createObject<Slime>(position - Vec2{ 0, size.y / 2 });
 
 		state = VaillantState::Idle;
@@ -140,6 +146,8 @@ void Vaillant::attack(VaillantAttackType type)
 	
 	if (attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Preparation)
 	{
+		AudioAsset(U"Vaillant Teleport1").playOneShot();
+
 		body.setVelocity({ 0, 0 });
 
 		SetTimeout([this] {
@@ -179,6 +187,8 @@ void Vaillant::attack(VaillantAttackType type)
 	
 	if (attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Attacked)
 	{
+		AudioAsset(U"Vaillant Teleport2").play();
+
 		body.setPos({ body.getPos().x, size.y });
 		body.setVelocity({ 0, 0 });
 		
@@ -211,9 +221,10 @@ void Vaillant::update()
 		if (Key1.down()) heal(10.0f);
 		if (Key2.down()) applyDamage(10.0f);
 		if (Key3.down()) applyDamage(100.0f);
-		if (Key4.down()) hp = 10.0f;
+		if (Key4.down()) applyDamage(max_hp - 10.0f);
 		if (Key5.down()) applyDamage(max_hp);
 		if (Key6.down()) attack(VaillantAttackType::Slime);
+		if (Key7.down()) attack(VaillantAttackType::Tentacles);
 	}
 #endif
 
@@ -271,7 +282,7 @@ void Vaillant::update()
 			return attack(
 				InRange(distance, 100.0, 150.0) ? Random(0, 3) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
 				InRange(distance, 150.0, 400.0) ? Random(0, 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
-				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 3)) :
+				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 2)) :
 				InRange(distance, 600.0, 700.0) ? VaillantAttackType::Rush : attack_type
 			);
 		}
@@ -573,6 +584,8 @@ void Vaillant::onHit(ObjectBase& object)
 	{
 		if (attack_type == VaillantAttackType::Rush && attack_state == VaillantAttackState::Attacking)
 		{
+			AudioAsset(U"Vaillant Clash").playOneShot();
+
 			SetTimeout([this] { if (state >= VaillantState::Death) return; attack_state = VaillantAttackState::Ends; }, 1000ms);
 			SetTimeout([this] { if (state >= VaillantState::Death) return; state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 5000ms);
 

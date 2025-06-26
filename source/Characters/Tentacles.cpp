@@ -18,11 +18,43 @@ Tentacles::Tentacles(P2World& world, const Vec2& position) :
 	hp = max_hp = TENTACLES_MAX_HP;
 }
 
-void Tentacles::update() {}
+void Tentacles::update()
+{
+	frameTime += Scene::DeltaTime();
+
+	if (body) position = body.getPos();
+
+	if (position.y >= (Scene::Height() + 100))
+	{
+		body.setPos(start_position);
+		body.setVelocity({ 0, 0 });
+	}
+}
 
 void Tentacles::draw() const
 {
 	body.drawFrame();
+	
+	String assetName = U"Vaillant Tentacles 1";
+	
+	Vec2 margin{ 0, 0 };
+
+	SizeF cutoutSize{ 48, 48 };
+
+	SizeF resized = cutoutSize * 5;
+	
+	Vec2 shiftAmount{ 0, -70 };
+	
+	ColorF mask{ 1.0, 1.0, 1.0, 1.0 };
+	
+	double frameDuration = 0.085;
+	int    frameCount    = 16;
+	
+	int currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
+
+	if (currentFrame) margin.x += (cutoutSize.x) * currentFrame;
+	
+	if (assetName) TextureAsset(assetName)(margin, cutoutSize).resized(resized).drawAt(position + shiftAmount, mask);
 }
 
 void Tentacles::onHit(ObjectBase& object) {}
