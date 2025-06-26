@@ -206,8 +206,8 @@ void GameClear::draw() const
 		}
 
 		const Font& boldFont = FontAsset(U"Dot_16");
-		boldFont(U"REPLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
-		boldFont(U"TITLE").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+		boldFont(U"REPLAY").drawAt(40, m_startButton.center(), ColorF{ 0.1 });
+		boldFont(U"TITLE").drawAt(40, m_exitButton.center(), ColorF{ 0.1 });
 	}
 
 #ifdef _DEBUG
