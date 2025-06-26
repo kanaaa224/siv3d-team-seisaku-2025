@@ -97,6 +97,7 @@ void AssetsRegistration()
 		TextureAsset::Register({ U"BuffSpawn",  { U"Effect" } }, U"../assets/images/effect/2/673.png");
 		TextureAsset::Register({ U"DamageUp",  { U"Effect" } }, U"../assets/images/effect/buf/P_DamageUp_UI.png");
 		TextureAsset::Register({ U"SpeedUp",  { U"Effect" } }, U"../assets/images/effect/buf/P_SpeedUp_UI.png");
+		TextureAsset::Register({ U"Star",  { U"Effect" } }, U"../assets/images/effect/Star.png");
 	}
 
 	//GameUI

@@ -44,6 +44,7 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 
 	rankDraw_ct = 0.0;
 	rankDrawFlg = false;
+	rankSize = RANK_SIZE;
 }
 
 void GameClear::update()
@@ -165,7 +166,7 @@ void GameClear::draw() const
 		if (rankDrawFlg) {
 			FontAsset(U"Dot_16")(rank)
 				.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
-						180, Vec2{ 640,380 }, rankColor);
+						rankSize, Vec2{ 640,380 }, rankColor);
 		}
 	}
 
