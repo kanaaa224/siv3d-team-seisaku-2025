@@ -243,8 +243,8 @@ void Title::draw() const
 	}
 
 	const Font& boldFont = FontAsset(U"Dot_16");
-	boldFont(U"PLAY").drawAt(25, m_startButton.center(), ColorF{ 0.1 });
-	boldFont(U"END").drawAt(25, m_exitButton.center(), ColorF{ 0.1 });
+	boldFont(U"PLAY").drawAt(40, m_startButton.center(), ColorF{ 0.1 });
+	boldFont(U"END").drawAt(40, m_exitButton.center(), ColorF{ 0.1 });
 
 	////左下にプレイヤー表示
 	//if (!m_runAnimation.isEmpty())
