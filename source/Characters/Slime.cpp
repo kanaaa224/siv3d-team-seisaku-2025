@@ -74,9 +74,9 @@ Slime::Slime(P2World& world, const Vec2& position) : CharacterBase(world, positi
 		joints << world.createDistanceJoint(aroundBodies[i], posA, aroundBodies[(i + 1) % num], posB, (posB - posA).length()).setLinearStiffness(1.0, 0.5).setMinLength(0.0);
 	}
 
-	max_hp = SLIME_MAX_HP;
+	hp = max_hp = SLIME_MAX_HP;
 
-	hp = max_hp;
+	body.applyLinearImpulse({ 0, -SLIME_JUMP_POWER * 2 });
 }
 
 void Slime::update()
@@ -92,10 +92,7 @@ void Slime::draw() const
 {
 	Array<Vec2> vertices;
 
-	for (const auto& b : aroundBodies)
-	{
-		vertices << b.getPos();
-	}
+	for (const auto& b : aroundBodies) vertices << b.getPos();
 
 	double alpha = 0.9;
 
@@ -117,8 +114,22 @@ void Slime::onDamaged(float amount)
 
 		AudioAsset(U"Vaillant Damage").playOneShot();
 
+		body.applyLinearImpulse({ (!mirrored ? SLIME_WALK_POWER : -SLIME_WALK_POWER) * 200, -SLIME_JUMP_POWER });
+
 		SetTimeout([this] { damaged = false; }, 750ms);
 
 		damaged = true;
+	}
+}
+
+void Slime::destroy()
+{
+	if (!destroy_executed)
+	{
+		body.release();
+
+		SetTimeout([this] { ObjectBase::destroy(); }, 1000ms);
+
+		destroy_executed = true;
 	}
 }

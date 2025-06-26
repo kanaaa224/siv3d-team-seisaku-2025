@@ -4,9 +4,22 @@
 # include "../Objects/Wall.hpp"
 # include "../Objects/HitBox.hpp"
 # include "../Characters/Player.hpp"
+# include "../UI/PlayerHUD.hpp"
+# include "../Characters/Enemies/Scarerun/Scarerun.hpp"
+
+#define SIZE 20	//文字のサイズ
+#define DRAW_POSITION Vec2{Scene::Width() / 2, Scene::Height() / 2 - 100.0} //座標
 
 TutorialStage::TutorialStage()
 {
+	m_currentIndex = 0;
+
+	// ステージの開始・終了ワールド座標を設定
+	//プレイヤーの初期位を回質店
+	m_stageStartX = 100.0;
+	//Bossの生成位置を終了点
+	m_stageEndX = (Scene::Width() / 2) + 4900.0;
+
 	initialize();
 }
 
@@ -23,22 +36,30 @@ void TutorialStage::initialize()
 	createObject<Wall>(Vec2{ -5, 500 });
 	createObject<Wall>(Vec2{ Scene::Width(), 500});
 
-	//for (int8 i = 1; i < 6; i++)
-	//{
-	//	//敵
-	//	createObject<Scarerun>(Vec2{ 700 * i, Scene::Height() - 45 });
-	//	createObject<Flot>(Vec2{ 800 * i ,500 });
-	//}
-
 	//プレイヤー
 	createObject<Player>(Vec2{ 100, 650 });
+
+	camera = Camera2D(Vec2{ (Scene::Width() / 2), (Scene::Height() / 2) }, 1.0, CameraControl::None_);
 }
 
 void TutorialStage::update()
 {
+	auto controller = XInput(0);
+
 	Stage::update();
 
+	Player* player = nullptr;
+	PlayerHUD* playerHUD = PlayerHUD::GetInstance();
+
+	playerHUD->player_game_world_start_x = m_stageStartX;
+	playerHUD->player_game_world_end_x = m_stageEndX;
+
 	auto _objects_ = objects;
+
+	for (const auto& object : objects)
+	{
+		if ((player = dynamic_cast<Player*>(object))) break;
+	}
 
 	for (const auto& object : _objects_)
 	{
@@ -47,13 +68,22 @@ void TutorialStage::update()
 			hitBox->destroy();
 		}
 	}
-	
+
+	playerHUD->setPlayerHP(player->getHP());
+	playerHUD->update();
+	playerHUD->setPlayerState(player->getplayerstate());
+	playerHUD->setPlayerVel(player->getBody().getVelocity());
+	playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
+	playerHUD->setPlayerPosition(player->getBody().getPos());
+
 	if (KeyEnter.down() || Gamepad(0).isConnected() && Gamepad(0).buttons[7].down())
 	{
 		sceneData().current_stage = 1;
 
 		sceneChange(SceneState::Game, 0.5s);
 	}
+
+	//camera.update();
 }
 
 void TutorialStage::draw() const
@@ -68,9 +98,8 @@ void TutorialStage::draw() const
 
 	{
 		Stage::draw();
+		PlayerHUD::GetInstance()->draw();
 	}
-
-	FontAsset(U"TitleFont")(U"Enterキーでスキップ可能").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ Scene::Width() / 2, Scene::Height() / 2 });
 }
 
 void TutorialStage::NewInstance()
@@ -79,3 +108,5 @@ void TutorialStage::NewInstance()
 
 	instance = new TutorialStage();
 }
+
+

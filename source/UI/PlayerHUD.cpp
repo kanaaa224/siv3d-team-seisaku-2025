@@ -191,7 +191,7 @@ void PlayerHUD::draw() const
 
 	if (!run_animation.isEmpty())
 	{
-		run_animation[animation_number].resized(576, 90).drawAt(player_current_pos);
+		run_animation[animation_number].resized(536, 70).drawAt(player_current_pos);
 	}
 
 	//その他のUI要素の描画
