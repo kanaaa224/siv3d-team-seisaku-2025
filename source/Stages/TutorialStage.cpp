@@ -17,7 +17,7 @@ TutorialStage::TutorialStage()
 {
 	m_currentIndex = 0;
 
-	AudioAsset(U"tutorial1_BGM").setVolume(0.3);
+	AudioAsset(U"tutorial1_BGM").setVolume(0.5);
 	//AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"tutorial1_BGM").play();
 
@@ -89,8 +89,8 @@ void TutorialStage::initialize()
 		font(U"Now Loading").draw(basePos, Palette::White);
 		font(dots).draw(basePos + Vec2{ 185, 0 }, Palette::White);
 
-		//4秒以上経ったら抜ける
-		if (elapsed > 4.0 && !shownOnce)
+		//抜ける
+		if (elapsed > 2.5 && !shownOnce)
 		{
 			shownOnce = true;
 			break;
