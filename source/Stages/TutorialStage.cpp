@@ -17,7 +17,7 @@ TutorialStage::TutorialStage()
 {
 	m_currentIndex = 0;
 
-	AudioAsset(U"tutorial1_BGM").setVolume(0.5);
+	AudioAsset(U"tutorial1_BGM").setVolume(1.0);
 	//AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"tutorial1_BGM").play();
 
@@ -319,7 +319,13 @@ void TutorialStage::draw() const
 	//説明文描画
 	FontAsset(U"TitleFont")(helpTexts[currentTextIndex]).drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),28, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 135.0));
 
+	// START SKIP 点滅表示
+	double blinkAlpha = Periodic::Square0_1(1.0); // カクカク点滅
+	// double blinkAlpha = Periodic::Sine0_1(1.0); // フェード点滅にしたい場合はこちら
+	ColorF blinkColor{ 1.0, 1.0, 1.0, blinkAlpha };
+	FontAsset(U"TitleFont")(U"START SKIP").drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),	23, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 320.0), blinkColor);
 }
+
 
 void TutorialStage::NewInstance()
 {
