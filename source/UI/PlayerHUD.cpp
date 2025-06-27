@@ -66,7 +66,7 @@ void PlayerHUD::initialize()
 void PlayerHUD::update()
 {
 	//タイマーの開始処理
-	if (!GO && player_state != 0)
+	if (!GO && player_state == 1)
 	{
 		GO = true;
 	}

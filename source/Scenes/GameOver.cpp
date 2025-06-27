@@ -70,6 +70,7 @@ void GameOver::update()
 	{
 		AudioAsset(U"kettei_SE").play();
 		AudioAsset(U"GameOver_BGM").stop();
+		PlayerHUD::GetInstance()->resetTime();
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
@@ -77,6 +78,7 @@ void GameOver::update()
 	{
 		AudioAsset(U"GameOver_BGM").stop();
 		AudioAsset(U"kettei_SE").play();
+		PlayerHUD::GetInstance()->resetTime();
 		changeScene(SceneState::Title, 0.5s);
 	}
 }
