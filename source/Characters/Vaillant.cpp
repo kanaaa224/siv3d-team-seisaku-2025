@@ -178,7 +178,7 @@ void Vaillant::attack(VaillantAttackType type)
 	
 	if (attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Attacking)
 	{
-		body.setPos({ player_position.x, 0 - size.y });
+		body.setPos({ Random(0, 2) ? player_position.x : Random(position.x, start_position.x), 0 - size.y});
 		body.setVelocity({ 0, 0 });
 	}
 	
@@ -186,7 +186,7 @@ void Vaillant::attack(VaillantAttackType type)
 	{
 		AudioAsset(U"Vaillant Teleport2").play();
 
-		body.setPos({ body.getPos().x, size.y });
+		body.setPos({ position.x, size.y });
 		body.setVelocity({ 0, 0 });
 		
 		mirrored = player_position.x <= position.x;
@@ -277,10 +277,10 @@ void Vaillant::update()
 		if (jumped == Vec2{ 0, 0 } && InRange(distance, 100.0, 700.0))
 		{
 			return attack(
-				InRange(distance, 100.0, 150.0) ? Random(0, 3) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
+				InRange(distance, 100.0, 150.0) ? Random(0, 1) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
 				InRange(distance, 150.0, 400.0) ? Random(0, 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
-				InRange(distance, 500.0, 600.0) ? static_cast<VaillantAttackType>(Random(0, 2)) :
-				InRange(distance, 600.0, 700.0) ? VaillantAttackType::Rush : attack_type
+				InRange(distance, 450.0, 600.0) ? static_cast<VaillantAttackType>(hp < max_hp / 1.25 ? hp < max_hp / 2 ? Random(2, 3) : Random(1, 2) : Random(0, 1)) :
+				InRange(distance, 600.0, 700.0) ? hp < max_hp / 1.25 ? VaillantAttackType::Rush : VaillantAttackType::Teleport : attack_type
 			);
 		}
 
@@ -589,7 +589,7 @@ void Vaillant::onHit(ObjectBase& object)
 			AudioAsset(U"Vaillant Clash").playOneShot();
 
 			SetTimeout([this] { if (state >= VaillantState::Death) return; attack_state = VaillantAttackState::Ends; }, 1000ms);
-			SetTimeout([this] { if (state >= VaillantState::Death) return; state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, 5000ms);
+			SetTimeout([this] { if (state >= VaillantState::Death) return; state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, hp < max_hp / 3.5 ? 2500ms : 5000ms);
 
 			applyDamage(0.0f);
 
