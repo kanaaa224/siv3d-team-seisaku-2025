@@ -17,6 +17,10 @@ TutorialStage::TutorialStage()
 {
 	m_currentIndex = 0;
 
+	AudioAsset(U"tutorial1_BGM").setVolume(0.3);
+	//AudioAsset(U"Battle_BGM").stop();
+	AudioAsset(U"tutorial1_BGM").play();
+
 	// ステージの開始・終了ワールド座標を設定
 	//プレイヤーの初期位を回質店
 	m_stageStartX = 100.0;
