@@ -55,5 +55,6 @@ private:
 	Texture enemy1_image;
 	Texture enemy2_image;
 	Texture enemy3_image;
+
 };
 
