@@ -221,7 +221,7 @@ void Main()
 	sceneManager.add<GameClear> (SceneState::Clear);
 	sceneManager.add<GameOver>  (SceneState::GameOver);
 	sceneManager.add<CreditRoll>(SceneState::Credit);
-	sceneManager.init           (SceneState::Game, 0.5s);
+	sceneManager.init           (SceneState::Title, 0.5s);
 
 	while (System::Update()) if (not sceneManager.update()) break;
 }
