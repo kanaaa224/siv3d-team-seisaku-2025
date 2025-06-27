@@ -39,6 +39,8 @@ private:
 	bool transition;
 	Vec2 glowPos;
 
+	bool textJustSwitched;
+
 private:
 	void initialize();
 

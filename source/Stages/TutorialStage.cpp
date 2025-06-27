@@ -39,6 +39,7 @@ TutorialStage::TutorialStage()
 	runAnimationTime = 0.0;
 	transition = false;
 	glowPos = Vec2(Scene::Width() / 2, Scene::Height() / 2);
+	textJustSwitched = false;
 
 	initialize();
 }
@@ -57,7 +58,6 @@ void TutorialStage::initialize()
 		U"キノコからのドロップ品は攻撃力UP！",
 		U"コウモリからのドロップ品はスピードUP！",
 		U"コウモリにはジャンプ攻撃が有効だ！",
-		U"バフを集めて強化！"
 	};
 
 	String randomMessage = messages.choice();
@@ -132,9 +132,13 @@ void TutorialStage::initialize()
 	}
 
 	isLoading = false; // 読み込み完了
+<<<<<<< HEAD
 	autoSkipTimer.start();
 
 	
+=======
+	//autoSkipTimer.start();
+>>>>>>> 4ce79f8a8720ce0a9533e614258d20bfa210968a
 }
 
 void TutorialStage::update()
@@ -231,32 +235,45 @@ void TutorialStage::update()
 	}
 
 	// ゲージ更新
-	if (gaugeStarted && sceneData().current_stage != 1)
+	if (gaugeStarted && sceneData().current_stage != 1 && !textJustSwitched)
 	{
 		last_point.x = getGaugePosition(195, 1085, HELP_TIMER, gaugeStartTime).x;
 	}
 
 	// 自動でテキストを切り替え
-	if (last_point.x >= 1084)
+	if (last_point.x >= 1084 && !textJustSwitched)
 	{
+		textJustSwitched = true;
 		// 最後のテキストだった場合はゲームシーンへ遷移
-		if (currentTextIndex == helpTexts.size() - 1.0)
+		if (currentTextIndex == helpTexts.size() - 1)
 		{
 			sceneData().current_stage = 1;
 			last_point.x = 1085.0;
 			transition = true;
-			// 遷移条件
-			if (player->getBody().getPos().x >= 1290.0)
-			{
-				sceneChange(SceneState::Game, 1.0s);
-			}
 		}
 		else
 		{
-			currentTextIndex = (currentTextIndex + 1);
-			autoSkipTimer.restart();
+			++currentTextIndex;
+			last_point.x = 195; // 次のゲージをリセット
+			gaugeStartTime = Scene::Time(); // タイマー再スタート
+			//autoSkipTimer.restart();
 		}
 	}
+
+	// ゲージがリセットされたときにフラグ解除
+	if (textJustSwitched && last_point.x <= 195 && !transition)
+	{
+		textJustSwitched = false;
+	}
+
+	// 遷移条件
+	if (player->getBody().getPos().x >= 1290.0)
+	{
+		sceneChange(SceneState::Game, 2.0s);
+		player->destroy();
+	}
+
+#ifdef _DEBUG
 	//スキップ
 	if (KeyEnter.down() || Gamepad(0).isConnected() && Gamepad(0).buttons[7].down())
 	{
@@ -264,7 +281,7 @@ void TutorialStage::update()
 
 		sceneChange(SceneState::Game, 0.5s);
 	}
-
+#endif
 	//camera.update();
 }
 
