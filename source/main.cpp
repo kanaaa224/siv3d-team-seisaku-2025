@@ -185,9 +185,11 @@ void AssetsRegistration()
 	TextureAsset::Register({ U"1",  { U"Load" } }, U"../assets/images/enemy/flotte/1.png");
 	TextureAsset::Register({ U"2",  { U"Load" } }, U"../assets/images/enemy/scarerun/new/2.png");
 
-	//れいに頼まれたやつ
+	//チュートリアル音源
 	AudioAsset::Register(U"tutorial1_BGM", Audio::Stream, U"../assets/sounds/BGM/tutorial_BGM1.wav");
 	AudioAsset::Register(U"tutorial2_BGM", Audio::Stream, U"../assets/sounds/BGM/tutorial_BGM1.wav");
+
+	//リザルトBGM
 	AudioAsset::Register(U"1_SE", Audio::Stream, U"../assets/sounds/SE/kamihubuki.wav");
 	AudioAsset::Register(U"kirakira_SE", Audio::Stream, U"../assets/sounds/SE/kirakira.wav");
 	AudioAsset::Register(U"kaze_SE", Audio::Stream, U"../assets/sounds/SE/kaze.wav");

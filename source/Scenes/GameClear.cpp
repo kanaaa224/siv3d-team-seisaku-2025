@@ -14,6 +14,9 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	score_fream = TextureAsset(U"Score Frame");
 
 	AudioAsset(U"End_BGM").setVolume(0.3);
+	AudioAsset(U"1_SE").setVolume(0.3);
+	AudioAsset(U"kirakira_SE").setVolume(0.3);
+	AudioAsset(U"kaze_SE").setVolume(0.3);
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
@@ -189,6 +192,7 @@ void GameClear::draw() const
 	if (rank == U"S") {
 		confetti_Right.draw();//紙吹雪
 		confetti_Left.draw();
+		AudioAsset(U"1_SE").play();
 	}
 	//スコア描画//
 	FontAsset(U"Dot_16")(U"Time: {:.2f} 秒"_fmt(drawClearTime))
