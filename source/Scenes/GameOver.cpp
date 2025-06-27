@@ -54,26 +54,26 @@ void GameOver::update()
 
 	// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
 	if (controller.buttonRight.down()
-		 || KeyRight.down())
+		/* || KeyRight.down()*/)
 	{
 		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
 	}
 	else if (controller.buttonLeft.down()
-		|| KeyLeft.down())
+		/*|| KeyLeft.down()*/)
 	{
 		m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
 	}
 
 	// ボタンのクリック処理
 	// マウス左クリックまたはコントローラーのAボタンで決定
-	if ((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0))
+	if (/*(m_startButton.leftClicked() && m_selectedButtonIndex == 0) || */(controller.buttonA.down() && m_selectedButtonIndex == 0))
 	{
 		AudioAsset(U"kettei_SE").play();
 		AudioAsset(U"GameOver_BGM").stop();
 		changeScene(SceneState::Game, 0.5s);
 	}
 	// マウス左クリックまたはコントローラーのAボタンで決定
-	else if ((m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1)))
+	else if ((/*m_exitButton.leftClicked() || */(controller.buttonA.down() && m_selectedButtonIndex == 1)))
 	{
 		AudioAsset(U"GameOver_BGM").stop();
 		AudioAsset(U"kettei_SE").play();
@@ -109,12 +109,12 @@ void GameOver::draw() const
 			m_exitButton.drawFrame(3, 0, Palette::Orange); // 太めのオレンジの枠
 		}
 
-		const Font& boldFont = FontAsset(U"Bold");
+		const Font& boldFont = FontAsset(U"Dot_16");
 
-		boldFont(U"REPLAY").drawAt(25, m_startButton.center(),
+		boldFont(U"REPLAY").drawAt(40, m_startButton.center(),
 			(m_selectedButtonIndex == 0) ? ColorF{ 0.1 } : ColorF{ Palette::White });
 
-		boldFont(U"TITLE").drawAt(25, m_exitButton.center(),
+		boldFont(U"TITLE").drawAt(40, m_exitButton.center(),
 			(m_selectedButtonIndex == 1) ? ColorF{ 0.1 } : ColorF{ Palette::White });
 
 

@@ -265,8 +265,10 @@ void TutorialStage::update()
 	if (player->getBody().getPos().x >= 1290.0)
 	{
 		sceneChange(SceneState::Game, 2.0s);
+		player->destroy();
 	}
 
+#ifdef _DEBUG
 	//スキップ
 	if (KeyEnter.down() || Gamepad(0).isConnected() && Gamepad(0).buttons[7].down())
 	{
@@ -274,7 +276,7 @@ void TutorialStage::update()
 
 		sceneChange(SceneState::Game, 0.5s);
 	}
-
+#endif
 	//camera.update();
 }
 
