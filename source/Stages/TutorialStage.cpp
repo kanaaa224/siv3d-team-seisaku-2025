@@ -32,6 +32,8 @@ TutorialStage::TutorialStage()
 	run_animation = LoadDivGraph(U"Player Run", Size(288, 45));
 	runAnimationFrame = 0;
 	runAnimationTime = 0.0;
+	transition = false;
+	glowPos = Vec2(Scene::Width() / 2, Scene::Height() / 2);
 
 	initialize();
 }
@@ -72,8 +74,8 @@ void TutorialStage::initialize()
 		U"ジャンプ中にXボタンを押すと、空中攻撃ができます。\n空中の敵や高い位置にも攻撃が届きます。",
 		U"ジャンプ中にBボタンを押すと、空中回避ができます。\n移動しながら攻撃でき、敵をすり抜けることも可能です。\n使用後、再度使えるまで時間がかかります。",
 		U"敵を倒すと、バフアイテムが出現します。\n・赤いアイテム：攻撃力が上昇（DamageUp）\n・青いアイテム：移動速度が上昇（SpeedUp）\n近づくと獲得できます。",
-		U"画面左上：現在のHP(オレンジ色のゲージ) \n画面左上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。"
-		U""
+		U"画面左上：現在のHP(オレンジ色のゲージ) \n画面左上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。",
+		U"右へ進むと、いよいよ本編が始まります。\nあなたの力で森の影に挑みましょう。"
 	};
 
 	for (const auto& section : helpTexts)
@@ -138,6 +140,14 @@ void TutorialStage::update()
 		{
 			hitBox->destroy();
 		}
+
+		if (Wall* wall = dynamic_cast<Wall*>(object))
+		{
+			if (transition)
+			{
+				wall->getBody().setPos(Vec2(Scene::Width() + 100.0, 500.0));
+			}
+		}
 	}
 
 	// 敵召喚
@@ -178,7 +188,12 @@ void TutorialStage::update()
 		{
 			sceneData().current_stage = 1;
 			last_point.x = 1085.0;
-			sceneChange(SceneState::Game, 1.0s);
+			transition = true;
+			// 遷移条件
+			if (player->getBody().getPos().x >= 1290.0)
+			{
+				sceneChange(SceneState::Game, 1.0s);
+			}
 		}
 		else
 		{
@@ -220,6 +235,17 @@ void TutorialStage::draw() const
 #endif
 
 	Stage::draw();
+
+	if (transition)
+	{
+		const double glowAlpha = 0.5 + 0.5 * Periodic::Sine0_1(1.0); // 点滅 (0.5〜1.0)
+		const int glowWidth = 70.0; // 右端から100pxの光
+
+		// 画面右端に横グラデーション（左：透明 → 右：光る黄色）
+		Rect{ Scene::Width() - glowWidth, 0, glowWidth, Scene::Height() }
+			.draw(Arg::left = ColorF(1.0, 1.0, 0.9, 0.0),  // 左端：透明
+				  Arg::right = ColorF(1.0, 1.0, 0.5, glowAlpha));  // 右端：点滅する黄色
+	}
 
 	//四角形描画
 	RoundRect{ Arg::center(Scene::Width() / 2, Scene::Height() / 2 - 135.0), 900, 170, 10 }.draw(ColorF{ Palette::Black, 0.6});
