@@ -6,6 +6,10 @@
 #include "../Stages/1.hpp"
 //Leaf
 #include "../Objects/Leaf.h"
+//Tiem
+#include "../Utils/Timer.hpp"
+
+using namespace TimerUtils;
 
 Title::Title(const InitData& init) : IScene{ init }
 {
@@ -25,7 +29,8 @@ Title::Title(const InitData& init) : IScene{ init }
 
 	//m_runAnimation = LoadDivGraph(U"Scarerun Idle", Size(150, 45));
 	//m_runAnimationFrame = 0;
-	//m_runAnimationTime = 0.0;
+	//
+	// m_runAnimationTime = 0.0;
 
 	//m_runnerAnimation = LoadDivGraph(U"Flot Idle", Size(150, 45));
 	//m_runnerAnimationTime = 0.0;
@@ -45,8 +50,11 @@ Title::Title(const InitData& init) : IScene{ init }
 
 	createLeaf_ct = 0.0;
 
-
+	showPopup = false;
 	debugFlg = false;
+	waitInput = false;
+	doOneceTimeOutFlg = false;
+	m_selected_PopupButtonIndex = 0;
 #ifdef _DEBUG
 	debugFlg = true;
 #endif // _DEBUG
@@ -74,14 +82,27 @@ void Title::update()
 	//タイマー初期化
 	PlayerHUD::GetInstance()->resetTime();
 
+	//ボタン処理（waitTime）
+	TimerUtils::Update();
+	if (waitInput) {
+		if (!doOneceTimeOutFlg) {
+			SetTimeout([this] {
+				waitInput = false;
+				doOneceTimeOutFlg = false;
+		    }, 10ms);
+			doOneceTimeOutFlg = true;
+		}
+		
+	}
+
 	auto controller = XInput(0); //コントローラーを取得
 
 	if (!debugFlg) {
 		// ボタンの更新
 		{
 			// マウスオーバーとコントローラーのAボタン、Bボタンに対応
-			m_startTransition.update(controller.buttonA.pressed() || m_selectedButtonIndex == 0);
-			m_exitTransition.update(controller.buttonB.pressed() || m_selectedButtonIndex == 1);
+			m_startTransition.update((controller.buttonA.pressed() || m_selectedButtonIndex == 0) && !showPopup);
+			m_exitTransition.update((controller.buttonB.pressed() || m_selectedButtonIndex == 1) && !showPopup);
 
 			if (controller.isConnected())
 			{
@@ -90,25 +111,26 @@ void Title::update()
 		}
 
 		// D-Padの上下で切り替え
-		if (controller.buttonDown.down())
+		if (controller.buttonDown.down() && !showPopup)
 		{
 			m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
 		}
-		else if (controller.buttonUp.down())
+		else if (controller.buttonUp.down() && !showPopup)
 		{
 			m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
 		}
 
 		// ボタンのクリック処理
 		// コントローラーのAボタンで決定
-		if ((controller.buttonA.down() && m_selectedButtonIndex == 0))
+		if (((controller.buttonA.down() && m_selectedButtonIndex == 0)) && !showPopup)
 		{
 			AudioAsset(U"kettei_SE").play();
 			AudioAsset(U"Title_BGM").stop();
-			changeScene(SceneState::Game, 0.5s);
+			//changeScene(SceneState::Game, 0.5s);
+			showPopup = true;
 		}
 		// コントローラーのAボタンで決定
-		else if ((controller.buttonA.down() && m_selectedButtonIndex == 1))
+		else if (((controller.buttonA.down() && m_selectedButtonIndex == 1)) && !showPopup)
 		{
 			AudioAsset(U"kettei_SE").play();
 			AudioAsset(U"Title_BGM").stop();
@@ -117,89 +139,67 @@ void Title::update()
 		}
 	}
 
-#ifdef _DEBUG
-	// ボタンの更新
-	{
-		// マウスオーバーとコントローラーのAボタン、Bボタンに対応
-		m_startTransition.update(m_startButton.mouseOver() || controller.buttonA.pressed() || m_selectedButtonIndex == 0);
-		m_exitTransition.update(m_exitButton.mouseOver() || controller.buttonB.pressed() || m_selectedButtonIndex == 1);
+	if (showPopup) {
+		if (controller.buttonY.down()) {
+			showPopup = false;
+		}
 
-		if (m_startButton.mouseOver() || m_exitButton.mouseOver() || controller.isConnected())
+		popupWindowUpdate();
+	}
+
+#ifdef _DEBUG
+	if (!waitInput) {
+		// ボタンの更新
 		{
-			Cursor::RequestStyle(CursorStyle::Hand);
+			// マウスオーバーとコントローラーのAボタン、Bボタンに対応
+			m_startTransition.update((m_startButton.mouseOver() || controller.buttonA.pressed() || m_selectedButtonIndex == 0) && !showPopup);
+			m_exitTransition.update((m_exitButton.mouseOver() || controller.buttonB.pressed() || m_selectedButtonIndex == 1) && !showPopup);
+
+			if (m_startButton.mouseOver() || m_exitButton.mouseOver() || controller.isConnected())
+			{
+				Cursor::RequestStyle(CursorStyle::Hand);
+			}
+		}
+
+		//マウス選択でも枠線切り替わるように
+		if (m_startButton.mouseOver() && !showPopup)
+		{
+			m_selectedButtonIndex = 0;
+		}
+		else if (m_exitButton.mouseOver() && !showPopup)
+		{
+			m_selectedButtonIndex = 1;
+		}
+
+
+		// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
+		if ((controller.buttonDown.down() || KeyDown.down()) && !showPopup)
+		{
+			m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
+		}
+		else if ((controller.buttonUp.down() || KeyUp.down()) && !showPopup)
+		{
+			m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
+		}
+
+		// ボタンのクリック処理
+		// マウス左クリックまたはコントローラーのAボタンで決定
+		if (((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0)) && !showPopup)
+		{
+			AudioAsset(U"kettei_SE").play();
+			AudioAsset(U"Title_BGM").stop();
+			//changeScene(SceneState::Game, 0.5s);
+			showPopup = true;
+		}
+		// マウス左クリックまたはコントローラーのAボタンで決定
+		else if ((m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1)) && !showPopup)
+		{
+			AudioAsset(U"kettei_SE").play();
+			AudioAsset(U"Title_BGM").stop();
+			changeScene(SceneState::Credit, 0.5s);
 		}
 	}
-
-	//マウス選択でも枠線切り替わるように
-	if (m_startButton.mouseOver())
-	{
-		m_selectedButtonIndex = 0;
-	}
-	else if (m_exitButton.mouseOver())
-	{
-		m_selectedButtonIndex = 1;
-	}
-
-
-	// D-Padの上下、またはキーボードの上下矢印キーのみで切り替え
-	if (controller.buttonDown.down() || KeyDown.down())
-	{
-		m_selectedButtonIndex = (m_selectedButtonIndex + 1) % 2; // 0 -> 1 -> 0...
-	}
-	else if (controller.buttonUp.down() || KeyUp.down())
-	{
-		m_selectedButtonIndex = (m_selectedButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
-	}
-
-	// ボタンのクリック処理
-	// マウス左クリックまたはコントローラーのAボタンで決定
-	if ((m_startButton.leftClicked() && m_selectedButtonIndex == 0) || (controller.buttonA.down() && m_selectedButtonIndex == 0))
-	{
-		AudioAsset(U"kettei_SE").play();
-		AudioAsset(U"Title_BGM").stop();
-		changeScene(SceneState::Game, 0.5s);
-	}
-	// マウス左クリックまたはコントローラーのAボタンで決定
-	else if (m_exitButton.leftClicked() || (controller.buttonA.down() && m_selectedButtonIndex == 1))
-	{
-		AudioAsset(U"kettei_SE").play();
-		AudioAsset(U"Title_BGM").stop();
-		changeScene(SceneState::Credit, 0.5s);
-		//System::Exit();
-	}
 #endif // _DEBUG
-
-
-	////アニメーション更新
-	//m_runAnimationTime += Scene::DeltaTime();
-	//if (m_runAnimationTime >= 0.1)
-	//{
-	//	m_runAnimationFrame = (m_runAnimationFrame + 1) % m_runAnimation.size();
-	//	m_runAnimationTime = 0.0;
-	//}
-
-	//m_runnerAnimationTime += Scene::DeltaTime();
-	//if (m_runnerAnimationTime >= 0.1) // アニメーション速度（0.1秒ごとにフレーム更新）
-	//{
-	//	m_runnerAnimationFrame = (m_runnerAnimationFrame + 1) % m_runnerAnimation.size();
-	//	m_runnerAnimationTime = 0.0;
-	//
-	//	 if (x != 840)
-	//	 {
-	//		 x += 5.0;
-	//	 }
-	//	 if (x >= 650 && y <= 600)
-	//	 {
-	//		 y += 8.0;
-	//	 }
-	//	 if (x == 840)
-	//	 {
-	//		 x += 0.0;
-	//		 y += 0.0;
-	//		
-	//		 m_runnerAnimation = LoadDivGraph(U"Scarerun Idle", Size(150, 45));
-	//	 }
-	//}
 }
 
 void Title::draw() const
@@ -246,19 +246,22 @@ void Title::draw() const
 	boldFont(U"PLAY").drawAt(40, m_startButton.center(), ColorF{ 0.1 });
 	boldFont(U"END").drawAt(40, m_exitButton.center(), ColorF{ 0.1 });
 
-	////左下にプレイヤー表示
-	//if (!m_runAnimation.isEmpty())
-	//{
-	//	m_runAnimation[m_runAnimationFrame].scaled(2.0).draw(840, Scene::Height() - 120);
-	//}
+	//popupWindow
+	if (showPopup) {
+		Rect{ 0,0,Scene::Width(),Scene::Height() }.draw(ColorF(0, 0, 0, 0.5));
+		RoundRect popupRect{ Scene::Width() / 2 - 300,Scene::Height() / 2 - 200,600,400,8 };
+		popupRect.draw(ColorF{ Palette::White, }).drawFrame(2);
 
-	//if (!m_runnerAnimation.isEmpty())
-	//{
-	//	// スケールを調整したい場合は .scaled() を追加
-	//	//m_runnerAnimation[m_runnerAnimationFrame].draw(m_runnerPos);
-	//	m_runnerAnimation[m_runAnimationFrame].scaled(2.0).draw(x,y);
-	//}
+		const Font& font = FontAsset(U"Dot_16");
+		font(U"チュートリアル").drawAt(40, Vec2{popupRect.center().x,popupRect.center().y - 100}, ColorF{0.1});
 
+		m_tutorialButton.draw(ColorF{ Palette::Black, m_tutorialTransition.value() + 0.45 }).drawFrame(1);
+		font(U"PLAY").drawAt(40, m_tutorialButton.center(), ColorF{Palette::White});
+		m_skipButton.draw(ColorF{ Palette::Black, m_skipTransition.value() + 0.45 }).drawFrame(1);
+		font(U"SKIP").drawAt(40, m_skipButton.center(), ColorF{ Palette::White });
+		m_backButton.draw(ColorF{ Palette::Black, m_backTransition.value() + 0.45 }).drawFrame(1);
+		font(U"✕").drawAt(40, m_backButton.center(), ColorF{ Palette::White });
+	}
 }
 
 void Title::textAlphaCalc()
@@ -325,4 +328,90 @@ void Title::createLeaf()
 
 		createLeaf_ct = 0.0;
 	}
+}
+
+void Title::popupWindowUpdate()
+{
+	auto controller = XInput(0); //コントローラーを取得
+
+	if (!debugFlg) {
+
+	}
+
+#ifdef _DEBUG
+	// ボタンの更新
+	{
+		// マウスオーバーとコントローラーのAボタン、Bボタンに対応
+		m_tutorialTransition.update((m_tutorialButton.mouseOver() || controller.buttonA.pressed() || m_selected_PopupButtonIndex == 0));
+		m_skipTransition.update((m_skipButton.mouseOver() || controller.buttonB.pressed() || m_selected_PopupButtonIndex == 1));
+		m_backTransition.update((m_backButton.mouseOver() || controller.buttonB.pressed() || m_selected_PopupButtonIndex == 2));
+
+		if (m_tutorialButton.mouseOver() || m_skipButton.mouseOver() || controller.isConnected())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+	}
+
+	//マウス選択でも枠線切り替わるように
+	if (m_tutorialButton.mouseOver())
+	{
+		m_selected_PopupButtonIndex = 0;
+	}
+	else if (m_skipButton.mouseOver())
+	{
+		m_selected_PopupButtonIndex = 1;
+	}
+	else if (m_backButton.mouseOver()) {
+		m_selected_PopupButtonIndex = 2;
+	}
+
+
+	// D-Padの左右上下、またはキーボードの左右上下矢印キーのみで切り替え
+	if ((controller.buttonLeft.down() || KeyLeft.down()))
+	{
+		m_selected_PopupButtonIndex = (m_selected_PopupButtonIndex + 1) % 2; // 0 -> 1 -> 0...
+	}
+	else if ((controller.buttonRight.down() || KeyRight.down()))
+	{
+		m_selected_PopupButtonIndex = (m_selected_PopupButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
+	}
+	else if ((controller.buttonUp.down() || KeyUp.down()))
+	{
+		if (m_selected_PopupButtonIndex == 0 || m_selected_PopupButtonIndex == 1) {
+			old_m_selected_PopupButtonIndex = m_selected_PopupButtonIndex;
+			m_selected_PopupButtonIndex = 2;
+		}
+	}
+	else if ((controller.buttonDown.down() || KeyDown.down()))
+	{
+		if (m_selected_PopupButtonIndex == 2) {
+			m_selected_PopupButtonIndex = old_m_selected_PopupButtonIndex;
+		}
+	}
+
+	// ボタンのクリック処理
+	// マウス左クリックまたはコントローラーのAボタンで決定
+	if (((m_tutorialButton.leftClicked() && m_selected_PopupButtonIndex == 0) || (controller.buttonA.down() && m_selected_PopupButtonIndex == 0)))
+	{
+		AudioAsset(U"kettei_SE").play();
+		//チュートリアルからゲームを始める
+		getData().current_stage = 0;
+		changeScene(SceneState::Game, 0.5s);
+
+	}
+	// マウス左クリックまたはコントローラーのAボタンで決定
+	else if ((m_skipButton.leftClicked() && m_selected_PopupButtonIndex == 1) || (controller.buttonA.down() && m_selected_PopupButtonIndex == 1))
+	{
+		AudioAsset(U"kettei_SE").play();
+		//そのままゲームを始める
+		getData().current_stage = 1;
+		changeScene(SceneState::Game, 0.5s);
+	}
+	else if ((m_backButton.leftClicked() && m_selected_PopupButtonIndex == 2) || (controller.buttonA.down() && m_selected_PopupButtonIndex == 2))
+	{
+		AudioAsset(U"kettei_SE").play();
+		showPopup = false;
+		waitInput = true;
+	}
+#endif // _DEBUG
 }
