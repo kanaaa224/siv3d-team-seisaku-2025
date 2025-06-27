@@ -277,8 +277,8 @@ void Vaillant::update()
 		if (jumped == Vec2{ 0, 0 } && InRange(distance, 100.0, 700.0))
 		{
 			return attack(
-				InRange(distance, 100.0, 150.0) ? Random(0, 2) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
-				InRange(distance, 150.0, 400.0) ? Random(0, hp < max_hp * 0.5 ? 1 : 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Rush :
+				InRange(distance, 100.0, 125.0) ? Random(0, 2) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
+				InRange(distance, 125.0, 400.0) ? Random(0, hp < max_hp * 0.5 ? 1 : 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Rush :
 				InRange(distance, 450.0, 600.0) ? static_cast<VaillantAttackType>(hp < max_hp * 0.75 ? hp < max_hp * 0.5 ? Random(2, 3) : Random(1, 2) : Random(0, 1)) :
 				InRange(distance, 600.0, 700.0) ? hp < max_hp * 0.9 ? VaillantAttackType::Rush : VaillantAttackType::Teleport : attack_type
 			);
