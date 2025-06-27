@@ -8,8 +8,6 @@
 # include "../Objects/Wall.hpp"
 # include "../Objects/Ground.hpp"
 
-#define _DEBUG
-
 using namespace TimerUtils;
 using namespace std::chrono_literals;
 
