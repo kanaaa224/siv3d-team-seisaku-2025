@@ -69,7 +69,8 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	doOnesConfettiFlg = false;
 
 	hasPlayedKazeSE = false; //seflag
-
+	doOnecePlaySE_1 = false;
+	doOnecePlaySE_2 = false;
 }
 
 void GameClear::update()
@@ -171,11 +172,11 @@ void GameClear::update()
 	}
 
 	// 5秒後に一度だけ風SEを再生
-	if (!hasPlayedKazeSE && timer.sF() > 3.5)
-	{
-		AudioAsset(U"kaze_SE").play();
-		hasPlayedKazeSE = true; // 再生済みフラグを立てる
-	}
+	//if (!hasPlayedKazeSE && timer.sF() > 3.5)
+	//{
+	//	AudioAsset(U"kaze_SE").play();
+	//	hasPlayedKazeSE = true; // 再生済みフラグを立てる
+	//}
 
 
 
@@ -204,7 +205,6 @@ void GameClear::draw() const
 	if (rank == U"S") {
 		confetti_Right.draw();//紙吹雪
 		confetti_Left.draw();
-		AudioAsset(U"kurakka_SE").play();
 	}
 	//スコア描画//
 	FontAsset(U"Dot_16")(U"Time: {:.2f} 秒"_fmt(drawClearTime))
@@ -220,8 +220,6 @@ void GameClear::draw() const
 			FontAsset(U"Dot_16")(rank)
 				.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
 						rankSize, Vec2{ RANK_POS_X,RANK_POS_Y }, rankColor);
-			AudioAsset(U"kirakira_SE").play();
-			//AudioAsset(U"kaze_SE").play();
 		}
 	}
 
@@ -320,10 +318,22 @@ void GameClear::rankS_Anim(double ct)
 		createSmokeEffect();
 		createRankStarEffect();
 
+		if (!doOnecePlaySE_1) {
+			AudioAsset(U"kaze_SE").playOneShot();
+			AudioAsset(U"kirakira_SE").playOneShot();
+			doOnecePlaySE_1 = true;
+		}
+		
+
 		if (!doOnesConfettiFlg) {
 			confetti_Right.launch();
 			confetti_Left.launch();
 			doOnesConfettiFlg = true;
+
+			if (!doOnecePlaySE_2) {
+				AudioAsset(U"1_SE").playOneShot();
+				doOnecePlaySE_2 = true;
+			}
 		}
 	}
 }
@@ -334,6 +344,12 @@ void GameClear::rankA_Anim(double ct)
 	if (endSizeMoveFlg) {
 		createSmokeEffect();
 		createRankStarEffect();
+
+		if (!doOnecePlaySE_1) {
+			AudioAsset(U"kaze_SE").playOneShot();
+			AudioAsset(U"kirakira_SE").playOneShot();
+			doOnecePlaySE_1 = true;
+		}
 	}
 }
 
@@ -342,6 +358,11 @@ void GameClear::rankB_Anim(double ct)
 	rankSizeMove();
 	if (endSizeMoveFlg) {
 		createSmokeEffect();
+
+		if (!doOnecePlaySE_1) {
+			AudioAsset(U"kaze_SE").playOneShot();
+			doOnecePlaySE_1 = true;
+		}
 	}
 }
 

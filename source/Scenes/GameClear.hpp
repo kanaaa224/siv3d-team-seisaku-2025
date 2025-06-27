@@ -89,4 +89,7 @@ private:
 
 	bool hasPlayedKazeSE; //seflag
 	Stopwatch timer{ StartImmediately::Yes }; //タイマースイッチ
+
+	bool doOnecePlaySE_1;
+	bool doOnecePlaySE_2;
 };
