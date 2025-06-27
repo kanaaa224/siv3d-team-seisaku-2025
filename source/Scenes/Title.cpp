@@ -97,7 +97,7 @@ void Title::update()
 
 	auto controller = XInput(0); //コントローラーを取得
 
-	if (!debugFlg) {
+	if (!debugFlg && !waitInput) {
 		// ボタンの更新
 		{
 			// マウスオーバーとコントローラーのAボタン、Bボタンに対応
@@ -126,7 +126,7 @@ void Title::update()
 		{
 			AudioAsset(U"kettei_SE").play();
 			AudioAsset(U"Title_BGM").stop();
-			//changeScene(SceneState::Game, 0.5s);
+			waitInput = true;
 			showPopup = true;
 		}
 		// コントローラーのAボタンで決定
@@ -334,8 +334,68 @@ void Title::popupWindowUpdate()
 {
 	auto controller = XInput(0); //コントローラーを取得
 
-	if (!debugFlg) {
+	if (!debugFlg && !waitInput) {
+		// ボタンの更新
+		{
+			//コントローラーのAボタン、Bボタンに対応
+			m_tutorialTransition.update(controller.buttonA.pressed() || m_selected_PopupButtonIndex == 0);
+			m_skipTransition.update(controller.buttonB.pressed() || m_selected_PopupButtonIndex == 1);
+			m_backTransition.update(controller.buttonB.pressed() || m_selected_PopupButtonIndex == 2);
 
+			if (controller.isConnected())
+			{
+				Cursor::RequestStyle(CursorStyle::Hand);
+			}
+		}
+
+
+		// D-Padの左右上下で切り替え
+		if (controller.buttonLeft.down())
+		{
+			m_selected_PopupButtonIndex = (m_selected_PopupButtonIndex + 1) % 2; // 0 -> 1 -> 0...
+		}
+		else if (controller.buttonRight.down())
+		{
+			m_selected_PopupButtonIndex = (m_selected_PopupButtonIndex - 1 + 2) % 2; // 1 -> 0 -> 1...
+		}
+		else if (controller.buttonUp.down())
+		{
+			if (m_selected_PopupButtonIndex == 0 || m_selected_PopupButtonIndex == 1) {
+				old_m_selected_PopupButtonIndex = m_selected_PopupButtonIndex;
+				m_selected_PopupButtonIndex = 2;
+			}
+		}
+		else if (controller.buttonDown.down())
+		{
+			if (m_selected_PopupButtonIndex == 2) {
+				m_selected_PopupButtonIndex = old_m_selected_PopupButtonIndex;
+			}
+		}
+
+		// ボタンのクリック処理
+		// コントローラーのAボタンで決定
+		if (controller.buttonA.down() && m_selected_PopupButtonIndex == 0)
+		{
+			AudioAsset(U"kettei_SE").play();
+			//チュートリアルからゲームを始める
+			getData().current_stage = 0;
+			changeScene(SceneState::Game, 0.5s);
+
+		}
+		//コントローラーのAボタンで決定
+		else if (controller.buttonA.down() && m_selected_PopupButtonIndex == 1)
+		{
+			AudioAsset(U"kettei_SE").play();
+			//そのままゲームを始める
+			getData().current_stage = 1;
+			changeScene(SceneState::Game, 0.5s);
+		}
+		else if (controller.buttonA.down() && m_selected_PopupButtonIndex == 2)
+		{
+			AudioAsset(U"kettei_SE").play();
+			showPopup = false;
+			waitInput = true;
+		}
 	}
 
 #ifdef _DEBUG
