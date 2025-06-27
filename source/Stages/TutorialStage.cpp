@@ -17,7 +17,7 @@ TutorialStage::TutorialStage()
 {
 	m_currentIndex = 0;
 
-	AudioAsset(U"tutorial1_BGM").setVolume(0.5);
+	AudioAsset(U"tutorial1_BGM").setVolume(1.0);
 	//AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"tutorial1_BGM").play();
 
