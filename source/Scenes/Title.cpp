@@ -125,7 +125,6 @@ void Title::update()
 		if (((controller.buttonA.down() && m_selectedButtonIndex == 0)) && !showPopup)
 		{
 			AudioAsset(U"kettei_SE").play();
-			AudioAsset(U"Title_BGM").stop();
 			waitInput = true;
 			showPopup = true;
 		}
@@ -377,6 +376,7 @@ void Title::popupWindowUpdate()
 		if (controller.buttonA.down() && m_selected_PopupButtonIndex == 0)
 		{
 			AudioAsset(U"kettei_SE").play();
+			AudioAsset(U"Title_BGM").stop();
 			//チュートリアルからゲームを始める
 			getData().current_stage = 0;
 			changeScene(SceneState::Game, 0.5s);
@@ -386,6 +386,7 @@ void Title::popupWindowUpdate()
 		else if (controller.buttonA.down() && m_selected_PopupButtonIndex == 1)
 		{
 			AudioAsset(U"kettei_SE").play();
+			AudioAsset(U"Title_BGM").stop();
 			//そのままゲームを始める
 			getData().current_stage = 1;
 			changeScene(SceneState::Game, 0.5s);
