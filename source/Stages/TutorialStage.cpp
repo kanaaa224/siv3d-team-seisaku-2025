@@ -17,6 +17,10 @@ TutorialStage::TutorialStage()
 {
 	m_currentIndex = 0;
 
+	AudioAsset(U"tutorial1_BGM").setVolume(0.3);
+	//AudioAsset(U"Battle_BGM").stop();
+	AudioAsset(U"tutorial1_BGM").play();
+
 	// ステージの開始・終了ワールド座標を設定
 	//プレイヤーの初期位を回質店
 	m_stageStartX = 100.0;
@@ -106,7 +110,7 @@ void TutorialStage::initialize()
 	////text
 	helpTexts =
 	{
-		U"ようこそ『森の影』へ！\nこのゲームは、敵を倒しながら成長し、森の奥にいるボスに挑むアクションゲームです。",
+		U"ようこそ『森の影』へ！\nこのゲームは、敵を倒しながら成長し、\n森の奥にいるボスに挑むアクションゲームです。",
         U"ボスを倒すとステージクリア！\nクリアまでにかかった時間に応じてランクが決まります。",
         U"左スティックを左右に倒すと、キャラが移動します。\nまずは動いてみましょう！",
         U"Aボタンでジャンプできます。\n敵を飛び越えたり、攻撃を避けたりするのに使います。",
