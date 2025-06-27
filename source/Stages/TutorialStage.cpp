@@ -99,11 +99,6 @@ void TutorialStage::initialize()
 
 	System::Update(); // 1フレーム強制描画
 
-	//BGM
-	/*AudioAsset(U"Title_BGM").stop();
-	AudioAsset(U"Battle_BGM").setVolume(0.7);
-	AudioAsset(U"Battle_BGM").play();*/
-
 	//ステージオブジェクト
 	createObject<StageBackground>();
 	createObject<Ground>(Vec2{ Scene::Width(), (Scene::Height() + 5) });
@@ -142,11 +137,11 @@ void TutorialStage::initialize()
 
 void TutorialStage::update()
 {
-
-
 	auto controller = XInput(0);
 
 	Stage::update();
+
+	static Stopwatch respawnTimer{ StartImmediately::No };
 
 	bool enemySpawn = false;
 
@@ -163,59 +158,75 @@ void TutorialStage::update()
 		if ((player = dynamic_cast<Player*>(object))) break;
 	}
 
-	for (const auto& object : _objects_)
+	if (player)
 	{
-		if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
-		{
-			enemy->setPlayerPos(player->getBody().getPos());
-		}
+		respawnTimer.reset();
 
-		if (dynamic_cast<Scarerun*>(object))
+		for (const auto& object : _objects_)
 		{
-			enemySpawn = true;
-			break;
-		}
-	}
-
-	for (const auto& object : _objects_)
-	{
-		if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
-		{
-			hitBox->destroy();
-		}
-
-		if (Wall* wall = dynamic_cast<Wall*>(object))
-		{
-			if (transition)
+			if (EnemyBase* enemy = dynamic_cast<EnemyBase*>(object))
 			{
-				wall->getBody().setPos(Vec2(Scene::Width() + 100.0, 500.0));
+				enemy->setPlayerPos(player->getBody().getPos());
+			}
+
+			if (dynamic_cast<Scarerun*>(object))
+			{
+				enemySpawn = true;
+				break;
 			}
 		}
-	}
 
-	// 敵召喚
-	if (!enemySpawn && currentTextIndex >= 3)
+		for (const auto& object : _objects_)
+		{
+			if (HitBox* hitBox = dynamic_cast<HitBox*>(object))
+			{
+				hitBox->destroy();
+			}
+
+			if (Wall* wall = dynamic_cast<Wall*>(object))
+			{
+				if (transition)
+				{
+					wall->getBody().setPos(Vec2(Scene::Width() + 100.0, 500.0));
+				}
+			}
+		}
+
+		// 敵召喚
+		if (!enemySpawn && currentTextIndex >= 3)
+		{
+			createObject<Scarerun>(Vec2{ 1000, Scene::Height() - 45 });
+		}
+
+		// Playerが動くとゲージスタート
+		if (!gaugeStarted && player->getplayerstate() != ePlayerState::idle)
+		{
+			gaugeStarted = true;
+			gaugeStartTime = Scene::Time();
+		}
+
+		playerHUD->setPlayerHP(player->getHP());
+		playerHUD->update();
+		playerHUD->setPlayerState(player->getplayerstate());
+		playerHUD->setPlayerVel(player->getBody().getVelocity());
+		playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
+		playerHUD->setPlayerPosition(player->getBody().getPos());
+
+		//バフの数を取得、HUDに設定
+		playerHUD->setBuffDamageUpCount(player->GetPlayerBuffDamageUpCount());
+		playerHUD->setBuffSpeedUpCount(player->GetPlayerBuffSpeedUpCount());
+	}
+	else
 	{
-		createObject<Scarerun>(Vec2{ 1000, Scene::Height() - 45 });
+		if (!respawnTimer.isRunning()) respawnTimer.restart();
+
+		if (respawnTimer.sF() >= 1.0)
+		{
+			createObject<Player>(Vec2{ (Scene::Width() / 2), 500 });
+
+			respawnTimer.reset();
+		}
 	}
-
-	// Playerが動くとゲージスタート
-	if (!gaugeStarted && player->getplayerstate() != ePlayerState::idle)
-	{
-		gaugeStarted = true;
-		gaugeStartTime = Scene::Time();
-	}
-
-	playerHUD->setPlayerHP(player->getHP());
-	playerHUD->update();
-	playerHUD->setPlayerState(player->getplayerstate());
-	playerHUD->setPlayerVel(player->getBody().getVelocity());
-	playerHUD->setPlayeravoid(player->getAvoidanceCooldown());
-	playerHUD->setPlayerPosition(player->getBody().getPos());
-
-	//バフの数を取得、HUDに設定
-	playerHUD->setBuffDamageUpCount(player->GetPlayerBuffDamageUpCount());
-	playerHUD->setBuffSpeedUpCount(player->GetPlayerBuffSpeedUpCount());
 
 	// ゲージ更新
 	if (gaugeStarted && sceneData().current_stage != 1)
