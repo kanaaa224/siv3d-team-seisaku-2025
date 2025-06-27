@@ -7,6 +7,7 @@
 # include "../UI/PlayerHUD.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Utils/CustomImageLoader.hpp"
+#include <random>
 
 #define SIZE 20	//文字のサイズ
 #define DRAW_POSITION Vec2{Scene::Width() / 2 - 445.0, Scene::Height() / 2 - 50.0} //座標
@@ -27,12 +28,6 @@ TutorialStage::TutorialStage()
 	gaugeStarted = false;
 	gaugeStartTime = 0.0;
 
-	Loding_image = TextureAsset(U"Loading_image");
-
-	run_animation = LoadDivGraph(U"Player Run", Size(288, 45));
-	runAnimationFrame = 0;
-	runAnimationTime = 0.0;
-
 	initialize();
 }
 
@@ -40,8 +35,53 @@ void TutorialStage::initialize()
 {
 	// --- ロード画面表示 ---
 	Scene::SetBackground(ColorF{ 0.0 }); // 背景を黒に設定
-	Loding_image.resized(Size(1500, 500)).draw(-40, 30);
+	//Loding_image.resized(Size(1500, 500)).draw(-40, 30);
 	//FontAsset(U"TitleFont")(U"Loading...").drawAt(Scene::Center(), Palette::White);
+	
+	Scene::SetBackground(ColorF{ 0.0 });
+
+	Font font(30);
+	Array<String> messages = {
+		U"キノコからのドロップ品は攻撃力UP！",
+		U"コウモリからのドロップ品はスピードUP！",
+		U"コウモリにはジャンプ攻撃が有効だ！",
+		U"バフを集めて強化！"
+	};
+
+	String randomMessage = messages.choice();
+
+	const double startTime = Scene::Time();
+	const double duration = 2.0; // 2秒で1ループ
+	bool shownOnce = false;
+
+	while (System::Update())
+	{
+		Scene::SetBackground(ColorF(0.1));
+
+		double elapsed = Scene::Time() - startTime;
+		int dotCount = static_cast<int>(elapsed * 3) % 4; // 0,1,2,3
+
+		String dots = U"";
+		for (int i = 0; i < dotCount; ++i)
+		{
+			dots += U".";
+		}
+
+		//アニメーションさせたやつ
+		font(U"Now Loading").draw(100, 100, Palette::White);
+		font(dots).draw(285, 100, Palette::White);
+
+		font(randomMessage).draw(100, 150, Palette::Gray);
+
+		//5秒以上経ったら抜ける
+		if (elapsed > 5.0 && !shownOnce)
+		{
+			shownOnce = true;
+			break;
+		}
+	}
+
+
 	System::Update(); // 1フレーム強制描画
 
 	//BGM
@@ -87,17 +127,7 @@ void TutorialStage::initialize()
 
 void TutorialStage::update()
 {
-	if (isLoading == true)
-	{
-		if (runAnimationTime >= 0.1)
-		{
-			if (runAnimationFrame < (run_animation.size() - 1))  // 最後のフレームで止める
-			{
-				++runAnimationFrame;
-			}
-			runAnimationTime = 0.0;
-		}
-	}
+
 
 	auto controller = XInput(0);
 
@@ -199,17 +229,6 @@ void TutorialStage::update()
 
 void TutorialStage::draw() const
 {
-	if (isLoading)
-	{
-		Scene::SetBackground(ColorF{ 0.0 });
-		FontAsset(U"TitleFont")(U"Loading...").drawAt(Scene::Center(), Palette::White);
-		//左下にプレイヤー表示
-		if (!run_animation.isEmpty())
-		{
-			run_animation[runAnimationFrame].scaled(2.0).draw(400, Scene::Height() - 380);
-		}
-		return;
-	}
 
 	ClearPrint(); // 過去のPrint出力を消す
 #ifdef _DEBUG

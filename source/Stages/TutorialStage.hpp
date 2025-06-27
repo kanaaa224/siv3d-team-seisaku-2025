@@ -47,5 +47,8 @@ private:
 	Array<TextureRegion> run_animation;
 
 	Texture Loding_image;
+	Texture enemy1_image;
+	Texture enemy2_image;
+	Texture enemy3_image;
 };
 

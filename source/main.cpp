@@ -50,6 +50,7 @@ void AssetsRegistration()
 
 	// Enemy
 	TextureAsset::Register({ U"Scarerun Idle Old", { U"Enemy" } }, U"../assets/images/enemy/scarerun/idle.png");//旧画像
+	TextureAsset::Register({ U"Scarerun Idle Old1", { U"Enemy" } }, U"../assets/images/enemy/scarerun/scarerun1.png");//旧画像
 	TextureAsset::Register({ U"Scarerun Idle",     { U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Idle.png");
 	TextureAsset::Register({ U"Scarerun Attack",   { U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Attack.png");
 	TextureAsset::Register({ U"Scarerun Run",      { U"Enemy" } }, U"../assets/images/enemy/scarerun/new/Run.png");
@@ -181,6 +182,14 @@ void AssetsRegistration()
 
 	//ロード用
 	TextureAsset::Register({ U"Loading_image",  { U"Load" } }, U"../assets/images/ui/Loading....png");
+	TextureAsset::Register({ U"1",  { U"Load" } }, U"../assets/images/enemy/flotte/1.png");
+	TextureAsset::Register({ U"2",  { U"Load" } }, U"../assets/images/enemy/scarerun/new/2.png");
+
+	//れいに頼まれたやつ
+	AudioAsset::Register(U"tutorial1_BGM", Audio::Stream, U"../assets/sounds/BGM/tutorial_BGM1.wav");
+	AudioAsset::Register(U"tutorial2_BGM", Audio::Stream, U"../assets/sounds/BGM/tutorial_BGM1.wav");
+	AudioAsset::Register(U"1_BGM", Audio::Stream, U"../assets/sounds/SE/kamihubuki.wav");
+
 }
 
 void Initialize()
