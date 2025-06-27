@@ -63,6 +63,7 @@ private:
 	Vec2 position;
 	Vec2 start_position;
 	Vec2 player_position;
+	Vec2 jumped;
 	
 	SizeF size;
 	
@@ -74,7 +75,6 @@ private:
 	bool hostility;
 	bool hostiled;
 	bool damaged;
-	bool jumped;
 	bool direction;
 	bool die_executed;
 	bool destroy_executed;
