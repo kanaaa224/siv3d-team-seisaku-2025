@@ -284,7 +284,7 @@ void PlayerHUD::draw() const
 	}
 	else if (player_state == ePlayerState::die)
 	{
-		FontAsset(U"TitleFont")(U"Game Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 200, Vec2{ 640, 200 });
+		//FontAsset(U"TitleFont")(U"Game Over").drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 200, Vec2{ 640, 200 });
 	}
 
 #ifdef _DEBUG
