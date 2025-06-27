@@ -17,6 +17,10 @@ TutorialStage::TutorialStage()
 {
 	m_currentIndex = 0;
 
+	AudioAsset(U"tutorial1_BGM").setVolume(0.3);
+	//AudioAsset(U"Battle_BGM").stop();
+	AudioAsset(U"tutorial1_BGM").play();
+
 	// ステージの開始・終了ワールド座標を設定
 	//プレイヤーの初期位を回質店
 	m_stageStartX = 100.0;
@@ -27,6 +31,14 @@ TutorialStage::TutorialStage()
 	last_point = Vec2(Scene::Width() / 2 - 445.0/*1085.0*/, Scene::Height() / 2 - 50.0);
 	gaugeStarted = false;
 	gaugeStartTime = 0.0;
+
+	Loding_image = TextureAsset(U"Loading_image");
+
+	run_animation = LoadDivGraph(U"Player Run", Size(288, 45));
+	runAnimationFrame = 0;
+	runAnimationTime = 0.0;
+	transition = false;
+	glowPos = Vec2(Scene::Width() / 2, Scene::Height() / 2);
 
 	initialize();
 }
@@ -106,17 +118,17 @@ void TutorialStage::initialize()
 	////text
 	helpTexts =
 	{
-		U"ようこそ『森の影』へ！\nこのゲームは、敵を倒しながら成長し、森の奥にいるボスに挑むアクションゲームです。",
-        U"ボスを倒すとステージクリア！\nクリアまでにかかった時間に応じてランクが決まります。",
-        U"左スティックを左右に倒すと、キャラが移動します。\nまずは動いてみましょう！",
-        U"Aボタンでジャンプできます。\n敵を飛び越えたり、攻撃を避けたりするのに使います。",
-        U"Xボタンで攻撃ができます。\n敵に近づいて、実際に攻撃してみましょう！",
-        U"Bボタンを押すと回避攻撃！\n素早く移動しながら攻撃できます。\n使ったあとは少しの間使えなくなります。",
-        U"ジャンプ中にXボタンを押すと、空中攻撃ができます。\n空を飛んでいる敵にも当てられます。",
-        U"ジャンプ中にBボタンを押すと、空中回避ができます。\n敵の攻撃をすり抜けながら反撃するチャンス！\nこちらも使ったあと少し待つ必要があります。",
-        U"敵を倒すとバフアイテムが出てくることがあります。\n・赤：攻撃力アップ（DamageUp）\n・青：移動速度アップ（SpeedUp）\n近づくだけで自動で拾えます。",
-        U"画面左上に注目！\nオレンジのゲージがHP、隣の数字が経過時間です。\nタイムはステージクリア後のランクに関係しています。"
-
+		U"ようこそ『森の影』へ。\n敵を倒して強化し、森のボスを目指すアクションゲームです。",
+		U"ボスを倒すことでステージクリアとなります。\nクリアタイムに応じてランクが表示されます。",
+		U"左スティックを左右に倒すと、プレイヤーが移動します。\n実際に動いてみましょう。",
+		U"Aボタンでジャンプできます。\n敵を飛び越えたり、攻撃を避けたりできます。",
+		U"Xボタンで攻撃します。\n敵に接近して攻撃してみましょう。",
+		U"Bボタンで回避攻撃ができます。\n移動しながら攻撃でき、敵をすり抜けることも可能です。\n使用後、再度使えるまで時間がかかります。",
+		U"ジャンプ中にXボタンを押すと、空中攻撃ができます。\n空中の敵や高い位置にも攻撃が届きます。",
+		U"ジャンプ中にBボタンを押すと、空中回避ができます。\n移動しながら攻撃でき、敵をすり抜けることも可能です。\n使用後、再度使えるまで時間がかかります。",
+		U"敵を倒すと、バフアイテムが出現します。\n・赤いアイテム：攻撃力が上昇（DamageUp）\n・青いアイテム：移動速度が上昇（SpeedUp）\n近づくと獲得できます。",
+		U"画面左上：現在のHP(オレンジ色のゲージ) \n画面左上：ステージ開始時からの経過タイム \nステージクリア後、このタイムに応じてランクが表示されます。",
+		U"右へ進むと、いよいよ本編が始まります。\nあなたの力で森の影に挑みましょう。"
 	};
 
 	for (const auto& section : helpTexts)
@@ -171,6 +183,14 @@ void TutorialStage::update()
 		{
 			hitBox->destroy();
 		}
+
+		if (Wall* wall = dynamic_cast<Wall*>(object))
+		{
+			if (transition)
+			{
+				wall->getBody().setPos(Vec2(Scene::Width() + 100.0, 500.0));
+			}
+		}
 	}
 
 	// 敵召喚
@@ -211,7 +231,12 @@ void TutorialStage::update()
 		{
 			sceneData().current_stage = 1;
 			last_point.x = 1085.0;
-			sceneChange(SceneState::Game, 1.0s);
+			transition = true;
+			// 遷移条件
+			if (player->getBody().getPos().x >= 1290.0)
+			{
+				sceneChange(SceneState::Game, 1.0s);
+			}
 		}
 		else
 		{
@@ -242,6 +267,17 @@ void TutorialStage::draw() const
 #endif
 
 	Stage::draw();
+
+	if (transition)
+	{
+		const double glowAlpha = 0.5 + 0.5 * Periodic::Sine0_1(1.0); // 点滅 (0.5〜1.0)
+		const int glowWidth = 70.0; // 右端から100pxの光
+
+		// 画面右端に横グラデーション（左：透明 → 右：光る黄色）
+		Rect{ Scene::Width() - glowWidth, 0, glowWidth, Scene::Height() }
+			.draw(Arg::left = ColorF(1.0, 1.0, 0.9, 0.0),  // 左端：透明
+				  Arg::right = ColorF(1.0, 1.0, 0.5, glowAlpha));  // 右端：点滅する黄色
+	}
 
 	//四角形描画
 	RoundRect{ Arg::center(Scene::Width() / 2, Scene::Height() / 2 - 135.0), 900, 170, 10 }.draw(ColorF{ Palette::Black, 0.6});

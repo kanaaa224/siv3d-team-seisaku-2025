@@ -36,6 +36,9 @@ private:
 	bool gaugeStarted;     // ゲージ開始フラグ
 	double gaugeStartTime;
 
+	bool transition;
+	Vec2 glowPos;
+
 private:
 	void initialize();
 
