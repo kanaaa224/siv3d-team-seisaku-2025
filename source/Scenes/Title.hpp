@@ -14,6 +14,9 @@ public:
 	void draw() const override;
 
 private:
+	bool waitInput;
+	bool doOneceTimeOutFlg;
+
 	bool debugFlg;
 
 	RoundRect m_startButton{ Arg::center(640, 400), 300, 60, 8 };
@@ -45,6 +48,21 @@ private:
 
 	void createLeaf();
 	double createLeaf_ct;
+
+	//popup window//
+	bool showPopup;
+	RoundRect m_tutorialButton{ Arg::center(535, 420), 150, 60, 8 };
+	RoundRect m_skipButton{ Arg::center(740, 420), 150, 60, 8 };
+	RoundRect m_backButton{ Arg::center(900, 200), 60, 60, 8 };
+
+	Transition m_tutorialTransition{ 0.2s, 0.2s };
+	Transition m_skipTransition{ 0.2s, 0.2s };
+	Transition m_backTransition{ 0.2s, 0.2s };
+
+	//0..play 1..skip 2..back
+	int m_selected_PopupButtonIndex;
+	int old_m_selected_PopupButtonIndex;
+	void popupWindowUpdate();
 
 	//****IMG****//
 	//backGround
