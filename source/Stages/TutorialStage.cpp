@@ -58,6 +58,7 @@ void TutorialStage::initialize()
 	{
 		Scene::SetBackground(ColorF(0.1));
 
+
 		double elapsed = Scene::Time() - startTime;
 		int dotCount = static_cast<int>(elapsed * 3) % 4; // 0,1,2,3
 
@@ -67,14 +68,16 @@ void TutorialStage::initialize()
 			dots += U".";
 		}
 
-		//アニメーションさせたやつ
-		font(U"Now Loading").draw(100, 100, Palette::White);
-		font(dots).draw(285, 100, Palette::White);
-
+		//ランダムにメッセージ
 		font(randomMessage).draw(100, 150, Palette::Gray);
 
-		//5秒以上経ったら抜ける
-		if (elapsed > 5.0 && !shownOnce)
+		//アニメーションさえるやつ
+		const Vec2 basePos = Vec2{ Scene::Width() - 260, Scene::Height() - 60 };
+		font(U"Now Loading").draw(basePos, Palette::White);
+		font(dots).draw(basePos + Vec2{ 185, 0 }, Palette::White);
+
+		//4秒以上経ったら抜ける
+		if (elapsed > 4.0 && !shownOnce)
 		{
 			shownOnce = true;
 			break;
