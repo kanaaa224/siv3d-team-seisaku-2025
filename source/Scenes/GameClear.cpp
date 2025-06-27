@@ -25,17 +25,17 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	ClearTime = getData().clearTime;
 
 	//ランク付け
-	if (ClearTime <= 55.0) {
+	if (ClearTime <= 70.0) {
 		rank = U"S";
 		rankColor = ColorF{ Palette::Gold };
 		rankSize = RANK_SIZE + 2000;
 	}
-	else if (ClearTime >= 56.0 && ClearTime <= 70.0) {
+	else if (ClearTime >= 71.0 && ClearTime <= 100.0) {
 		rank = U"A";
 		rankColor = ColorF{ Palette::Red };
 		rankSize = RANK_SIZE + 2000;
 	}
-	else if (ClearTime >= 71.0 && ClearTime <= 90.0) {
+	else if (ClearTime >= 101.0 && ClearTime <= 150.0) {
 		rank = U"B";
 		rankColor = ColorF{ Palette::Blue };
 		rankSize = RANK_SIZE + 2000;
