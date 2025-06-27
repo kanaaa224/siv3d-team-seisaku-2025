@@ -132,13 +132,10 @@ void TutorialStage::initialize()
 	}
 
 	isLoading = false; // 読み込み完了
-<<<<<<< HEAD
 	autoSkipTimer.start();
-
 	
-=======
 	//autoSkipTimer.start();
->>>>>>> 4ce79f8a8720ce0a9533e614258d20bfa210968a
+
 }
 
 void TutorialStage::update()
