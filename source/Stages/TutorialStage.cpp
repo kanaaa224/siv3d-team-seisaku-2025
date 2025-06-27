@@ -58,7 +58,6 @@ void TutorialStage::initialize()
 		U"キノコからのドロップ品は攻撃力UP！",
 		U"コウモリからのドロップ品はスピードUP！",
 		U"コウモリにはジャンプ攻撃が有効だ！",
-		U"バフを集めて強化！"
 	};
 
 	String randomMessage = messages.choice();
