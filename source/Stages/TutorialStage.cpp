@@ -53,7 +53,12 @@ void TutorialStage::initialize()
 	
 	Scene::SetBackground(ColorF{ 0.0 });
 
-	Font font(30);
+	//ランダムメッセージ用
+	Font messageFont(50);
+
+	
+	Font loadingFont(30);
+
 	Array<String> messages = {
 		U"キノコからのドロップ品は攻撃力UP！",
 		U"コウモリからのドロップ品はスピードUP！",
@@ -81,12 +86,13 @@ void TutorialStage::initialize()
 		}
 
 		//ランダムにメッセージ
-		font(randomMessage).draw(100, 150, Palette::Gray);
+		messageFont(randomMessage).drawAt(Scene::Center(), ColorF{117/255.0,184/255.0,128/255.0});
 
 		//アニメーションさえるやつ
 		const Vec2 basePos = Vec2{ Scene::Width() - 260, Scene::Height() - 60 };
-		font(U"Now Loading").draw(basePos, Palette::White);
-		font(dots).draw(basePos + Vec2{ 185, 0 }, Palette::White);
+		loadingFont(U"Now Loading").draw(basePos, Palette::White);
+		loadingFont(dots).draw(basePos + Vec2{ 185, 0 }, Palette::White);
+
 
 		//抜ける
 		if (elapsed > 2.5 && !shownOnce)
@@ -319,11 +325,11 @@ void TutorialStage::draw() const
 	//説明文描画
 	FontAsset(U"TitleFont")(helpTexts[currentTextIndex]).drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),28, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 135.0));
 
-	// START SKIP 点滅表示
-	double blinkAlpha = Periodic::Square0_1(1.0); // カクカク点滅
-	// double blinkAlpha = Periodic::Sine0_1(1.0); // フェード点滅にしたい場合はこちら
-	ColorF blinkColor{ 1.0, 1.0, 1.0, blinkAlpha };
-	FontAsset(U"TitleFont")(U"START SKIP").drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),	23, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 320.0), blinkColor);
+	//// START SKIP 点滅表示
+	//double blinkAlpha = Periodic::Square0_1(1.0); // カクカク点滅
+	//// double blinkAlpha = Periodic::Sine0_1(1.0); // フェード点滅にしたい場合はこちら
+	//ColorF blinkColor{ 1.0, 1.0, 1.0, blinkAlpha };
+	//FontAsset(U"TitleFont")(U"START SKIP").drawAt(TextStyle::OutlineShadow(0.1, ColorF{ 0.1, 0.1, 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),	23, Vec2(Scene::Width() / 2, Scene::Height() / 2 - 320.0), blinkColor);
 }
 
 
