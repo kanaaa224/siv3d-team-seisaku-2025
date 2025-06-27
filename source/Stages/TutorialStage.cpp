@@ -88,8 +88,8 @@ void TutorialStage::initialize()
 		font(U"Now Loading").draw(basePos, Palette::White);
 		font(dots).draw(basePos + Vec2{ 185, 0 }, Palette::White);
 
-		//4秒以上経ったら抜ける
-		if (elapsed > 4.0 && !shownOnce)
+		//抜ける
+		if (elapsed > 2.5 && !shownOnce)
 		{
 			shownOnce = true;
 			break;
