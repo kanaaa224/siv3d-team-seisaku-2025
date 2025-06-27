@@ -24,7 +24,6 @@ Vaillant::Vaillant(P2World& world, const Vec2& position) :
 	hostility (false),
 	hostiled  (false),
 	damaged   (false),
-	jumped    (false),
 	direction (false),
 
 	die_executed    (false),
@@ -266,7 +265,7 @@ void Vaillant::update()
 	{
 		distance = position.x - player_position.x;
 
-		if (!jumped)
+		if (jumped == Vec2{ 0, 0 })
 		{
 			direction = (distance > 100) ? true : (distance < -100) ? false : direction;
 
@@ -275,7 +274,7 @@ void Vaillant::update()
 
 		distance = Abs(distance);
 
-		if (!jumped && InRange(distance, 100.0, 700.0))
+		if (jumped == Vec2{ 0, 0 } && InRange(distance, 100.0, 700.0))
 		{
 			return attack(
 				InRange(distance, 100.0, 150.0) ? Random(0, 3) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
@@ -285,7 +284,7 @@ void Vaillant::update()
 			);
 		}
 
-		if (!jumped && distance < 100 && not InRange(body.getVelocity().x, -50.0, 50.0) && !forbid_jump/* || InRange(distance, -1.0, 1.0)*/)
+		if (jumped == Vec2{ 0, 0 } && distance < 100 && not InRange(body.getVelocity().x, -50.0, 50.0) && !forbid_jump/* || InRange(distance, -1.0, 1.0)*/)
 		{
 			AudioAsset(U"Vaillant Jump").playOneShot();
 
@@ -299,10 +298,15 @@ void Vaillant::update()
 			spriteAnimator.show();
 			spriteAnimator.play();
 
-			jumped = true;
+			jumped = position;
 		}
 
-		if (InRange(body.getVelocity().y, -1.0, 1.0) && position.y > start_position.y) jumped = false;
+		if (InRange(body.getVelocity().y, -1.0, 1.0) && position.y > start_position.y)
+		{
+			if (position.distanceFrom(jumped) < 100) return attack(VaillantAttackType::Teleport);
+
+			jumped = Vec2{ 0, 0 };
+		}
 	}
 
 	state = VaillantState::Idle;
@@ -560,7 +564,7 @@ void Vaillant::onHit(ObjectBase& object)
 				player->getplayerstate() != ePlayerState::jump_attack &&
 				player->getplayerstate() != ePlayerState::jump_avoidance)
 			{
-				if (!damaged) player->applyDamage(jumped ? 5.0f : 10.0f);
+				if (!damaged) player->applyDamage(jumped != Vec2{ 0, 0 } ? 5.0f : 10.0f);
 
 				object.getBody().applyLinearImpulse(object.getBody().getPos().x < position.x ? Vec2{ -50, 0 } : Vec2{ 50, 0 });
 			}
