@@ -29,7 +29,9 @@ void Stage1::initialize()
 	AudioAsset(U"Title_BGM").stop();
 	AudioAsset(U"tutorial1_BGM").stop();
 	AudioAsset(U"Battle_BGM").setVolume(0.7);
+	AudioAsset(U"Battle_BGM").setLoop(true);
 	AudioAsset(U"Battle_BGM").play();
+
 
 	// ステージの開始・終了ワールド座標を設定
 	//プレイヤーの初期位を回質店
