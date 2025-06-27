@@ -86,4 +86,7 @@ private:
 	Confetti confetti_Right{ Vec2(Scene::Size().x - 80.0,Scene::Size().y - 100), 1.8, sin(60)};
 	Confetti confetti_Left{ Vec2(80.0,Scene::Size().y - 100), 1.8, sin(-60)};
 	bool doOnesConfettiFlg;
+
+	bool hasPlayedKazeSE; //seflag
+	Stopwatch timer{ StartImmediately::Yes }; //タイマースイッチ
 };

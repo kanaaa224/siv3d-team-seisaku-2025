@@ -14,9 +14,9 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	score_fream = TextureAsset(U"Score Frame");
 
 	AudioAsset(U"End_BGM").setVolume(0.3);
-	AudioAsset(U"1_SE").setVolume(0.3);
-	AudioAsset(U"kirakira_SE").setVolume(0.3);
-	AudioAsset(U"kaze_SE").setVolume(0.3);
+	AudioAsset(U"kirakira_SE").setVolume(0.5);
+	AudioAsset(U"kurakka_SE").setVolume(0.1);
+	AudioAsset(U"kaze_SE").setVolume(20.0);
 	AudioAsset(U"Battle_BGM").stop();
 	AudioAsset(U"End_BGM").play();
 	AudioAsset(U"kettei_SE").setVolume(1.0);
@@ -67,6 +67,9 @@ GameClear::GameClear(const InitData& init) : IScene{ init }
 	createSmokeFlg = false;
 
 	doOnesConfettiFlg = false;
+
+	hasPlayedKazeSE = false; //seflag
+
 }
 
 void GameClear::update()
@@ -167,6 +170,15 @@ void GameClear::update()
 		rankAnime();
 	}
 
+	// 5秒後に一度だけ風SEを再生
+	if (!hasPlayedKazeSE && timer.sF() > 3.5)
+	{
+		AudioAsset(U"kaze_SE").play();
+		hasPlayedKazeSE = true; // 再生済みフラグを立てる
+	}
+
+
+
 #ifdef _DEBUG
 	if (KeyR.pressed() && Key1.pressed()) {
 		Stage::GetInstance()->createObject<Smoke>(Vec2{ 100,100 });
@@ -192,7 +204,7 @@ void GameClear::draw() const
 	if (rank == U"S") {
 		confetti_Right.draw();//紙吹雪
 		confetti_Left.draw();
-		AudioAsset(U"1_SE").play();
+		AudioAsset(U"kurakka_SE").play();
 	}
 	//スコア描画//
 	FontAsset(U"Dot_16")(U"Time: {:.2f} 秒"_fmt(drawClearTime))
@@ -208,6 +220,8 @@ void GameClear::draw() const
 			FontAsset(U"Dot_16")(rank)
 				.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }),
 						rankSize, Vec2{ RANK_POS_X,RANK_POS_Y }, rankColor);
+			AudioAsset(U"kirakira_SE").play();
+			//AudioAsset(U"kaze_SE").play();
 		}
 	}
 
@@ -237,7 +251,7 @@ void GameClear::draw() const
 #ifdef _DEBUG
 
 	Print << U"クリアスコア描画" << ClearTime;
-
+	//Print << U"Time: {:.2f}"_fmt(timer.sF());
 #endif // DEBUG
 
 }
