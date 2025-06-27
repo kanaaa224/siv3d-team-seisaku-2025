@@ -36,7 +36,7 @@ void CreditRoll::update()
 	}
 
 	//一番最後の文字が画面左端を通過したら終了
-	if (m_scrollX < -2100) //後で変える
+	if (m_scrollX < -2600) //後で変える
 	{
 		AudioAsset(U"Credit_BGM").stop();
 		//changeScene(SceneState::Title, 2.0s);  //タイトルシーンに戻る
@@ -61,7 +61,10 @@ void CreditRoll::draw() const
 	font(U"SE").draw(m_scrollX + 1520, centerY - 120);
 	font(U"Audiostock").draw(m_scrollX + 1420, centerY-30);
 	font(U"効果音ラボ").draw(m_scrollX + 1440, centerY+30);
-	font(U"Thank You For Playing!").draw(m_scrollX + 2500, centerY);
+	font(U"UI").draw(m_scrollX + 2010, centerY - 120);
+	font(U"UTILITY-LABO").draw(m_scrollX + 1870, centerY - 30);
+	font(U"DOT ILLUST").draw(m_scrollX + 1890, centerY + 30);
+	font(U"Thank You For Playing!").draw(m_scrollX + 3000, centerY);
 
 
 		//左下にプレイヤー表示
