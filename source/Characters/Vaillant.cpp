@@ -279,8 +279,8 @@ void Vaillant::update()
 			return attack(
 				InRange(distance, 100.0, 150.0) ? Random(0, 1) ? VaillantAttackType::Teleport : VaillantAttackType::Earthquake :
 				InRange(distance, 150.0, 400.0) ? Random(0, 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
-				InRange(distance, 450.0, 600.0) ? static_cast<VaillantAttackType>(hp < max_hp / 1.25 ? hp < max_hp / 2 ? Random(2, 3) : Random(1, 2) : Random(0, 1)) :
-				InRange(distance, 600.0, 700.0) ? hp < max_hp / 1.25 ? VaillantAttackType::Rush : VaillantAttackType::Teleport : attack_type
+				InRange(distance, 450.0, 600.0) ? static_cast<VaillantAttackType>(hp < max_hp * 0.75 ? hp < max_hp * 0.5 ? Random(2, 3) : Random(1, 2) : Random(0, 1)) :
+				InRange(distance, 600.0, 700.0) ? hp < max_hp * 0.9 ? VaillantAttackType::Rush : VaillantAttackType::Teleport : attack_type
 			);
 		}
 
@@ -589,7 +589,7 @@ void Vaillant::onHit(ObjectBase& object)
 			AudioAsset(U"Vaillant Clash").playOneShot();
 
 			SetTimeout([this] { if (state >= VaillantState::Death) return; attack_state = VaillantAttackState::Ends; }, 1000ms);
-			SetTimeout([this] { if (state >= VaillantState::Death) return; state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, hp < max_hp / 3.5 ? 2500ms : 5000ms);
+			SetTimeout([this] { if (state >= VaillantState::Death) return; state = VaillantState::Idle; attack_state = VaillantAttackState::Preparation; }, hp < max_hp * 0.35 ? 2500ms : 5000ms);
 
 			applyDamage(0.0f);
 
