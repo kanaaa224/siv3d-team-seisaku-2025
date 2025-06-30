@@ -69,7 +69,9 @@ void HitBox::onHit(ObjectBase& object)
 		// ボス1が出したヒットボックスだったとき
 		if (Vaillant* vaillant = dynamic_cast<Vaillant*>(owner))
 		{
-			if (player->getplayerstate() != ePlayerState::avoidance &&
+			if (vaillant->getState() < VaillantState::Death &&
+
+				player->getplayerstate() != ePlayerState::avoidance &&
 				player->getplayerstate() != ePlayerState::jump_attack &&
 				player->getplayerstate() != ePlayerState::jump_avoidance)
 			{
@@ -105,7 +107,8 @@ void HitBox::onHit(ObjectBase& object)
 		if (Player* player = dynamic_cast<Player*>(owner))
 		{
 			if (!(vaillant->getState()       == VaillantState::Attack &&
-				  vaillant->getAttackType()  == VaillantAttackType::Teleport))
+				  vaillant->getAttackType()  == VaillantAttackType::Teleport) &&
+				  vaillant->getState()        < VaillantState::Death)
 			{
 				vaillant->applyDamage(player->GetPlayerAttackDamage());
 
