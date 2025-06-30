@@ -86,6 +86,10 @@ void Slime::update()
 	mirrored = body.getPos().x < player_position.x;
 
 	body.applyLinearImpulse({ mirrored ? SLIME_WALK_POWER : -SLIME_WALK_POWER, 0 });
+
+	//double distance = body.getPos().distanceFrom(player_position);
+
+	//if (InRange(distance, 195.0, 205.0) && InRange(Abs(body.getPos().y - player_position.y), 0.0, 50.0)) body.applyLinearImpulse({ 0, -SLIME_JUMP_POWER });
 }
 
 void Slime::draw() const
