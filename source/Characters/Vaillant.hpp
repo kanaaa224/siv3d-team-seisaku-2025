@@ -24,7 +24,8 @@ enum class VaillantAttackType
 	Teleport,   // 瞬間移動
 	Slime,      // スライム
 	Rush,       // 突進
-	Tentacles   // 触手
+	Tentacles,  // 触手
+	CreepingUp  // 忍び寄る
 };
 
 enum class VaillantAttackState

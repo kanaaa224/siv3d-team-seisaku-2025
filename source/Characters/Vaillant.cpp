@@ -198,6 +198,54 @@ void Vaillant::attack(VaillantAttackType type)
 
 		state = VaillantState::Idle;
 	}
+
+	if (attack_type == VaillantAttackType::CreepingUp)
+	{
+		mirrored = direction = position.x > player_position.x;
+	}
+
+	if (attack_type == VaillantAttackType::CreepingUp && attack_state == VaillantAttackState::Preparation)
+	{
+		body.setVelocity({ 0, 0 });
+
+		SetTimeout([this] {
+			if (state >= VaillantState::Death) return;
+
+			attack_state = VaillantAttackState::Attacking;
+
+			attack_frame = frameTime;
+		}, 1000ms);
+
+		SetTimeout([this] {
+			if (state >= VaillantState::Death) return;
+
+			attack_state = VaillantAttackState::Attacked;
+
+			attack_frame = frameTime;
+		}, hp < max_hp * 0.5 ? 2500ms : 3500ms);
+
+		SetTimeout([this] {
+			if (state >= VaillantState::Death) return;
+
+			attack_state = VaillantAttackState::Ends;
+
+			attack_frame = frameTime;
+		}, hp < max_hp * 0.5 ? 3500ms : 4500ms);
+
+		attack_state = VaillantAttackState::Start;
+	}
+
+	if (attack_type == VaillantAttackType::CreepingUp && attack_state == VaillantAttackState::Attacking)
+	{
+		body.applyLinearImpulse(((direction ? Vec2{ -VAILLANT_WALK_POWER, 0 } : Vec2{ VAILLANT_WALK_POWER, 0 }) / 1.5)* (240 / Profiler::FPS()));
+	}
+
+	if (attack_type == VaillantAttackType::CreepingUp && attack_state == VaillantAttackState::Ends)
+	{
+		state = VaillantState::Idle;
+
+		attack_state = VaillantAttackState::Preparation;
+	}
 }
 
 void Vaillant::update()
@@ -276,6 +324,8 @@ void Vaillant::update()
 
 		if (jumped == Vec2{ 0, 0 } && InRange(distance, 100.0, 700.0))
 		{
+			if (attack_type != VaillantAttackType::CreepingUp && !Random(0, hp < max_hp * 0.4 ? 5 : 2)) return attack(VaillantAttackType::CreepingUp);
+
 			return attack(
 				InRange(distance, 100.0, 125.0) ? Random(0, 2) ? VaillantAttackType::Earthquake : VaillantAttackType::Teleport :
 				InRange(distance, 125.0, 400.0) ? Random(0, hp < max_hp * 0.5 ? 1 : 3) ? VaillantAttackType::Earthquake : VaillantAttackType::Rush :
@@ -432,6 +482,24 @@ void Vaillant::draw() const
 
 			break;
 		}
+
+		case VaillantAttackType::CreepingUp:
+		{
+			margin = { 86, 81 };
+
+			int marginR = 195;
+
+			frameDuration = 0.085;
+			frameCount = 16;
+
+			currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
+
+			if (not InRange(body.getVelocity().y, -1.0, 1.0) || position.y < start_position.y) currentFrame = 12;
+
+			if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
+
+			break;
+		}
 		}
 
 		break;
@@ -507,6 +575,12 @@ void Vaillant::draw() const
 			if (attack_state == VaillantAttackState::Attacking && position.y > 0) assetName = U"";
 				
 			if (attack_state <= VaillantAttackState::Start) assetName = U"Vaillant Idle";
+			break;
+
+		case VaillantAttackType::CreepingUp:
+			assetName = U"Vaillant Idle";
+
+			if (attack_state == VaillantAttackState::Attacking) assetName = U"Vaillant Walk";
 			break;
 		}
 
