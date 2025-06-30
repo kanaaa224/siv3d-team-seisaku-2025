@@ -1,6 +1,6 @@
 ﻿# pragma once
 
-# include "Base.hpp"
+# include "CharacterBase.hpp"
 # include "../Effects/SpriteAnimator.hpp"
 
 # define VAILLANT_SIZE { 150, 200 }

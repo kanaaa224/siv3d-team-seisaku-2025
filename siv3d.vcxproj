@@ -115,45 +115,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Effects\Confetti.cpp" />
-    <ClCompile Include="source\Effects\Smoke.cpp" />
-    <ClCompile Include="source\Objects\Leaf.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Effect\BloodImpactEffect.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Effect\SmallHitEffect.cpp" />
-    <ClCompile Include="source\Scenes\GameClear.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Effect\BuffSpawnEffect.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Effect\CloudOfDustEffect.cpp" />
-    <ClCompile Include="source\Characters\Enemies\EnemyBase.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Flot\Flot.cpp" />
-    <ClCompile Include="source\Characters\Enemies\Scarerun\Scarerun.cpp" />
-    <ClCompile Include="source\Characters\Player.cpp" />
-    <ClCompile Include="source\Characters\Slime.cpp" />
-    <ClCompile Include="source\Characters\Tentacles.cpp" />
-    <ClCompile Include="source\Characters\Vaillant.cpp" />
-    <ClCompile Include="source\Effects\SpriteAnimator.cpp" />
-    <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\Objects\Ammo.cpp" />
-    <ClCompile Include="source\Objects\Base.cpp" />
-    <ClCompile Include="source\Objects\Buff\Attack\AttackPowerBuff.cpp" />
-    <ClCompile Include="source\Objects\Buff\BuffBase.cpp" />
-    <ClCompile Include="source\Objects\Buff\MoveSpeed\MoveSpeedBuff.cpp" />
-    <ClCompile Include="source\Objects\Ground.cpp" />
-    <ClCompile Include="source\Objects\HitBox.cpp" />
-    <ClCompile Include="source\Objects\StageBackground.cpp" />
-    <ClCompile Include="source\Objects\Wall.cpp" />
-    <ClCompile Include="source\Scenes\CreditRoll.cpp" />
-    <ClCompile Include="source\Scenes\Game.cpp" />
-    <ClCompile Include="source\Scenes\GameOver.cpp" />
-    <ClCompile Include="source\Scenes\Title.cpp" />
-    <ClCompile Include="source\Stages\TutorialStage.cpp" />
-    <ClCompile Include="source\Stage.cpp" />
-    <ClCompile Include="source\Stages\1.cpp" />
-    <ClCompile Include="source\Stages\DebugBoss.cpp" />
-    <ClCompile Include="source\UI\EnemyBoss.cpp" />
-    <ClCompile Include="source\UI\PlayerHUD.cpp" />
-    <ClCompile Include="source\Utils\CustomImageLoader.cpp" />
-    <ClCompile Include="source\Effects\Star.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -363,48 +324,6 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Effects\Confetti.h" />
-    <ClInclude Include="source\Effects\Smoke.h" />
-    <ClInclude Include="source\Objects\Leaf.h" />
-    <ClInclude Include="source\Characters\Enemies\Effect\BloodImpactEffect.h" />
-    <ClInclude Include="source\Characters\Enemies\Effect\SmallHitEffect.h" />
-    <ClInclude Include="source\Scenes\GameClear.hpp" />
-    <ClInclude Include="source\Characters\Enemies\Effect\BuffSpawnEffect.h" />
-    <ClInclude Include="source\Characters\Enemies\Effect\ExclamationMarkEffect.h" />
-    <ClInclude Include="source\Characters\Base.hpp" />
-    <ClInclude Include="source\Characters\Enemies\Effect\CloudOfDustEffect.h" />
-    <ClInclude Include="source\Characters\Enemies\EnemyBase.hpp" />
-    <ClInclude Include="source\Characters\Enemies\Flot\Flot.hpp" />
-    <ClInclude Include="source\Characters\Enemies\Scarerun\Scarerun.hpp" />
-    <ClInclude Include="source\Characters\Player.hpp" />
-    <ClInclude Include="source\Characters\Slime.hpp" />
-    <ClInclude Include="source\Characters\Tentacles.hpp" />
-    <ClInclude Include="source\Characters\Vaillant.hpp" />
-    <ClInclude Include="source\Common.hpp" />
-    <ClInclude Include="source\Effects\SpriteAnimator.hpp" />
-    <ClInclude Include="source\Objects\Ammo.hpp" />
-    <ClInclude Include="source\Objects\Base.hpp" />
-    <ClInclude Include="source\Objects\Buff\Attack\AttackPowerBuff.h" />
-    <ClInclude Include="source\Objects\Buff\BuffBase.hpp" />
-    <ClInclude Include="source\Objects\Buff\MoveSpeed\MoveSpeedBuff.h" />
-    <ClInclude Include="source\Objects\Ground.hpp" />
-    <ClInclude Include="source\Objects\HitBox.hpp" />
-    <ClInclude Include="source\Objects\StageBackground.hpp" />
-    <ClInclude Include="source\Objects\Wall.hpp" />
-    <ClInclude Include="source\Scenes\CreditRoll.h" />
-    <ClInclude Include="source\Scenes\Game.hpp" />
-    <ClInclude Include="source\Scenes\GameOver.h" />
-    <ClInclude Include="source\Scenes\Title.hpp" />
-    <ClInclude Include="source\Stages\TutorialStage.hpp" />
-    <ClInclude Include="source\Stage.hpp" />
-    <ClInclude Include="source\Stages\1.hpp" />
-    <ClInclude Include="source\Stages\DebugBoss.hpp" />
-    <ClInclude Include="source\UI\EnemyBoss.hpp" />
-    <ClInclude Include="source\UI\HPBar.hpp" />
-    <ClInclude Include="source\UI\PlayerHUD.hpp" />
-    <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
-    <ClInclude Include="source\Utils\Timer.hpp" />
-    <ClInclude Include="source\Effects\Star.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

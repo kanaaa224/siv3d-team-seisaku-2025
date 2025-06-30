@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../Base.hpp"//親クラス
+#include "../ObjectBase.hpp"//親クラス
 
 #define GRAVITY 10.0
 #define IMG_SIZE_X 19

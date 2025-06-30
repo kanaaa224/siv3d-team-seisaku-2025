@@ -1,6 +1,6 @@
 ﻿# include "Player.hpp"
 # include "../Utils/CustomImageLoader.hpp"
-# include "../Stage.hpp"
+# include "../Stages/Stage.hpp"
 # include "../Objects/HitBox.hpp"
 # include "../Characters/Enemies/Scarerun/Scarerun.hpp"
 # include "../Objects/Ground.hpp"

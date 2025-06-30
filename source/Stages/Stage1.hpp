@@ -1,6 +1,6 @@
 ﻿# pragma once
 
-# include "../Stage.hpp"
+# include "Stage.hpp"
 
 # define STAGE1_WIDTH 5740
 

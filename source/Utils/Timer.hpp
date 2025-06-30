@@ -1,4 +1,6 @@
-﻿# pragma once
+﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-scroll" */
+
+# pragma once
 
 # include <Siv3D.hpp>
 # include <chrono>

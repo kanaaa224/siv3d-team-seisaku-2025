@@ -2,7 +2,7 @@
 #include "../UI/PlayerHUD.hpp"
 
 //Stage
-#include "../Stages/1.hpp"
+#include "../Stages/Stage.hpp"
 //Star
 #include "../Effects/Star.h"
 //Smoke

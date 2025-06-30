@@ -1,6 +1,8 @@
-﻿# pragma once
+﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-scroll" */
 
-# include "Objects/Base.hpp"
+# pragma once
+
+# include "../Objects/ObjectBase.hpp"
 
 class Stage
 {

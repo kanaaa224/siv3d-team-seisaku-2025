@@ -3,7 +3,7 @@
 //Player
 #include "../Player.hpp"
 //Stage
-#include "../../Stages/1.hpp"
+#include "../../Stages/Stage1.hpp"
 //Buff
 #include "../../Objects/Buff/Attack/AttackPowerBuff.h"
 #include "../../Objects/Buff/MoveSpeed/MoveSpeedBuff.h"

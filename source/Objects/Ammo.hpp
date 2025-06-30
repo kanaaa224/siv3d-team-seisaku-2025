@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 //親クラス
-#include "Base.hpp"
+#include "ObjectBase.hpp"
 
 #define _LIFE_TIME_ 3.0//生成されて[_LIFE_TIME_]秒後削除
 

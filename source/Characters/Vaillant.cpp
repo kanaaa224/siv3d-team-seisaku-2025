@@ -2,7 +2,7 @@
 # include "Slime.hpp"
 # include "Tentacles.hpp"
 # include "Player.hpp"
-# include "../Stage.hpp"
+# include "../Stages/Stage.hpp"
 # include "../Utils/Timer.hpp"
 # include "../Objects/HitBox.hpp"
 # include "../Objects/Wall.hpp"

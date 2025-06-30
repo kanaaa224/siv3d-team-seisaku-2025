@@ -1,6 +1,6 @@
 ﻿# pragma once
 
-# include "Base.hpp"
+# include "CharacterBase.hpp"
 # include "../Effects/SpriteAnimator.hpp"
 
 enum ePlayerState

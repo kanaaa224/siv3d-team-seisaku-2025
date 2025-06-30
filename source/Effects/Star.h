@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../Objects/Base.hpp"
+#include "../Objects/ObjectBase.hpp"
 
 class Star : public ObjectBase
 {

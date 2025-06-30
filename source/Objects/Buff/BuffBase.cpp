@@ -2,7 +2,7 @@
 //Player
 #include "../../Characters/Player.hpp"
 //Stage
-#include "../../Stages/1.hpp"
+#include "../../Stages/Stage1.hpp"
 //effect
 #include "../../Characters/Enemies/Effect/BuffSpawnEffect.h"
 

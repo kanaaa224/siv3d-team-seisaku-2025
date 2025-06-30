@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 //親クラス
-#include "../../../Objects/Base.hpp"
+#include "../../../Objects/ObjectBase.hpp"
 
 #define IMG_SIZE 32  //縦横32サイズの画像
 #define IMG_RESIZE 50//サイズ変更時の値

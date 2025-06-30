@@ -1,6 +1,6 @@
 ﻿#pragma once
 //親クラス
-#include "../Base.hpp"
+#include "../CharacterBase.hpp"
 //Buffの親クラス
 #include "../../Objects/Buff/BuffBase.hpp"
 //hpBar

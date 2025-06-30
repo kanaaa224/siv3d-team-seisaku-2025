@@ -2,7 +2,7 @@
 //画像の分割読み込み
 #include "../../../Utils/CustomImageLoader.hpp"
 //Stage
-#include "../../../Stages/1.hpp"
+#include "../../../Stages/Stage1.hpp"
 //effect
 #include "../Effect/CloudOfDustEffect.h"
 

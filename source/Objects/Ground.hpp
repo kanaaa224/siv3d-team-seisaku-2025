@@ -1,6 +1,6 @@
 ﻿# pragma once
 
-# include "Base.hpp"
+# include "ObjectBase.hpp"
 
 class Ground : public ObjectBase
 {

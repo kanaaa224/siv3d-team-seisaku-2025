@@ -1,6 +1,6 @@
 ﻿# pragma once
 
-# include "Base.hpp"
+# include "CharacterBase.hpp"
 
 # define TENTACLES_SIZE { 100, 100 }
 # define TENTACLES_MAX_HP 100

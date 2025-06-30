@@ -2,7 +2,7 @@
 
 # pragma once
 
-# include "Base.hpp"
+# include "CharacterBase.hpp"
 
 # define SLIME_MAX_HP 100
 # define SLIME_WALK_POWER 0.75

@@ -3,7 +3,7 @@
 # include "../Utils/CustomImageLoader.hpp"
 
 //Stage
-#include "../Stages/1.hpp"
+#include "../Stages/Stage.hpp"
 //Leaf
 #include "../Objects/Leaf.h"
 //Tiem

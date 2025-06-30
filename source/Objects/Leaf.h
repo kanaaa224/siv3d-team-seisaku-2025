@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Base.hpp"
+#include "ObjectBase.hpp"
 
 #define LEAF_IMG_SIZE 16
 

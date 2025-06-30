@@ -1,4 +1,4 @@
-﻿# include "1.hpp"
+﻿# include "Stage1.hpp"
 # include "../Objects/StageBackground.hpp"
 # include "../Objects/Ground.hpp"
 # include "../Objects/Wall.hpp"

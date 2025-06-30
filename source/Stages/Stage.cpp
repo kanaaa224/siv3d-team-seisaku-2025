@@ -1,4 +1,6 @@
-﻿# include "Stage.hpp"
+﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-scroll" */
+
+# include "Stage.hpp"
 
 Stage::Stage() : stepTime(1.0 / 200.0), accumulatedTime(0.0) {}
 
