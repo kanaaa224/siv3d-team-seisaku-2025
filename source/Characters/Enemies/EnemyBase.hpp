@@ -77,7 +77,7 @@ protected:
 	bool img_flipFlg;                       //画像を左右反転
 
 	TextureRegion hp_frame_img;             //hpバーの後ろ画像
-	const Texture hp_bar_img{ U"../assets/images/ui/hp_bar_front.png" };//hpバーの前画像
+	const Texture hp_bar_img{ TextureAsset(U"Enemy HP Bar") };//hpバーの前画像
 	Vec2 hp_imgSize;                        //hpバーの画像サイズ
 	double hp_rate;
 

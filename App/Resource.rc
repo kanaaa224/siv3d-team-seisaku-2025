@@ -127,8 +127,6 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 //
 //////////////////////////////////////////////////////
 
-
-
 /* examples 
 
 	//
@@ -146,3 +144,160 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 	MYIDENTIFIER_1 FILE "assets/a b c.txt"
 	MYIDENTIFIER_2 FILE "level 1/map.dat"
 */
+
+// Fonts
+Resource(example/font/RocknRoll/RocknRollOne-Regular.ttf)
+Resource(assets/fonts/DotGothic16-Regular.ttf)
+Resource(assets/fonts/Doto-VariableFont_RONDwght.ttf)
+
+// Player
+Resource(assets/images/player/idle/03_idle.png)
+Resource(assets/images/player/run/run_288_45_8.png)
+Resource(assets/images/player/attack1/atk_288_45.png)
+Resource(assets/images/player/jump_attack/jump_attack.png)
+Resource(assets/images/player/roll/roll_288_45_7.png)
+Resource(assets/images/player/idle/01_idle_1.png)
+Resource(assets/images/player/jump_up/jump_up2_2.png)
+Resource(assets/images/player/jump_full/jump_between_1.png)
+Resource(assets/images/player/jump_down/03_jump_down_1.png)
+Resource(assets/images/player/air_attak/air_atk1.png)
+Resource(assets/images/player/take_hit/take_hit_1.png)
+Resource(assets/images/player/death/death_1.png)
+
+// Title
+Resource(assets/images/title/j1.png)
+Resource(assets/images/title/j2.png)
+Resource(assets/images/title/j3.png)
+Resource(assets/images/title/j4.png)
+Resource(assets/images/title/ELR_SpringlLeaf.png)
+
+// End
+Resource(assets/images/end/End4.png)
+
+// Stage
+Resource(assets/images/stage/stage1/forest.png)
+Resource(assets/images/stage/stage1/Background.png)
+
+// Enemy - Scarerun
+Resource(assets/images/enemy/scarerun/idle.png)
+Resource(assets/images/enemy/scarerun/scarerun1.png)
+Resource(assets/images/enemy/scarerun/new/Idle.png)
+Resource(assets/images/enemy/scarerun/new/Attack.png)
+Resource(assets/images/enemy/scarerun/new/Run.png)
+Resource(assets/images/enemy/scarerun/new/TakeHit.png)
+Resource(assets/images/enemy/scarerun/new/Death.png)
+
+// Enemy - Flotte
+Resource(assets/images/enemy/flotte/Flight.png)
+Resource(assets/images/enemy/flotte/Attack.png)
+Resource(assets/images/enemy/flotte/TakeHit.png)
+Resource(assets/images/enemy/flotte/Death.png)
+Resource(assets/images/enemy/flotte/Energyball/EnergyBall.png)
+Resource(assets/images/enemy/flotte/Energyball/energyBallImpact.png)
+
+// Enemy Boss - Vaillant
+Resource(assets/images/enemy_boss/vaillant/idle.png)
+Resource(assets/images/enemy_boss/vaillant/walk.png)
+Resource(assets/images/enemy_boss/vaillant/attack.png)
+Resource(assets/images/enemy_boss/vaillant/death.png)
+Resource(assets/images/enemy_boss/vaillant/attack-2-a.png)
+
+// Buff
+Resource(assets/images/buf/PotionAsset_20_25.png)
+Resource(assets/images/buf/AttackPower.png)
+Resource(assets/images/buf/MoveSpeed.png)
+
+// Effect
+Resource(assets/images/effect/1/01.png)
+Resource(assets/images/effect/1/02.png)
+Resource(assets/images/effect/1/29.png)
+Resource(assets/images/effect/1/35.png)
+Resource(assets/images/effect/1/14.png)
+Resource(assets/images/effect/1/27.png)
+Resource(assets/images/effect/excalimationmark2.png)
+Resource(assets/images/effect/Hit/Effect_SmallHit_1_532x528.png)
+Resource(assets/images/effect/Hit/Effect_SmallHit.png)
+Resource(assets/images/effect/Hit/Effect_BloodImpact_1_69x60.png)
+Resource(assets/images/effect/2/673.png)
+Resource(assets/images/effect/buf/P_DamageUp_UI.png)
+Resource(assets/images/effect/buf/P_SpeedUp_UI.png)
+Resource(assets/images/effect/Star.png)
+Resource(assets/images/effect/Smoke/SmokeVFX2.png)
+
+// UI
+Resource(assets/images/ui/character_frame.png)
+Resource(assets/images/ui/character_icon.png)
+Resource(assets/images/ui/Score.png)
+Resource(assets/images/ui/hp_frame.png)
+Resource(assets/images/ui/hp_bar_back.png)
+Resource(assets/images/ui/hp_bar_front.png)
+Resource(assets/images/ui/timer_frame.png)
+Resource(assets/images/ui/buf_icons/buf_attack_power_up.png)
+Resource(assets/images/ui/buf_frames/frame_attack_power.png)
+Resource(assets/images/ui/buf_icons/buf_Defense_power_up.png)
+Resource(assets/images/ui/buf_frames/frame_Defense_power.png)
+Resource(assets/images/ui/buf_icons/buf_hp_upper_limit_up.png)
+Resource(assets/images/ui/buf_frames/frame_hp_upper_limit.png)
+Resource(assets/images/ui/buf_icons/buf_hp_recovery.png)
+Resource(assets/images/ui/buf_frames/frame_hp_recovery.png)
+Resource(assets/images/ui/buf_icons/buf_movement_speed_up.png)
+Resource(assets/images/ui/buf_frames/frame_movement_speed.png)
+Resource(assets/images/ui/button/short_button_animation1.png)
+Resource(assets/images/ui/x_box_botton/xbox_bigbotton_16_16.png)
+Resource(assets/images/ui/buf_icons/buf_movement_speed_up_skyblue.png)
+
+// Progress UI
+Resource(assets/images/ui/progress/Vaillant_idle_1.png)
+Resource(assets/images/ui/progress/boss_base.png)
+Resource(assets/images/ui/progress/run_288_45_8.png)
+Resource(assets/images/ui/progress/crystal_sphere_black.png)
+Resource(assets/images/ui/progress/crystal_sphere_white.png)
+Resource(assets/images/ui/progress/ishi.png)
+Resource(assets/images/ui/progress/ishi_silver.png)
+Resource(assets/images/ui/progress/BOSS_ui.png)
+
+// Load
+Resource(assets/images/ui/Loading....png)
+Resource(assets/images/enemy/flotte/1.png)
+Resource(assets/images/enemy/scarerun/new/2.png)
+
+// Audio - BGM
+Resource(assets/sounds/BGM/title_BGM.wav)
+Resource(assets/sounds/BGM/end_BGM.wav)
+Resource(assets/sounds/BGM/battle_BGM.wav)
+Resource(assets/sounds/BGM/boss_battle_BGM.wav)
+Resource(assets/sounds/BGM/GameOver_BGM2.wav)
+Resource(assets/sounds/BGM/GameOver_BGM3.wav)
+Resource(assets/sounds/BGM/tutorial_BGM1.wav)
+
+// Audio - Player SE
+Resource(assets/sounds/PlayerSE/attack.wav)
+Resource(assets/sounds/PlayerSE/attack2.wav)
+Resource(assets/sounds/PlayerSE/attack3.wav)
+Resource(assets/sounds/PlayerSE/dies.wav)
+Resource(assets/sounds/PlayerSE/jump.wav)
+Resource(assets/sounds/PlayerSE/run5.wav)
+Resource(assets/sounds/PlayerSE/damage.wav)
+
+// Audio - Enemy SE
+Resource(assets/sounds/EnemySE/EnemyDies.wav)
+Resource(assets/sounds/EnemySE/EnemyDamage.wav)
+Resource(assets/sounds/EnemySE/EnemyAttack.wav)
+Resource(assets/sounds/EnemySE/hakkenn2.wav)
+Resource(assets/sounds/EnemySE/BossRun.wav)
+Resource(assets/sounds/EnemySE/BossDies.wav)
+Resource(assets/sounds/EnemySE/tya-zi.wav)
+Resource(assets/sounds/EnemySE/bakuhatu1.wav)
+Resource(assets/sounds/EnemySE/bakuhatu2.wav)
+Resource(assets/sounds/EnemySE/syunnkannidou1.wav)
+Resource(assets/sounds/EnemySE/syunnkannidou2.wav)
+Resource(assets/sounds/EnemySE/syunnkannidou3.wav)
+Resource(assets/sounds/EnemySE/syunnkannidou4.wav)
+
+// Audio - SE
+Resource(assets/sounds/SE/kettei.wav)
+Resource(assets/sounds/SE/BuffGet.wav)
+Resource(assets/sounds/SE/kamihubuki.wav)
+Resource(assets/sounds/SE/kirakira.wav)
+Resource(assets/sounds/SE/kaze.wav)
+Resource(assets/sounds/SE/kurakka.wav)
