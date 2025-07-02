@@ -1,7 +1,7 @@
 ﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-scroll" */
 
 # include "Slime.hpp"
-# include "../Utils/Timer.hpp"
+# include "../Utils/TimerUtils.hpp"
 
 using namespace TimerUtils;
 using namespace std::chrono_literals;

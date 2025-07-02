@@ -11,15 +11,13 @@
 # include "../UI/EnemyBoss.hpp"
 # include "../Characters/Vaillant.hpp"
 # include "../Characters/Slime.hpp"
-# include "../Utils/Timer.hpp"
+# include "../Utils/TimerUtils.hpp"
 
 using namespace TimerUtils;
 using namespace std::chrono_literals;
 
 Stage1::Stage1()
 {
-	TimerUtils::ClearTasks();
-
 	initialize();
 }
 
@@ -139,14 +137,7 @@ void Stage1::update()
 
 					if (!aaaaa)
 					{
-						std::thread([this]()
-						{
-							std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-
-							sceneChange(SceneState::Clear, 0.5s);
-
-							aaaaa = false;
-						}).detach();
+						SetTimeout([this] { aaaaa = false; sceneChange(SceneState::Clear, 0.5s); }, 5000ms);
 
 						aaaaa = true;
 					}
@@ -202,14 +193,7 @@ void Stage1::update()
 
 			if (!aaaaa)
 			{
-				std::thread([this]()
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-
-					sceneChange(SceneState::GameOver, 0.5s);
-
-					aaaaa = false;
-				}).detach();
+				SetTimeout([this] { aaaaa = false; sceneChange(SceneState::GameOver, 0.5s); }, 3000ms);
 
 				aaaaa = true;
 			}
@@ -258,8 +242,6 @@ void Stage1::update()
 #endif
 
 	camera.update();
-	
-	TimerUtils::Update();
 }
 
 void Stage1::draw() const

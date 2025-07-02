@@ -404,7 +404,7 @@
     <ClInclude Include="source\UI\HPBar.hpp" />
     <ClInclude Include="source\UI\PlayerHUD.hpp" />
     <ClInclude Include="source\Utils\CustomImageLoader.hpp" />
-    <ClInclude Include="source\Utils\Timer.hpp" />
+    <ClInclude Include="source\Utils\TimerUtils.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

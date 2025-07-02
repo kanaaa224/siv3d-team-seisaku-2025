@@ -3,7 +3,7 @@
 # include "Tentacles.hpp"
 # include "Player.hpp"
 # include "../Stages/Stage.hpp"
-# include "../Utils/Timer.hpp"
+# include "../Utils/TimerUtils.hpp"
 # include "../Objects/HitBox.hpp"
 # include "../Objects/Wall.hpp"
 # include "../Objects/Ground.hpp"
@@ -427,7 +427,7 @@ void Vaillant::draw() const
 
 			if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
-			RectF(position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 }).draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
+			RectF{ position + Vec2{ (mirrored ? -size.x / 2 - 400 : size.x / 2), 0 }, SizeF{ 400, 100 } }.draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
 
 			break;
 		}
@@ -447,11 +447,11 @@ void Vaillant::draw() const
 
 			if (currentFrame) margin.x += (marginR + cutoutSize.x) * currentFrame;
 
-			if (attack_state == VaillantAttackState::Start) RectF(position + Vec2{ (mirrored ? -size.x / 2 - Scene::Width() : size.x / 2), 0 }, SizeF{ Scene::Width(), 100}).draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
+			if (attack_state == VaillantAttackState::Start) RectF{ position + Vec2{ (mirrored ? -size.x / 2 - Scene::Width() : size.x / 2), 0 }, SizeF{ Scene::Width(), 100} }.draw(Arg::top(1.0, 0.0, 0.0, 0.0), Arg::bottom(1.0, 0.0, 0.0, 0.2));
 
 			break;
 		}
-				
+
 		case VaillantAttackType::Teleport:
 		{
 			margin = { 86, 81 };
