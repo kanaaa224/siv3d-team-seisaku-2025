@@ -1043,7 +1043,7 @@
     <ClInclude Include="source\Utils\CustomImageLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Utils\Timer.hpp">
+    <ClInclude Include="source\Utils\TimerUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Common.hpp">

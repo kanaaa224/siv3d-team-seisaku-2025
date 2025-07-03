@@ -2,9 +2,12 @@
 # include "../Stages/Stage1.hpp"
 # include "../Stages/TutorialStage.hpp"
 # include "../Stages/DebugBoss.hpp"
+# include "../Utils/TimerUtils.hpp"
 
 Game::Game(const InitData& init) : IScene{ init }
 {
+	TimerUtils::ClearTasks();
+
 #ifdef _DEBUG
 	if (Key1.pressed()) { StageDebugBoss::NewInstance(); return; }
 #endif
@@ -36,7 +39,17 @@ Game::~Game()
 
 void Game::update()
 {
+#ifdef _DEBUG
+	static bool pause = false;
+
+	if (KeyP.down()) pause = !pause;
+
+	if (pause) return;
+#endif
+
 	Stage::GetInstance()->update();
+
+	TimerUtils::Update();
 }
 
 void Game::draw() const
