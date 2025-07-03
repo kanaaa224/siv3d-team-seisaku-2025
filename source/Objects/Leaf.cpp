@@ -3,7 +3,12 @@
 Leaf::Leaf(P2World& world, const Vec2& position, int imgNum, eDropPostion dropPos, double windStrength)
 	: ObjectBase(world, position)
 {
-	body = world.createCircleSensor(P2Dynamic, position,0.1);
+	body = world.createCircleSensor(P2Dynamic, position,0.1,
+		P2Filter{
+				.categoryBits = CollisionCategory::Leaf, // 自分のカテゴリ
+				.maskBits = CollisionCategory::None   // Hitさせたいカテゴリ
+			}
+		);
 
 	body.setGravityScale(10);
 

@@ -64,6 +64,7 @@ private:
 
 	bool isTriggeredOnce;		//一度だけの処理用フラグ
 	bool wall_hit;
+	bool slime_hit;
 
 	P2Filter filter;			//物理干渉のフィルター
 

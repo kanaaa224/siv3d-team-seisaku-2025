@@ -33,4 +33,5 @@ namespace CollisionCategory
 	constexpr uint16 Player  = 0x0002;
 	constexpr uint16 Enemy   = 0x0004;
 	constexpr uint16 HitBox  = 0x0008;
+	constexpr uint16 Leaf = 0x0100;
 }

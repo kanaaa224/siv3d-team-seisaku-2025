@@ -7,6 +7,8 @@
 # include "../Objects/Wall.hpp"
 # include "../Characters/Enemies/Effect/SmallHitEffect.h"
 # include "../Objects/Buff/BuffBase.hpp"
+# include "../Objects/Leaf.h"
+# include "../Characters/Slime.hpp"
 
 #define VELOCITY 150.0			// 移動速度
 #define JUMPSPEED 550.0			// ジャンプ速度
@@ -35,7 +37,7 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 {
 	// プレイヤーの干渉フィルター
 	filter.categoryBits = CollisionCategory::Player;		// Playerのカテゴリ設定
-	filter.maskBits = CollisionCategory::All;			// 敵のカテゴリ設定
+	filter.maskBits = (CollisionCategory::All & ~CollisionCategory::Leaf);			// 敵のカテゴリ設定
 
 	// プレイヤーの当たり判定
 	body = world.createRect(P2Dynamic, position, SizeF{ 30, 90 }, P2Material{ .restitution = 0.0, }, P2Filter{ filter.categoryBits }); // 島袋が追記: 物理シミュレーションを行うための箱を生成
@@ -68,6 +70,8 @@ Player::Player(P2World& world, const Vec2& position) : CharacterBase(world, posi
 	Buff_SpeedUpCount = 0;
 	isHitBufftype = eHitBuffType::None;
 	showMessage = false;
+	wall_hit = false;
+	slime_hit = false;
 
 	this->initialize();
 }
@@ -81,7 +85,7 @@ Player::~Player()
 
 void Player::initialize()
 {
-	is_on_ground = true;		//地面についているか？
+	//is_on_ground = true;		//地面についているか？
 	playerState = ePlayerState::null;	//待機状態に設定
 	playerIndex = 0;			//プレイヤーコントローラー 0番目
 	enableDeadZone = false;		//デッドゾーン無効化
@@ -115,7 +119,6 @@ void Player::initialize()
 
 	movement_speed = 0.0;
 	attack_power = 30.f;
-	wall_hit = true;
 	enemyHit = false;
 }
 
@@ -154,8 +157,6 @@ void Player::update()
 		avoidanceCooldown -= Scene::DeltaTime();
 	}
 
-	//spriteAnimator.update();
-
 	switch (playerState)
 	{
 	case null: //何もなし
@@ -188,17 +189,6 @@ void Player::update()
 		enemyHit = false;
 
 		animation(idle_animation, IDLE_ANIM_SPEED,idle);
-
-		//spriteAnimator.setAnimationName(AnimationName::SpawnEffect);
-		//spriteAnimator.setMask({ 1.0, 1.0, 1.0, 1.0 });
-		//spriteAnimator.setSize({ 120, 120 });
-		//spriteAnimator.setPosition({ Scene::Width() / 2, Scene::Height() / 2 });
-		//spriteAnimator.setLooping(true);
-		//spriteAnimator.setAnimationSpeed(0.1);
-		////spriteAnimator.stop();
-		//spriteAnimator.show();
-		//spriteAnimator.play();
-
 
 		//idle状態からボタンを押したごとの処理
 		if (//move
@@ -279,14 +269,14 @@ void Player::update()
 		jumpmovement(controller);
 		////////se追加する場合
 
-		if (KeyS.down() == true)
+		if (slime_hit == true)
 		{
-			hp -= 90;
+			playerState = ePlayerState::move;
 		}
 
 		//ジャンプ中左右移動可能
-		if (controller.buttonLeft.pressed() == true ||
-			controller.buttonRight.pressed() == true ||
+		if (controller.buttonLeft.pressed() == true||
+			controller.buttonRight.pressed() == true||
 			KeyA.pressed() == true ||
 			KeyD.pressed() == true ||
 			KeyLeft.pressed() == true ||
@@ -620,22 +610,20 @@ void Player::draw() const
 	if ((Damageflg == true && Fmod(Scene::Time(), 0.1) < 0.05)) {
 		image.mirrored(flip_flg).resized(size).drawAt(pos, Palette::Red);
 	}
-
-	//spriteAnimator.draw();
 	
 #ifdef _DEBUG
 
 	body.drawFrame(1.0, ColorF(Palette::Blue));
 	image.mirrored(flip_flg).resized(size).drawAt(pos, ColorF{ 1.0, 1.0, 1.0, alpha});
 
-	Print << U"Player HP : " << hp;
+	//Print << U"Player HP : " << hp;
 	Print << U"Player 座標 : " << body.getPos();
-	Print << U"Player 移動量 : " << body.getVelocity();
+	//Print << U"Player 移動量 : " << body.getVelocity();
 	Print << U"Player State : " << playerState;
 	Print << U"Player 壁 : " << wall_hit;
-	Print << U"バフ : " << isHitBufftype;
-	Print << U"赤バフ : " << Buff_DamageUpCount;
-	Print << U"青バフ : " << Buff_SpeedUpCount;
+	Print << U"Player 床 : " << is_on_ground;
+	//Print << U"赤バフ : " << Buff_DamageUpCount;
+	//Print << U"青バフ : " << Buff_SpeedUpCount;
 	
 
 #endif // DEBUG
@@ -647,26 +635,32 @@ void Player::onHit(ObjectBase& object)
 	{
 		is_on_ground = true;
 	}
-	else
-	{
-		is_on_ground = false;
-	}
 
 	if (Wall* wall = dynamic_cast<Wall*>(&object))
 	{
+		//is_on_ground = false;
 		wall_hit = true;
-		if (!flip_flg)
+		/*if (!flip_flg)
 		{
 			body.applyLinearImpulse(Vec2(1.0, 0.0));
 		}
-		else if(flip_flg)
+		else if (flip_flg)
 		{
 			body.applyLinearImpulse(Vec2(-1.0, 0.0));
-		}
+		}*/
 	}
 	else
 	{
 		wall_hit = false;
+	}
+
+	if (Slime* slime = dynamic_cast<Slime*>(&object))
+	{
+		slime_hit = true;
+	}
+	else
+	{
+		slime_hit = false;
 	}
 
 	// 何のバフを獲得したか取得
@@ -828,7 +822,10 @@ void Player::movement(s3d::detail::XInput_impl controller)
 	{
 		body.setVelocity(Vec2(0.0, body.getVelocity().y));
 
-		playerState = ePlayerState::idle;
+		if (is_on_ground == true)
+		{
+			playerState = ePlayerState::idle;
+		}
 	}
 }
 
