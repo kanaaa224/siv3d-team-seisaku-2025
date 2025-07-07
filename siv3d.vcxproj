@@ -147,7 +147,7 @@
     <ClCompile Include="source\Scenes\GameClear.cpp" />
     <ClCompile Include="source\Scenes\GameOver.cpp" />
     <ClCompile Include="source\Scenes\Title.cpp" />
-    <ClCompile Include="source\Stages\DebugBoss.cpp" />
+    <ClCompile Include="source\Stages\DebugBossStage.cpp" />
     <ClCompile Include="source\Stages\Stage.cpp" />
     <ClCompile Include="source\Stages\Stage1.cpp" />
     <ClCompile Include="source\Stages\TutorialStage.cpp" />
@@ -396,7 +396,7 @@
     <ClInclude Include="source\Scenes\GameClear.hpp" />
     <ClInclude Include="source\Scenes\GameOver.h" />
     <ClInclude Include="source\Scenes\Title.hpp" />
-    <ClInclude Include="source\Stages\DebugBoss.hpp" />
+    <ClInclude Include="source\Stages\DebugBossStage.hpp" />
     <ClInclude Include="source\Stages\Stage.hpp" />
     <ClInclude Include="source\Stages\Stage1.hpp" />
     <ClInclude Include="source\Stages\TutorialStage.hpp" />

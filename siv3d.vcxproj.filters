@@ -234,7 +234,7 @@
     <ClCompile Include="source\Scenes\Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Stages\DebugBoss.cpp">
+    <ClCompile Include="source\Stages\DebugBossStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Stages\Stage.cpp">
@@ -1019,7 +1019,7 @@
     <ClInclude Include="source\Scenes\Title.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Stages\DebugBoss.hpp">
+    <ClInclude Include="source\Stages\DebugBossStage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Stages\Stage.hpp">

@@ -2,11 +2,11 @@
 
 # include "Stage.hpp"
 
-class StageDebugBoss : public Stage
+class DebugBossStage : public Stage
 {
 public:
-	StageDebugBoss();
-	~StageDebugBoss() = default;
+	DebugBossStage();
+	~DebugBossStage() = default;
 
 	void update() override;
 	void draw() const override;

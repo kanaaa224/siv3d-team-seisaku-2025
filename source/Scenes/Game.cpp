@@ -1,16 +1,12 @@
 ﻿# include "Game.hpp"
 # include "../Stages/Stage1.hpp"
 # include "../Stages/TutorialStage.hpp"
-# include "../Stages/DebugBoss.hpp"
+# include "../Stages/DebugBossStage.hpp"
 # include "../Utils/TimerUtils.hpp"
 
 Game::Game(const InitData& init) : IScene{ init }
 {
 	TimerUtils::ClearTasks();
-
-#ifdef _DEBUG
-	if (Key1.pressed()) { StageDebugBoss::NewInstance(); return; }
-#endif
 
 	switch (getData().current_stage)
 	{
@@ -20,6 +16,10 @@ Game::Game(const InitData& init) : IScene{ init }
 
 	case 1:
 		Stage1::NewInstance();
+		break;
+
+	case 99:
+		DebugBossStage::NewInstance();
 		break;
 
 	default:

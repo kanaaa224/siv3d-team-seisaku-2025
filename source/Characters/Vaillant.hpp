@@ -54,7 +54,7 @@ public:
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
 	void setForbidJump    (bool b = false)      { forbid_jump = b; }
-	void setAttackStarted (bool b = false)      { hostiled = b; }
+	void setAttackStarted (bool b = false)      { discovered = b; hostility = b; hostiled = b; }
 
 	VaillantState       getState()       const { return state; }
 	VaillantAttackType  getAttackType()  const { return attack_type; }

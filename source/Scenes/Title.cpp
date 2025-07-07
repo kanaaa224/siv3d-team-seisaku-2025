@@ -199,6 +199,10 @@ void Title::update()
 		}
 	}
 #endif // _DEBUG
+
+#ifdef _DEBUG
+	if (Key1.pressed()) { getData().current_stage = 99; changeScene(SceneState::Game, 0.5s); } // デバッグ用
+#endif
 }
 
 void Title::draw() const
