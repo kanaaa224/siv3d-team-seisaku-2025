@@ -1,4 +1,4 @@
-﻿# include "Vaillant.hpp"
+# include "Vaillant.hpp"
 # include "Slime.hpp"
 # include "Tentacles.hpp"
 # include "Player.hpp"
@@ -62,7 +62,7 @@ void Vaillant::attack(VaillantAttackType type)
 	if (attack_state == VaillantAttackState::Preparation)
 	{
 		mirrored = player_position.x <= position.x;
-		
+
 		attack_frame = frameTime;
 	}
 
@@ -140,7 +140,7 @@ void Vaillant::attack(VaillantAttackType type)
 
 		state = VaillantState::Idle;
 	}
-	
+
 	if (attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Preparation)
 	{
 		AudioAsset(U"Vaillant Teleport1").playOneShot();
@@ -151,47 +151,47 @@ void Vaillant::attack(VaillantAttackType type)
 			if (state >= VaillantState::Death) return;
 
 			attack_state = VaillantAttackState::Attacking;
-			
+
 			attack_frame = frameTime;
 
 			// spriteAnimator
 		}, 1000ms);
-		
+
 		SetTimeout([this] {
 			if (state >= VaillantState::Death) return;
 
 			attack_state = VaillantAttackState::Attacked;
-			
+
 			attack_frame = frameTime;
 		}, 1500ms);
-		
+
 		SetTimeout([this] {
 			if (state >= VaillantState::Death) return;
 
 			attack_state = VaillantAttackState::Ends;
-			
+
 			body.applyLinearImpulse({ 0, VAILLANT_JUMP_POWER });
 		}, 2000ms);
 
 		attack_state = VaillantAttackState::Start;
 	}
-	
+
 	if (attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Attacking)
 	{
 		body.setPos({ Random(0, 2) ? player_position.x : position.x, 0 - size.y});
 		body.setVelocity({ 0, 0 });
 	}
-	
+
 	if (attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Attacked)
 	{
 		AudioAsset(U"Vaillant Teleport2").play();
 
 		body.setPos({ position.x, size.y });
 		body.setVelocity({ 0, 0 });
-		
+
 		mirrored = player_position.x <= position.x;
 	}
-	
+
 	if (attack_type == VaillantAttackType::Tentacles)
 	{
 		Stage::GetInstance()->createObject<Tentacles>(position - Vec2{ 0, size.y / 2 });
@@ -459,21 +459,21 @@ void Vaillant::draw() const
 			int marginR = 195;
 
 			frameDuration = 7.5;
-			
+
 			if (attack_state == VaillantAttackState::Start)
 			{
 				resized.x *= Max(0.0, 1.0 - ((frameTime - attack_frame) * frameDuration));
 			}
-			
+
 			frameDuration = 1.5;
-			
+
 			if (attack_state == VaillantAttackState::Attacked)
 			{
 				double t = (frameTime - attack_frame) * frameDuration;
 
 				mask = ColorF{ 1.0, 1.0, 1.0, Min(t, 1.0) };
 			}
-			
+
 			currentFrame = 0;
 
 			if (attack_state >= VaillantAttackState::Attacked) currentFrame = 12;
@@ -568,12 +568,12 @@ void Vaillant::draw() const
 		case VaillantAttackType::Rush:
 			assetName = U"Vaillant Walk";
 			break;
-				
+
 		case VaillantAttackType::Teleport:
 			assetName = U"Vaillant Walk";
-				
+
 			if (attack_state == VaillantAttackState::Attacking && position.y > 0) assetName = U"";
-				
+
 			if (attack_state <= VaillantAttackState::Start) assetName = U"Vaillant Idle";
 			break;
 
@@ -670,13 +670,13 @@ void Vaillant::onHit(ObjectBase& object, const P2Collision& collision)
 			attack_state = VaillantAttackState::Attacked;
 		}
 	}
-	
+
 	if (Ground* ground = dynamic_cast<Ground*>(&object))
 	{
 		if (attack_type == VaillantAttackType::Teleport && attack_state == VaillantAttackState::Ends && position.y > Scene::Center().y)
 		{
 			AudioAsset(U"Vaillant Attack").playOneShot();
-			
+
 			spriteAnimator.setAnimationName(AnimationName::Smoke1);
 			spriteAnimator.setMask({ 1.0, 1.0, 1.0, 0.5 });
 			spriteAnimator.setSize({ 200, 150 });

@@ -1,4 +1,4 @@
-﻿# pragma once
+# pragma once
 
 # include "CharacterBase.hpp"
 
@@ -19,18 +19,18 @@ public:
 
 	void onHit(ObjectBase& object, const P2Collision& collision) override;
 	void onDamaged(float amount) override;
-	
+
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
 
 private:
 	Vec2 position;
 	Vec2 start_position;
 	Vec2 player_position;
-	
+
 	SizeF size;
-	
+
 	double frameTime;
-	
+
 	bool damaged;
 	bool die_executed;
 	bool destroy_executed;

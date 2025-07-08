@@ -1,4 +1,4 @@
-﻿# pragma once
+# pragma once
 
 # include <Siv3D.hpp> // Siv3D v0.6.16
 
@@ -18,7 +18,7 @@ enum class SceneState
 struct SceneData
 {
 	int current_stage = 0;
-	
+
 	double clearTime = 0.0;
 };
 
@@ -33,5 +33,5 @@ namespace CollisionCategory
 	constexpr uint16 Player  = 0x0002;
 	constexpr uint16 Enemy   = 0x0004;
 	constexpr uint16 HitBox  = 0x0008;
-	constexpr uint16 Leaf = 0x0100;
+	constexpr uint16 Leaf    = 0x0100;
 }

@@ -20,7 +20,7 @@ public:
 	static void DeleteInstance(); // 既存のインスタンスを削除する関数
 	static void NewInstance();    // 新規インスタンスを生成する関数
 	static Stage* GetInstance();  // 既存のインスタンスを返す関数
-	
+
 	// 自動で呼び出されるシーン処理系の関数を設定する関数
 	void setSceneFunctions(
 		const std::function<void(SceneState, Duration)>& changeSceneFunc,
@@ -29,7 +29,7 @@ public:
 		sceneChange = changeSceneFunc;
 		sceneData   = getDataFunc;
 	}
-	
+
 	std::function<void(SceneState, Duration)> sceneChange; // シーン遷移する関数
 	std::function<SceneData&()>               sceneData;   // シーン間の同期データを返す関数
 

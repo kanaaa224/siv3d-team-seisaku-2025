@@ -1,4 +1,4 @@
-﻿# include "Tentacles.hpp"
+# include "Tentacles.hpp"
 # include "../Utils/TimerUtils.hpp"
 
 using namespace TimerUtils;
@@ -14,7 +14,7 @@ Tentacles::Tentacles(P2World& world, const Vec2& position) :
 	body.addRectSensor(RectF{ -(size / 2), size }, { .categoryBits = CollisionCategory::Enemy, .maskBits = CollisionCategory::Player });
 
 	body.setFixedRotation(true);
-	
+
 	hp = max_hp = TENTACLES_MAX_HP;
 }
 
@@ -34,26 +34,26 @@ void Tentacles::update()
 void Tentacles::draw() const
 {
 	body.drawFrame();
-	
+
 	String assetName = U"Vaillant Tentacles 1";
-	
+
 	Vec2 margin{ 0, 0 };
 
 	SizeF cutoutSize{ 48, 48 };
 
 	SizeF resized = cutoutSize * 5;
-	
+
 	Vec2 shiftAmount{ 0, -70 };
-	
+
 	ColorF mask{ 1.0, 1.0, 1.0, 1.0 };
-	
+
 	double frameDuration = 0.085;
 	int    frameCount    = 16;
-	
+
 	int currentFrame = static_cast<int>(frameTime / frameDuration) % frameCount;
 
 	if (currentFrame) margin.x += (cutoutSize.x) * currentFrame;
-	
+
 	if (assetName) TextureAsset(assetName)(margin, cutoutSize).resized(resized).drawAt(position + shiftAmount, mask);
 }
 

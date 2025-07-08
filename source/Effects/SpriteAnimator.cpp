@@ -1,4 +1,4 @@
-﻿# include "SpriteAnimator.hpp"
+# include "SpriteAnimator.hpp"
 
 SpriteAnimator::SpriteAnimator(AnimationName name) :
 	frameTime     (0.0),

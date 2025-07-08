@@ -1,4 +1,4 @@
-﻿# pragma once
+# pragma once
 
 # include "CharacterBase.hpp"
 # include "../Effects/SpriteAnimator.hpp"
@@ -51,7 +51,7 @@ public:
 
 	void onHit(ObjectBase& object, const P2Collision& collision) override;
 	void onDamaged(float amount) override;
-	
+
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }
 	void setForbidJump    (bool b = false)      { forbid_jump = b; }
 	void setAttackStarted (bool b = false)      { discovered = b; hostility = b; hostiled = b; }
@@ -65,9 +65,9 @@ private:
 	Vec2 start_position;
 	Vec2 player_position;
 	Vec2 jumped;
-	
+
 	SizeF size;
-	
+
 	double frameTime;
 	double attack_frame;
 
@@ -81,7 +81,7 @@ private:
 	bool destroy_executed;
 	bool forbid_jump;
 	bool player_hit;
-	
+
 	VaillantState state;
 	VaillantAttackType attack_type;
 	VaillantAttackState attack_state;
