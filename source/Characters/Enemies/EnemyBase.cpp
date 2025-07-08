@@ -122,7 +122,7 @@ void EnemyBase::draw() const
 #endif // DEBUG
 }
 
-void EnemyBase::onHit(ObjectBase& object)
+void EnemyBase::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	//プレイヤーに当たったら
 	if (Player* player = dynamic_cast<Player*>(&object)) {

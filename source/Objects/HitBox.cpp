@@ -61,7 +61,7 @@ void HitBox::draw() const
 #endif
 }
 
-void HitBox::onHit(ObjectBase& object)
+void HitBox::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	// プレイヤーに当たったとき
 	if (Player* player = dynamic_cast<Player*>(&object))

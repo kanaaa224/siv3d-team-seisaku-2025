@@ -623,7 +623,7 @@ void Vaillant::draw() const
 #endif
 }
 
-void Vaillant::onHit(ObjectBase& object)
+void Vaillant::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	if (Player* player = dynamic_cast<Player*>(&object))
 	{

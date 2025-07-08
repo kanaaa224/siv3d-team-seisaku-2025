@@ -1,4 +1,4 @@
-﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-scroll" */
+/* Copied from "https://github.com/kanaaa224/siv3d-2d-game-base" */
 
 # pragma once
 
@@ -13,7 +13,7 @@ public:
 	virtual void update() {}     // 更新時に自動で呼び出される関数
 	virtual void draw() const {} // 描画時に自動で呼び出される関数
 
-	virtual void onHit(ObjectBase& object) { (void)object; } // 衝突時に自動で呼び出される関数
+	virtual void onHit(ObjectBase& object, const P2Collision& collision) { (void)object; (void)collision; } // 衝突時に自動で呼び出される関数
 
 	P2Body& getBody() { return body; }
 

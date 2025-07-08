@@ -23,11 +23,11 @@ void MoveSpeedBuff::draw() const
 	BuffBase::draw();
 }
 
-void MoveSpeedBuff::onHit(ObjectBase& object)
+void MoveSpeedBuff::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	if (Player* player = dynamic_cast<Player*>(&object)) {
 		player->SetPlayerSpeed(MOVESPEED_BUFF_PARAMETER);
 	}
 
-	BuffBase::onHit(object);//親クラスのメゾットを呼び出す
+	BuffBase::onHit(object, collision);//親クラスのメゾットを呼び出す
 }

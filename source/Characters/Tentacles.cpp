@@ -57,7 +57,7 @@ void Tentacles::draw() const
 	if (assetName) TextureAsset(assetName)(margin, cutoutSize).resized(resized).drawAt(position + shiftAmount, mask);
 }
 
-void Tentacles::onHit(ObjectBase& object) {}
+void Tentacles::onHit(ObjectBase& object, const P2Collision& collision) {}
 
 void Tentacles::onDamaged(float amount)
 {

@@ -18,7 +18,7 @@ public:
 	void update() override;
 	void draw() const override;
 
-	//void onHit(ObjectBase& object) override;
+	//void onHit(ObjectBase& object, const P2Collision& collision) override;
 
 private:
 	void stateControl() override;

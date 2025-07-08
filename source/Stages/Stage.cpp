@@ -1,4 +1,4 @@
-﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-scroll" */
+/* Copied from "https://github.com/kanaaa224/siv3d-2d-game-base" */
 
 # include "Stage.hpp"
 
@@ -33,8 +33,8 @@ void Stage::update()
 
 			if (objectA && objectB)
 			{
-				objectA->onHit(*objectB);
-				objectB->onHit(*objectA);
+				objectA->onHit(*objectB, collision);
+				objectB->onHit(*objectA, collision);
 			}
 		}
 	}

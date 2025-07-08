@@ -629,7 +629,7 @@ void Player::draw() const
 #endif // DEBUG
 }
 
-void Player::onHit(ObjectBase& object)
+void Player::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	if (Ground* ground = dynamic_cast<Ground*>(&object))
 	{

@@ -110,7 +110,7 @@ public:
 	virtual void update() override;
 	virtual void draw() const override;
 
-	virtual void onHit(ObjectBase& object) override;
+	virtual void onHit(ObjectBase& object, const P2Collision& collision) override;
 
 	virtual void onDamaged(float amount) override { getDamage(amount); };
 

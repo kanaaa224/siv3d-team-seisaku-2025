@@ -39,7 +39,7 @@ void BuffBase::draw() const
 #endif // DEBUG
 }
 
-void BuffBase::onHit(ObjectBase& object)
+void BuffBase::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	if (Player* player = dynamic_cast<Player*>(&object)) {
 		AudioAsset(U"buff_get_SE").playOneShot();//SE再生

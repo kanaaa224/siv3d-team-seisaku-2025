@@ -5,6 +5,13 @@
 # include "Scenes/GameOver.h"
 # include "Scenes/CreditRoll.h"
 
+#ifdef __APPLE__
+	#define Resource(path) ([] { \
+		constexpr auto p = path; \
+		return (StringView(p).starts_with(U"assets/")) ? U"../" + String(p) : String(p); \
+	}())
+#endif
+
 void AssetsRegistration() // ! スペースやハイフンがパスに含まれているとリソース埋め込みが出来なくなります（英数字とアンダーバーのみ使用可能）
 {
 	// Font

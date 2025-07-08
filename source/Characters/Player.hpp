@@ -107,10 +107,9 @@ public:
 
 	ePlayerState getplayerstate() const;
 
-	void onHit(ObjectBase& object) override;
+	void onHit(ObjectBase& object, const P2Collision& collision) override;
 	void onDamaged(float amount) override;	//ダメージを受けた時の処理
 	void destroy() override;				//死体が消える系
-
 	void die() override;					//死亡処理
 
 	bool getFlip()    const { return flip_flg; }

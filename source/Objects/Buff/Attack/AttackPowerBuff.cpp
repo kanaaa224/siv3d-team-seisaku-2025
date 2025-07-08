@@ -24,7 +24,7 @@ void AttackPowerBuff::draw() const
 	BuffBase::draw();
 }
 
-void AttackPowerBuff::onHit(ObjectBase& object)
+void AttackPowerBuff::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	if (Player* player = dynamic_cast<Player*>(&object)) {
 		if (!doOncePara) {
@@ -33,5 +33,5 @@ void AttackPowerBuff::onHit(ObjectBase& object)
 		}
 	}
 
-	BuffBase::onHit(object);//親クラスのメゾットを呼び出す
+	BuffBase::onHit(object, collision);//親クラスのメゾットを呼び出す
 }

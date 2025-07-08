@@ -17,7 +17,7 @@ public:
 	void destroy() override;
 	void die() override;
 
-	void onHit(ObjectBase& object) override;
+	void onHit(ObjectBase& object, const P2Collision& collision) override;
 	void onDamaged(float amount) override;
 	
 	void setPlayerPosition(Vec2 pos = { 0, 0 }) { player_position = pos; }

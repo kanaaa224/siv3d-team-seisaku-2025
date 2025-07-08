@@ -81,7 +81,7 @@ void Ammo::draw() const
 #endif // DEBUG
 }
 
-void Ammo::onHit(ObjectBase& object)
+void Ammo::onHit(ObjectBase& object, const P2Collision& collision)
 {
 	//プレイヤーに当たった時
 	if (Player* p = dynamic_cast<Player*>(&object)) {
