@@ -1,4 +1,4 @@
-# pragma once
+﻿# pragma once
 
 # include "CharacterBase.hpp"
 # include "../Effects/SpriteAnimator.hpp"

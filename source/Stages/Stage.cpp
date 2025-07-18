@@ -1,4 +1,4 @@
-/* Copied from "https://github.com/kanaaa224/siv3d-2d-game-base" */
+﻿/* Copied from "https://github.com/kanaaa224/siv3d-2d-game-base" */
 
 # include "Stage.hpp"
 
